@@ -93,7 +93,7 @@ Vera UI includes 45+ carefully crafted components organized into categories:
 
 ```bash
 # Clone the repository
-git clone https://github.com/jibu-mwakilembe/vera-ui.git
+git clone https://github.com/helgadigitals-limited-company/vera-ui
 cd vera-ui
 
 # Install dependencies
