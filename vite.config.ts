@@ -20,12 +20,12 @@ export default defineConfig({
   })],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src")
+      "@": path.resolve(dirname, "./src")
     }
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
+      entry: path.resolve(dirname, "src/index.ts"),
       name: "VeraUI",
       formats: ["es", "cjs", "umd"],
       fileName: format => `vera-ui.${format}.js`

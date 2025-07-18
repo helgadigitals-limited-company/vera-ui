@@ -1,4 +1,91 @@
-node_modules
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
 
+# Production builds
+dist/
+build/
+lib/
+
+# Storybook
 *storybook.log
-storybook-static
+storybook-static/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+# .vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output
+.coverage
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Package manager lockfiles (keep only one)
+# yarn.lock
+# package-lock.json
+# Note: pnpm-lock.yaml is kept for this project
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint cache
+.eslintcache
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Vite cache
+.vite/
+
+# Vitest
+coverage/
