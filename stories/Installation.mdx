@@ -1,0 +1,147 @@
+# Installation
+
+Get started with Vera UI in your React project.
+
+## Package Manager
+
+Install Vera UI using your preferred package manager:
+
+```bash
+# npm
+npm install vera-ui
+
+# yarn
+yarn add vera-ui
+
+# pnpm
+pnpm add vera-ui
+```
+
+## Prerequisites
+
+Make sure you have the following dependencies installed:
+
+- **React** 18.0.0 or later
+- **React DOM** 18.0.0 or later
+
+## Setup
+
+### 1. Install Tailwind CSS
+
+Vera UI is built with Tailwind CSS. If you don't have Tailwind CSS installed in your project, follow the [official installation guide](https://tailwindcss.com/docs/installation).
+
+### 2. Configure Tailwind CSS
+
+Add the Vera UI components to your Tailwind CSS configuration:
+
+```js
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/vera-ui/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+### 3. Import CSS Variables
+
+Import the CSS variables in your main CSS file:
+
+```css
+/* globals.css or index.css */
+@import "vera-ui/styles.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### 4. Add Theme Provider
+
+Wrap your app with the ThemeProvider to enable theme switching:
+
+```tsx
+// App.tsx
+import { ThemeProvider } from "vera-ui"
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="system" storageKey="vera-ui-theme">
+      {/* Your app content */}
+    </ThemeProvider>
+  )
+}
+```
+
+## Usage
+
+Start using Vera UI components in your project:
+
+```tsx
+import { Button } from "vera-ui"
+
+function MyComponent() {
+  return (
+    <Button variant="default" size="lg">
+      Get Started
+    </Button>
+  )
+}
+```
+
+## TypeScript
+
+Vera UI is built with TypeScript and provides comprehensive type definitions. No additional setup is required for TypeScript projects.
+
+## Next.js Setup
+
+For Next.js projects, you may need to configure transpilation:
+
+```js
+// next.config.js
+const nextConfig = {
+  transpilePackages: ["vera-ui"],
+}
+
+module.exports = nextConfig
+```
+
+## Vite Setup
+
+For Vite projects, no additional configuration is typically required. Vera UI works out of the box with Vite.
+
+## Troubleshooting
+
+### CSS Not Loading
+
+If styles aren't loading properly:
+
+1. Ensure you've imported the CSS variables
+2. Check your Tailwind configuration includes Vera UI paths
+3. Verify your bundler is processing CSS files correctly
+
+### TypeScript Errors
+
+If you encounter TypeScript errors:
+
+1. Ensure you're using TypeScript 4.9 or later
+2. Check that your `tsconfig.json` includes the correct paths
+3. Restart your TypeScript service in your editor
+
+### Component Not Rendering
+
+If components aren't rendering:
+
+1. Verify the ThemeProvider is wrapping your app
+2. Check that you've imported the component correctly
+3. Ensure all required props are provided
+
+## Need Help?
+
+- Check the [component documentation](?path=/docs/components-button--docs)
+- Look at the [example implementations](?path=/docs/examples-forms--docs)
+- Report issues on our GitHub repository
