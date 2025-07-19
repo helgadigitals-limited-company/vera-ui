@@ -54,7 +54,6 @@ export function TabsContainer({
     const [urlTab, setUrlTab] = useQueryState(
         urlParamName,
         {
-            defaultValue: defaultTab || tabs[0]?.value || '',
             shallow,
             history: historyMode,
             clearOnDefault: true,
@@ -62,11 +61,11 @@ export function TabsContainer({
                 // Validate that the parsed value is a valid tab
                 return tabs.some(tab => tab.value === value) ? value : defaultTab || tabs[0]?.value || '';
             },
-            enabled: persistInUrl, // Only enable URL state management if persistInUrl is true
         }
     );
 
-    const activeTab = persistInUrl ? urlTab : localTab;
+    // Use the default value directly in the component logic
+    const activeTab = persistInUrl ? (urlTab ?? defaultTab ?? tabs[0]?.value ?? '') : localTab;
 
     const handleTabChange = (value: string) => {
         if (persistInUrl) {

@@ -216,13 +216,13 @@ export const IndeterminateProgress: Story = {
         <p className="text-sm mb-2">Loading Animation</p>
         <div className="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full">
           <div
-            className="bg-primary h-full absolute rounded-full w-1/3 animate-[loading_2s_ease-in-out_infinite]"
+            className="bg-primary h-full absolute rounded-full w-1/3"
             style={{
               animation: "loading 2s ease-in-out infinite",
             }}
           ></div>
         </div>
-        <style jsx>{`
+        <style>{`
           @keyframes loading {
             0% {
               transform: translateX(-100%);
