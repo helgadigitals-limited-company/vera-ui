@@ -1,7 +1,4 @@
 import type { Preview } from '@storybook/react';
-import { withThemeByClassName } from '@storybook/addon-themes';
-import { ThemeProvider } from '../src/components/theme-provider';
-import React from 'react';
 import '../src/index.css';
 
 const preview: Preview = {
@@ -16,17 +13,7 @@ const preview: Preview = {
       toc: true,
     },
     backgrounds: {
-      default: 'light',
-      values: [
-        {
-          name: 'light',
-          value: '#ffffff',
-        },
-        {
-          name: 'dark',
-          value: '#0a0a0a',
-        },
-      ],
+      disable: true, // Disable backgrounds since we're using theme switching
     },
     viewport: {
       viewports: {
@@ -69,23 +56,44 @@ const preview: Preview = {
     },
   },
   decorators: [
-    withThemeByClassName({
-      themes: {
-        light: 'light',
-        dark: 'dark',
-      },
-      defaultTheme: 'dark',
-    }),
-    (Story) => {
-      return React.createElement(
-        ThemeProvider, 
-        { 
-          defaultTheme: 'dark' as const,
-          children: React.createElement(Story)
+    (Story, context) => {
+      const theme = context.globals.theme || 'dark';
+      
+      // Apply theme to document root
+      if (typeof window !== 'undefined') {
+        const root = window.document.documentElement;
+        root.classList.remove('light', 'dark');
+        
+        if (theme === 'system') {
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+          root.classList.add(systemTheme);
+        } else {
+          root.classList.add(theme);
         }
-      );
-    },
+      }
+      
+      return Story();
+    }
   ],
+  globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Global theme for components',
+      defaultValue: 'light',
+      toolbar: {
+        icon: 'paintbrush',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+          { value: 'system', title: 'System', icon: 'monitor' },
+        ],
+        showName: true,
+        dynamicTitle: true,
+      },
+    },
+  },
 };
 
 export default preview;
