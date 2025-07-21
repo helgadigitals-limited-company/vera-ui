@@ -2,6 +2,7 @@
   "name": "@helgadigitals/vera-ui",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "description": "A modern, accessible React component library for vera",
   "main": "dist/vera-ui.cjs.js",
   "module": "dist/vera-ui.es.js",
@@ -13,9 +14,9 @@
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/vera-ui.es.js",
-      "require": "./dist/vera-ui.cjs.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/vera-ui.cjs.js"
     },
     "./styles": "./dist/vera-ui.css"
   },
