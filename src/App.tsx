@@ -1,4 +1,5 @@
 import {type TabItem, TabsContainer} from "@/components/tabs-container.tsx";
+import FileUpload from "./components/ui/fileUpload";
 
 function App() {
 
@@ -28,6 +29,11 @@ function App() {
                     persistInUrl={false}
                     onTabChange={(value) => console.log('Tab changed:', value)}
                     containerHeight="600px"
+                />
+
+                <FileUpload
+                    onChange={(file) => console.log('File selected:', file)}
+                    onError={(error) => console.error('File upload error:', error)}
                 />
 
             </section>
