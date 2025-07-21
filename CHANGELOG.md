@@ -1,3 +1,13 @@
+## [2.0.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.0.0...v2.0.0) (2025-07-21)
+
+### ⚠ BREAKING CHANGES
+
+* Package is now ready for public npm distribution
+
+### 🚀 Features
+
+* prepare package for npm publishing ([057cdaa](https://github.com/helgadigitals-limited-company/vera-ui/commit/057cdaa071f7fc703887f7a3f18c1abb0b092e05))
+
 ## 1.0.0 (2025-07-21)
 
 ### 🚀 Features
