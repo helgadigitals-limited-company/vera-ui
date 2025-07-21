@@ -1,6 +1,5 @@
 {
   "name": "@helgadigitals/vera-ui",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
   "description": "A modern, accessible React component library for vera",
@@ -43,7 +42,7 @@
     "tailwind",
     "accessibility"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "HelgaDigitals info@helgadigitals.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/helgadigitals-limited-company/vera-ui/issues"
