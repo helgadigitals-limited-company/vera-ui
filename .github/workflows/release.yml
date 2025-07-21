@@ -19,25 +19,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10
+          node-version: "22"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-    #   - name: Lint
-    #     run: pnpm lint
+      #   - name: Lint
+      #     run: pnpm lint
 
-    #   - name: Test
-    #     run: pnpm test
+      #   - name: Test
+      #     run: pnpm test
 
       - name: Build
         run: pnpm build
@@ -70,17 +70,17 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10
+          node-version: "22"
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
