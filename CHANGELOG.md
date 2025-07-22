@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.2.0...v2.2.1) (2025-07-22)
+
+### 🐛 Bug Fixes
+
+* correct import path for FileUpload component in stories ([62524c4](https://github.com/helgadigitals-limited-company/vera-ui/commit/62524c4cbea3f715667f5ac819a739500cb15af2))
+* FileUpload component not being in dist folder with comprehensive features and stories ([ddf5626](https://github.com/helgadigitals-limited-company/vera-ui/commit/ddf5626cc73fd8e12030285e2ad65670a5b92e1a))
+
 ## [2.2.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.1.0...v2.2.0) (2025-07-22)
 
 ### 🚀 Features
