@@ -1,3 +1,9 @@
+## [2.1.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.0.0...v2.1.0) (2025-07-22)
+
+### 🚀 Features
+
+* add CSS export to package.json and update Vite config for improved dependency management ([0b85221](https://github.com/helgadigitals-limited-company/vera-ui/commit/0b85221b565fc6b3d5ad128be2f090f20b6fb8ea))
+
 ## [2.0.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.0.0...v2.0.0) (2025-07-21)
 
 ### ⚠ BREAKING CHANGES
