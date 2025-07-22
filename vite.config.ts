@@ -5,11 +5,9 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from 'vite-plugin-dts';
 import { fileURLToPath } from 'node:url';
-// import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [
     react(), 
@@ -32,23 +30,67 @@ export default defineConfig({
     lib: {
       entry: path.resolve(dirname, "src/index.ts"),
       name: "VeraUI",
-      formats: ["es", "cjs", "umd"],
+      formats: ["es", "cjs"],
       fileName: (format: string) => `vera-ui.${format}.js`
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-slot", "class-variance-authority", "clsx", "lucide-react", "tailwind-merge"],
+      external: [
+        "react", 
+        "react-dom", 
+        "react/jsx-runtime",
+        // Add all your dependencies here
+        "@radix-ui/react-accordion",
+        "@radix-ui/react-alert-dialog",
+        "@radix-ui/react-aspect-ratio",
+        "@radix-ui/react-avatar",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-collapsible",
+        "@radix-ui/react-context-menu",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-dropdown-menu",
+        "@radix-ui/react-hover-card",
+        "@radix-ui/react-label",
+        "@radix-ui/react-menubar",
+        "@radix-ui/react-navigation-menu",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-progress",
+        "@radix-ui/react-radio-group",
+        "@radix-ui/react-scroll-area",
+        "@radix-ui/react-select",
+        "@radix-ui/react-separator",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-switch",
+        "@radix-ui/react-tabs",
+        "@radix-ui/react-toggle",
+        "@radix-ui/react-toggle-group",
+        "@radix-ui/react-tooltip",
+        "@tailwindcss/vite",
+        "@tanstack/react-table",
+        "class-variance-authority",
+        "clsx",
+        "cmdk",
+        "date-fns",
+        "embla-carousel-react",
+        "input-otp",
+        "lucide-react",
+        "next-themes",
+        "nuqs",
+        "react-day-picker",
+        "react-hook-form",
+        "react-resizable-panels",
+        "recharts",
+        "sonner",
+        "tailwind-merge",
+        "tailwindcss",
+        "vaul",
+        "zod"
+      ],
       output: {
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
           "react/jsx-runtime": "react/jsx-runtime",
-          "@radix-ui/react-slot": "RadixUIReactSlot",
-          "class-variance-authority": "classVarianceAuthority",
-          "clsx": "clsx",
-          "lucide-react": "lucideReact",
-          "tailwind-merge": "tailwindMerge"
         },
-        // Ensure CSS is named correctly
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) {
             return 'vera-ui.css';
@@ -59,11 +101,15 @@ export default defineConfig({
     },
     cssCodeSplit: false,
     sourcemap: true,
-    minify: false,
+    minify: 'esbuild',
     chunkSizeWarningLimit: 1000
   },
+  css: {
+    postcss: {
+      plugins: [],
+    },
+  },
   test: {
-    // Storybook test configuration will be added later when implementing testing tasks
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts']
   }

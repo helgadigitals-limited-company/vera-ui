@@ -17,6 +17,7 @@
       "import": "./dist/vera-ui.es.js",
       "require": "./dist/vera-ui.cjs.js"
     },
+    "./dist/vera-ui.css": "./dist/vera-ui.css",
     "./styles": "./dist/vera-ui.css"
   },
   "scripts": {
