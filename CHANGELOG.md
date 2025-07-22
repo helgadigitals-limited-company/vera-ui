@@ -1,3 +1,13 @@
+## [2.2.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.1.0...v2.2.0) (2025-07-22)
+
+### 🚀 Features
+
+* add stories for Combobox, Drawer, Sheet, and Table components ([f2feba3](https://github.com/helgadigitals-limited-company/vera-ui/commit/f2feba32aa723fd9d7d54287c6b950b03cc50e38))
+
+### 🐛 Bug Fixes
+
+* added fileUpload component which was forgot to be included in the index.ts ([c6582cb](https://github.com/helgadigitals-limited-company/vera-ui/commit/c6582cb1433d4de8df9c9cbc24309369cb23a297))
+
 ## [2.1.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.0.0...v2.1.0) (2025-07-22)
 
 ### 🚀 Features
