@@ -208,7 +208,7 @@ function FileList({
   );
 }
 
-export default function FileUpload({
+export  function FileUpload({
   value,
   onChange,
   accept = "*/*",
