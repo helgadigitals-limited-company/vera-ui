@@ -1,3 +1,9 @@
+## [2.2.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.2.1...v2.2.2) (2025-07-23)
+
+### 🐛 Bug Fixes
+
+* update import statement for FileUpload component and change export to named export ([e7af28b](https://github.com/helgadigitals-limited-company/vera-ui/commit/e7af28b1c98887d46b750f97e329a07e3452b9a6))
+
 ## [2.2.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.2.0...v2.2.1) (2025-07-22)
 
 ### 🐛 Bug Fixes
