@@ -1,3 +1,9 @@
+## [2.3.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.0...v2.3.1) (2025-08-05)
+
+### 🐛 Bug Fixes
+
+* update color variables in CSS, adjust Tailwind config for font families and update path to node_modules when library in use ([e25738a](https://github.com/helgadigitals-limited-company/vera-ui/commit/e25738aca783b5ef8dda6625d2e741ed7b99d785))
+
 ## [2.3.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.2.2...v2.3.0) (2025-08-05)
 
 ### 🚀 Features
