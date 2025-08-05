@@ -10,7 +10,7 @@
     "dist",
     "README.md",
     "LICENSE",
-    "tailwind.config.js",
+    "tailwind.config.cjs",
     "postcss.config.js"
   ],
   "exports": {
@@ -23,7 +23,7 @@
     "./dist/vera-ui-v3.css": "./dist/vera-ui-v3.css",
     "./styles": "./dist/vera-ui.css",
     "./styles/v3": "./dist/vera-ui-v3.css",
-    "./tailwind.config": "./tailwind.config.js"
+    "./tailwind.config": "./tailwind.config.cjs"
   },
   "scripts": {
     "dev": "vite",
