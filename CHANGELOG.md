@@ -1,3 +1,13 @@
+## [2.3.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.2.2...v2.3.0) (2025-08-05)
+
+### 🚀 Features
+
+* Tailwind CSS v3 support ([05c092e](https://github.com/helgadigitals-limited-company/vera-ui/commit/05c092e9e4feed065937a10a36958dd16037708e))
+
+### 🐛 Bug Fixes
+
+* update import statement for FileUpload component to use named export ([443d67b](https://github.com/helgadigitals-limited-company/vera-ui/commit/443d67bb07f775e1e75032d7d63c3e9a456dda1a))
+
 ## [2.2.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.2.1...v2.2.2) (2025-07-23)
 
 ### 🐛 Bug Fixes
