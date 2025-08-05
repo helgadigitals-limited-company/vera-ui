@@ -6,7 +6,10 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    './node_modules/@helgadigitals/vera-ui/dist/**/*.{js,jsx,ts,tsx}',
+    path.join(
+      path.dirname(require.resolve('@helgadigitals/vera-ui/package.json')),
+      'dist/**/*.{js,ts,jsx,tsx}'
+    ),
   ],
   prefix: "",
   theme: {
@@ -74,6 +77,11 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        serif: ["var(--font-serif)"],
+        mono: ["var(--font-mono)"],
       },
       keyframes: {
         "accordion-down": {
