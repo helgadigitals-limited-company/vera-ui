@@ -64,7 +64,6 @@ export default defineConfig({
         "@radix-ui/react-toggle",
         "@radix-ui/react-toggle-group",
         "@radix-ui/react-tooltip",
-        "@tailwindcss/vite",
         "@tanstack/react-table",
         "class-variance-authority",
         "clsx",
@@ -81,7 +80,6 @@ export default defineConfig({
         "recharts",
         "sonner",
         "tailwind-merge",
-        "tailwindcss",
         "vaul",
         "zod"
       ],
