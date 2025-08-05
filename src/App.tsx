@@ -1,5 +1,5 @@
 import {type TabItem, TabsContainer} from "@/components/tabs-container.tsx";
-import FileUpload from "./components/ui/fileUpload";
+import { FileUpload } from "@/components/ui/file-upload";
 
 function App() {
 
