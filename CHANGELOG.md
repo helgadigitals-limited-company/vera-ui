@@ -1,3 +1,9 @@
+## [2.3.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.1...v2.3.2) (2025-08-05)
+
+### 🐛 Bug Fixes
+
+* update tailwind.config file extension and enhance configuration for Tailwind CSS ([3c606e1](https://github.com/helgadigitals-limited-company/vera-ui/commit/3c606e1353afd07c135729febf31a2dbd79281e1))
+
 ## [2.3.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.0...v2.3.1) (2025-08-05)
 
 ### 🐛 Bug Fixes
