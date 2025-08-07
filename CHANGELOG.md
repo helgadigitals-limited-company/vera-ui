@@ -1,3 +1,9 @@
+## [2.3.3](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.2...v2.3.3) (2025-08-07)
+
+### 🐛 Bug Fixes
+
+* update Tailwind config file references to use .cjs extension and remove deprecated config file ([2550660](https://github.com/helgadigitals-limited-company/vera-ui/commit/25506607315d8ffd9215d099e91da7b9be588528))
+
 ## [2.3.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.1...v2.3.2) (2025-08-05)
 
 ### 🐛 Bug Fixes
