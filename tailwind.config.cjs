@@ -1,5 +1,3 @@
-const path = require('path');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -8,10 +6,7 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    path.join(
-      path.dirname(require.resolve('@helgadigitals/vera-ui/package.json')),
-      'dist/**/*.{js,ts,jsx,tsx}'
-    ),
+    './node_modules/@helgadigitals/vera-ui/dist/**/*.{js,ts,jsx,tsx}',
   ],
   prefix: "",
   theme: {

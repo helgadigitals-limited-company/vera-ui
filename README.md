@@ -29,7 +29,7 @@ Vera UI supports both **Tailwind CSS v3** and **v4**.
 npm install tailwindcss@^3 postcss autoprefixer tailwindcss-animate
 
 # Copy Tailwind config
-cp node_modules/@helgadigitals/vera-ui/tailwind.config.js ./
+cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js
 ```
 
 ```css

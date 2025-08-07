@@ -32,7 +32,7 @@ npm install @helgadigitals/vera-ui tailwindcss@^3 postcss autoprefixer
 Copy the Tailwind config:
 
 ```bash
-cp node_modules/@helgadigitals/vera-ui/tailwind.config.js ./
+cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js
 ```
 
 ```css
@@ -69,7 +69,7 @@ module.exports = nextConfig;
 
 ```js
 // tailwind.config.js
-const veraConfig = require("@helgadigitals/vera-ui/tailwind.config");
+const veraConfig = require("@helgadigitals/vera-ui/tailwind.config.cjs");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -171,7 +171,7 @@ Copy the Tailwind config and modify:
 
 ```js
 // tailwind.config.mjs
-import veraConfig from "@helgadigitals/vera-ui/tailwind.config";
+import veraConfig from "@helgadigitals/vera-ui/tailwind.config.cjs";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -280,7 +280,7 @@ function SignupForm() {
 ### Migrating from v4 to v3
 
 - [ ] Install Tailwind v3: `npm install tailwindcss@^3 postcss autoprefixer`
-- [ ] Copy Tailwind config: `cp node_modules/@helgadigitals/vera-ui/tailwind.config.js ./`
+- [ ] Copy Tailwind config: `cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js`
 - [ ] Change CSS import from `vera-ui.css` to `vera-ui-v3.css`
 - [ ] Update CSS structure:
   ```diff

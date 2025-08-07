@@ -1,6 +1,32 @@
 # Vera UI - Tailwind CSS Integration Guide
 
-Vera UI is compatible with both Tailwind CSS v3 and v4. This guide will help you set up the library in your project regardless of which version you're using.
+Vera UI is compatible with both Tailwind CSS v3 ```js
+// tailwind.config.js
+const veraConfig = require('@helgadigitals/ve```js
+// tailwind.config.js
+const veraConfig = require('@helgadigitals/vera-ui/tailwind.config.cjs')
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  ...veraConfig,
+  content: [
+    ...veraConfig.content,
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+}.config.cjs')
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  ...veraConfig,
+  content: [
+    ...veraConfig.content,
+    // Add your own content paths
+    './src/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],uide will help you set up the library in your project regardless of which version you're using.
 
 ## Table of Contents
 
@@ -82,10 +108,9 @@ npm install @helgadigitals/vera-ui tailwindcss@^3 postcss autoprefixer tailwindc
 2. **Copy or extend the Tailwind config**:
 
 Option A: Copy the provided config (recommended):
-
 ```bash
 # Copy the tailwind config from the package
-cp node_modules/@helgadigitals/vera-ui/tailwind.config.js ./tailwind.config.js
+cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js
 ```
 
 Option B: Extend your existing config:
