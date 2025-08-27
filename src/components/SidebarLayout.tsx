@@ -5,7 +5,6 @@ import  {
   type ReusableSidebarClassNames,
   type ReusableSidebarStyleProps,
 } from "@/components/Sidebar"
-import { Outlet } from "react-router-dom"
 
 export type SidebarLayoutProps = {
   props: {
@@ -21,10 +20,11 @@ export type SidebarLayoutProps = {
     classNames?: ReusableSidebarClassNames
     stylesConfig?: ReusableSidebarStyleProps
     collapsibleMode?: "icon" | "offcanvas" | "none"
-  }
+  },
+  children: React.ReactNode
 }
 
-export  function SidebarLayout({ props }: SidebarLayoutProps) {
+export  function SidebarLayout({ props, children }: SidebarLayoutProps) {
   const {
     items,
     heading,
@@ -76,7 +76,7 @@ export  function SidebarLayout({ props }: SidebarLayoutProps) {
         <div className="p-2">
           <SidebarTrigger />
         </div>
-        <Outlet />
+        {children}
       </main>
     </SidebarProvider>
   )
