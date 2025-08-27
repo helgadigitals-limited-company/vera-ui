@@ -1,17 +1,17 @@
 /// <reference types="vitest/config" />
 import * as path from "path";
-import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from 'vite-plugin-dts';
 import { fileURLToPath } from 'node:url';
+import tailwindcss from '@tailwindcss/vite';
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [
-    react(), 
-    tailwindcss(),
+    react(),
+	  tailwindcss(),
     dts({
       insertTypesEntry: true,
       include: ['src/**/*.{ts,tsx}'],
@@ -72,6 +72,7 @@ export default defineConfig({
         "embla-carousel-react",
         "input-otp",
         "lucide-react",
+        "motion",
         "next-themes",
         "nuqs",
         "react-day-picker",
@@ -102,11 +103,11 @@ export default defineConfig({
     minify: 'esbuild',
     chunkSizeWarningLimit: 1000
   },
-  css: {
-    postcss: {
-      plugins: [],
-    },
-  },
+	css: {
+		postcss: {
+			plugins: [],
+		},
+	},
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts']
