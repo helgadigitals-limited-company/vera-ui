@@ -9,9 +9,7 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE",
-    "tailwind.config.js",
-    "postcss.config.js"
+    "LICENSE"
   ],
   "exports": {
     ".": {
