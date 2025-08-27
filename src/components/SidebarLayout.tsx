@@ -1,5 +1,6 @@
 import { SidebarTrigger, SidebarProvider } from "@/components/ui/sidebar"
-import ReusableSidebar, {
+import  {
+  ReusableSidebar,
   type SidebarItem,
   type ReusableSidebarClassNames,
   type ReusableSidebarStyleProps,
@@ -23,7 +24,7 @@ export type SidebarLayoutProps = {
   }
 }
 
-export default function SidebarLayout({ props }: SidebarLayoutProps) {
+export  function SidebarLayout({ props }: SidebarLayoutProps) {
   const {
     items,
     heading,

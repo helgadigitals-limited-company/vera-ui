@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { User, type LucideIcon } from "lucide-react"
+import { User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   Sidebar,
@@ -19,7 +19,7 @@ import * as React from "react"
 export type SidebarItem = {
   title: string
   path: string
-  icon: LucideIcon
+  icon: React.ElementType
   exact?: boolean
   // Optional badge text (e.g. counts)
   badge?: string | number
@@ -94,7 +94,7 @@ type SidebarProps = {
   collapsibleMode?: "icon" | "offcanvas" | "none"
 }
 
-export default function ReusableSidebar({
+export  function ReusableSidebar({
   items,
   heading,
   image,
@@ -212,7 +212,7 @@ export default function ReusableSidebar({
                         )
                       }
                     >
-                      <item.icon className="shrink-0" />
+                      {React.createElement(item.icon, { className: "shrink-0" })}
                       <span className="truncate">{item.title}</span>
                       {item.badge != null && (
                         <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded bg-primary px-1 text-[10px] font-medium text-primary-foreground">
