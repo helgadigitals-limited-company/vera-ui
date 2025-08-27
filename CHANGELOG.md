@@ -1,3 +1,15 @@
+## [2.4.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.3...v2.4.0) (2025-08-27)
+
+### 🚀 Features
+
+* removed support for tailwindcss v4, together with other things ([822c77d](https://github.com/helgadigitals-limited-company/vera-ui/commit/822c77db8d377d22a11d33f80bf66ba0ec82e59d))
+* **theme:** created and added the theme-toggle.tsx component ([c5a4e74](https://github.com/helgadigitals-limited-company/vera-ui/commit/c5a4e7496ddcc33055ea7b4bc54207c6c7c3709f))
+
+### ♻️ Refactoring
+
+* remove unused PostCSS and Tailwind configuration files ([dd0580a](https://github.com/helgadigitals-limited-company/vera-ui/commit/dd0580a864ebd8bda3ddf310c08295fb1cef0ee3))
+* remove unused Tailwind and PostCSS configuration files from package.json ([f0e1729](https://github.com/helgadigitals-limited-company/vera-ui/commit/f0e172988d9b38b553a4d1bf21310c872151833d))
+
 ## [2.3.3](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.2...v2.3.3) (2025-08-07)
 
 ### 🐛 Bug Fixes
