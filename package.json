@@ -9,9 +9,7 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE",
-    "tailwind.config.cjs",
-    "postcss.config.js"
+    "LICENSE"
   ],
   "exports": {
     ".": {
@@ -20,16 +18,12 @@
       "require": "./dist/vera-ui.cjs.js"
     },
     "./dist/vera-ui.css": "./dist/vera-ui.css",
-    "./dist/vera-ui-v3.css": "./dist/vera-ui-v3.css",
-    "./styles": "./dist/vera-ui.css",
-    "./styles/v3": "./dist/vera-ui-v3.css",
-    "./tailwind.config": "./tailwind.config.cjs"
+    "./styles": "./dist/vera-ui.css"
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:lib && npm run build:v3-css",
+    "build": "npm run build:lib",
     "build:lib": "tsc && vite build",
-    "build:v3-css": "node scripts/build-v3-css.js",
     "build:storybook": "storybook build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -59,16 +53,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "tailwindcss": ">=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "tailwindcss": {
-      "optional": false
-    }
-  },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -96,7 +80,8 @@
     "@radix-ui/react-toggle": "^1.1.9",
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
-    "@tailwindcss/vite": "^4.1.11",
+    "@radix-ui/react-use-controllable-state": "^1.2.2",
+    "@tailwindcss/vite": "^4.1.12",
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -105,6 +90,7 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.525.0",
+    "motion": "^12.23.12",
     "next-themes": "^0.4.6",
     "nuqs": "^2.4.3",
     "react": "^19.1.0",
@@ -115,7 +101,7 @@
     "recharts": "2.15.4",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.1.12",
     "vaul": "^1.1.2",
     "vite-plugin-dts": "^4.5.4",
     "zod": "^4.0.5"

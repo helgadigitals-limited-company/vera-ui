@@ -1,8 +1,9 @@
-import {type TabItem, TabsContainer} from "@/components/tabs-container.tsx";
+import { type TabItem, TabsContainer } from "@/components/tabs-container.tsx";
 import { FileUpload } from "@/components/ui/file-upload";
+import { ThemeProvider } from '@/components/theme-provider.tsx';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 function App() {
-
     const tabs: TabItem[] = [
         {
             value: 'tab1',
@@ -18,30 +19,37 @@ function App() {
     ];
 
     return (
-    <>
-      <h1>hello world</h1>
-
-        <div className={'container mx-auto'}>
-            <section className='flex justify-center items-center p-20 container mx-auto'>
-                <TabsContainer
-                    tabs={tabs}
-                    defaultTab="tab1"
-                    persistInUrl={false}
-                    onTabChange={(value) => console.log('Tab changed:', value)}
-                    containerHeight="600px"
-                />
-
-                <FileUpload
-                    onChange={(file) => console.log('File selected:', file)}
-                    onError={(error) => console.error('File upload error:', error)}
-                />
-
-            </section>
-        </div>
-
-
-    </>
-  );
+        <>
+            <ThemeProvider defaultTheme={'system'} storageKey={'vera-ui-theme'}>
+                <div className="container mx-auto p-4">
+                    <header className="flex justify-between items-center mb-8">
+                        <h1 className="text-2xl font-bold">Vera UI Demo</h1>
+                        <ThemeToggle />
+                    </header>
+                    
+                    <section className="flex flex-col gap-8 p-4 border rounded-lg">
+                        <div className="flex justify-center items-center">
+                            <TabsContainer
+                                tabs={tabs}
+                                defaultTab="tab1"
+                                persistInUrl={false}
+                                onTabChange={(value) => console.log('Tab changed:', value)}
+                                containerHeight="300px"
+                            />
+                        </div>
+                        
+                        <div className="mt-8">
+                            <h2 className="text-xl mb-4">File Upload Example</h2>
+                            <FileUpload
+                                onChange={(file) => console.log('File selected:', file)}
+                                onError={(error) => console.error('File upload error:', error)}
+                            />
+                        </div>
+                    </section>
+                </div>
+            </ThemeProvider>
+        </>
+    );
 }
 
 export default App;

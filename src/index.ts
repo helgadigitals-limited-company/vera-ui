@@ -50,9 +50,12 @@ export * from './components/ui/toggle'
 export * from './components/ui/toggle-group'
 export * from './components/ui/tooltip'
 
+
 // Core Components
 export * from './components/theme-provider'
+export * from './components/theme-toggle'
 
 // Export utilities
 export * from './lib/utils'
+export * from './lib/theme-context'
 export * from './hooks/use-theme'
