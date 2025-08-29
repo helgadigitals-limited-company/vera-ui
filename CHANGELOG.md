@@ -1,3 +1,11 @@
+## [2.6.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.5.0...v2.6.0) (2025-08-29)
+
+### 🚀 Features
+
+* add DataTable component and utility functions for string manipulation ([a033981](https://github.com/helgadigitals-limited-company/vera-ui/commit/a033981bb461d873769f85029c20dd9a2c22389b))
+* **DataTable:** add loading and empty state handling ([4266553](https://github.com/helgadigitals-limited-company/vera-ui/commit/4266553f630eb2dad6e6adda8f7de97080c06eda))
+* new DataTable component ([2fade85](https://github.com/helgadigitals-limited-company/vera-ui/commit/2fade855aaf127cff8d60df3b2761307edd1e2f5))
+
 ## [2.5.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.4.0...v2.5.0) (2025-08-29)
 
 ### 🚀 Features
