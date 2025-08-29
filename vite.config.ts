@@ -82,7 +82,8 @@ export default defineConfig({
         "sonner",
         "tailwind-merge",
         "vaul",
-        "zod"
+        "zod",
+	    "react-router-dom"
       ],
       output: {
         globals: {
