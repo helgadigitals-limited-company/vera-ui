@@ -126,13 +126,13 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(react-router-dom@7.8.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.8.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       react:
-        specifier: ^19.1.0
+        specifier: ^18.2.0 || ^19.0.0
         version: 19.1.0
       react-day-picker:
         specifier: ^9.8.0
         version: 9.8.0(react@19.1.0)
       react-dom:
-        specifier: ^19.1.0
+        specifier: ^18.2.0 || ^19.0.0
         version: 19.1.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.60.0
@@ -141,7 +141,7 @@ importers:
         specifier: ^3.0.3
         version: 3.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-router-dom:
-        specifier: ^7.8.2
+        specifier: ^6.22.0 || ^7.0.0
         version: 7.8.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       recharts:
         specifier: 2.15.4
