@@ -5,6 +5,7 @@ import  {
   type ReusableSidebarClassNames,
   type ReusableSidebarStyleProps,
 } from "@/components/Sidebar"
+import React from 'react';
 
 export type SidebarLayoutProps = {
   props: {
@@ -73,10 +74,12 @@ export  function SidebarLayout({ props, children }: SidebarLayoutProps) {
         collapsibleMode={collapsibleMode}
       />
       <main className="flex-1 min-h-svh">
-        <div className="p-2">
+        <div className="p-4">
           <SidebarTrigger />
+	        <div className={"p-4"}>
+                {children}
+	        </div>
         </div>
-        {children}
       </main>
     </SidebarProvider>
   )
