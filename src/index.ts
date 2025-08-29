@@ -55,6 +55,7 @@ export * from './components/theme-provider'
 export * from './components/Sidebar'
 export * from './components/SidebarLayout'
 export * from './components/theme-toggle'
+export * from './components/DataTable'
 
 // Export utilities
 export * from './lib/utils'
