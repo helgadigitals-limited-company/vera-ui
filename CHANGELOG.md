@@ -1,3 +1,28 @@
+## [2.5.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.4.0...v2.5.0) (2025-08-29)
+
+### 🚀 Features
+
+* add new Sidebar and SidebarLayout, update dependency handling ([c5feca8](https://github.com/helgadigitals-limited-company/vera-ui/commit/c5feca89b786ddbb4b9ecfc34db0da83d3d09cdd))
+* **component:** add reusable sidebar component and layout with theming support ([0c5a088](https://github.com/helgadigitals-limited-company/vera-ui/commit/0c5a088f41891820f1ec38b501e64af6273a315d))
+* update Sidebar and SidebarLayout components for improved icon handling and add stories for SidebarLayout ([81afd9b](https://github.com/helgadigitals-limited-company/vera-ui/commit/81afd9b9e6514db31b3157d3575056d29c004ef7))
+
+### 🐛 Bug Fixes
+
+* add react, react-dom, and react-router-dom as devDependencies with updated peer dependency specifications ([266b55a](https://github.com/helgadigitals-limited-company/vera-ui/commit/266b55a6f49c04895796825f21328c5177eea20a))
+* added react router dom as a dependecey ([78421c2](https://github.com/helgadigitals-limited-company/vera-ui/commit/78421c2bd33c910e28099ef92b4cf8a995c1bd64))
+* remove react-dom from dependencies ([c5f9922](https://github.com/helgadigitals-limited-company/vera-ui/commit/c5f9922f67c30f325c4da8a5b22f2c87a0c851d3))
+* update lockfile after peer dep changes" ([ad74684](https://github.com/helgadigitals-limited-company/vera-ui/commit/ad74684f04905f74d7f5ee94d80aeab64ebe8771))
+* update peer dependencies for react and react-dom, and make react-router-dom optional ([d043cf7](https://github.com/helgadigitals-limited-company/vera-ui/commit/d043cf7984c3379ad1a1e30fe2de32194a83afac))
+* update peer dependencies in package.json and clean up unused dependencies in vite.config.ts ([60b27e7](https://github.com/helgadigitals-limited-company/vera-ui/commit/60b27e77543f2362e81eae2bc27af8b36dd5f138))
+
+### 📚 Documentation
+
+* update Installation and Introduction documentation for clarity and structure ([745c350](https://github.com/helgadigitals-limited-company/vera-ui/commit/745c350bd2049819bcc37d091e92cf7c183de05b))
+
+### ♻️ Refactoring
+
+* remove react-router-dom dependency and update SidebarLayout to use children prop ([f912b20](https://github.com/helgadigitals-limited-company/vera-ui/commit/f912b204a6aa7bdca32866db4a3ed703c76c7723))
+
 ## [2.4.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.3.3...v2.4.0) (2025-08-27)
 
 ### 🚀 Features
