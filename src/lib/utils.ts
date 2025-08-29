@@ -18,3 +18,8 @@ export function transformToSelectOptions<T extends Record<string, any>>(
       label: String(item[labelField] ?? ''),
     }));
 }
+
+
+export function splitStringByUnderscore(str: string) {
+  return str.split("_").join(" ");
+}
