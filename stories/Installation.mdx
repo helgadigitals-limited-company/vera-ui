@@ -1,147 +1,253 @@
 # Installation
 
-Get started with Vera UI in your React project.
+## 1. Install Package + Peers
 
-## Package Manager
-
-Install Vera UI using your preferred package manager:
+Using pnpm (recommended):
 
 ```bash
-# npm
-npm install vera-ui
-
-# yarn
-yarn add vera-ui
-
-# pnpm
-pnpm add vera-ui
+pnpm add @helgadigitals/vera-ui react react-dom @tanstack/react-table react-hook-form zod date-fns
+# optional if you use router-bound components:
+pnpm add react-router-dom
 ```
 
-## Prerequisites
+Yarn:
 
-Make sure you have the following dependencies installed:
-
-- **React** 18.0.0 or later
-- **React DOM** 18.0.0 or later
-
-## Setup
-
-### 1. Install Tailwind CSS
-
-Vera UI is built with Tailwind CSS. If you don't have Tailwind CSS installed in your project, follow the [official installation guide](https://tailwindcss.com/docs/installation).
-
-### 2. Configure Tailwind CSS
-
-Add the Vera UI components to your Tailwind CSS configuration:
-
-```js
-// tailwind.config.js
-module.exports = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/vera-ui/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+```bash
+yarn add @helgadigitals/vera-ui react react-dom @tanstack/react-table react-hook-form zod date-fns
 ```
 
-### 3. Import CSS Variables
+NPM:
 
-Import the CSS variables in your main CSS file:
+```bash
+npm i @helgadigitals/vera-ui react react-dom @tanstack/react-table react-hook-form zod date-fns
+```
+
+### Verify Single React
+
+```bash
+pnpm ls react
+```
+Should show exactly one version. If multiple: `pnpm dedupe` or align versions.
+
+## 2. Tailwind Setup
+
+Add package to `content` so purge includes its class usage.
 
 ```css
-/* globals.css or index.css */
-@import "vera-ui/styles.css";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@tailwind tailwind;
 ```
 
-### 4. Add Theme Provider
+If using Tailwind v4 (oxide) ensure you follow new config shape—just include the same paths.
 
-Wrap your app with the ThemeProvider to enable theme switching:
+## 3. Import Base Styles
+
+The build emits a single CSS file (`vera-ui.css`). Import once (before your app styles if you want overrides later).
+
+```css
+/* src/styles/globals.css */
+@import "@helgadigitals/vera-ui/styles";
+@tailwind tailwind;
+```
+
+Or in a Next.js `_app.tsx`:
 
 ```tsx
-// App.tsx
-import { ThemeProvider } from "vera-ui"
+import "@helgadigitals/vera-ui/styles"
+import "@/styles/globals.css"
+```
 
-function App() {
+## 4. Providers
+
+Theme + color mode:
+
+```tsx
+import { ThemeProvider } from "@helgadigitals/vera-ui"
+
+export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vera-ui-theme">
-      {/* Your app content */}
+    <ThemeProvider
+      defaultTheme="system"
+      storageKey="vera-ui-theme"
+      disableTransitionOnChange
+    >
+      {children}
     </ThemeProvider>
   )
 }
 ```
 
-## Usage
-
-Start using Vera UI components in your project:
+Optional: Layout / Sidebar theming per subtree:
 
 ```tsx
-import { Button } from "vera-ui"
+import { SidebarProvider } from "@helgadigitals/vera-ui"
 
-function MyComponent() {
+<SidebarProvider
+  theme={{
+    bgColor: "bg-neutral-900",
+    textColor: "text-neutral-100",
+    widthClass: "w-64"
+  }}
+>
+  {/* content */}
+</SidebarProvider>
+```
+
+## 5. Basic Usage
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export function Example() {
+  return <Button variant="default">Click me</Button>
+}
+```
+
+## 6. Sidebar Example
+
+```tsx
+import {
+  SidebarProvider,
+  SidebarTrigger
+} from "@helgadigitals/vera-ui"
+import { ReusableSidebar } from "@helgadigitals/vera-ui/sidebar" // adjust if re-exported
+
+const items = [
+  { title: "Home", path: "/", icon: () => <span>🏠</span> },
+  { title: "Reports", path: "/reports", icon: () => <span>📊</span> },
+]
+
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Button variant="default" size="lg">
-      Get Started
-    </Button>
+    <SidebarProvider
+      theme={{
+        bgColor: "bg-zinc-950",
+        textColor: "text-zinc-100",
+        menuButtonActive: "bg-zinc-800/50",
+      }}
+    >
+      {/* ReusableSidebar renders navigation etc. */}
+      <SidebarTrigger className="m-2" />
+      <main>{children}</main>
+    </SidebarProvider>
   )
 }
 ```
 
-## TypeScript
+## 7. Form + Validation
 
-Vera UI is built with TypeScript and provides comprehensive type definitions. No additional setup is required for TypeScript projects.
+```tsx
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Input, Button } from "@helgadigitals/vera-ui"
 
-## Next.js Setup
+const schema = z.object({ email: z.string().email() })
+type Values = z.infer<typeof schema>
 
-For Next.js projects, you may need to configure transpilation:
+export function EmailForm() {
+  const { register, handleSubmit, formState: { errors } } =
+    useForm<Values>({ resolver: zodResolver(schema) })
+
+  return (
+    <form onSubmit={handleSubmit(v => console.log(v))} className="space-y-4">
+      <div>
+        <Input type="email" placeholder="Email" {...register("email")} />
+        {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
+      </div>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+}
+```
+
+## 8. Table Integration (@tanstack/react-table)
+
+```tsx
+import { useReactTable, getCoreRowModel } from "@tanstack/react-table"
+import { Table, TableHead, TableRow, TableBody, TableCell } from "@helgadigitals/vera-ui" // assuming exports
+```
+(Implement per your table wrapper docs.)
+
+## 9. Next.js Notes
+
+Add transpile (if needed for older Next versions):
 
 ```js
 // next.config.js
-const nextConfig = {
-  transpilePackages: ["vera-ui"],
+module.exports = {
+  transpilePackages: ["@helgadigitals/vera-ui"]
 }
-
-module.exports = nextConfig
 ```
 
-## Vite Setup
+## 10. Vite / Plain React
 
-For Vite projects, no additional configuration is typically required. Vera UI works out of the box with Vite.
+Works out of the box. If aliasing `@` internally avoid collision with your app alias.
 
-## Troubleshooting
+## 11. Local Development (Monorepo or Linking)
 
-### CSS Not Loading
+Preferred: `pnpm` workspace.
 
-If styles aren't loading properly:
+```json
+// root package.json
+{
+  "workspaces": ["apps/*", "packages/*"]
+}
+```
 
-1. Ensure you've imported the CSS variables
-2. Check your Tailwind configuration includes Vera UI paths
-3. Verify your bundler is processing CSS files correctly
+Consumer package.json:
 
-### TypeScript Errors
+```json
+"dependencies": {
+  "@helgadigitals/vera-ui": "workspace:*"
+}
+```
 
-If you encounter TypeScript errors:
+Ad-hoc local test:
 
-1. Ensure you're using TypeScript 4.9 or later
-2. Check that your `tsconfig.json` includes the correct paths
-3. Restart your TypeScript service in your editor
+```bash
+pnpm pack   # creates tarball
+cd ../consumer
+pnpm add ../vera-ui/@helgadigitals-vera-ui-<version>.tgz
+```
 
-### Component Not Rendering
+Avoid plain `pnpm link` if you need strict peer resolution; `file:` or workspace is more deterministic.
 
-If components aren't rendering:
+## 12. Theming / Tokens
 
-1. Verify the ThemeProvider is wrapping your app
-2. Check that you've imported the component correctly
-3. Ensure all required props are provided
+Override via:
+- Provider `theme` prop (structural + class tokens)
+- Per component `className`
+- Tailwind layers for global overrides
+- CSS cascade (import your custom utilities after library styles)
 
-## Need Help?
+## 13. Troubleshooting
 
-- Check the [component documentation](?path=/docs/components-button--docs)
-- Look at the [example implementations](?path=/docs/examples-forms--docs)
-- Report issues on our GitHub repository
+| Issue | Action |
+| ----- | ------ |
+| Invalid hook call | Single React copy; check peers installed |
+| Missing styles | Confirm CSS import + Tailwind content path |
+| Types missing | Ensure `types` export path resolves; delete `node_modules` + reinstall |
+| Sidebar mobile crash | Ensure `react`, `react-dom` not duplicated |
+| Icons missing | Install `lucide-react` if you use icon components expecting it |
+
+Diagnostics:
+
+```bash
+pnpm ls react react-dom @tanstack/react-table react-hook-form zod date-fns
+```
+
+## 14. Version Ranges
+
+Keep peer versions aligned with library’s `peerDependencies`. Upgrade React first in your app, then update the library.
+
+## 15. Uninstall
+
+```bash
+pnpm remove @helgadigitals/vera-ui
+```
+
+---
+
+Proceed to:
+- [Introduction](?path=/docs/documentation-introduction--docs)
+- [Contributing](?path=/docs/documentation-contributing--docs)

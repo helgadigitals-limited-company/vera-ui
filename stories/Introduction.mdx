@@ -1,51 +1,97 @@
 # Welcome to Vera UI
 
-Vera UI is a comprehensive React component library built with **Radix UI** primitives and styled with **Tailwind CSS**. It provides a collection of accessible, customizable, and production-ready components that follow modern design principles.
+`@helgadigitals/vera-ui` is a modern React component library built on **Radix UI** + **Tailwind CSS** with strong TypeScript support and theming primitives.
 
 ## ✨ Features
 
-- **🎨 Beautiful Design**: Modern, clean design system with consistent visual language
-- **♿ Accessibility First**: Built with Radix UI primitives ensuring WCAG compliance
-- **🌗 Dark Mode Ready**: Full support for light and dark themes
-- **📱 Responsive**: Mobile-first design with responsive components
-- **🎯 TypeScript**: Full TypeScript support with comprehensive type definitions
-- **⚡ Performance**: Optimized for performance with minimal bundle size
-- **🔧 Customizable**: Easy to customize with CSS variables and Tailwind classes
+- 🎨 Consistent design tokens & theming
+- ♿ Accessibility via Radix primitives
+- 🌗 Dark mode ready
+- 📱 Responsive + mobile aware (drawers, sheets)
+- ⚡ Tree‑shakable ES modules
+- 🧪 TypeScript-first, strict types
+- 🔌 Composable + headless patterns
 
-## 🏗️ Built With
+## 🏗️ Core Stack
 
-- **React 19** - The latest version of React
-- **Radix UI** - Unstyled, accessible components
-- **Tailwind CSS** - Utility-first CSS framework
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Fast build tool and development server
-- **Class Variance Authority** - For component variants
-- **Lucide React** - Beautiful & consistent icons
+| Layer | Tech |
+| ----- | ---- |
+| Framework | React 18 / 19 |
+| Primitives | Radix UI |
+| Styling | Tailwind CSS |
+| Forms | react-hook-form (+ zod resolvers) |
+| Data | @tanstack/react-table |
+| Validation | zod |
+
+## 📦 Packaging Model
+
+The library marks critical singletons as `peerDependencies` (not bundled):
+
+Required peers:
+```
+react
+react-dom
+@tanstack/react-table
+react-hook-form
+zod
+date-fns
+```
+
+Optional peer:
+```
+react-router-dom
+```
+
+Install them (see Installation doc) to avoid duplicate React or context instances.
+
+## 🧱 High-Level Architecture
+
+- Low-level UI (buttons, inputs, overlays)
+- Layout primitives (sidebar, panels)
+- Form integrations (validators, RHF adapters)
+- Theme provider + design tokens
+- Composable hooks (state + accessibility helpers)
 
 ## 🎯 Philosophy
 
-Vera UI is designed with the following principles in mind:
+1. Accessibility first
+2. Predictable APIs
+3. Minimal runtime styling logic (Tailwind utilities)
+4. Escape hatches for customization (classNames / theme prop)
+5. No hidden singletons (explicit providers)
 
-1. **Accessibility is not optional** - Every component is built with accessibility in mind
-2. **Developer Experience** - Simple APIs with excellent TypeScript support
-3. **Customization** - Easy to theme and customize to match your brand
-4. **Performance** - Fast, lightweight components with minimal overhead
-5. **Consistency** - Cohesive design language across all components
+## 🔧 Customization Snapshot
 
-## 🚀 Getting Started
+```tsx
+import { SidebarProvider } from "@helgadigitals/vera-ui"
 
-To get started with Vera UI, check out our [Installation Guide](?path=/docs/documentation-installation--docs) and explore the component documentation.
+<SidebarProvider
+  theme={{
+    bgColor: "bg-zinc-900",
+    textColor: "text-zinc-100",
+    widthClass: "w-72",
+    menuButtonActive: "bg-zinc-800/60",
+  }}
+>
+  {/* app */}
+</SidebarProvider>
+```
 
-## 📚 Documentation
+See Installation for Tailwind config & CSS import details.
 
-- [Installation](?path=/docs/documentation-installation--docs) - Setup instructions
-- [Contributing](?path=/docs/documentation-contributing--docs) - How to contribute
-- [Components](?path=/docs/components-button--docs) - Browse all components
+## 🚑 Troubleshooting (Quick)
 
-## 🤝 Contributing
+| Symptom | Fix |
+| ------ | --- |
+| Invalid hook call | Ensure single React: `pnpm ls react` |
+| Styles missing | Tailwind content paths include the package + imported CSS |
+| Sidebar mobile crash | Missing peer deps / duplicate React build |
+| Types missing | Confirm `dist/index.d.ts` resolved; restart TS server |
 
-We welcome contributions! Please see our [Contributing Guide](?path=/docs/documentation-contributing--docs) for details.
+Full details in Installation doc.
 
 ---
 
-**Start exploring the components in the sidebar** → 
+Continue to:
+- [Installation](?path=/docs/documentation-installation--docs)
+- [Contributing](?path=/docs/documentation-contributing--docs)

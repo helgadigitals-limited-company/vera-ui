@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { PanelLeftIcon } from "lucide-react"
+import { AlignJustify } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -19,7 +19,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
@@ -38,6 +37,36 @@ type SidebarContextProps = {
   setOpenMobile: (open: boolean) => void
   isMobile: boolean
   toggleSidebar: () => void
+  // NEW: theme
+  theme?: SidebarTheme
+}
+
+// NEW: Theme definition centralizing style tokens.
+export type SidebarTheme = {
+  // root container utilities (width, bg/text colors, radius, shadow, etc.)
+  root?: string
+  bgColor?: string
+  textColor?: string
+  surface?: string
+  widthClass?: string
+  // typography scales
+  itemTextSize?: string
+  headingTextSize?: string
+  // menu button overrides
+  menuButton?: string
+  menuButtonActive?: string
+  // group label override
+  groupLabel?: string
+  // footer / user info
+  footer?: string
+  footerUserIcon?: string
+  footerDisplayName?: string
+  // heading / image area
+  header?: string
+  heading?: string
+  image?: string
+  menu?: string
+  menuItem?: string
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
@@ -58,11 +87,13 @@ function SidebarProvider({
   className,
   style,
   children,
+  theme, // NEW
   ...props
 }: React.ComponentProps<"div"> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  theme?: SidebarTheme
 }) {
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
@@ -120,13 +151,14 @@ function SidebarProvider({
       openMobile,
       setOpenMobile,
       toggleSidebar,
+      theme, // NEW
     }),
-    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar, theme]
   )
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
+      
         <div
           data-slot="sidebar-wrapper"
           style={
@@ -144,7 +176,6 @@ function SidebarProvider({
         >
           {children}
         </div>
-      </TooltipProvider>
     </SidebarContext.Provider>
   )
 }
@@ -161,7 +192,7 @@ function Sidebar({
   variant?: "sidebar" | "floating" | "inset"
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
-  const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  const { isMobile, state, openMobile, setOpenMobile, theme } = useSidebar()
 
   if (collapsible === "none") {
     return (
@@ -169,6 +200,11 @@ function Sidebar({
         data-slot="sidebar"
         className={cn(
           "bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
+          theme?.bgColor,
+          theme?.textColor,
+          theme?.surface,
+          theme?.widthClass,
+          theme?.root,
           className
         )}
         {...props}
@@ -242,7 +278,13 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className={cn(
+            "bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm",
+            theme?.bgColor,
+            theme?.textColor,
+            theme?.surface,
+            theme?.root
+          )}
         >
           {children}
         </div>
@@ -271,7 +313,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <AlignJustify  />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
@@ -507,15 +549,19 @@ function SidebarMenuButton({
   tooltip?: string | React.ComponentProps<typeof TooltipContent>
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const Comp = asChild ? Slot : "button"
-  const { isMobile, state } = useSidebar()
-
+  const { isMobile, state, theme } = useSidebar()
+  const mergedClass = cn(
+    sidebarMenuButtonVariants({ variant, size }),
+    theme?.itemTextSize,
+    theme?.menuButton
+  )
   const button = (
     <Comp
       data-slot="sidebar-menu-button"
       data-sidebar="menu-button"
       data-size={size}
       data-active={isActive}
-      className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+      className={cn(mergedClass, className, isActive && theme?.menuButtonActive)}
       {...props}
     />
   )
@@ -720,5 +766,7 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  // eslint-disable-next-line react-refresh/only-export-components
   useSidebar,
 }
+
