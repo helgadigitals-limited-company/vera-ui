@@ -1,3 +1,9 @@
+## [2.6.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.0...v2.6.1) (2025-09-01)
+
+### 🐛 Bug Fixes
+
+* **SidebarLayout:** add relative positioning to the main content wrapper ([9cb7e02](https://github.com/helgadigitals-limited-company/vera-ui/commit/9cb7e0241d14df1cf4c00b45441f4d3b720efb23))
+
 ## [2.6.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.5.0...v2.6.0) (2025-08-29)
 
 ### 🚀 Features
