@@ -74,7 +74,7 @@ export  function SidebarLayout({ props, children }: SidebarLayoutProps) {
         collapsibleMode={collapsibleMode}
       />
       <main className="flex-1 min-h-svh">
-        <div className="p-4">
+        <div className="relative p-4">
           <SidebarTrigger />
 	        <div className={"p-4"}>
                 {children}
