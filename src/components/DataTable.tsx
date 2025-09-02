@@ -10,6 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { MoreHorizontal } from "lucide-react";
 
 type StringKeys<T> = Extract<keyof T, string>;
 
@@ -587,40 +589,48 @@ export const DataTable = <T extends Record<string, any>>(
   };
 
   const renderActionsCell = (row: T) => {
-    if (actionsRender) return actionsRender(row);
-    if (!actions) return null;
-    return (
-      <div className="flex items-center gap-2">
-        {actions
-          .filter((a) => !(a.hidden && a.hidden(row)))
-          .map((a) => {
-            const disabled = a.disabled ? a.disabled(row) : false;
-            return (
-              <Button
-                key={a.id}
-                variant={a.variant as any}
-                size="sm"
-                disabled={disabled}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  a.onClick(row);
-                }}
-              >
-                {a.icon ? (
-                  <span className="flex items-center gap-1">
-                    {a.icon}
-                    {a.label && <span>{a.label}</span>}
-                  </span>
-                ) : (
-                  a.label
-                )}
-              </Button>
-            );
-          })}
-      </div>
-    );
-  };
+  if (actionsRender) return actionsRender(row);
+  if (!actions || actions.length === 0) return null;
 
+  const visibleActions = actions.filter((a) => !(a.hidden && a.hidden(row)));
+  
+  if (visibleActions.length === 0) return null;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {visibleActions.map((a) => {
+          const disabled = a.disabled ? a.disabled(row) : false;
+          return (
+            <DropdownMenuItem
+              key={a.id}
+              disabled={disabled}
+              variant={a.variant as any}
+              onClick={(e) => {
+                e.stopPropagation();
+                a.onClick(row);
+              }}
+              className="cursor-pointer"
+            >
+              {a.icon && (
+                <span className="mr-2 flex items-center">
+                  {a.icon}
+                </span>
+              )}
+              {a.label}
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
   // ----- Expansion -----
   const [internalExpandedRowIds, setInternalExpandedRowIds] = useState<Array<string | number>>(defaultExpandedRowIds);
   const effectiveExpandedRowIds = expandedRowIds ?? internalExpandedRowIds;
