@@ -1089,12 +1089,13 @@ export const DataTable = <T extends Record<string, any>>(
                   <TableRow
                     key={id}
                     data-row-id={id}
+                    // NEW: expose selection state for styling and a11y
+                    data-state={rowSelected ? "selected" : undefined}
+                    aria-selected={rowSelected ? true : undefined}
                     className={cn(
-                      rowSelected && "bg-slate-50",
-                      expandOnRowClick && expandable && "cursor-pointer hover:bg-gray-50",
-                      typeof rowClassName === "function"
-                        ? rowClassName(row)
-                        : rowClassName
+                      // removed hardcoded bg; rely on attributes-based styling
+                      expandOnRowClick && expandable && "cursor-pointer hover:bg-muted/50",
+                      typeof rowClassName === "function" ? rowClassName(row) : rowClassName
                     )}
                     onClick={() => handleRowClick(row, id)}
                   >
