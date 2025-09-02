@@ -1,3 +1,9 @@
+## [2.6.5](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.4...v2.6.5) (2025-09-02)
+
+### 🐛 Bug Fixes
+
+* **DataTable:** enhance row selection accessibility and styling ([bd1f64d](https://github.com/helgadigitals-limited-company/vera-ui/commit/bd1f64d32d6216852dcca1ff8051d32db6a5b116))
+
 ## [2.6.4](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.3...v2.6.4) (2025-09-02)
 
 ### 🐛 Bug Fixes
