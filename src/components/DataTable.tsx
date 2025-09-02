@@ -64,9 +64,12 @@ export interface DataTableProps<T> {
 
   // Selection (controlled)
   selectable?: boolean;
+  selectionMode?: "single" | "multiple"; // NEW: Selection mode
   selectedRowIds?: Array<string | number>;
   onSelectionChange?: (ids: Array<string | number>) => void;
   selectionColumnHeader?: ReactNode;
+  maxSelections?: number; // NEW: Maximum number of selections allowed
+  onMaxSelectionsReached?: (attemptedId: string | number) => void; // NEW: Callback when max reached
 
   // Actions column
   actions?: TableAction<T>[];
@@ -103,7 +106,7 @@ export interface DataTableProps<T> {
   onExpandedRowsChange?: (ids: Array<string | number>) => void;
   defaultExpandedRowIds?: Array<string | number>;
   expandedContent?: (row: T) => ReactNode;
-  expandOnRowClick?: boolean; // expand row when clicked (default: false)
+  expandOnRowClick?: boolean;
   expandIcon?: ReactNode;
   collapseIcon?: ReactNode;
   expandColumnHeader?: ReactNode;
@@ -176,9 +179,12 @@ export const DataTable = <T extends Record<string, any>>(
 
     getRowId,
     selectable = false,
+    selectionMode = "multiple", // NEW: Default to multiple selection
     selectedRowIds = [],
     onSelectionChange,
     selectionColumnHeader,
+    maxSelections, // NEW: Optional max selections
+    onMaxSelectionsReached, // NEW: Callback for max selections
 
     actions,
     actionsRender,
@@ -190,11 +196,9 @@ export const DataTable = <T extends Record<string, any>>(
     sortState,
     defaultSortState = [],
     onSortChange,
-    // Ensure the default empty object is correctly typed
     sortFns = {} as Partial<Record<StringKeys<T>, (a: any, b: any) => number>>,
     manualSort = false,
 
-    // Filtering
     enableGlobalFilter = false,
     globalFilter,
     onGlobalFilterChange,
@@ -205,7 +209,6 @@ export const DataTable = <T extends Record<string, any>>(
     onColumnFiltersChange,
     columnFilterFns = {} as Partial<Record<StringKeys<T>, (cellValue: any, filterValue: string) => boolean>>,
 
-    // Row Expansion
     expandable = false,
     expandedRowIds,
     onExpandedRowsChange,
@@ -337,15 +340,37 @@ export const DataTable = <T extends Record<string, any>>(
     [selectedRowIds]
   );
 
+  // UPDATED: Enhanced toggle row selection with single/multi mode support
   const toggleRowSelection = useCallback(
     (id: string | number) => {
       if (!onSelectionChange) return;
-      const next = isRowSelected(id)
-        ? selectedRowIds.filter((x) => x !== id)
-        : [...selectedRowIds, id];
-      onSelectionChange(next);
+
+      // Single selection mode
+      if (selectionMode === "single") {
+        const next = isRowSelected(id) ? [] : [id];
+        onSelectionChange(next);
+        return;
+      }
+
+      // Multiple selection mode
+      if (isRowSelected(id)) {
+        // Deselect the row
+        const next = selectedRowIds.filter((x) => x !== id);
+        onSelectionChange(next);
+      } else {
+        // Check max selections limit
+        if (maxSelections && selectedRowIds.length >= maxSelections) {
+          if (onMaxSelectionsReached) {
+            onMaxSelectionsReached(id);
+          }
+          return;
+        }
+        // Select the row
+        const next = [...selectedRowIds, id];
+        onSelectionChange(next);
+      }
     },
-    [onSelectionChange, isRowSelected, selectedRowIds]
+    [onSelectionChange, isRowSelected, selectedRowIds, selectionMode, maxSelections, onMaxSelectionsReached]
   );
 
   const showActionsColumn =
@@ -449,27 +474,65 @@ export const DataTable = <T extends Record<string, any>>(
     [processedRows]
   );
 
+  // UPDATED: Select all logic with single/multi mode support
   const allFilteredSelected =
     selectable &&
+    selectionMode === "multiple" && // Only show for multiple selection mode
     filteredRowIds.length > 0 &&
     filteredRowIds.every((id) => selectedRowIds.includes(id));
 
   const someFilteredSelected =
     selectable &&
+    selectionMode === "multiple" && // Only show for multiple selection mode
     !allFilteredSelected &&
     filteredRowIds.some((id) => selectedRowIds.includes(id));
 
+  // UPDATED: Toggle select all with max selections support
   const toggleSelectAllFiltered = useCallback(() => {
-    if (!onSelectionChange) return;
+    if (!onSelectionChange || selectionMode === "single") return;
+
     if (allFilteredSelected) {
+      // Deselect all filtered rows
       onSelectionChange(
         selectedRowIds.filter((id) => !filteredRowIds.includes(id))
       );
     } else {
-      const set = new Set([...selectedRowIds, ...filteredRowIds]);
+      // Select all filtered rows (respecting max selections)
+      const currentNonFilteredSelections = selectedRowIds.filter(
+        (id) => !filteredRowIds.includes(id)
+      );
+      
+      let rowsToSelect = filteredRowIds;
+      
+      // Apply max selections limit
+      if (maxSelections) {
+        const availableSlots = maxSelections - currentNonFilteredSelections.length;
+        if (availableSlots <= 0) {
+          if (onMaxSelectionsReached) {
+            onMaxSelectionsReached(filteredRowIds[0]); // Signal with first row
+          }
+          return;
+        }
+        rowsToSelect = filteredRowIds.slice(0, availableSlots);
+        
+        // If we couldn't select all due to limit, notify
+        if (rowsToSelect.length < filteredRowIds.length && onMaxSelectionsReached) {
+          onMaxSelectionsReached(filteredRowIds[rowsToSelect.length]);
+        }
+      }
+      
+      const set = new Set([...currentNonFilteredSelections, ...rowsToSelect]);
       onSelectionChange(Array.from(set));
     }
-  }, [onSelectionChange, allFilteredSelected, selectedRowIds, filteredRowIds]);
+  }, [
+    onSelectionChange, 
+    selectionMode, 
+    allFilteredSelected, 
+    selectedRowIds, 
+    filteredRowIds, 
+    maxSelections, 
+    onMaxSelectionsReached
+  ]);
 
   // Filter change handlers
   const handleGlobalFilterChange = useCallback(
@@ -589,48 +652,48 @@ export const DataTable = <T extends Record<string, any>>(
   };
 
   const renderActionsCell = (row: T) => {
-  if (actionsRender) return actionsRender(row);
-  if (!actions || actions.length === 0) return null;
+    if (actionsRender) return actionsRender(row);
+    if (!actions || actions.length === 0) return null;
 
-  const visibleActions = actions.filter((a) => !(a.hidden && a.hidden(row)));
-  
-  if (visibleActions.length === 0) return null;
+    const visibleActions = actions.filter((a) => !(a.hidden && a.hidden(row)));
+    
+    if (visibleActions.length === 0) return null;
 
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {visibleActions.map((a) => {
-          const disabled = a.disabled ? a.disabled(row) : false;
-          return (
-            <DropdownMenuItem
-              key={a.id}
-              disabled={disabled}
-              variant={a.variant as any}
-              onClick={(e) => {
-                e.stopPropagation();
-                a.onClick(row);
-              }}
-              className="cursor-pointer"
-            >
-              {a.icon && (
-                <span className="mr-2 flex items-center">
-                  {a.icon}
-                </span>
-              )}
-              {a.label}
-            </DropdownMenuItem>
-          );
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {visibleActions.map((a) => {
+            const disabled = a.disabled ? a.disabled(row) : false;
+            return (
+              <DropdownMenuItem
+                key={a.id}
+                disabled={disabled}
+                variant={a.variant as any}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  a.onClick(row);
+                }}
+                className="cursor-pointer"
+              >
+                {a.icon && (
+                  <span className="mr-2 flex items-center">
+                    {a.icon}
+                  </span>
+                )}
+                {a.label}
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
   // ----- Expansion -----
   const [internalExpandedRowIds, setInternalExpandedRowIds] = useState<Array<string | number>>(defaultExpandedRowIds);
   const effectiveExpandedRowIds = expandedRowIds ?? internalExpandedRowIds;
@@ -919,17 +982,23 @@ export const DataTable = <T extends Record<string, any>>(
                 </TableHead>
               )}
 
+              {/* UPDATED: Selection header with single/multi mode support */}
               {selectable && (
                 <TableHead className="w-8 text-center">
-                  <input
-                    type="checkbox"
-                    aria-label="Select all rows"
-                    checked={allFilteredSelected}
-                    ref={(el) => {
-                      if (el) el.indeterminate = someFilteredSelected;
-                    }}
-                    onChange={toggleSelectAllFiltered}
-                  />
+                  {selectionMode === "multiple" ? (
+                    <input
+                      type="checkbox"
+                      aria-label="Select all rows"
+                      checked={allFilteredSelected}
+                      ref={(el) => {
+                        if (el) el.indeterminate = someFilteredSelected;
+                      }}
+                      onChange={toggleSelectAllFiltered}
+                      disabled={maxSelections ? selectedRowIds.length >= maxSelections && !allFilteredSelected : false}
+                    />
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Select</span>
+                  )}
                   {selectionColumnHeader}
                 </TableHead>
               )}
@@ -1055,16 +1124,24 @@ export const DataTable = <T extends Record<string, any>>(
                       </TableCell>
                     )}
 
+                    {/* UPDATED: Selection cell with radio for single mode */}
                     {selectable && (
                       <TableCell
                         className="w-8 text-center"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <input
-                          type="checkbox"
-                          aria-label="Select row"
+                          type={selectionMode === "single" ? "radio" : "checkbox"}
+                          name={selectionMode === "single" ? "table-selection" : undefined}
+                          aria-label={selectionMode === "single" ? "Select row" : "Select row"}
                           checked={rowSelected}
                           onChange={() => toggleRowSelection(id)}
+                          disabled={
+                            selectionMode === "multiple" &&
+                            maxSelections !== undefined &&
+                            selectedRowIds.length >= maxSelections &&
+                            !rowSelected
+                          }
                         />
                       </TableCell>
                     )}
