@@ -1,3 +1,9 @@
+## [2.6.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.1...v2.6.2) (2025-09-02)
+
+### 🐛 Bug Fixes
+
+* update sidebar color variables for improved accessibility ([24b2195](https://github.com/helgadigitals-limited-company/vera-ui/commit/24b2195f5f6bf5772ff896284fb4f0134f033428))
+
 ## [2.6.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.0...v2.6.1) (2025-09-01)
 
 ### 🐛 Bug Fixes
