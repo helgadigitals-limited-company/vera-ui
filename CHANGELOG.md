@@ -1,3 +1,9 @@
+## [2.6.3](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.2...v2.6.3) (2025-09-02)
+
+### 🐛 Bug Fixes
+
+* **DataTable:** implement dropdown menu for action buttons instead of Buttons as earlier ([bc1864b](https://github.com/helgadigitals-limited-company/vera-ui/commit/bc1864bab5856fa7af35d35ba59b14797f55593d))
+
 ## [2.6.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.1...v2.6.2) (2025-09-02)
 
 ### 🐛 Bug Fixes
