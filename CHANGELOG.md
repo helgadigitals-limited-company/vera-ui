@@ -1,3 +1,9 @@
+## [2.6.4](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.3...v2.6.4) (2025-09-02)
+
+### 🐛 Bug Fixes
+
+* **DataTable:** add single/multiple selection modes with max selections support ([4108240](https://github.com/helgadigitals-limited-company/vera-ui/commit/4108240ffd284383bc222a7d23a8b469b873547e))
+
 ## [2.6.3](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.2...v2.6.3) (2025-09-02)
 
 ### 🐛 Bug Fixes
