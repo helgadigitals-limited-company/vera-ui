@@ -1,3 +1,4 @@
+import type { Group, SidebarItem } from "@/components/Sidebar";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -26,11 +27,17 @@ export function splitStringByUnderscore(str: string) {
 }
 
 
-// Helper: derive group key and label from path’s first segment
-export function getGroupKey(path: string) {
-  const seg = path.replace(/^\//, "").split("/")[0] || "";
-  return seg;
-}
-export function toTitleCase(slug: string) {
-  return slug.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+// Helper function to check if items are Groups or SidebarItems
+export function isGroupArray(items: SidebarItem[] | Group[]): items is Group[] {
+  if (!items || items.length === 0) return false;
+  const firstItem = items[0];
+  // Check if it has all the required Group properties
+  return (
+    typeof firstItem === 'object' &&
+    firstItem !== null &&
+    'key' in firstItem &&
+    'label' in firstItem &&
+    'items' in firstItem &&
+    Array.isArray((firstItem as Group).items)
+  );
 }

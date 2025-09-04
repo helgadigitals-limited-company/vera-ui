@@ -1,5 +1,5 @@
 import { User, ChevronRight } from "lucide-react";
-import { cn, getGroupKey, toTitleCase } from "@/lib/utils";
+import { cn, isGroupArray } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -32,6 +32,12 @@ export type SidebarItem = {
   badge?: string | number;
   // Optional override tooltip (if you later wire in collapsed tooltips)
   tooltip?: string;
+};
+
+export type Group = {
+  key: string;
+  label: string;
+  items: SidebarItem[];
 };
 
 export type ReusableSidebarClassNames = {
@@ -77,7 +83,7 @@ export type ReusableSidebarStyleProps = {
 };
 
 type SidebarProps = {
-  items: SidebarItem[];
+  items: SidebarItem[] | Group[];
   heading?: string;
   image?: string;
   isFooterVisible?: boolean;
@@ -101,21 +107,23 @@ type SidebarProps = {
   collapsibleMode?: "icon" | "offcanvas" | "none";
 };
 
-
-
-type Group = {
-  key: string;
-  label: string;
-  items: SidebarItem[];
-};
-
 // Persist open/closed per group
 const GROUPS_STORAGE_KEY = "sidebar_groups_open";
 
-function usePersistentGroups(keys: string[], firstKey: string | undefined) {
+
+
+function usePersistentGroups(groupKeys: string[]) {
   const [openMap, setOpenMap] = React.useState<Record<string, boolean>>({});
+  
+  // Fix: Use a stable dependency by joining the keys
+  const keyString = React.useMemo(() => groupKeys.join(','), [groupKeys]);
+  const memoizedKeys = React.useMemo(() => groupKeys, [groupKeys]);
+  const firstKey = memoizedKeys[0];
 
   React.useEffect(() => {
+    // Only access localStorage on client side
+    if (typeof window === 'undefined') return;
+    
     const raw = localStorage.getItem(GROUPS_STORAGE_KEY);
     let initial: Record<string, boolean> = {};
     try {
@@ -123,20 +131,28 @@ function usePersistentGroups(keys: string[], firstKey: string | undefined) {
     } catch {
       // ignore
     }
+    
     // Ensure all keys exist; first group defaults to open if not stored
     const next: Record<string, boolean> = {};
-    for (const k of keys) {
-      if (k in initial) next[k] = initial[k];
-      else next[k] = k === firstKey; // first group open by default
+    for (const k of memoizedKeys) {
+      if (k in initial) {
+        next[k] = initial[k];
+      } else {
+        next[k] = k === firstKey; // first group open by default
+      }
     }
+    
     setOpenMap(next);
-  }, [keys, firstKey]);
+  }, [keyString, firstKey, memoizedKeys]); // Use keyString instead of memoizedKeys
 
   const setAndPersist = React.useCallback(
     (updater: (prev: Record<string, boolean>) => Record<string, boolean>) => {
       setOpenMap((prev) => {
         const next = updater(prev);
-        localStorage.setItem(GROUPS_STORAGE_KEY, JSON.stringify(next));
+        // Only access localStorage on client side
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(GROUPS_STORAGE_KEY, JSON.stringify(next));
+        }
         return next;
       });
     },
@@ -226,9 +242,7 @@ export function ReusableSidebar({
   collapsibleMode = "icon",
 }: SidebarProps) {
   const { state, theme } = useSidebar();
-  // Backward compatibility: if stylesConfig provided directly (legacy),
-  // we still derive fallbacks; theme from provider takes precedence.
-
+  
   const {
     bgColor,
     textColor,
@@ -241,27 +255,37 @@ export function ReusableSidebar({
   const appliedItemText = theme?.itemTextSize || itemTextSize;
   const appliedHeadingText = theme?.headingTextSize || headingTextSize;
 
-  // Build groups by first path segment
-  const groups = React.useMemo<Group[]>(() => {
-    const map = new Map<string, Group>();
-    for (const it of items) {
-      const key = getGroupKey(it.path);
-      const label = toTitleCase(key || "General");
-      if (!map.has(key)) {
-        map.set(key, { key, label, items: [] });
-      }
-      map.get(key)!.items.push(it);
+  // Process items to determine if we have groups or individual items
+  const { groups, hasGrouping, directItems } = React.useMemo(() => {
+    if (isGroupArray(items)) {
+      // Items are already groups - use as-is
+      const processedGroups = items as Group[];
+      return {
+        groups: processedGroups,
+        hasGrouping: true,
+        directItems: null
+      };
+    } else {
+      // Items are SidebarItem[] - render directly without grouping
+      const sidebarItems = items as SidebarItem[];
+      
+      return {
+        groups: [],
+        hasGrouping: false,
+        directItems: sidebarItems
+      };
     }
-    return Array.from(map.values());
   }, [items]);
 
-  const hasGrouping =
-    groups.length > 1 || (groups.length === 1 && groups[0].items.length > 1);
-  const groupKeys = groups.map((g) => g.key);
-  const firstKey = groups[0]?.key;
+  // Only create group keys if we have grouping
+  const groupKeys = React.useMemo(() => {
+    if (!hasGrouping) return [];
+    const keys = groups.map((g) => g.key);
+    return keys;
+  }, [groups, hasGrouping]);
 
-  // Persist open/closed per group
-  const { openMap, toggle } = usePersistentGroups(groupKeys, firstKey);
+  // Persist open/closed per group (only if we have grouping)
+  const { openMap, toggle } = usePersistentGroups(groupKeys);
 
   const location = useLocation();
 
@@ -339,8 +363,9 @@ export function ReusableSidebar({
           )}
           <SidebarGroupContent>
             <SidebarMenu className={cn(theme?.menu, classNames?.menu)}>
+              {/* Render direct items without grouping */}
               {!hasGrouping &&
-                items.map((item) => (
+                directItems?.map((item) => (
                   <SidebarNavItem
                     key={item.title}
                     item={item}
@@ -350,6 +375,7 @@ export function ReusableSidebar({
                   />
                 ))}
 
+              {/* Render grouped items with collapsible groups */}
               {hasGrouping &&
                 groups.map((group, idx) => {
                   // Group open logic: force-open if a child active
@@ -385,7 +411,6 @@ export function ReusableSidebar({
                             "group flex w-full items-center gap-2 px-2 py-1.5 hover:bg-foreground/5"
                           )}
                         >
-                          {/* Optional: show first child icon as group icon if desired */}
                           <ChevronRight
                             className={cn(
                               "ml-0.5 size-4 shrink-0 transition-transform",
