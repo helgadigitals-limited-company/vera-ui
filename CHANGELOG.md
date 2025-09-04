@@ -1,3 +1,9 @@
+## [2.6.7](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.6...v2.6.7) (2025-09-04)
+
+### 🐛 Bug Fixes
+
+* **Sidebar:** implement group functionality for sidebar items with persistent open/closed state ([5171942](https://github.com/helgadigitals-limited-company/vera-ui/commit/5171942a626bef843fedf9269d9f2de654733b2b))
+
 ## [2.6.6](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.5...v2.6.6) (2025-09-04)
 
 ### 🐛 Bug Fixes
