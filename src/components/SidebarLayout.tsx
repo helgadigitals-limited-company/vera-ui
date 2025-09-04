@@ -2,6 +2,7 @@ import { SidebarTrigger, SidebarProvider } from "@/components/ui/sidebar"
 import  {
   ReusableSidebar,
   type SidebarItem,
+  type Group,
   type ReusableSidebarClassNames,
   type ReusableSidebarStyleProps,
 } from "@/components/Sidebar"
@@ -9,7 +10,7 @@ import React from 'react';
 
 export type SidebarLayoutProps = {
   props: {
-    items: SidebarItem[]
+    items: SidebarItem[] | Group[]
     heading?: string
     image?: string
     isFooterVisible?: boolean
@@ -76,9 +77,9 @@ export  function SidebarLayout({ props, children }: SidebarLayoutProps) {
       <main className="flex-1 min-h-svh">
         <div className="relative p-4">
           <SidebarTrigger />
-	        <div className={"p-4"}>
+            <div className={"p-4"}>
                 {children}
-	        </div>
+            </div>
         </div>
       </main>
     </SidebarProvider>

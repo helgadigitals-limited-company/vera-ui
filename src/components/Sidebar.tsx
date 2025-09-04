@@ -1,5 +1,5 @@
-import { User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { User, ChevronRight } from "lucide-react";
+import { cn, isGroupArray } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -15,7 +15,13 @@ import {
   type SidebarTheme,
 } from "@/components/ui/sidebar";
 import * as React from "react";
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import {
+  Link,
+  useMatch,
+  useResolvedPath,
+  useLocation,
+  matchPath,
+} from "react-router-dom";
 
 export type SidebarItem = {
   title: string;
@@ -26,6 +32,12 @@ export type SidebarItem = {
   badge?: string | number;
   // Optional override tooltip (if you later wire in collapsed tooltips)
   tooltip?: string;
+};
+
+export type Group = {
+  key: string;
+  label: string;
+  items: SidebarItem[];
 };
 
 export type ReusableSidebarClassNames = {
@@ -71,7 +83,7 @@ export type ReusableSidebarStyleProps = {
 };
 
 type SidebarProps = {
-  items: SidebarItem[];
+  items: SidebarItem[] | Group[];
   heading?: string;
   image?: string;
   isFooterVisible?: boolean;
@@ -94,6 +106,75 @@ type SidebarProps = {
    */
   collapsibleMode?: "icon" | "offcanvas" | "none";
 };
+
+// Persist open/closed per group
+const GROUPS_STORAGE_KEY = "sidebar_groups_open";
+
+
+
+function usePersistentGroups(groupKeys: string[]) {
+  const [openMap, setOpenMap] = React.useState<Record<string, boolean>>({});
+  
+  // Fix: Use a stable dependency by joining the keys
+  const keyString = React.useMemo(() => groupKeys.join(','), [groupKeys]);
+  const memoizedKeys = React.useMemo(() => groupKeys, [groupKeys]);
+  const firstKey = memoizedKeys[0];
+
+  React.useEffect(() => {
+    // Only access localStorage on client side
+    if (typeof window === 'undefined') return;
+    
+    const raw = localStorage.getItem(GROUPS_STORAGE_KEY);
+    let initial: Record<string, boolean> = {};
+    try {
+      if (raw) initial = JSON.parse(raw);
+    } catch {
+      // ignore
+    }
+    
+    // Ensure all keys exist; first group defaults to open if not stored
+    const next: Record<string, boolean> = {};
+    for (const k of memoizedKeys) {
+      if (k in initial) {
+        next[k] = initial[k];
+      } else {
+        next[k] = k === firstKey; // first group open by default
+      }
+    }
+    
+    setOpenMap(next);
+  }, [keyString, firstKey, memoizedKeys]); // Use keyString instead of memoizedKeys
+
+  const setAndPersist = React.useCallback(
+    (updater: (prev: Record<string, boolean>) => Record<string, boolean>) => {
+      setOpenMap((prev) => {
+        const next = updater(prev);
+        // Only access localStorage on client side
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(GROUPS_STORAGE_KEY, JSON.stringify(next));
+        }
+        return next;
+      });
+    },
+    []
+  );
+
+  const toggle = React.useCallback(
+    (key: string) => {
+      setAndPersist((prev) => ({ ...prev, [key]: !prev[key] }));
+    },
+    [setAndPersist]
+  );
+
+  const setOpen = React.useCallback(
+    (key: string, open: boolean) => {
+      setAndPersist((prev) => ({ ...prev, [key]: open }));
+    },
+    [setAndPersist]
+  );
+
+  return { openMap, toggle, setOpen };
+}
 
 // Add a small item component that uses hooks to detect active route
 function SidebarNavItem({
@@ -161,9 +242,7 @@ export function ReusableSidebar({
   collapsibleMode = "icon",
 }: SidebarProps) {
   const { state, theme } = useSidebar();
-  // Backward compatibility: if stylesConfig provided directly (legacy),
-  // we still derive fallbacks; theme from provider takes precedence.
-
+  
   const {
     bgColor,
     textColor,
@@ -175,6 +254,40 @@ export function ReusableSidebar({
 
   const appliedItemText = theme?.itemTextSize || itemTextSize;
   const appliedHeadingText = theme?.headingTextSize || headingTextSize;
+
+  // Process items to determine if we have groups or individual items
+  const { groups, hasGrouping, directItems } = React.useMemo(() => {
+    if (isGroupArray(items)) {
+      // Items are already groups - use as-is
+      const processedGroups = items as Group[];
+      return {
+        groups: processedGroups,
+        hasGrouping: true,
+        directItems: null
+      };
+    } else {
+      // Items are SidebarItem[] - render directly without grouping
+      const sidebarItems = items as SidebarItem[];
+      
+      return {
+        groups: [],
+        hasGrouping: false,
+        directItems: sidebarItems
+      };
+    }
+  }, [items]);
+
+  // Only create group keys if we have grouping
+  const groupKeys = React.useMemo(() => {
+    if (!hasGrouping) return [];
+    const keys = groups.map((g) => g.key);
+    return keys;
+  }, [groups, hasGrouping]);
+
+  // Persist open/closed per group (only if we have grouping)
+  const { openMap, toggle } = usePersistentGroups(groupKeys);
+
+  const location = useLocation();
 
   return (
     <Sidebar
@@ -250,15 +363,84 @@ export function ReusableSidebar({
           )}
           <SidebarGroupContent>
             <SidebarMenu className={cn(theme?.menu, classNames?.menu)}>
-              {items.map((item) => (
-                <SidebarNavItem
-                  key={item.title}
-                  item={item}
-                  appliedItemText={appliedItemText}
-                  theme={theme}
-                  classNames={classNames}
-                />
-              ))}
+              {/* Render direct items without grouping */}
+              {!hasGrouping &&
+                directItems?.map((item) => (
+                  <SidebarNavItem
+                    key={item.title}
+                    item={item}
+                    appliedItemText={appliedItemText}
+                    theme={theme}
+                    classNames={classNames}
+                  />
+                ))}
+
+              {/* Render grouped items with collapsible groups */}
+              {hasGrouping &&
+                groups.map((group, idx) => {
+                  // Group open logic: force-open if a child active
+                  const anyChildActive = group.items.some((child) =>
+                    matchPath(
+                      { path: child.path, end: child.exact },
+                      location.pathname
+                    )
+                  );
+                  const persistedOpen = openMap[group.key] ?? idx === 0;
+                  const isOpen = anyChildActive || persistedOpen;
+
+                  return (
+                    <li
+                      key={group.key}
+                      className={cn(theme?.menuItem, classNames?.menuItem)}
+                    >
+                      <SidebarMenuButton
+                        asChild
+                        className={cn(
+                          "flex w-full items-center gap-2 rounded-md transition-colors",
+                          appliedItemText,
+                          theme?.menuButton,
+                          classNames?.menuButton
+                        )}
+                        data-state={isOpen ? "open" : "closed"}
+                        aria-expanded={isOpen}
+                      >
+                        <button
+                          type="button"
+                          onClick={() => toggle(group.key)}
+                          className={cn(
+                            "group flex w-full items-center gap-2 px-2 py-1.5 hover:bg-foreground/5"
+                          )}
+                        >
+                          <ChevronRight
+                            className={cn(
+                              "ml-0.5 size-4 shrink-0 transition-transform",
+                              isOpen && "rotate-90"
+                            )}
+                          />
+                          <span className="truncate">{group.label}</span>
+                        </button>
+                      </SidebarMenuButton>
+
+                      {state === "expanded" && isOpen && (
+                        <ul
+                          className={cn(
+                            "mt-1 ml-2 border-l border-border/60 pl-3 space-y-0.5"
+                          )}
+                        >
+                          {group.items.map((item) => (
+                            <SidebarNavItem
+                              key={item.title}
+                              item={item}
+                              appliedItemText={appliedItemText}
+                              theme={theme}
+                              classNames={classNames}
+                            />
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
