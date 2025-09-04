@@ -1,6 +1,5 @@
-import { NavLink } from "react-router-dom"
-import { User } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { User } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -13,88 +12,143 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   useSidebar,
-} from "@/components/ui/sidebar"
-import * as React from "react"
+  type SidebarTheme,
+} from "@/components/ui/sidebar";
+import * as React from "react";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 export type SidebarItem = {
-  title: string
-  path: string
-  icon: React.ElementType
-  exact?: boolean
+  title: string;
+  path: string;
+  icon: React.ElementType;
+  exact?: boolean;
   // Optional badge text (e.g. counts)
-  badge?: string | number
+  badge?: string | number;
   // Optional override tooltip (if you later wire in collapsed tooltips)
-  tooltip?: string
-}
+  tooltip?: string;
+};
 
 export type ReusableSidebarClassNames = {
-  root?: string
-  header?: string
-  image?: string
-  heading?: string
-  groupLabel?: string
-  menu?: string
-  menuItem?: string
-  menuButton?: string
-  menuButtonActive?: string
-  footer?: string
-  footerUserIcon?: string
-  footerDisplayName?: string
-}
+  root?: string;
+  header?: string;
+  image?: string;
+  heading?: string;
+  groupLabel?: string;
+  menu?: string;
+  menuItem?: string;
+  menuButton?: string;
+  menuButtonActive?: string;
+  footer?: string;
+  footerUserIcon?: string;
+  footerDisplayName?: string;
+};
 
 export type ReusableSidebarStyleProps = {
   /**
    * Tailwind BG utility (e.g. "bg-slate-900")
    */
-  bgColor?: string
+  bgColor?: string;
   /**
    * Tailwind text color utility (e.g. "text-white")
    */
-  textColor?: string
+  textColor?: string;
   /**
    * Tailwind width (default uses internal)
    */
-  widthClass?: string
+  widthClass?: string;
   /**
    * Item text size class (e.g. "text-xs" | "text-sm" | "text-base")
    */
-  itemTextSize?: string
+  itemTextSize?: string;
   /**
    * Heading text size class
    */
-  headingTextSize?: string
+  headingTextSize?: string;
   /**
    * Apply rounded / border / shadow etc.
    */
-  surfaceClasses?: string
-}
+  surfaceClasses?: string;
+};
 
 type SidebarProps = {
-  items: SidebarItem[]
-  heading?: string
-  image?: string
-  isFooterVisible?: boolean
-  label?: string
-  displayName?: string
+  items: SidebarItem[];
+  heading?: string;
+  image?: string;
+  isFooterVisible?: boolean;
+  label?: string;
+  displayName?: string;
   /**
    * Pass Tailwind class tokens. These merge onto defaults.
    */
-  classNames?: ReusableSidebarClassNames
+  classNames?: ReusableSidebarClassNames;
   /**
    * Style related utility props (shortcuts)
    */
-  stylesConfig?: ReusableSidebarStyleProps
+  stylesConfig?: ReusableSidebarStyleProps;
   /**
    * Direct inline style override for root <Sidebar/>
    */
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
   /**
    * Collapse mode (defaults "icon")
    */
-  collapsibleMode?: "icon" | "offcanvas" | "none"
+  collapsibleMode?: "icon" | "offcanvas" | "none";
+};
+
+// Add a small item component that uses hooks to detect active route
+function SidebarNavItem({
+  item,
+  appliedItemText,
+  theme,
+  classNames,
+}: {
+  item: SidebarItem;
+  appliedItemText: string;
+  theme?: SidebarTheme;
+  classNames?: ReusableSidebarClassNames;
+}) {
+  const resolved = useResolvedPath(item.path);
+  const match = useMatch({ path: resolved.pathname, end: item.exact });
+  const isActive = Boolean(match);
+
+  return (
+    <SidebarMenuItem className={cn(theme?.menuItem, classNames?.menuItem)}>
+      <SidebarMenuButton
+        asChild
+        className={cn(appliedItemText, classNames?.menuButton)}
+        data-active={isActive || undefined}
+      >
+        <Link
+          to={item.path}
+          className={cn(
+            "flex w-full items-center gap-2 rounded-md transition-colors",
+            appliedItemText,
+            theme?.menuButton,
+            classNames?.menuButton,
+            isActive
+              ? cn(
+                  "bg-blue-200 text-blue-900 dark:bg-blue-500/20 dark:text-blue-50",
+                  "font-semibold",
+                  theme?.menuButtonActive,
+                  classNames?.menuButtonActive
+                )
+              : "hover:bg-foreground/5"
+          )}
+        >
+          {React.createElement(item.icon, { className: "shrink-0" })}
+          <span className="truncate">{item.title}</span>
+          {item.badge != null && (
+            <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded bg-primary px-1 text-[10px] font-medium text-primary-foreground">
+              {item.badge}
+            </span>
+          )}
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
 }
 
-export  function ReusableSidebar({
+export function ReusableSidebar({
   items,
   heading,
   image,
@@ -106,9 +160,10 @@ export  function ReusableSidebar({
   style,
   collapsibleMode = "icon",
 }: SidebarProps) {
-  const { state, theme } = useSidebar()
+  const { state, theme } = useSidebar();
   // Backward compatibility: if stylesConfig provided directly (legacy),
   // we still derive fallbacks; theme from provider takes precedence.
+
   const {
     bgColor,
     textColor,
@@ -116,10 +171,10 @@ export  function ReusableSidebar({
     itemTextSize = "text-sm",
     headingTextSize = "text-xs",
     surfaceClasses = "",
-  } = stylesConfig || {}
+  } = stylesConfig || {};
 
-  const appliedItemText = theme?.itemTextSize || itemTextSize
-  const appliedHeadingText = theme?.headingTextSize || headingTextSize
+  const appliedItemText = theme?.itemTextSize || itemTextSize;
+  const appliedHeadingText = theme?.headingTextSize || headingTextSize;
 
   return (
     <Sidebar
@@ -140,13 +195,19 @@ export  function ReusableSidebar({
       style={style}
       data-custom-sidebar
     >
-      <SidebarHeader className={cn("px-2 pt-2", theme?.header, classNames?.header)}>
+      <SidebarHeader
+        className={cn("px-2 pt-2", theme?.header, classNames?.header)}
+      >
         <div className="flex flex-col items-start gap-1">
           {state === "expanded" && image && (
             <img
               src={image}
               alt="Sidebar"
-              className={cn("w-24 h-24 object-cover rounded-md mx-auto", theme?.image, classNames?.image)}
+              className={cn(
+                "w-24 h-24 object-cover rounded-md mx-auto",
+                theme?.image,
+                classNames?.image
+              )}
             />
           )}
           {state === "expanded" && heading && (
@@ -165,7 +226,11 @@ export  function ReusableSidebar({
             <img
               src={image}
               alt="Sidebar"
-              className={cn("w-12 h-12 object-cover rounded-md", theme?.image, classNames?.image)}
+              className={cn(
+                "w-12 h-12 object-cover rounded-md",
+                theme?.image,
+                classNames?.image
+              )}
             />
           )}
         </div>
@@ -186,42 +251,13 @@ export  function ReusableSidebar({
           <SidebarGroupContent>
             <SidebarMenu className={cn(theme?.menu, classNames?.menu)}>
               {items.map((item) => (
-                <SidebarMenuItem
+                <SidebarNavItem
                   key={item.title}
-                  className={cn(theme?.menuItem, classNames?.menuItem)}
-                >
-                  <SidebarMenuButton
-                    asChild
-                    className={cn(appliedItemText, classNames?.menuButton)}
-                  >
-                    <NavLink
-                      to={item.path}
-                      end={item.exact}
-                      className={({ isActive }) =>
-                        cn(
-                          "flex items-center gap-2",
-                          appliedItemText,
-                          theme?.menuButton,
-                          classNames?.menuButton,
-                          isActive &&
-                            cn(
-                              "font-semibold",
-                              theme?.menuButtonActive,
-                              classNames?.menuButtonActive
-                            )
-                        )
-                      }
-                    >
-                      {React.createElement(item.icon, { className: "shrink-0" })}
-                      <span className="truncate">{item.title}</span>
-                      {item.badge != null && (
-                        <span className="ml-auto inline-flex min-w-5 items-center justify-center rounded bg-primary px-1 text-[10px] font-medium text-primary-foreground">
-                          {item.badge}
-                        </span>
-                      )}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                  item={item}
+                  appliedItemText={appliedItemText}
+                  theme={theme}
+                  classNames={classNames}
+                />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -235,7 +271,13 @@ export  function ReusableSidebar({
             classNames?.footer
           )}
         >
-          <User className={cn("size-5", theme?.footerUserIcon, classNames?.footerUserIcon)} />
+          <User
+            className={cn(
+              "size-5",
+              theme?.footerUserIcon,
+              classNames?.footerUserIcon
+            )}
+          />
           {state === "expanded" && (
             <span
               className={cn(
@@ -250,5 +292,5 @@ export  function ReusableSidebar({
         </SidebarFooter>
       )}
     </Sidebar>
-  )
+  );
 }
