@@ -1,3 +1,9 @@
+## [2.6.6](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.5...v2.6.6) (2025-09-04)
+
+### 🐛 Bug Fixes
+
+* **Sidebar:** refactor sidebar item rendering to use SidebarNavItem component, for better managing active routes with some styling to show that it is active ([c3d4ade](https://github.com/helgadigitals-limited-company/vera-ui/commit/c3d4ade909146a86273ef602c123d3a2365d0e71))
+
 ## [2.6.5](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.4...v2.6.5) (2025-09-02)
 
 ### 🐛 Bug Fixes
