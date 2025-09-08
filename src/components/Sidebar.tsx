@@ -1,5 +1,5 @@
 import { User, ChevronRight } from "lucide-react";
-import { cn, isGroup, isGroupArray, isMixedArray, isSidebarItem } from "@/lib/utils";
+import { cn, isGroup, isGroupArray, isMixedArray } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -259,43 +259,28 @@ export function ReusableSidebar({
   const appliedItemText = theme?.itemTextSize || itemTextSize;
   const appliedHeadingText = theme?.headingTextSize || headingTextSize;
 
-  // Enhanced processing logic to handle mixed arrays
-  const { groups, hasGrouping, directItems } = React.useMemo(() => {
+  // Enhanced processing logic to handle mixed arrays while preserving order
+  const { processedItems, hasGrouping } = React.useMemo(() => {
     if (isMixedArray(items)) {
-      // Handle mixed array: both groups and individual items
+      // Handle mixed array: preserve original order
       const mixedItems = items as MixedSidebarItem[];
-      const extractedGroups: Group[] = [];
-      const extractedDirectItems: SidebarItem[] = [];
-      
-      mixedItems.forEach((item) => {
-        if (isGroup(item)) {
-          extractedGroups.push(item);
-        } else if (isSidebarItem(item)) {
-          extractedDirectItems.push(item);
-        }
-      });
-      
       return {
-        groups: extractedGroups,
-        hasGrouping: extractedGroups.length > 0,
-        directItems: extractedDirectItems
+        processedItems: mixedItems,
+        hasGrouping: mixedItems.some(item => isGroup(item))
       };
     } else if (isGroupArray(items)) {
       // Items are already groups - use as-is
       const processedGroups = items as Group[];
       return {
-        groups: processedGroups,
-        hasGrouping: true,
-        directItems: []
+        processedItems: processedGroups,
+        hasGrouping: true
       };
     } else {
       // Items are SidebarItem[] - render directly without grouping
       const sidebarItems = items as SidebarItem[];
-      
       return {
-        groups: [],
-        hasGrouping: false,
-        directItems: sidebarItems
+        processedItems: sidebarItems,
+        hasGrouping: false
       };
     }
   }, [items]);
@@ -303,9 +288,14 @@ export function ReusableSidebar({
   // Only create group keys if we have grouping
   const groupKeys = React.useMemo(() => {
     if (!hasGrouping) return [];
-    const keys = groups.map((g) => g.key);
+    const keys: string[] = [];
+    processedItems.forEach((item) => {
+      if (isGroup(item)) {
+        keys.push(item.key);
+      }
+    });
     return keys;
-  }, [groups, hasGrouping]);
+  }, [processedItems, hasGrouping]);
 
   // Persist open/closed per group (only if we have grouping)
   const { openMap, toggle } = usePersistentGroups(groupKeys);
@@ -386,28 +376,18 @@ export function ReusableSidebar({
           )}
           <SidebarGroupContent>
             <SidebarMenu className={cn(theme?.menu, classNames?.menu)}>
-              {/* Render direct items at the top level (for both pure direct items and mixed content) */}
-              {directItems.map((item) => (
-                <SidebarNavItem
-                  key={item.title}
-                  item={item}
-                  appliedItemText={appliedItemText}
-                  theme={theme}
-                  classNames={classNames}
-                />
-              ))}
-
-              {/* Render grouped items with collapsible groups */}
-              {hasGrouping &&
-                groups.map((group, idx) => {
-                  // Group open logic: force-open if a child active
+              {/* Render items in their original order */}
+              {processedItems.map((item, index) => {
+                if (isGroup(item)) {
+                  // Render group
+                  const group = item as Group;
                   const anyChildActive = group.items.some((child) =>
                     matchPath(
                       { path: child.path, end: child.exact },
                       location.pathname
                     )
                   );
-                  const persistedOpen = openMap[group.key] ?? idx === 0;
+                  const persistedOpen = openMap[group.key] ?? index === 0;
                   const isOpen = anyChildActive || persistedOpen;
 
                   return (
@@ -433,14 +413,15 @@ export function ReusableSidebar({
                             "group flex w-full items-center gap-2 px-2 py-1.5 hover:bg-foreground/5"
                           )}
                         >
+
                           
-                          {/* NEW: Optional group icon */}
+                          {/* Optional group icon */}
                           {group.icon && React.createElement(group.icon, { 
                             className: "size-4 shrink-0" 
                           })}
                           <span className="truncate">{group.label}</span>
 
-                          {/* NEW: Chevron moved to front */}
+                           {/* Chevron at front */}
                           <ChevronRight
                             className={cn(
                               "size-4 shrink-0 ml-auto transition-transform",
@@ -448,8 +429,6 @@ export function ReusableSidebar({
                             )}
                           />
                         </button>
-
-                        
                       </SidebarMenuButton>
 
                       {state === "expanded" && isOpen && (
@@ -458,10 +437,10 @@ export function ReusableSidebar({
                             "mt-1 ml-2 border-l border-border/60 pl-3 space-y-0.5"
                           )}
                         >
-                          {group.items.map((item) => (
+                          {group.items.map((childItem) => (
                             <SidebarNavItem
-                              key={item.title}
-                              item={item}
+                              key={childItem.title}
+                              item={childItem}
                               appliedItemText={appliedItemText}
                               theme={theme}
                               classNames={classNames}
@@ -471,7 +450,20 @@ export function ReusableSidebar({
                       )}
                     </li>
                   );
-                })}
+                } else {
+                  // Render direct item
+                  const sidebarItem = item as SidebarItem;
+                  return (
+                    <SidebarNavItem
+                      key={sidebarItem.title}
+                      item={sidebarItem}
+                      appliedItemText={appliedItemText}
+                      theme={theme}
+                      classNames={classNames}
+                    />
+                  );
+                }
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
