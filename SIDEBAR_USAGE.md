@@ -42,13 +42,14 @@ type SidebarItem = {
 };
 ```
 
-### Group
+### Group (Updated)
 
 ```tsx
 type Group = {
-  key: string;           // Unique identifier
-  label: string;         // Group display name
-  items: SidebarItem[];  // Array of sidebar items
+  key: string;             // Unique identifier
+  label: string;           // Group display name
+  icon?: React.ElementType; // Optional icon (NEW)
+  items: SidebarItem[];    // Array of sidebar items
 };
 ```
 
@@ -167,48 +168,81 @@ function App() {
 }
 ```
 
-### Mixed Content Benefits
-
-- **Flexibility**: Combine different navigation patterns in one sidebar
-- **Prioritization**: Place important direct actions at the top
-- **Organization**: Group related items while keeping others separate
-- **User Experience**: Logical flow with quick access + organized groups
-
-### Real-World Mixed Example
+### Enhanced Mixed Usage with Group Icons
 
 ```tsx
-const appNavigation: MixedSidebarItem[] = [
-  // Quick access items at top
-  { title: "Dashboard", path: "/", icon: Home, exact: true },
-  { title: "Search", path: "/search", icon: Search },
-  { title: "Notifications", path: "/notifications", icon: Bell, badge: 5 },
+import { SidebarLayout, type MixedSidebarItem } from "@helgadigitals/vera-ui";
+import { 
+  Home, Users, Settings, Profile, BarChart, FileText, 
+  Shield, Cog, ShoppingCart 
+} from "lucide-react";
+
+const enhancedMixedItems: MixedSidebarItem[] = [
+  // Direct items appear at the top level
+  { title: "Home", path: "/", icon: Home },
+  { title: "Profile", path: "/profile", icon: Profile },
   
-  // Content management group
-  {
-    key: "content",
-    label: "Content Management",
-    items: [
-      { title: "Posts", path: "/posts", icon: FileText, badge: 12 },
-      { title: "Media", path: "/media", icon: Image },
-      { title: "Comments", path: "/comments", icon: MessageCircle, badge: 3 }
-    ]
-  },
-  
-  // Quick settings access
-  { title: "Account", path: "/account", icon: User },
-  
-  // Admin group (for privileged users)
+  // Groups with icons and chevron in front
   {
     key: "admin",
     label: "Administration",
+    icon: Shield,  // NEW: Icon appears after chevron, before label
     items: [
-      { title: "Users", path: "/admin/users", icon: Users },
-      { title: "Roles", path: "/admin/roles", icon: Shield },
-      { title: "System", path: "/admin/system", icon: Settings }
+      { title: "Users", path: "/users", icon: Users },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  },
+  
+  // Another direct item
+  { title: "Quick Action", path: "/quick", icon: Zap },
+  
+  // Another group with icon
+  {
+    key: "reports",
+    label: "Reports & Analytics",
+    icon: BarChart,  // NEW: Icon for this group
+    items: [
+      { title: "Analytics", path: "/analytics", icon: BarChart },
+      { title: "Reports", path: "/reports", icon: FileText }
+    ]
+  },
+  
+  // Group without icon (optional)
+  {
+    key: "ecommerce",
+    label: "E-commerce",
+    // No icon property - only chevron and label will show
+    items: [
+      { title: "Orders", path: "/orders", icon: ShoppingCart },
+      { title: "Products", path: "/products", icon: Package }
     ]
   }
 ];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items: enhancedMixedItems }}>
+      <div>Your application content</div>
+    </SidebarLayout>
+  );
+}
 ```
+
+### Visual Layout
+
+The new group header layout is:
+```
+[>] [GroupIcon] Group Label    (collapsed)
+[v] [GroupIcon] Group Label    (expanded)
+    ├── Child Item 1
+    ├── Child Item 2
+    └── Child Item 3
+```
+
+Where:
+- `[>]` / `[v]` = Chevron icon (rotates on expand/collapse)
+- `[GroupIcon]` = Optional group icon (if provided)
+- Groups without icons show: `[>] Group Label`
 
 ## Auto-Detection Logic
 
@@ -330,10 +364,11 @@ const fullFeaturedItems: MixedSidebarItem[] = [
     badge: 5 
   },
   
-  // Content management
+  // Content management with icon
   {
     key: "content",
     label: "Content Management",
+    icon: FileText,  // NEW: Group icon
     items: [
       { title: "Posts", path: "/posts", icon: FileText, badge: 12 },
       { title: "Media Library", path: "/media", icon: Image },
@@ -348,10 +383,11 @@ const fullFeaturedItems: MixedSidebarItem[] = [
     icon: User 
   },
   
-  // Analytics group
+  // Analytics group with icon
   {
     key: "analytics",
     label: "Analytics & Reports",
+    icon: BarChart,  // NEW: Group icon
     items: [
       { title: "Overview", path: "/analytics", icon: BarChart },
       { title: "Performance", path: "/analytics/performance", icon: Zap },
@@ -359,10 +395,11 @@ const fullFeaturedItems: MixedSidebarItem[] = [
     ]
   },
   
-  // Admin section
+  // Admin section with icon
   {
     key: "admin",
     label: "Administration",
+    icon: Shield,  // NEW: Group icon
     items: [
       { title: "User Management", path: "/admin/users", icon: Users },
       { title: "Roles & Permissions", path: "/admin/roles", icon: Shield },
@@ -407,10 +444,11 @@ const ecommerceItems: MixedSidebarItem[] = [
   { title: "Orders", path: "/orders", icon: ShoppingCart, badge: 8 },
   { title: "Messages", path: "/messages", icon: MessageSquare, badge: 3 },
   
-  // Product management
+  // Product management with icon
   {
     key: "products",
     label: "Product Management",
+    icon: Package,  // NEW: Group icon
     items: [
       { title: "All Products", path: "/products", icon: Package },
       { title: "Categories", path: "/categories", icon: Tags },
@@ -422,10 +460,11 @@ const ecommerceItems: MixedSidebarItem[] = [
   // Quick customer access
   { title: "Customers", path: "/customers", icon: Users, badge: 156 },
   
-  // Sales & Analytics
+  // Sales & Analytics with icon
   {
     key: "sales",
-    label: "Sales & Analytics", 
+    label: "Sales & Analytics",
+    icon: BarChart,  // NEW: Group icon
     items: [
       { title: "Sales Report", path: "/sales", icon: TrendingUp },
       { title: "Analytics", path: "/analytics", icon: BarChart },
@@ -433,10 +472,11 @@ const ecommerceItems: MixedSidebarItem[] = [
     ]
   },
   
-  // Settings
+  // Settings with icon
   {
     key: "settings",
     label: "Store Settings",
+    icon: Settings,  // NEW: Group icon
     items: [
       { title: "General", path: "/settings", icon: Settings },
       { title: "Payment", path: "/settings/payment", icon: CreditCard },
@@ -444,37 +484,6 @@ const ecommerceItems: MixedSidebarItem[] = [
     ]
   }
 ];
-```
-
-### 3. Using ReusableSidebar Directly
-
-If you need more control, use `ReusableSidebar` directly:
-
-```tsx
-import { SidebarProvider, ReusableSidebar, SidebarTrigger } from "@helgadigitals/vera-ui";
-
-function CustomLayout() {
-  return (
-    <SidebarProvider>
-      <div className="flex h-screen">
-        <ReusableSidebar
-          items={mixedItems} // Works with any item type
-          heading="Custom App"
-          collapsibleMode="offcanvas"
-          style={{ backgroundColor: '#1e293b' }}
-        />
-        <main className="flex-1 overflow-auto">
-          <div className="p-4">
-            <SidebarTrigger /> {/* Toggle button */}
-            <div className="mt-4">
-              {/* Your content */}
-            </div>
-          </div>
-        </main>
-      </div>
-    </SidebarProvider>
-  );
-}
 ```
 
 ## Props Reference

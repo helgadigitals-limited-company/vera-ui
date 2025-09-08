@@ -1,4 +1,4 @@
-import { isGroup, type Group, type MixedSidebarItem, type SidebarItem } from "@/components/Sidebar";
+import { type Group, type MixedSidebarItem, type SidebarItem } from "@/components/Sidebar";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -64,4 +64,27 @@ export function isMixedArray(items: SidebarItem[] | Group[] | MixedSidebarItem[]
   }
   
   return false;
+}
+
+
+
+export function isGroup(item: SidebarItem | Group): item is Group {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'key' in item &&
+    'label' in item &&
+    'items' in item &&
+    Array.isArray((item as Group).items)
+  );
+}
+
+export function isSidebarItem(item: SidebarItem | Group): item is SidebarItem {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'title' in item &&
+    'path' in item &&
+    'icon' in item
+  );
 }
