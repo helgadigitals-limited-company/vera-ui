@@ -1,3 +1,9 @@
+## [2.7.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.7...v2.7.0) (2025-09-08)
+
+### 🚀 Features
+
+* **Pagination:** add Pagination component with page navigation and page size selection ([1ada997](https://github.com/helgadigitals-limited-company/vera-ui/commit/1ada99724fbe382ec4c47fc8e0569f0d843abdd0))
+
 ## [2.6.7](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.6...v2.6.7) (2025-09-04)
 
 ### 🐛 Bug Fixes
