@@ -1,4 +1,4 @@
-import type { Group, SidebarItem } from "@/components/Sidebar";
+import { isGroup, type Group, type MixedSidebarItem, type SidebarItem } from "@/components/Sidebar";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -31,7 +31,6 @@ export function splitStringByUnderscore(str: string) {
 export function isGroupArray(items: SidebarItem[] | Group[]): items is Group[] {
   if (!items || items.length === 0) return false;
   const firstItem = items[0];
-  // Check if it has all the required Group properties
   return (
     typeof firstItem === 'object' &&
     firstItem !== null &&
@@ -40,4 +39,29 @@ export function isGroupArray(items: SidebarItem[] | Group[]): items is Group[] {
     'items' in firstItem &&
     Array.isArray((firstItem as Group).items)
   );
+}
+
+// utility functions for mixed array handling
+
+export function isMixedArray(items: SidebarItem[] | Group[] | MixedSidebarItem[]): items is MixedSidebarItem[] {
+  if (!items || items.length === 0) return false;
+  
+  // Check if we have both types in the array
+  let hasGroups = false;
+  let hasItems = false;
+  
+  for (const item of items) {
+    if (isGroup(item)) {
+      hasGroups = true;
+    } else {
+      hasItems = true;
+    }
+    
+    // If we found both types, it's a mixed array
+    if (hasGroups && hasItems) {
+      return true;
+    }
+  }
+  
+  return false;
 }

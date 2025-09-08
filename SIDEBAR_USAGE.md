@@ -1,16 +1,18 @@
 # Sidebar & SidebarLayout Usage Guide
 
-The Vera UI library provides a powerful and flexible sidebar system with two main components: `ReusableSidebar` and `SidebarLayout`. This guide covers all functionalities and usage patterns.
+The Vera UI library provides a powerful and flexible sidebar system with two main components: `ReusableSidebar` and `SidebarLayout`. This guide covers all functionalities and usage patterns, including the new **Mixed Content Support**.
 
 ## Table of Contents
 
 1. [Installation & Basic Setup](#installation--basic-setup)
 2. [Data Types](#data-types)
 3. [Basic Usage](#basic-usage)
-4. [Auto-Detection Logic](#auto-detection-logic)
-5. [Advanced Styling](#advanced-styling)
-6. [Complete Examples](#complete-examples)
-7. [Props Reference](#props-reference)
+4. [Mixed Content Support (NEW)](#mixed-content-support-new)
+5. [Auto-Detection Logic](#auto-detection-logic)
+6. [Advanced Styling](#advanced-styling)
+7. [Complete Examples](#complete-examples)
+8. [Props Reference](#props-reference)
+9. [Features](#features)
 
 ## Installation & Basic Setup
 
@@ -19,7 +21,8 @@ import {
   SidebarLayout,
   ReusableSidebar,
   type SidebarItem,
-  type Group
+  type Group,
+  type MixedSidebarItem
 } from "@helgadigitals/vera-ui";
 import { Home, Calendar, Users, Settings } from "lucide-react";
 ```
@@ -48,6 +51,14 @@ type Group = {
   items: SidebarItem[];  // Array of sidebar items
 };
 ```
+
+### MixedSidebarItem (NEW)
+
+```tsx
+type MixedSidebarItem = SidebarItem | Group;
+```
+
+This union type allows you to mix individual sidebar items and groups in the same array for maximum flexibility.
 
 ## Basic Usage
 
@@ -108,23 +119,126 @@ function App() {
 }
 ```
 
+## Mixed Content Support (NEW)
+
+The most powerful feature allows you to **mix individual `SidebarItem`s and `Group`s in the same array**:
+
+### Basic Mixed Usage
+
+```tsx
+import { SidebarLayout, type MixedSidebarItem } from "@helgadigitals/vera-ui";
+import { Home, Users, Settings, Profile, BarChart, FileText } from "lucide-react";
+
+const mixedItems: MixedSidebarItem[] = [
+  // Direct items appear at the top level
+  { title: "Home", path: "/", icon: Home },
+  { title: "Profile", path: "/profile", icon: Profile },
+  
+  // Groups appear below direct items
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "Users", path: "/users", icon: Users },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  },
+  
+  // Another direct item
+  { title: "Quick Action", path: "/quick", icon: Zap },
+  
+  // Another group
+  {
+    key: "reports",
+    label: "Reports & Analytics", 
+    items: [
+      { title: "Analytics", path: "/analytics", icon: BarChart },
+      { title: "Reports", path: "/reports", icon: FileText }
+    ]
+  }
+];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items: mixedItems }}>
+      <div>Your application content</div>
+    </SidebarLayout>
+  );
+}
+```
+
+### Mixed Content Benefits
+
+- **Flexibility**: Combine different navigation patterns in one sidebar
+- **Prioritization**: Place important direct actions at the top
+- **Organization**: Group related items while keeping others separate
+- **User Experience**: Logical flow with quick access + organized groups
+
+### Real-World Mixed Example
+
+```tsx
+const appNavigation: MixedSidebarItem[] = [
+  // Quick access items at top
+  { title: "Dashboard", path: "/", icon: Home, exact: true },
+  { title: "Search", path: "/search", icon: Search },
+  { title: "Notifications", path: "/notifications", icon: Bell, badge: 5 },
+  
+  // Content management group
+  {
+    key: "content",
+    label: "Content Management",
+    items: [
+      { title: "Posts", path: "/posts", icon: FileText, badge: 12 },
+      { title: "Media", path: "/media", icon: Image },
+      { title: "Comments", path: "/comments", icon: MessageCircle, badge: 3 }
+    ]
+  },
+  
+  // Quick settings access
+  { title: "Account", path: "/account", icon: User },
+  
+  // Admin group (for privileged users)
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "Users", path: "/admin/users", icon: Users },
+      { title: "Roles", path: "/admin/roles", icon: Shield },
+      { title: "System", path: "/admin/system", icon: Settings }
+    ]
+  }
+];
+```
+
 ## Auto-Detection Logic
 
-The sidebar automatically detects your data shape:
+The sidebar automatically detects your data shape with enhanced logic:
 
 ### Detection Rules
 
-1. **`isGroupArray()` returns `true`** when items have:
+1. **`isMixedArray()` returns `true`** when the array contains both:
+   - Items with `title`, `path`, `icon` properties (`SidebarItem`)
+   - Items with `key`, `label`, `items` properties (`Group`)
+
+2. **`isGroupArray()` returns `true`** when all items have:
    - `key` property (string)
    - `label` property (string)  
    - `items` property (array)
 
-2. **`isGroupArray()` returns `false`** when items are plain `SidebarItem[]`
+3. **Otherwise**: Treats as pure `SidebarItem[]`
 
 ### Behavior
 
 - **Direct Items (`SidebarItem[]`)**: Renders flat list without group headers
-- **Grouped Items (`Group[]`)**: Renders collapsible groups with headers and chevron icons
+- **Grouped Items (`Group[]`)**: Renders only collapsible groups with headers and chevron icons
+- **Mixed Items (`MixedSidebarItem[]`)**: Renders direct items first, then groups below with proper spacing
+
+### Rendering Order in Mixed Mode
+
+1. **Direct Items**: Rendered at the top level in order of appearance
+2. **Groups**: Rendered below direct items with collapsible headers
+3. **Active States**: Work across both direct items and grouped items
+4. **Persistence**: Group open/closed states are remembered
 
 ## Advanced Styling
 
@@ -141,7 +255,7 @@ const customClassNames: ReusableSidebarClassNames = {
 
 <SidebarLayout 
   props={{
-    items,
+    items: mixedItems, // Works with any item type
     classNames: customClassNames
   }}
 >
@@ -163,7 +277,7 @@ const stylesConfig: ReusableSidebarStyleProps = {
 
 <SidebarLayout 
   props={{
-    items,
+    items: mixedItems,
     stylesConfig
   }}
 >
@@ -175,54 +289,85 @@ const stylesConfig: ReusableSidebarStyleProps = {
 
 ```tsx
 // Icon mode (default) - collapses to icon bar
-<SidebarLayout props={{ items, collapsibleMode: "icon" }}>
+<SidebarLayout props={{ items: mixedItems, collapsibleMode: "icon" }}>
 
 // Offcanvas mode - hides completely on mobile
-<SidebarLayout props={{ items, collapsibleMode: "offcanvas" }}>
+<SidebarLayout props={{ items: mixedItems, collapsibleMode: "offcanvas" }}>
 
 // None - always visible, no collapse
-<SidebarLayout props={{ items, collapsibleMode: "none" }}>
+<SidebarLayout props={{ items: mixedItems, collapsibleMode: "none" }}>
 ```
 
 ## Complete Examples
 
-### 1. Full-Featured Sidebar
+### 1. Full-Featured Mixed Sidebar
 
 ```tsx
-import { SidebarLayout, type SidebarItem } from "@helgadigitals/vera-ui";
+import { SidebarLayout, type MixedSidebarItem } from "@helgadigitals/vera-ui";
 import { 
-  Home, Calendar, Users, Settings, 
-  BarChart, FileText, Shield 
+  Home, Search, Bell, FileText, Image, MessageCircle,
+  User, Users, Shield, Settings, BarChart, Zap
 } from "lucide-react";
 
-const items: SidebarItem[] = [
+const fullFeaturedItems: MixedSidebarItem[] = [
+  // Top-level quick access
   { 
     title: "Dashboard", 
-    path: "/dashboard", 
+    path: "/", 
     icon: Home,
     exact: true 
   },
   { 
-    title: "Analytics", 
-    path: "/analytics", 
-    icon: BarChart,
-    badge: "New" 
+    title: "Search", 
+    path: "/search", 
+    icon: Search,
+    tooltip: "Global search"
   },
   { 
-    title: "Users", 
-    path: "/users", 
-    icon: Users,
-    badge: 24 
+    title: "Notifications", 
+    path: "/notifications", 
+    icon: Bell,
+    badge: 5 
   },
-  { 
-    title: "Reports", 
-    path: "/reports", 
-    icon: FileText 
+  
+  // Content management
+  {
+    key: "content",
+    label: "Content Management",
+    items: [
+      { title: "Posts", path: "/posts", icon: FileText, badge: 12 },
+      { title: "Media Library", path: "/media", icon: Image },
+      { title: "Comments", path: "/comments", icon: MessageCircle, badge: 3 }
+    ]
   },
+  
+  // Quick account access
   { 
-    title: "Settings", 
-    path: "/settings", 
-    icon: Settings 
+    title: "My Account", 
+    path: "/account", 
+    icon: User 
+  },
+  
+  // Analytics group
+  {
+    key: "analytics",
+    label: "Analytics & Reports",
+    items: [
+      { title: "Overview", path: "/analytics", icon: BarChart },
+      { title: "Performance", path: "/analytics/performance", icon: Zap },
+      { title: "Custom Reports", path: "/reports", icon: FileText }
+    ]
+  },
+  
+  // Admin section
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "User Management", path: "/admin/users", icon: Users },
+      { title: "Roles & Permissions", path: "/admin/roles", icon: Shield },
+      { title: "System Settings", path: "/admin/settings", icon: Settings }
+    ]
   }
 ];
 
@@ -230,7 +375,7 @@ function App() {
   return (
     <SidebarLayout 
       props={{
-        items,
+        items: fullFeaturedItems,
         heading: "My Application",
         image: "/logo.png",
         isFooterVisible: true,
@@ -253,66 +398,52 @@ function App() {
 }
 ```
 
-### 2. Multi-Group Sidebar
+### 2. E-commerce Mixed Sidebar
 
 ```tsx
-const workspaceItems: Group[] = [
+const ecommerceItems: MixedSidebarItem[] = [
+  // Quick actions
+  { title: "Dashboard", path: "/", icon: Home },
+  { title: "Orders", path: "/orders", icon: ShoppingCart, badge: 8 },
+  { title: "Messages", path: "/messages", icon: MessageSquare, badge: 3 },
+  
+  // Product management
   {
-    key: "workspace",
-    label: "Workspace",
+    key: "products",
+    label: "Product Management",
     items: [
-      { title: "Home", path: "/", icon: Home },
-      { title: "Projects", path: "/projects", icon: FolderOpen, badge: 5 },
-      { title: "Tasks", path: "/tasks", icon: CheckSquare, badge: 12 }
+      { title: "All Products", path: "/products", icon: Package },
+      { title: "Categories", path: "/categories", icon: Tags },
+      { title: "Inventory", path: "/inventory", icon: Archive },
+      { title: "Reviews", path: "/reviews", icon: Star, badge: "12 new" }
     ]
   },
+  
+  // Quick customer access
+  { title: "Customers", path: "/customers", icon: Users, badge: 156 },
+  
+  // Sales & Analytics
   {
-    key: "team",
-    label: "Team",
+    key: "sales",
+    label: "Sales & Analytics", 
     items: [
-      { title: "Members", path: "/team/members", icon: Users },
-      { title: "Roles", path: "/team/roles", icon: Shield },
-      { title: "Permissions", path: "/team/permissions", icon: Key }
+      { title: "Sales Report", path: "/sales", icon: TrendingUp },
+      { title: "Analytics", path: "/analytics", icon: BarChart },
+      { title: "Marketing", path: "/marketing", icon: Megaphone }
     ]
   },
+  
+  // Settings
   {
     key: "settings",
-    label: "Settings",
+    label: "Store Settings",
     items: [
-      { title: "General", path: "/settings/general", icon: Settings },
-      { title: "Integrations", path: "/settings/integrations", icon: Plug },
-      { title: "Billing", path: "/settings/billing", icon: CreditCard }
+      { title: "General", path: "/settings", icon: Settings },
+      { title: "Payment", path: "/settings/payment", icon: CreditCard },
+      { title: "Shipping", path: "/settings/shipping", icon: Truck }
     ]
   }
 ];
-
-function TeamApp() {
-  return (
-    <SidebarLayout 
-      props={{
-        items: workspaceItems,
-        heading: "Team Workspace",
-        image: "/team-logo.png",
-        isFooterVisible: true,
-        displayName: "Team Admin",
-        classNames: {
-          root: "border-r border-slate-200",
-          groupLabel: "text-slate-500 font-semibold",
-          menuButtonActive: "bg-blue-100 text-blue-900"
-        }
-      }}
-    >
-      <main className="flex-1 p-8">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/tasks" element={<TasksPage />} />
-          {/* ... other routes */}
-        </Routes>
-      </main>
-    </SidebarLayout>
-  );
-}
 ```
 
 ### 3. Using ReusableSidebar Directly
@@ -320,14 +451,14 @@ function TeamApp() {
 If you need more control, use `ReusableSidebar` directly:
 
 ```tsx
-import { SidebarProvider, ReusableSidebar } from "@helgadigitals/vera-ui";
+import { SidebarProvider, ReusableSidebar, SidebarTrigger } from "@helgadigitals/vera-ui";
 
 function CustomLayout() {
   return (
     <SidebarProvider>
       <div className="flex h-screen">
         <ReusableSidebar
-          items={items}
+          items={mixedItems} // Works with any item type
           heading="Custom App"
           collapsibleMode="offcanvas"
           style={{ backgroundColor: '#1e293b' }}
@@ -353,7 +484,7 @@ function CustomLayout() {
 ```tsx
 type SidebarLayoutProps = {
   props: {
-    items: SidebarItem[] | Group[];
+    items: SidebarItem[] | Group[] | MixedSidebarItem[]; // NEW: Added mixed type support
     heading?: string;
     image?: string;
     isFooterVisible?: boolean;
@@ -373,7 +504,7 @@ type SidebarLayoutProps = {
 
 ```tsx
 type SidebarProps = {
-  items: SidebarItem[] | Group[];
+  items: SidebarItem[] | Group[] | MixedSidebarItem[]; // NEW: Added mixed type support
   heading?: string;
   image?: string;
   isFooterVisible?: boolean;
@@ -420,18 +551,27 @@ type ReusableSidebarStyleProps = {
 
 ## Features
 
+### ✅ Mixed Content Support (NEW)
+- Mix individual items and groups in the same array
+- Direct items rendered at top level
+- Groups rendered below with collapsible headers
+- Maintains proper spacing and visual hierarchy
+
 ### ✅ Auto-Detection
-- Automatically detects data shape (`SidebarItem[]` vs `Group[]`)
+- Automatically detects data shape (`SidebarItem[]` vs `Group[]` vs `MixedSidebarItem[]`)
 - Renders appropriate UI based on data structure
+- Enhanced detection logic for mixed arrays
 
 ### ✅ Persistent State
 - Remembers group open/closed state in localStorage
 - Survives page refreshes and navigation
+- Works across all sidebar modes
 
 ### ✅ Active Route Detection
 - Highlights currently active menu item
 - Supports exact route matching
 - Auto-expands groups containing active items
+- Works for both direct items and grouped items
 
 ### ✅ Responsive Design
 - Multiple collapse modes (icon, offcanvas, none)
@@ -453,4 +593,8 @@ type ReusableSidebarStyleProps = {
 - Lucide React icons integration
 - Custom icon support
 
-This sidebar system provides a complete navigation solution for React applications with automatic behavior adaptation based on your data structure.
+### ✅ Import Flexibility
+- Direct imports: `import { SidebarLayout, MixedSidebarItem } from "@helgadigitals/vera-ui"`
+- Namespace imports: `import { Sidebar } from "@helgadigitals/vera-ui"` (use as `Sidebar.MixedSidebarItem`)
+
+This sidebar system provides a complete navigation solution for React applications with automatic behavior adaptation based on your data structure, now including powerful mixed content support for maximum flexibility.

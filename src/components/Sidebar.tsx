@@ -14,7 +14,7 @@
 // ]
 
 import { User, ChevronRight } from "lucide-react";
-import { cn, isGroupArray } from "@/lib/utils";
+import { cn, isGroupArray, isMixedArray } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -54,6 +54,9 @@ export type Group = {
   label: string;
   items: SidebarItem[];
 };
+
+// Update the union type to include a mixed type
+export type MixedSidebarItem = SidebarItem | Group;
 
 export type ReusableSidebarClassNames = {
   root?: string;
@@ -98,7 +101,7 @@ export type ReusableSidebarStyleProps = {
 };
 
 type SidebarProps = {
-  items: SidebarItem[] | Group[];
+  items: SidebarItem[] | Group[] | MixedSidebarItem[]; // Add mixed type support
   heading?: string;
   image?: string;
   isFooterVisible?: boolean;
@@ -270,15 +273,34 @@ export function ReusableSidebar({
   const appliedItemText = theme?.itemTextSize || itemTextSize;
   const appliedHeadingText = theme?.headingTextSize || headingTextSize;
 
-  // Process items to determine if we have groups or individual items
+  // Enhanced processing logic to handle mixed arrays
   const { groups, hasGrouping, directItems } = React.useMemo(() => {
-    if (isGroupArray(items)) {
+    if (isMixedArray(items)) {
+      // Handle mixed array: both groups and individual items
+      const mixedItems = items as MixedSidebarItem[];
+      const extractedGroups: Group[] = [];
+      const extractedDirectItems: SidebarItem[] = [];
+      
+      mixedItems.forEach((item) => {
+        if (isGroup(item)) {
+          extractedGroups.push(item);
+        } else if (isSidebarItem(item)) {
+          extractedDirectItems.push(item);
+        }
+      });
+      
+      return {
+        groups: extractedGroups,
+        hasGrouping: extractedGroups.length > 0,
+        directItems: extractedDirectItems
+      };
+    } else if (isGroupArray(items)) {
       // Items are already groups - use as-is
       const processedGroups = items as Group[];
       return {
         groups: processedGroups,
         hasGrouping: true,
-        directItems: null
+        directItems: []
       };
     } else {
       // Items are SidebarItem[] - render directly without grouping
@@ -378,17 +400,16 @@ export function ReusableSidebar({
           )}
           <SidebarGroupContent>
             <SidebarMenu className={cn(theme?.menu, classNames?.menu)}>
-              {/* Render direct items without grouping */}
-              {!hasGrouping &&
-                directItems?.map((item) => (
-                  <SidebarNavItem
-                    key={item.title}
-                    item={item}
-                    appliedItemText={appliedItemText}
-                    theme={theme}
-                    classNames={classNames}
-                  />
-                ))}
+              {/* Render direct items at the top level (for both pure direct items and mixed content) */}
+              {directItems.map((item) => (
+                <SidebarNavItem
+                  key={item.title}
+                  item={item}
+                  appliedItemText={appliedItemText}
+                  theme={theme}
+                  classNames={classNames}
+                />
+              ))}
 
               {/* Render grouped items with collapsible groups */}
               {hasGrouping &&
@@ -489,5 +510,32 @@ export function ReusableSidebar({
         </SidebarFooter>
       )}
     </Sidebar>
+  );
+}
+
+
+
+
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function isGroup(item: SidebarItem | Group): item is Group {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'key' in item &&
+    'label' in item &&
+    'items' in item &&
+    Array.isArray((item as Group).items)
+  );
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function isSidebarItem(item: SidebarItem | Group): item is SidebarItem {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'title' in item &&
+    'path' in item &&
+    'icon' in item
   );
 }
