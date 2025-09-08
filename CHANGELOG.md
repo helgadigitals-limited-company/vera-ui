@@ -1,3 +1,9 @@
+## [2.7.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.7.0...v2.7.1) (2025-09-08)
+
+### 🐛 Bug Fixes
+
+* **Sidebar:** add support for mixed arrays of SidebarItems and Groups ([c99e09b](https://github.com/helgadigitals-limited-company/vera-ui/commit/c99e09b8950ad2b678700d730c0d9c38ab83f666))
+
 ## [2.7.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.6.7...v2.7.0) (2025-09-08)
 
 ### 🚀 Features

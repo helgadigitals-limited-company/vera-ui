@@ -1,6 +1,6 @@
 {
   "name": "@helgadigitals/vera-ui",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "type": "module",
   "description": "A modern, accessible React component library for vera",
   "main": "dist/vera-ui.cjs.js",
