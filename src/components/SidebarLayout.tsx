@@ -6,11 +6,12 @@ import  {
   type ReusableSidebarClassNames,
   type ReusableSidebarStyleProps,
 } from "@/components/Sidebar"
+import type { MixedSidebarItem } from "@/components/Sidebar"
 import React from 'react';
 
 export type SidebarLayoutProps = {
   props: {
-    items: SidebarItem[] | Group[]
+    items: SidebarItem[] | Group[] | MixedSidebarItem[] // Add mixed type support
     heading?: string
     image?: string
     isFooterVisible?: boolean
