@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.8.0...v2.8.1) (2025-09-08)
+
+### 🐛 Bug Fixes
+
+* **Sidebar:** enhance mixed array handling and preserve item order ([4fc21b4](https://github.com/helgadigitals-limited-company/vera-ui/commit/4fc21b481a5dcaeff2b383609da6ffcd806470dc))
+* **Sidebar:** enhance mixed array handling and preserve item order ([acbd017](https://github.com/helgadigitals-limited-company/vera-ui/commit/acbd017a2cc5ad80d1fe654b3152d3af9a657c36))
+
 ## [2.8.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.7.1...v2.8.0) (2025-09-08)
 
 ### 🚀 Features
