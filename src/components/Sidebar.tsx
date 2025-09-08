@@ -1,5 +1,5 @@
 import { User, ChevronRight } from "lucide-react";
-import { cn, isGroupArray, isMixedArray } from "@/lib/utils";
+import { cn, isGroup, isGroupArray, isMixedArray, isSidebarItem } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
@@ -37,6 +37,7 @@ export type SidebarItem = {
 export type Group = {
   key: string;
   label: string;
+  icon?: React.ElementType; // NEW: Optional icon for groups
   items: SidebarItem[];
 };
 
@@ -432,14 +433,23 @@ export function ReusableSidebar({
                             "group flex w-full items-center gap-2 px-2 py-1.5 hover:bg-foreground/5"
                           )}
                         >
+                          
+                          {/* NEW: Optional group icon */}
+                          {group.icon && React.createElement(group.icon, { 
+                            className: "size-4 shrink-0" 
+                          })}
+                          <span className="truncate">{group.label}</span>
+
+                          {/* NEW: Chevron moved to front */}
                           <ChevronRight
                             className={cn(
-                              "ml-0.5 size-4 shrink-0 transition-transform",
+                              "size-4 shrink-0 ml-auto transition-transform",
                               isOpen && "rotate-90"
                             )}
                           />
-                          <span className="truncate">{group.label}</span>
                         </button>
+
+                        
                       </SidebarMenuButton>
 
                       {state === "expanded" && isOpen && (
@@ -502,25 +512,3 @@ export function ReusableSidebar({
 
 
 
-// eslint-disable-next-line react-refresh/only-export-components
-export function isGroup(item: SidebarItem | Group): item is Group {
-  return (
-    typeof item === 'object' &&
-    item !== null &&
-    'key' in item &&
-    'label' in item &&
-    'items' in item &&
-    Array.isArray((item as Group).items)
-  );
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-export function isSidebarItem(item: SidebarItem | Group): item is SidebarItem {
-  return (
-    typeof item === 'object' &&
-    item !== null &&
-    'title' in item &&
-    'path' in item &&
-    'icon' in item
-  );
-}
