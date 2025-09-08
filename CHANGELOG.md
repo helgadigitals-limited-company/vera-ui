@@ -1,3 +1,13 @@
+## [2.8.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.7.1...v2.8.0) (2025-09-08)
+
+### 🚀 Features
+
+* **Sidebar:** add optional icons for groups and enhance mixed content support ([242b942](https://github.com/helgadigitals-limited-company/vera-ui/commit/242b942910613e8fc6e0449b0968d922a1ad1196))
+
+### 🐛 Bug Fixes
+
+* **Sidebar:** adjust Chevron position for improved layout ([5c9939f](https://github.com/helgadigitals-limited-company/vera-ui/commit/5c9939f9654c827fec125301941c7f2d9acedaaa))
+
 ## [2.7.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v2.7.0...v2.7.1) (2025-09-08)
 
 ### 🐛 Bug Fixes
