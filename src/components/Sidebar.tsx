@@ -1,3 +1,18 @@
+// TODO: Enhance sidebar to accept mixed arrays of SidebarItems and Groups in a single array
+// This would allow more flexible data structures like:
+// items: [
+//   { title: "Home", path: "/", icon: Home },  // Direct SidebarItem
+//   {                                          // Group
+//     key: "admin", 
+//     label: "Administration", 
+//     items: [
+//       { title: "Users", path: "/users", icon: Users },
+//       { title: "Settings", path: "/settings", icon: Settings }
+//     ]
+//   },
+//   { title: "Profile", path: "/profile", icon: User }  // Another direct SidebarItem
+// ]
+
 import { User, ChevronRight } from "lucide-react";
 import { cn, isGroupArray } from "@/lib/utils";
 import {
