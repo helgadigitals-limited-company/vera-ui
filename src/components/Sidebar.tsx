@@ -443,7 +443,7 @@ export function ReusableSidebar({
                           {/* NEW: Chevron moved to front */}
                           <ChevronRight
                             className={cn(
-                              "size-4 shrink-0 absolute right-3 transition-transform",
+                              "size-4 shrink-0 ml-auto transition-transform",
                               isOpen && "rotate-90"
                             )}
                           />
