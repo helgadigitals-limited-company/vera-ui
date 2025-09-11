@@ -1,0 +1,75 @@
+---
+title: Form Components
+description: Input controls and form management components for user interaction
+---
+
+# Form Components
+
+Essential building blocks for collecting user input and managing form interactions. All form components are built with validation, accessibility, and user experience in mind.
+
+## Components
+
+### Input Controls
+- **[Button](/docs/components/forms/button)** - Interactive buttons with multiple variants and states
+- **[Input](/docs/components/forms/input)** - Text input fields with validation support  
+- **[Textarea](/docs/components/forms/textarea)** - Multi-line text input areas
+- **[Select](/docs/components/forms/select)** - Dropdown selection components
+- **[Checkbox](/docs/components/forms/checkbox)** - Boolean input controls
+- **[Radio Group](/docs/components/forms/radio-group)** - Single-choice selection groups
+- **[Switch](/docs/components/forms/switch)** - Toggle switches for binary choices
+
+### Advanced Controls
+- **[Combobox](/docs/components/forms/combobox)** - Searchable selection dropdown
+- **[Multi-Select](/docs/components/forms/multi-select)** - Multiple item selection
+- **[File Upload](/docs/components/forms/file-upload)** - File selection and upload
+- **[Date Picker](/docs/components/forms/date-picker)** - Date selection component
+- **[OTP Input](/docs/components/forms/otp-input)** - One-time password input
+
+### Form Management
+- **[Form](/docs/components/forms/form)** - Complete form wrapper with validation
+- **[Label](/docs/components/forms/label)** - Accessible form field labels
+- **[Form Field](/docs/components/forms/form-field)** - Structured form field container
+
+## Form Patterns
+
+### Basic Form Structure
+```tsx
+import { 
+  Form, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormControl, 
+  FormMessage,
+  Input,
+  Button 
+} from '@helgadigitals/vera-ui'
+
+function ContactForm() {
+  return (
+    <Form>
+      <FormField name="email">
+        <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input type="email" placeholder="Enter your email" />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <Button type="submit">Submit</Button>
+    </Form>
+  )
+}
+```
+
+### Form Validation
+All form components integrate with popular validation libraries like React Hook Form and Zod for robust form validation and error handling.
+
+## Accessibility Features
+
+- **Keyboard Navigation**: All form controls support proper keyboard interaction
+- **Screen Readers**: Semantic HTML with appropriate ARIA attributes
+- **Focus Management**: Clear focus indicators and logical tab order
+- **Error Handling**: Accessible error messages linked to form controls
+- **Required Fields**: Clear indication of required vs optional fields

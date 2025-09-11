@@ -1,0 +1,286 @@
+---
+title: Vera UI
+description: A modern, accessible React component library built for design systems and scalable applications
+---
+
+import { Card, Cards } from "fumadocs-ui/components/card"
+import { Callout } from "fumadocs-ui/components/callout"
+import { Step, Steps } from "fumadocs-ui/components/steps"
+
+<div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 -mx-6 -mt-6 px-6 pt-12 pb-16">
+  <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
+  
+  <div className="relative max-w-4xl mx-auto text-center">
+    <div className="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 mb-8">
+      <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
+      Latest version 2.3.3
+    </div>
+    
+    <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-white dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-6">
+      Vera UI
+    </h1>
+    
+    <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+      Build beautiful, accessible React applications with a comprehensive component library designed for modern development workflows.
+    </p>
+    
+    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+      <a 
+        href="/docs/getting-started/installation" 
+        className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+      >
+        Get Started
+        <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+      <a 
+        href="/docs/components" 
+        className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors border border-slate-200 dark:border-slate-600 shadow-sm hover:shadow-md"
+      >
+        View Components
+      </a>
+    </div>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div className="text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400">50+</div>
+        <div className="text-sm text-slate-600 dark:text-slate-400">Components</div>
+      </div>
+      <div>
+        <div className="text-3xl md:text-4xl font-bold text-green-600 dark:text-green-400">100%</div>
+        <div className="text-sm text-slate-600 dark:text-slate-400">TypeScript</div>
+      </div>
+      <div>
+        <div className="text-3xl md:text-4xl font-bold text-purple-600 dark:text-purple-400">A11Y</div>
+        <div className="text-sm text-slate-600 dark:text-slate-400">Accessible</div>
+      </div>
+      <div>
+        <div className="text-3xl md:text-4xl font-bold text-orange-600 dark:text-orange-400">WCAG</div>
+        <div className="text-sm text-slate-600 dark:text-slate-400">Compliant</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+## ✨ Why Choose Vera UI?
+
+<Cards>
+  <Card 
+    title="🎨 Design System Ready" 
+    description="Built with design tokens and theming. Consistent spacing, typography, and color systems across all components."
+    href="/docs/components"
+  />
+  <Card 
+    title="♿ Accessibility First" 
+    description="Every component follows WCAG guidelines with proper ARIA attributes, keyboard navigation, and screen reader support."
+    href="/docs/contributing/guidelines#accessibility"
+  />
+  <Card 
+    title="🔧 Highly Customizable" 
+    description="Extensive customization options with CSS variables, Tailwind CSS integration, and component composition patterns."
+    href="/docs/getting-started/installation#configure-tailwind-css"
+  />
+  <Card 
+    title="📱 Responsive by Default" 
+    description="All components work seamlessly across different screen sizes and devices with mobile-first design principles."
+    href="/docs/examples"
+  />
+</Cards>
+
+## 🚀 Quick Start
+
+<Steps>
+  <Step>
+    ### Install the package
+    
+    ```bash npm2yarn
+    npm install @helgadigitals/vera-ui
+    ```
+  </Step>
+  
+  <Step>
+    ### Import and use components
+    
+    ```tsx
+    import { Button, Card, CardContent, CardHeader, CardTitle } from '@helgadigitals/vera-ui'
+
+    function App() {
+      return (
+        <Card className="w-96">
+          <CardHeader>
+            <CardTitle>Hello Vera UI</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Button>Get Started</Button>
+          </CardContent>
+        </Card>
+      )
+    }
+    ```
+  </Step>
+  
+  <Step>
+    ### Start building
+    
+    Explore our comprehensive component library and build amazing user interfaces!
+  </Step>
+</Steps>
+
+## 🎪 Component Categories
+
+<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+  <a href="/docs/components/forms" className="group block p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 rounded-xl border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-all hover:-translate-y-1">
+    <div className="flex items-center mb-3">
+      <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
+        📝
+      </div>
+      <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">Forms</h3>
+    </div>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Input controls, validation, and form management components for user interaction.</p>
+  </a>
+
+  <a href="/docs/components/navigation" className="group block p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/50 dark:to-emerald-950/50 rounded-xl border border-green-200 dark:border-green-800 hover:shadow-lg transition-all hover:-translate-y-1">
+    <div className="flex items-center mb-3">
+      <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
+        🧭
+      </div>
+      <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">Navigation</h3>
+    </div>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Sidebar, menus, breadcrumbs, and navigation patterns for site navigation.</p>
+  </a>
+
+  <a href="/docs/components/data-display" className="group block p-6 bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950/50 dark:to-violet-950/50 rounded-xl border border-purple-200 dark:border-purple-800 hover:shadow-lg transition-all hover:-translate-y-1">
+    <div className="flex items-center mb-3">
+      <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
+        📊
+      </div>
+      <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">Data Display</h3>
+    </div>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Tables, cards, badges, and components for presenting information beautifully.</p>
+  </a>
+
+  <a href="/docs/components/layout" className="group block p-6 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950/50 dark:to-red-950/50 rounded-xl border border-orange-200 dark:border-orange-800 hover:shadow-lg transition-all hover:-translate-y-1">
+    <div className="flex items-center mb-3">
+      <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
+        🏗️
+      </div>
+      <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400">Layout</h3>
+    </div>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Grid systems, containers, and structural components for page organization.</p>
+  </a>
+
+  <a href="/docs/components/feedback" className="group block p-6 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/50 dark:to-rose-950/50 rounded-xl border border-pink-200 dark:border-pink-800 hover:shadow-lg transition-all hover:-translate-y-1">
+    <div className="flex items-center mb-3">
+      <div className="w-8 h-8 bg-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
+        💬
+      </div>
+      <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400">Feedback</h3>
+    </div>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Alerts, toasts, progress bars, and components for user feedback.</p>
+  </a>
+
+  <a href="/docs/components/overlays" className="group block p-6 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-cyan-950/50 dark:to-teal-950/50 rounded-xl border border-cyan-200 dark:border-cyan-800 hover:shadow-lg transition-all hover:-translate-y-1">
+    <div className="flex items-center mb-3">
+      <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
+        🎭
+      </div>
+      <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400">Overlays</h3>
+    </div>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Modals, popovers, tooltips, and components that appear above other content.</p>
+  </a>
+</div>
+
+## 🏛️ Design Principles
+
+<div className="grid md:grid-cols-2 gap-8 my-12">
+  <div className="space-y-6">
+    <div className="flex items-start space-x-4">
+      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+        <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div>
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Consistency</h3>
+        <p className="text-slate-600 dark:text-slate-400">All components follow the same design patterns, naming conventions, and behavior expectations.</p>
+      </div>
+    </div>
+
+    <div className="flex items-start space-x-4">
+      <div className="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+        <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      </div>
+      <div>
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Performance</h3>
+        <p className="text-slate-600 dark:text-slate-400">Optimized for performance with tree-shaking, lazy loading, and minimal bundle impact.</p>
+      </div>
+    </div>
+  </div>
+
+  <div className="space-y-6">
+    <div className="flex items-start space-x-4">
+      <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+        <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a1 1 0 01-1-1V9a1 1 0 011-1h1a2 2 0 100-4H4a1 1 0 01-1-1V4a1 1 0 011-1h3a1 1 0 001-1z" />
+        </svg>
+      </div>
+      <div>
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Composability</h3>
+        <p className="text-slate-600 dark:text-slate-400">Components are designed to work together seamlessly with clear composition patterns.</p>
+      </div>
+    </div>
+
+    <div className="flex items-start space-x-4">
+      <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+        <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+        </svg>
+      </div>
+      <div>
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Developer Experience</h3>
+        <p className="text-slate-600 dark:text-slate-400">Clear APIs, comprehensive documentation, and helpful development tools for productive workflows.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<Callout type="success">
+  **Ready to build something amazing?** Start with our [installation guide](/docs/getting-started/installation) or explore our [component examples](/docs/examples) to see Vera UI in action.
+</Callout>
+
+## 🤝 Community & Support
+
+<div className="grid md:grid-cols-3 gap-6 my-8">
+  <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+    <div className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="w-6 h-6 text-slate-600 dark:text-slate-300" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+      </svg>
+    </div>
+    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">GitHub</h3>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Report issues, contribute code, and collaborate with the community.</p>
+  </div>
+
+  <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+    <div className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+    </div>
+    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Documentation</h3>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Comprehensive guides, examples, and API references for every component.</p>
+  </div>
+
+  <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+    <div className="w-12 h-12 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="w-6 h-6 text-slate-600 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+    </div>
+    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Examples</h3>
+    <p className="text-sm text-slate-600 dark:text-slate-400">Real-world templates, patterns, and implementation examples.</p>
+  </div>
+</div>

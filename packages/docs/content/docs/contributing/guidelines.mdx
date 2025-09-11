@@ -1,0 +1,325 @@
+---
+title: Contributing Guidelines
+description: Learn how to contribute to Vera UI development
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+import { Steps } from "fumadocs-ui/components/steps"
+
+# Contributing to Vera UI
+
+We welcome contributions to Vera UI! This guide will help you get started with contributing to the project.
+
+## Development Setup
+
+<Steps>
+
+### Fork and Clone
+
+Fork the repository on GitHub and clone it locally:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/vera-ui.git
+cd vera-ui
+```
+
+### Install Dependencies
+
+We use pnpm for package management:
+
+```bash
+pnpm install
+```
+
+### Development Workflow
+
+The project is organized as a monorepo with two main packages:
+
+- **`packages/ui`**: The component library
+- **`packages/docs`**: This documentation site
+
+Run both in development:
+
+```bash
+# Start both UI development and docs
+pnpm dev
+
+# Or run individually
+pnpm dev:ui    # Component library development
+pnpm dev:docs  # Documentation site
+```
+
+### Build and Test
+
+```bash
+# Build the component library
+pnpm build:ui
+
+# Build the documentation
+pnpm build:docs
+
+# Run tests
+pnpm test
+
+# Lint code
+pnpm lint
+```
+
+</Steps>
+
+## Project Structure
+
+```
+vera-ui/
+├── packages/
+│   ├── ui/                    # Component library
+│   │   ├── src/
+│   │   │   ├── components/    # React components
+│   │   │   │   ├── ui/       # Base UI components
+│   │   │   │   └── ...       # Complex components
+│   │   │   ├── hooks/        # Custom hooks
+│   │   │   ├── lib/          # Utilities
+│   │   │   └── index.ts      # Main export
+│   │   └── package.json
+│   └── docs/                  # Documentation site
+│       ├── content/           # MDX documentation
+│       ├── app/              # Next.js app
+│       └── package.json
+├── pnpm-workspace.yaml
+└── package.json
+```
+
+## Component Development Guidelines
+
+### Component Architecture
+
+All components should follow these principles:
+
+<Callout type="info">
+  **Accessibility First**: Every component must be accessible by default with proper ARIA attributes, keyboard navigation, and screen reader support.
+</Callout>
+
+1. **Built with Radix UI**: Use Radix UI primitives when available
+2. **Customizable**: Support className overrides and style customization
+3. **TypeScript**: Full TypeScript support with proper type definitions
+4. **Composable**: Components should be composable and follow compound component patterns
+5. **Responsive**: Work well across different screen sizes
+
+### Component Template
+
+Here's a template for creating new components:
+
+```tsx title="packages/ui/src/components/ui/my-component.tsx"
+"use client"
+
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
+
+const myComponentVariants = cva(
+  "base-classes-here",
+  {
+    variants: {
+      variant: {
+        default: "default-variant-classes",
+        secondary: "secondary-variant-classes",
+      },
+      size: {
+        default: "default-size-classes", 
+        sm: "small-size-classes",
+        lg: "large-size-classes",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface MyComponentProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof myComponentVariants> {
+  // Additional props here
+}
+
+const MyComponent = React.forwardRef<HTMLDivElement, MyComponentProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <div
+        className={cn(myComponentVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+MyComponent.displayName = "MyComponent"
+
+export { MyComponent, myComponentVariants }
+```
+
+### Component Categories
+
+Organize components into these categories:
+
+#### Forms
+- Input, Textarea, Select, Checkbox, Radio, etc.
+- Form validation and handling components
+
+#### Navigation  
+- Breadcrumb, Navigation Menu, Tabs, Sidebar, etc.
+- Components for site navigation
+
+#### Data Display
+- Table, Badge, Avatar, Card, etc.
+- Components for displaying information
+
+#### Layout
+- Container, Grid, Stack, Separator, etc.
+- Components for page layout
+
+#### Feedback
+- Alert, Toast, Progress, Loading, etc.
+- Components for user feedback
+
+#### Overlays
+- Dialog, Sheet, Popover, Tooltip, etc.
+- Components that appear above other content
+
+## Documentation Guidelines
+
+### Component Documentation
+
+Every component should have comprehensive documentation including:
+
+1. **Overview**: What the component does and when to use it
+2. **Installation**: Import statement and dependencies
+3. **Basic Usage**: Simple example
+4. **Props**: All available props with types and descriptions
+5. **Variants**: Different visual styles available
+6. **Examples**: Multiple real-world use cases
+7. **Accessibility**: ARIA patterns and keyboard interactions
+8. **API Reference**: Detailed prop documentation
+
+### Documentation Template
+
+```mdx title="packages/docs/content/docs/components/category/component-name.mdx"
+---
+title: Component Name
+description: Brief description of what the component does
+---
+
+import { ComponentPreview } from "@/components/component-preview"
+import { MyComponent } from "@helgadigitals/vera-ui"
+
+# Component Name
+
+Brief overview of the component and its purpose.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+<ComponentPreview>
+  <MyComponent>Example usage</MyComponent>
+</ComponentPreview>
+
+```tsx
+import { MyComponent } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return (
+    <MyComponent>
+      Example usage
+    </MyComponent>
+  )
+}
+```
+
+## Examples
+
+### Basic Example
+[Description and code example]
+
+### Advanced Example  
+[Description and code example]
+
+## API Reference
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | "default" \| "secondary" | "default" | Visual style variant |
+| size | "default" \| "sm" \| "lg" | "default" | Size of the component |
+
+## Accessibility
+
+- Proper ARIA attributes
+- Keyboard navigation support
+- Screen reader compatibility
+```
+
+## Pull Request Guidelines
+
+### Before Submitting
+
+- [ ] Run tests and ensure they pass
+- [ ] Run linting and fix any issues
+- [ ] Update documentation for any new features
+- [ ] Add examples for new components
+- [ ] Follow the established code style
+
+### PR Template
+
+When submitting a pull request, please include:
+
+1. **Description**: Clear description of what the PR does
+2. **Type**: Bug fix, new feature, documentation, etc.
+3. **Testing**: How you tested the changes
+4. **Screenshots**: For UI changes, include before/after screenshots
+5. **Breaking Changes**: Any breaking changes and migration path
+
+### Component Checklist
+
+For new components, ensure:
+
+- [ ] Component follows the template structure
+- [ ] Includes proper TypeScript types
+- [ ] Has comprehensive documentation
+- [ ] Includes multiple usage examples
+- [ ] Follows accessibility guidelines
+- [ ] Works with dark/light themes
+- [ ] Is responsive across screen sizes
+- [ ] Exports are added to main index.ts
+- [ ] Documentation is added to the docs site
+
+## Code Style
+
+We use the following tools for code consistency:
+
+- **ESLint**: For code linting
+- **Prettier**: For code formatting (integrated with ESLint)
+- **TypeScript**: For type checking
+
+The configuration is already set up in the repository. Make sure to:
+
+1. Use meaningful variable and function names
+2. Add comments for complex logic
+3. Keep components focused and single-responsibility
+4. Use TypeScript properly with good type definitions
+
+## Community
+
+- **GitHub Issues**: Report bugs and request features
+- **GitHub Discussions**: Ask questions and share ideas  
+- **Discord**: Join our community chat (link TBD)
+
+<Callout type="success">
+  **Thank you for contributing!** Every contribution, no matter how small, helps make Vera UI better for everyone.
+</Callout>

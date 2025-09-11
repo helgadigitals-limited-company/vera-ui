@@ -1,0 +1,437 @@
+---
+title: Button
+description: A versatile button component with multiple variants, sizes, and states
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+
+# Button
+
+A fundamental interactive element that triggers an action when activated. The Button component supports multiple variants, sizes, and states to fit different use cases in your application.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return <Button>Click me</Button>
+}
+```
+
+## Examples
+
+### Variants
+
+The Button component comes with several pre-built variants:
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function VariantsExample() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button variant="default">Default</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  )
+}
+```
+
+### Sizes
+
+Choose from different sizes to match your design needs:
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function SizesExample() {
+  return (
+    <div className="flex items-center gap-2">
+      <Button size="sm">Small</Button>
+      <Button size="default">Default</Button>
+      <Button size="lg">Large</Button>
+      <Button size="icon">👍</Button>
+    </div>
+  )
+}
+```
+
+### With Loading State
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+import { Loader2 } from "lucide-react"
+
+export default function LoadingExample() {
+  return (
+    <Button disabled>
+      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      Please wait
+    </Button>
+  )
+}
+```
+
+### As Child
+
+Use the `asChild` prop to render the button as a different element:
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function AsChildExample() {
+  return (
+    <Button asChild>
+      <a href="/home">Go to Home</a>
+    </Button>
+  )
+}
+```
+
+## API Reference
+
+### Button
+
+The main button component that renders an interactive element.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default" \| "destructive" \| "outline" \| "secondary" \| "ghost" \| "link"` | `"default"` | The visual style variant of the button |
+| `size` | `"default" \| "sm" \| "lg" \| "icon"` | `"default"` | The size of the button |
+| `asChild` | `boolean` | `false` | Change the default rendered element for the one passed as a child |
+| `disabled` | `boolean` | `false` | When true, prevents the user from interacting with the button |
+
+### Variant Details
+
+- **default**: The primary button style with solid background
+- **destructive**: For dangerous actions like delete operations
+- **outline**: Button with border and transparent background  
+- **secondary**: Alternative solid style with muted appearance
+- **ghost**: Minimal style with no background or border
+- **link**: Appears as a text link
+
+### Size Details
+
+- **sm**: Small button (32px height)
+- **default**: Standard button (40px height)  
+- **lg**: Large button (44px height)
+- **icon**: Square button for icons (40px × 40px)
+
+<Callout type="warn">
+When using the `asChild` prop, make sure the child element can receive click events and accessibility properties.
+</Callout>
+
+## Accessibility
+
+The Button component includes built-in accessibility features:
+
+- Proper ARIA attributes
+- Keyboard navigation support (Enter and Space keys)
+- Focus management
+- Screen reader compatibility
+
+When disabled, the button automatically:
+- Sets `aria-disabled="true"`
+- Prevents focus and interaction
+- Uses appropriate disabled styling
+
+## Common Patterns
+
+### Form Submit Button
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function FormExample() {
+  return (
+    <form>
+      {/* form fields */}
+      <Button type="submit">Submit Form</Button>
+    </form>
+  )
+}
+```
+
+### Button Group
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function ButtonGroupExample() {
+  return (
+    <div className="flex">
+      <Button variant="outline" className="rounded-r-none">
+        First
+      </Button>
+      <Button variant="outline" className="rounded-none border-l-0">
+        Second  
+      </Button>
+      <Button variant="outline" className="rounded-l-none border-l-0">
+        Third
+      </Button>
+    </div>
+  )
+}
+```
+
+### Confirmation Button
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+import { Trash2 } from "lucide-react"
+
+export default function ConfirmationExample() {
+  const handleDelete = () => {
+    if (confirm("Are you sure you want to delete this item?")) {
+      // Delete logic here
+    }
+  }
+
+  return (
+    <Button variant="destructive" onClick={handleDelete}>
+      <Trash2 className="mr-2 h-4 w-4" />
+      Delete Item
+    </Button>
+  )
+}
+```
+
+# Button
+
+A fundamental interactive element that triggers an action when activated. The Button component supports multiple variants, sizes, and states to fit different use cases in your application.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+<ComponentPreview>
+  <Button>Click me</Button>
+</ComponentPreview>
+
+```tsx
+import { Button } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return <Button>Click me</Button>
+}
+```
+
+## Examples
+
+### Variants
+
+The Button component comes with several pre-built variants:
+
+<ComponentPreview>
+  <div className="flex flex-wrap gap-2">
+    <Button variant="default">Default</Button>
+    <Button variant="destructive">Destructive</Button>
+    <Button variant="outline">Outline</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="link">Link</Button>
+  </div>
+</ComponentPreview>
+
+```tsx
+<Button variant="default">Default</Button>
+<Button variant="destructive">Destructive</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="link">Link</Button>
+```
+
+### Sizes
+
+Buttons are available in different sizes:
+
+<ComponentPreview>
+  <div className="flex items-center gap-2">
+    <Button size="sm">Small</Button>
+    <Button size="default">Default</Button>
+    <Button size="lg">Large</Button>
+    <Button size="icon">
+      <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+    </Button>
+  </div>
+</ComponentPreview>
+
+```tsx
+<Button size="sm">Small</Button>
+<Button size="default">Default</Button>
+<Button size="lg">Large</Button>
+<Button size="icon">
+  <StarIcon className="h-4 w-4" />
+</Button>
+```
+
+### With Icons
+
+Combine buttons with icons for better visual communication:
+
+<ComponentPreview>
+  <div className="flex flex-wrap gap-2">
+    <Button>
+      <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+      </svg>
+      Add Item
+    </Button>
+    <Button variant="outline">
+      Download
+      <svg className="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 9h-4V3H9v6H5l7 7 7-7z" />
+      </svg>
+    </Button>
+  </div>
+</ComponentPreview>
+
+```tsx
+<Button>
+  <PlusIcon className="mr-2 h-4 w-4" />
+  Add Item
+</Button>
+<Button variant="outline">
+  Download
+  <DownloadIcon className="ml-2 h-4 w-4" />
+</Button>
+```
+
+### Loading State
+
+Show loading state with disabled interaction:
+
+<ComponentPreview>
+  <div className="flex gap-2">
+    <Button disabled>
+      <svg className="mr-2 h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="32" strokeDashoffset="32">
+          <animate attributeName="stroke-dasharray" dur="2s" values="0 32;32 32;32 32" repeatCount="indefinite" />
+          <animate attributeName="stroke-dashoffset" dur="2s" values="0;-32;-64" repeatCount="indefinite" />
+        </circle>
+      </svg>
+      Loading...
+    </Button>
+    <Button variant="outline" disabled>
+      Please wait
+    </Button>
+  </div>
+</ComponentPreview>
+
+```tsx
+<Button disabled>
+  <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+  Loading...
+</Button>
+<Button variant="outline" disabled>
+  Please wait
+</Button>
+```
+
+### As Child Component
+
+Use the `asChild` prop to render the button as a different element:
+
+<ComponentPreview>
+  <Button asChild>
+    <a href="/about">Go to About</a>
+  </Button>
+</ComponentPreview>
+
+```tsx
+<Button asChild>
+  <a href="/about">Go to About</a>
+</Button>
+```
+
+## API Reference
+
+### Props
+
+The Button component accepts all standard HTML button attributes plus these additional props:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default"` \| `"destructive"` \| `"outline"` \| `"secondary"` \| `"ghost"` \| `"link"` | `"default"` | The visual style variant of the button |
+| `size` | `"default"` \| `"sm"` \| `"lg"` \| `"icon"` | `"default"` | The size of the button |
+| `asChild` | `boolean` | `false` | When true, the button will render as its child element |
+| `disabled` | `boolean` | `false` | Whether the button is disabled |
+| `className` | `string` | - | Additional CSS classes |
+
+### Styling
+
+The Button component uses CSS variables for theming. You can customize the appearance by overriding these variables:
+
+```css
+.my-custom-button {
+  --button-height: 2.5rem;
+  --button-padding-x: 1rem;
+  --button-font-size: 0.875rem;
+}
+```
+
+## Accessibility
+
+The Button component follows WAI-ARIA guidelines:
+
+- **Keyboard Navigation**: Fully accessible via keyboard (Enter/Space to activate)
+- **Screen Readers**: Proper semantic button element with accessible text
+- **Focus Management**: Clear focus indicators and focus trapping when needed
+- **Disabled State**: Properly communicated to assistive technologies
+
+<Callout type="info">
+  **ARIA Labels**: For icon-only buttons, always provide an `aria-label` or `aria-describedby` attribute for screen readers.
+</Callout>
+
+```tsx
+// Good: Icon button with accessible label
+<Button size="icon" aria-label="Add new item">
+  <PlusIcon className="h-4 w-4" />
+</Button>
+
+// Better: Icon button with tooltip
+<Tooltip>
+  <TooltipTrigger asChild>
+    <Button size="icon">
+      <PlusIcon className="h-4 w-4" />
+    </Button>
+  </TooltipTrigger>
+  <TooltipContent>Add new item</TooltipContent>
+</Tooltip>
+```
+
+## Design Tokens
+
+The Button component respects the following design tokens:
+
+- **Colors**: Primary, secondary, destructive color schemes
+- **Spacing**: Consistent padding and margin values
+- **Typography**: Font size and weight hierarchy  
+- **Border Radius**: Consistent corner radius values
+- **Animations**: Smooth hover and focus transitions
+
+## Related Components
+
+- [Icon Button](/docs/components/forms/icon-button) - For icon-only buttons
+- [Button Group](/docs/components/forms/button-group) - For grouping related buttons
+- [Loading Button](/docs/components/feedback/loading-button) - For async actions

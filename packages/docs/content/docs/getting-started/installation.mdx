@@ -1,0 +1,290 @@
+---
+title: Installation
+description: Learn how to install and set up Vera UI in your project
+---
+
+import { Steps } from "fumadocs-ui/components/steps"
+import { Callout } from "fumadocs-ui/components/callout"
+
+# Installation
+
+Get started with Vera UI, a modern React component library built with accessibility and customization in mind.
+
+## Requirements
+
+<Callout type="info">
+  Make sure you have Node.js 18+ and a React project set up before installing Vera UI.
+</Callout>
+
+- **React**: ^18.2.0 || ^19.0.0
+- **React DOM**: ^18.2.0 || ^19.0.0  
+- **Node.js**: >=18
+
+## Install the Package
+
+<Steps>
+
+### Install Vera UI
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+### Install Peer Dependencies
+
+Depending on your needs, you may need to install additional peer dependencies:
+
+```bash npm2yarn
+# For forms
+npm install react-hook-form zod
+
+# For routing (optional)
+npm install react-router-dom
+
+# For advanced table features
+npm install @tanstack/react-table
+
+# For date handling
+npm install date-fns
+```
+
+### Set Up Tailwind CSS
+
+Vera UI is built with Tailwind CSS. You need to set up Tailwind in your project:
+
+```bash npm2yarn
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+### Configure Tailwind CSS
+
+Update your `tailwind.config.js` to include Vera UI's components:
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    // Add Vera UI components
+    "./node_modules/@helgadigitals/vera-ui/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      // Vera UI theme extensions
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          "1": "hsl(var(--chart-1))",
+          "2": "hsl(var(--chart-2))",
+          "3": "hsl(var(--chart-3))",
+          "4": "hsl(var(--chart-4))",
+          "5": "hsl(var(--chart-5))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+}
+```
+
+### Add CSS Variables
+
+Add the CSS variables to your global CSS file (e.g., `globals.css`):
+
+```css title="src/globals.css"
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 10.6% 64.9%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 10.6% 64.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+```
+
+### Import Vera UI Styles
+
+Finally, import Vera UI's CSS in your main file:
+
+```tsx title="src/main.tsx" {3}
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import '@helgadigitals/vera-ui/styles'
+import './globals.css'
+import App from './App'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+</Steps>
+
+## Quick Start
+
+Now you can start using Vera UI components in your React application:
+
+```tsx title="src/App.tsx"
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@helgadigitals/vera-ui'
+
+function App() {
+  return (
+    <div className="p-8">
+      <Card className="w-96">
+        <CardHeader>
+          <CardTitle>Welcome to Vera UI</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-4 text-muted-foreground">
+            A modern React component library built for accessibility and customization.
+          </p>
+          <Button>Get Started</Button>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
+export default App
+```
+
+## Next Steps
+
+- Explore the [Components](/docs/components) to see all available components
+- Check out [Examples](/docs/examples) for real-world use cases
+- Learn about [Contributing](/docs/contributing) to help improve Vera UI
+
+<Callout type="success">
+  🎉 **You're all set!** Start building beautiful interfaces with Vera UI components.
+</Callout>

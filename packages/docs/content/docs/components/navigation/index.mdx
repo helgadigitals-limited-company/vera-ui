@@ -1,0 +1,129 @@
+---
+title: Navigation Components
+description: Components for site navigation, routing, and user journey management
+---
+
+# Navigation Components
+
+Essential components for helping users navigate through your application. From simple breadcrumbs to complex sidebar systems, these components provide flexible navigation patterns.
+
+## Components
+
+### Primary Navigation
+- **[Sidebar](/docs/components/navigation/sidebar)** - Collapsible navigation sidebar with groups and icons
+- **[Navigation Menu](/docs/components/navigation/navigation-menu)** - Horizontal navigation with dropdowns
+- **[Menubar](/docs/components/navigation/menubar)** - Desktop-style menu bar navigation
+- **[Breadcrumb](/docs/components/navigation/breadcrumb)** - Hierarchical navigation trail
+
+### Content Navigation
+- **[Tabs](/docs/components/navigation/tabs)** - Section switching and content organization
+- **[Pagination](/docs/components/navigation/pagination)** - Multi-page content navigation
+- **[Command](/docs/components/navigation/command)** - Command palette and search interface
+
+### Responsive Patterns
+- **[Sheet](/docs/components/navigation/sheet)** - Mobile-friendly slide-out navigation
+- **[Collapsible](/docs/components/navigation/collapsible)** - Expandable navigation sections
+
+## Navigation Patterns
+
+### Application Layout with Sidebar
+```tsx
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarTrigger
+} from '@helgadigitals/vera-ui'
+
+function AppLayout({ children }) {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <h2 className="font-semibold">My App</h2>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/dashboard">Dashboard</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/projects">Projects</a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1">
+        <header className="border-b p-4">
+          <SidebarTrigger />
+        </header>
+        {children}
+      </main>
+    </SidebarProvider>
+  )
+}
+```
+
+### Responsive Navigation
+```tsx
+import { 
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink
+} from '@helgadigitals/vera-ui'
+
+function MainNavigation() {
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/products/web">
+              Web Apps
+            </NavigationMenuLink>
+            <NavigationMenuLink href="/products/mobile">
+              Mobile Apps
+            </NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/about">
+            About
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  )
+}
+```
+
+## Accessibility Features
+
+- **Keyboard Navigation**: Full keyboard support with arrow keys and tab navigation
+- **Screen Readers**: Proper semantic navigation landmarks and ARIA labels
+- **Focus Management**: Focus trapping in overlays and logical focus order
+- **Active States**: Clear indication of current location and active items
+- **Mobile Support**: Touch-friendly interactions and responsive behavior
+
+## Design Patterns
+
+### Hierarchical Navigation
+Use breadcrumbs and nested sidebar groups to show content hierarchy and help users understand their location.
+
+### Progressive Disclosure
+Use collapsible sections and nested menus to reveal navigation options progressively, reducing cognitive load.
+
+### Contextual Navigation
+Provide different navigation options based on user context, role, or current section of the application.

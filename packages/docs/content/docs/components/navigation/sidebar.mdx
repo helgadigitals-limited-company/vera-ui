@@ -1,0 +1,606 @@
+---
+title: Sidebar
+description: A flexible navigation sidebar with collapsible groups, icons, and responsive behavior
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+
+# Sidebar
+
+A comprehensive navigation component that provides a collapsible sidebar with support for icons, badges, grouped items, and responsive behavior. Perfect for application dashboards and admin panels.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui lucide-react
+```
+
+## Usage
+
+The Sidebar component requires a SidebarProvider wrapper to manage state:
+
+```tsx
+import { 
+  SidebarProvider, 
+  SidebarInset,
+  SidebarTrigger 
+} from "@helgadigitals/vera-ui"
+
+export default function SidebarExample() {
+  return (
+    <SidebarProvider>
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          <h1>My Application</h1>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+          </div>
+          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+```
+
+## API Reference
+
+### SidebarProvider
+
+The root provider component that manages sidebar state and context.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `defaultOpen` | `boolean` | `true` | Default open state |
+| `open` | `boolean` | - | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | - | Callback when open state changes |
+
+### Sidebar
+
+The main sidebar container component.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `side` | `"left" \| "right"` | `"left"` | Which side of the screen to show the sidebar |
+| `variant` | `"sidebar" \| "floating" \| "inset"` | `"sidebar"` | The sidebar variant |
+| `collapsible` | `"offcanvas" \| "icon" \| "none"` | `"offcanvas"` | How the sidebar should behave when collapsed |
+
+### SidebarContent
+
+Container for sidebar content sections.
+
+### SidebarHeader / SidebarFooter
+
+Optional header and footer sections for the sidebar.
+
+### SidebarGroup
+
+Groups related sidebar items together.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional CSS classes |
+
+### SidebarGroupLabel
+
+Label for a sidebar group section.
+
+### SidebarGroupContent
+
+Container for group content.
+
+### SidebarMenu
+
+Container for sidebar menu items.
+
+### SidebarMenuItem
+
+Individual menu item wrapper.
+
+### SidebarMenuButton
+
+Interactive button for menu items.
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `asChild` | `boolean` | `false` | Render as child element |
+| `isActive` | `boolean` | `false` | Whether the item is currently active |
+| `tooltip` | `string \| ComponentProps<typeof TooltipContent>` | - | Tooltip content when collapsed |
+
+### SidebarTrigger
+
+Button to toggle sidebar open/closed state.
+
+### SidebarInset
+
+Main content area that adjusts for sidebar presence.
+
+### useSidebar
+
+Hook to access sidebar state and controls.
+
+#### Returns
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `state` | `"expanded" \| "collapsed"` | Current sidebar state |
+| `open` | `boolean` | Whether sidebar is open |
+| `setOpen` | `(open: boolean) => void` | Function to set open state |
+| `openMobile` | `boolean` | Whether mobile sidebar is open |
+| `setOpenMobile` | `(open: boolean) => void` | Function to set mobile open state |
+| `isMobile` | `boolean` | Whether currently in mobile view |
+| `toggleSidebar` | `() => void` | Function to toggle sidebar |
+
+<Callout type="info">
+The sidebar automatically handles mobile responsiveness and provides a consistent experience across all device sizes.
+</Callout>
+
+The Sidebar component requires a provider wrapper and follows a compound component pattern:
+
+<ComponentPreview>
+  <div className="flex h-64 w-full max-w-4xl border rounded-lg">
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Dashboard</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Analytics</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Settings</SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        <p>Main content area</p>
+      </main>
+    </SidebarProvider>
+  </div>
+</ComponentPreview>
+
+```tsx
+import {
+  Sidebar,
+  SidebarProvider,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Dashboard</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Analytics</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Settings</SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        <p>Your main content here</p>
+      </main>
+    </SidebarProvider>
+  )
+}
+```
+
+## Examples
+
+### With Icons and Navigation
+
+<ComponentPreview>
+  <div className="flex h-80 w-full max-w-4xl border rounded-lg">
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/">
+                  <HomeIcon className="h-4 w-4" />
+                  Dashboard
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/analytics">
+                  <BarChartIcon className="h-4 w-4" />
+                  Analytics
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/users">
+                  <UsersIcon className="h-4 w-4" />
+                  Users
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/settings">
+                  <SettingsIcon className="h-4 w-4" />
+                  Settings
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        <h2 className="text-lg font-semibold mb-2">Dashboard</h2>
+        <p className="text-muted-foreground">Welcome to your dashboard</p>
+      </main>
+    </SidebarProvider>
+  </div>
+</ComponentPreview>
+
+```tsx
+import {
+  Sidebar,
+  SidebarProvider,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@helgadigitals/vera-ui"
+import { Home, BarChart, Users, Settings } from "lucide-react"
+
+export default function NavigationSidebar() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/">
+                  <Home className="h-4 w-4" />
+                  Dashboard
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/analytics">
+                  <BarChart className="h-4 w-4" />
+                  Analytics
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href="/users">
+                  <Users className="h-4 w-4" />
+                  Users
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        {/* Your main content */}
+      </main>
+    </SidebarProvider>
+  )
+}
+```
+
+### Collapsible Groups
+
+<ComponentPreview>
+  <div className="flex h-96 w-full max-w-4xl border rounded-lg">
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Dashboard</SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Analytics</SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+          <SidebarGroup>
+            <SidebarGroupLabel>Management</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Users</SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Roles</SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Settings</SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        <h2 className="text-lg font-semibold mb-2">Main Content</h2>
+        <p className="text-muted-foreground">Content area with grouped sidebar</p>
+      </main>
+    </SidebarProvider>
+  </div>
+</ComponentPreview>
+
+```tsx
+import {
+  Sidebar,
+  SidebarProvider,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@helgadigitals/vera-ui"
+
+export default function GroupedSidebar() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Dashboard</SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Analytics</SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+          <SidebarGroup>
+            <SidebarGroupLabel>Management</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Users</SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Settings</SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+      <main className="flex-1">
+        {/* Your main content */}
+      </main>
+    </SidebarProvider>
+  )
+}
+```
+
+### With Header and Footer
+
+<ComponentPreview>
+  <div className="flex h-96 w-full max-w-4xl border rounded-lg">
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader className="border-b p-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground text-sm font-bold">
+              V
+            </div>
+            <span className="font-semibold">Vera UI</span>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Dashboard</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Projects</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Analytics</SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter className="border-t p-4">
+          <div className="flex items-center gap-2 text-sm">
+            <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+              JD
+            </div>
+            <div>
+              <p className="font-medium">John Doe</p>
+              <p className="text-muted-foreground text-xs">john@example.com</p>
+            </div>
+          </div>
+        </SidebarFooter>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        <h2 className="text-lg font-semibold mb-2">Dashboard</h2>
+        <p className="text-muted-foreground">Main application content</p>
+      </main>
+    </SidebarProvider>
+  </div>
+</ComponentPreview>
+
+```tsx
+import {
+  Sidebar,
+  SidebarProvider,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@helgadigitals/vera-ui"
+
+export default function FullSidebar() {
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader className="border-b p-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground text-sm font-bold">
+              V
+            </div>
+            <span className="font-semibold">Vera UI</span>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Dashboard</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Projects</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>Analytics</SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter className="border-t p-4">
+          <div className="flex items-center gap-2 text-sm">
+            <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+              JD
+            </div>
+            <div>
+              <p className="font-medium">John Doe</p>
+              <p className="text-muted-foreground text-xs">john@example.com</p>
+            </div>
+          </div>
+        </SidebarFooter>
+      </Sidebar>
+      <main className="flex-1 p-4">
+        {/* Your main content */}
+      </main>
+    </SidebarProvider>
+  )
+}
+```
+
+### Responsive Collapsible Modes
+
+The sidebar supports different collapsible behaviors:
+
+```tsx
+// Icon mode - collapses to icons on desktop
+<Sidebar collapsible="icon">
+
+// Offcanvas mode - hides completely when collapsed  
+<Sidebar collapsible="offcanvas">
+
+// None - never collapses
+<Sidebar collapsible="none">
+```
+
+## API Reference
+
+### SidebarProvider
+
+The root provider that manages sidebar state.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `defaultOpen` | `boolean` | `true` | Initial open state |
+| `open` | `boolean` | - | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | - | Open state change handler |
+
+### Sidebar
+
+The main sidebar container.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `side` | `"left"` \| `"right"` | `"left"` | Which side to display the sidebar |
+| `variant` | `"sidebar"` \| `"floating"` \| `"inset"` | `"sidebar"` | Visual variant |
+| `collapsible` | `"offcanvas"` \| `"icon"` \| `"none"` | `"offcanvas"` | Collapse behavior |
+
+### SidebarMenuButton
+
+Interactive menu button component.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `asChild` | `boolean` | `false` | Render as child element |
+| `isActive` | `boolean` | `false` | Active state |
+| `variant` | `"default"` \| `"outline"` | `"default"` | Visual variant |
+| `size` | `"default"` \| `"sm"` \| `"lg"` | `"default"` | Button size |
+| `tooltip` | `string` \| `object` | - | Tooltip content |
+
+## Accessibility
+
+The Sidebar component follows WAI-ARIA guidelines:
+
+- **Keyboard Navigation**: Full keyboard support with arrow keys and tab navigation
+- **Screen Readers**: Proper semantic navigation structure with landmarks
+- **Focus Management**: Focus trapping and restoration when collapsing/expanding
+- **ARIA Labels**: Proper labeling for navigation regions and interactive elements
+
+<Callout type="info">
+  **Navigation Landmarks**: The sidebar automatically uses the `navigation` landmark role for better screen reader navigation.
+</Callout>
+
+## Theming
+
+Customize the sidebar appearance using CSS variables:
+
+```css
+:root {
+  --sidebar-background: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 10.6% 64.9%);
+}
+```
+
+## Related Components
+
+- [Navigation Menu](/docs/components/navigation/navigation-menu) - For horizontal navigation
+- [Breadcrumb](/docs/components/navigation/breadcrumb) - For hierarchical navigation
+- [Tabs](/docs/components/navigation/tabs) - For section switching
