@@ -6,7 +6,7 @@ node_modules/
 # Production builds
 dist/
 build/
-lib/
+/lib/
 
 # Storybook
 *storybook.log
