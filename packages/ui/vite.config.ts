@@ -49,6 +49,7 @@ export default defineConfig({
         "zod",
       ],
       output: {
+        banner: '"use client";',
         globals: {
           react: "React",
           "react-dom": "ReactDOM",

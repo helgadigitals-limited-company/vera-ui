@@ -19,12 +19,14 @@ We welcome contributions to Vera UI! This guide will help you get started with c
 Fork the repository on GitHub and clone it locally:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/vera-ui.git
+git clone https://github.com/helgadigitals-limited-company/vera-ui.git
 cd vera-ui
 ```
 
 ### Install Dependencies
 
+```bash
+pnpm install
 We use pnpm for package management:
 
 ```bash
@@ -204,14 +206,14 @@ Every component should have comprehensive documentation including:
 
 ### Documentation Template
 
-```mdx title="packages/docs/content/docs/components/category/component-name.mdx"
+````mdx title="packages/docs/content/docs/components/category/component-name.mdx"
 ---
 title: Component Name
 description: Brief description of what the component does
 ---
 
 import { ComponentPreview } from "@/components/component-preview"
-import { MyComponent } from "@helgadigitals/vera-ui"
+import { Button } from "@helgadigitals/vera-ui"
 
 # Component Name
 
@@ -221,25 +223,27 @@ Brief overview of the component and its purpose.
 
 ```bash npm2yarn
 npm install @helgadigitals/vera-ui
-```
+
 
 ## Usage
 
 <ComponentPreview>
-  <MyComponent>Example usage</MyComponent>
+  <Button>Example usage</Button>
 </ComponentPreview>
 
 ```tsx
-import { MyComponent } from "@helgadigitals/vera-ui"
+import { Button } from "@helgadigitals/vera-ui"
 
 export default function Example() {
   return (
-    <MyComponent>
+    <Button>
       Example usage
-    </MyComponent>
+    </Button>
   )
 }
 ```
+
+````
 
 ## Examples
 

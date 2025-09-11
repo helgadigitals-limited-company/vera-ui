@@ -4,6 +4,16 @@ description: A powerful and flexible sidebar system with ReusableSidebar and Sid
 ---
 
 import { Callout } from "fumadocs-ui/components/callout"
+import { Home, BarChart, Users, Settings } from "lucide-react"
+import { 
+  Sidebar, 
+  SidebarLayout, 
+  SidebarProvider, 
+  SidebarContent, 
+  SidebarMenu, 
+  SidebarMenuItem, 
+  SidebarMenuButton 
+} from "@helgadigitals/vera-ui"
 
 # Sidebar & SidebarLayout
 
@@ -29,7 +39,7 @@ import {
   type Group,
   type MixedSidebarItem
 } from "@helgadigitals/vera-ui";
-import { Home, Calendar, Users, Settings } from "lucide-react";
+import { Home, Calendar, Users, Settings, BarChart } from "lucide-react";
 ```
 
 ## Data Types
@@ -74,7 +84,7 @@ When you pass `SidebarItem[]`, the sidebar renders items directly without groupi
 
 ```tsx
 import { SidebarLayout } from "@helgadigitals/vera-ui";
-import { Home, Calendar, Users, Settings } from "lucide-react";
+import { Home, Calendar, Users, Settings, BarChart } from "lucide-react";
 
 const items: SidebarItem[] = [
   { title: "Home", path: "/", icon: Home },
@@ -459,7 +469,7 @@ export default function Example() {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <a href="/">
-                  <HomeIcon className="h-4 w-4" />
+                  <Home className="h-4 w-4" />
                   Dashboard
                 </a>
               </SidebarMenuButton>
@@ -467,7 +477,7 @@ export default function Example() {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <a href="/analytics">
-                  <BarChartIcon className="h-4 w-4" />
+                  <BarChart className="h-4 w-4" />
                   Analytics
                 </a>
               </SidebarMenuButton>
@@ -475,7 +485,7 @@ export default function Example() {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <a href="/users">
-                  <UsersIcon className="h-4 w-4" />
+                  <Users className="h-4 w-4" />
                   Users
                 </a>
               </SidebarMenuButton>
@@ -483,7 +493,7 @@ export default function Example() {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <a href="/settings">
-                  <SettingsIcon className="h-4 w-4" />
+                  <Settings className="h-4 w-4" />
                   Settings
                 </a>
               </SidebarMenuButton>

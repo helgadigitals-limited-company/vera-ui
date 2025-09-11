@@ -1,3 +1,5 @@
+"use client"
+
 import './index.css'
 
 // UI Components (alphabetical order)
