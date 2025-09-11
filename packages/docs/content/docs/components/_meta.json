@@ -6,6 +6,7 @@
     "data-display",
     "layout",
     "feedback",
-    "overlays"
+    "overlays",
+    "utilities"
   ]
 }

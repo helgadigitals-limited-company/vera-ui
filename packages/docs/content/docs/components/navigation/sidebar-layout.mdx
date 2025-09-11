@@ -1,0 +1,304 @@
+---
+title: SidebarLayout
+description: A complete layout component that combines sidebar navigation with main content area
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+
+# SidebarLayout
+
+The `SidebarLayout` component provides a complete application layout solution that combines the powerful sidebar navigation system with a main content area. It's designed to be the primary layout component for dashboard and admin applications.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui lucide-react
+```
+
+## Usage
+
+```tsx
+import { SidebarLayout } from "@helgadigitals/vera-ui";
+import { Home, Users, Settings, BarChart } from "lucide-react";
+
+const items = [
+  { title: "Dashboard", path: "/", icon: Home },
+  { title: "Users", path: "/users", icon: Users, badge: 12 },
+  { title: "Analytics", path: "/analytics", icon: BarChart },
+  { title: "Settings", path: "/settings", icon: Settings }
+];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items }}>
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-4">Welcome to Dashboard</h1>
+        <p>Your main application content goes here.</p>
+      </div>
+    </SidebarLayout>
+  );
+}
+```
+
+## Features
+
+### Responsive Design
+
+The SidebarLayout automatically adapts to different screen sizes:
+
+- **Desktop**: Full sidebar visible alongside content
+- **Tablet**: Collapsible sidebar with overlay behavior
+- **Mobile**: Hidden sidebar accessible via trigger button
+
+### Built-in State Management
+
+The component includes built-in state management for:
+
+- Sidebar open/close state
+- Mobile responsiveness
+- Keyboard navigation
+- Focus management
+
+## Layout Structure
+
+The SidebarLayout creates a structured layout with these areas:
+
+```
+┌─────────────┬──────────────────────┐
+│             │                      │
+│   Sidebar   │    Main Content      │
+│             │                      │
+│             │                      │
+└─────────────┴──────────────────────┘
+```
+
+### Content Area
+
+The main content area automatically:
+
+- Takes remaining space after sidebar
+- Maintains proper spacing and padding
+- Supports scrolling when content overflows
+- Adapts to sidebar state changes
+
+## Advanced Usage
+
+### With Mixed Content
+
+```tsx
+import { SidebarLayout, type MixedSidebarItem } from "@helgadigitals/vera-ui";
+import { Home, Users, Settings, FileText, BarChart, Zap } from "lucide-react";
+
+const mixedItems: MixedSidebarItem[] = [
+  // Top-level quick actions
+  { title: "Dashboard", path: "/", icon: Home },
+  { title: "Quick Stats", path: "/quick-stats", icon: Zap, badge: "New" },
+  
+  // Grouped sections
+  {
+    key: "content",
+    label: "Content Management",
+    icon: FileText,
+    items: [
+      { title: "Posts", path: "/posts", icon: FileText },
+      { title: "Pages", path: "/pages", icon: FileText }
+    ]
+  },
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "Users", path: "/users", icon: Users, badge: 12 },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  }
+];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items: mixedItems }}>
+      <div className="flex flex-col h-full">
+        <header className="border-b p-4">
+          <h1 className="text-xl font-semibold">Application Header</h1>
+        </header>
+        <main className="flex-1 p-6 overflow-auto">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6">Main Content</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-card rounded-lg p-6 shadow-sm">
+                <h3 className="font-semibold mb-2">Card 1</h3>
+                <p className="text-muted-foreground">Content goes here</p>
+              </div>
+              <div className="bg-card rounded-lg p-6 shadow-sm">
+                <h3 className="font-semibold mb-2">Card 2</h3>
+                <p className="text-muted-foreground">Content goes here</p>
+              </div>
+              <div className="bg-card rounded-lg p-6 shadow-sm">
+                <h3 className="font-semibold mb-2">Card 3</h3>
+                <p className="text-muted-foreground">Content goes here</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </SidebarLayout>
+  );
+}
+```
+
+### With Router Integration
+
+```tsx
+import { SidebarLayout } from "@helgadigitals/vera-ui";
+import { useRouter } from "next/router"; // or your router of choice
+import { Home, Users, Settings } from "lucide-react";
+
+function AppLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
+  const items = [
+    { title: "Dashboard", path: "/", icon: Home, exact: true },
+    { title: "Users", path: "/users", icon: Users },
+    { title: "Settings", path: "/settings", icon: Settings }
+  ];
+
+  return (
+    <SidebarLayout props={{ items }}>
+      {children}
+    </SidebarLayout>
+  );
+}
+```
+
+## Props Reference
+
+### SidebarLayout Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `props.items` | `SidebarItem[] \| Group[] \| MixedSidebarItem[]` | - | Navigation items configuration |
+| `children` | `ReactNode` | - | Main content to render in the content area |
+| `className` | `string` | - | Additional CSS classes for the layout container |
+
+## Styling
+
+### CSS Variables
+
+The component uses CSS variables for theming:
+
+```css
+.sidebar-layout {
+  --sidebar-width: 280px;
+  --sidebar-width-mobile: 280px;
+  --sidebar-background: hsl(var(--background));
+  --sidebar-border: hsl(var(--border));
+}
+```
+
+### Custom Styling
+
+```tsx
+<SidebarLayout 
+  props={{ items }} 
+  className="custom-layout-styles"
+>
+  <div className="custom-content-styles">
+    {/* Your content */}
+  </div>
+</SidebarLayout>
+```
+
+## Accessibility
+
+The SidebarLayout includes built-in accessibility features:
+
+- **Keyboard Navigation**: Full keyboard support for sidebar navigation
+- **Screen Reader Support**: Proper ARIA labels and roles
+- **Focus Management**: Logical focus flow between sidebar and content
+- **Mobile Accessibility**: Touch-friendly controls on mobile devices
+
+## Best Practices
+
+<Callout type="info">
+**Layout Structure**: Use SidebarLayout as your main app layout component, wrapping all pages that need sidebar navigation.
+</Callout>
+
+<Callout type="warning">
+**Content Overflow**: Ensure your content area has proper overflow handling for long content.
+</Callout>
+
+### Recommended Structure
+
+```tsx
+// Layout component
+function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarLayout props={{ items: navigationItems }}>
+      <div className="flex flex-col h-full">
+        <Header />
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    </SidebarLayout>
+  );
+}
+
+// Page component
+function DashboardPage() {
+  return (
+    <div className="p-6">
+      <h1>Dashboard</h1>
+      {/* Page content */}
+    </div>
+  );
+}
+```
+
+## Integration Examples
+
+### Next.js App Router
+
+```tsx
+// app/layout.tsx
+import { SidebarLayout } from "@helgadigitals/vera-ui";
+import { navigationItems } from "@/config/navigation";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <SidebarLayout props={{ items: navigationItems }}>
+          {children}
+        </SidebarLayout>
+      </body>
+    </html>
+  );
+}
+```
+
+### React Router
+
+```tsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SidebarLayout } from "@helgadigitals/vera-ui";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <SidebarLayout props={{ items: navigationItems }}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </SidebarLayout>
+    </BrowserRouter>
+  );
+}
+```

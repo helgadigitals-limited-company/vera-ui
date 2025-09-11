@@ -1,0 +1,10 @@
+{
+  "title": "Utilities",
+  "pages": [
+    "index",
+    "utils",
+    "theme-provider",
+    "theme-toggle",
+    "hooks"
+  ]
+}

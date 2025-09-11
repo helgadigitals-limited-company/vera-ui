@@ -1,0 +1,412 @@
+---
+title: Theme Provider
+description: Theme management system for light, dark, and system theme modes
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+
+# Theme Provider
+
+The Theme Provider component enables comprehensive theme management in your application, supporting light mode, dark mode, and system preference detection. It provides context for theme state and persistence across sessions.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+## Basic Setup
+
+Wrap your application with the ThemeProvider to enable theme functionality:
+
+```tsx
+import { ThemeProvider } from "@helgadigitals/vera-ui";
+
+function App() {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <div className="min-h-screen bg-background text-foreground">
+        {/* Your app content */}
+        <YourAppContent />
+      </div>
+    </ThemeProvider>
+  );
+}
+```
+
+## Usage with Next.js
+
+For Next.js applications, wrap your app in the root layout:
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "@helgadigitals/vera-ui";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+## Theme Context Hook
+
+Use the `useTheme` hook to access and control theme state:
+
+```tsx
+import { useTheme } from "@helgadigitals/vera-ui";
+
+function ThemeControls() {
+  const { theme, setTheme, systemTheme, resolvedTheme } = useTheme();
+
+  return (
+    <div className="flex gap-2">
+      <button
+        onClick={() => setTheme("light")}
+        className={`px-3 py-1 rounded ${theme === "light" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+      >
+        Light
+      </button>
+      <button
+        onClick={() => setTheme("dark")}
+        className={`px-3 py-1 rounded ${theme === "dark" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+      >
+        Dark
+      </button>
+      <button
+        onClick={() => setTheme("system")}
+        className={`px-3 py-1 rounded ${theme === "system" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+      >
+        System
+      </button>
+    </div>
+  );
+}
+
+function ThemeStatus() {
+  const { theme, systemTheme, resolvedTheme } = useTheme();
+
+  return (
+    <div className="text-sm text-muted-foreground">
+      <p>Current theme: {theme}</p>
+      <p>System theme: {systemTheme}</p>
+      <p>Resolved theme: {resolvedTheme}</p>
+    </div>
+  );
+}
+```
+
+## Theme Toggle Component
+
+The library includes a pre-built theme toggle component:
+
+```tsx
+import { ThemeToggle } from "@helgadigitals/vera-ui";
+
+function Header() {
+  return (
+    <header className="flex justify-between items-center p-4">
+      <h1 className="text-xl font-bold">My App</h1>
+      <ThemeToggle />
+    </header>
+  );
+}
+```
+
+### Custom Theme Toggle
+
+Create your own theme toggle with custom styling:
+
+```tsx
+import { useTheme } from "@helgadigitals/vera-ui";
+import { Sun, Moon, Monitor } from "lucide-react";
+import { Button } from "@helgadigitals/vera-ui";
+
+function CustomThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  const cycleTheme = () => {
+    const themes = ["light", "dark", "system"];
+    const currentIndex = themes.indexOf(theme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    setTheme(themes[nextIndex]);
+  };
+
+  const getIcon = () => {
+    switch (theme) {
+      case "light":
+        return <Sun className="h-4 w-4" />;
+      case "dark":
+        return <Moon className="h-4 w-4" />;
+      case "system":
+        return <Monitor className="h-4 w-4" />;
+      default:
+        return <Sun className="h-4 w-4" />;
+    }
+  };
+
+  return (
+    <Button variant="outline" size="icon" onClick={cycleTheme}>
+      {getIcon()}
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  );
+}
+```
+
+## Advanced Configuration
+
+### Custom Theme Names
+
+You can use custom theme names beyond the standard light/dark:
+
+```tsx
+<ThemeProvider
+  attribute="class"
+  defaultTheme="system"
+  enableSystem
+  themes={["light", "dark", "blue", "rose", "system"]}
+>
+  <YourApp />
+</ThemeProvider>
+```
+
+### Storage Configuration
+
+Configure how themes are persisted:
+
+```tsx
+<ThemeProvider
+  attribute="class"
+  defaultTheme="system"
+  enableSystem
+  storageKey="app-theme" // Custom storage key
+  value={{
+    light: "light-theme",
+    dark: "dark-theme"
+  }}
+>
+  <YourApp />
+</ThemeProvider>
+```
+
+### Theme-Specific Styling
+
+Use CSS variables and Tailwind classes for theme-aware styling:
+
+```tsx
+// Component that adapts to theme
+function ThemedCard({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-card text-card-foreground border border-border rounded-lg p-6 shadow-sm">
+      {children}
+    </div>
+  );
+}
+
+// Custom theme-aware component
+function StatusIndicator({ status }: { status: "online" | "offline" }) {
+  const { resolvedTheme } = useTheme();
+  
+  return (
+    <div className={`
+      w-3 h-3 rounded-full
+      ${status === "online" 
+        ? "bg-green-500 dark:bg-green-400" 
+        : "bg-red-500 dark:bg-red-400"
+      }
+    `} />
+  );
+}
+```
+
+## Props Reference
+
+### ThemeProvider Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | App content to wrap |
+| `attribute` | `string` | `"data-theme"` | HTML attribute to set |
+| `defaultTheme` | `string` | `"system"` | Default theme when none is set |
+| `enableSystem` | `boolean` | `true` | Enable system theme detection |
+| `disableTransitionOnChange` | `boolean` | `false` | Disable CSS transitions during theme change |
+| `storageKey` | `string` | `"theme"` | localStorage key for persistence |
+| `themes` | `string[]` | `["light", "dark"]` | Available theme options |
+| `value` | `object` | - | Custom theme value mapping |
+
+### useTheme Return Values
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `theme` | `string` | Current theme setting |
+| `setTheme` | `(theme: string) => void` | Function to change theme |
+| `forcedTheme` | `string \| undefined` | Forced theme (if set) |
+| `resolvedTheme` | `string \| undefined` | Actual resolved theme |
+| `systemTheme` | `"light" \| "dark" \| undefined` | System preference |
+| `themes` | `string[]` | Available theme options |
+
+## CSS Variables
+
+The theme system uses CSS variables that automatically update based on the selected theme:
+
+```css
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 222.2 47.4% 11.2%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 84% 4.9%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 84% 4.9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  /* ... other dark theme variables */
+}
+```
+
+## Integration Examples
+
+### Component Library Integration
+
+```tsx
+import { ThemeProvider, Button, Card } from "@helgadigitals/vera-ui";
+
+function ComponentShowcase() {
+  return (
+    <ThemeProvider>
+      <div className="p-8 space-y-4">
+        <Card className="p-6">
+          <h2 className="text-lg font-semibold mb-4">Theme-aware Components</h2>
+          <div className="flex gap-2">
+            <Button variant="default">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+          </div>
+        </Card>
+        
+        <ThemeToggle />
+      </div>
+    </ThemeProvider>
+  );
+}
+```
+
+### Server-Side Rendering
+
+For SSR applications, handle hydration carefully:
+
+```tsx
+import { useEffect, useState } from "react";
+import { useTheme } from "@helgadigitals/vera-ui";
+
+function ClientOnlyThemeToggle() {
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // Return null on server-side
+  }
+
+  return (
+    <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      Toggle Theme
+    </button>
+  );
+}
+```
+
+## Best Practices
+
+<Callout type="info">
+**System Theme**: Always enable system theme detection for better user experience.
+</Callout>
+
+<Callout type="warning">
+**Hydration**: Be careful with theme-dependent rendering in SSR applications to avoid hydration mismatches.
+</Callout>
+
+### Recommendations
+
+1. **Provider Placement**: Place ThemeProvider at the root of your application
+2. **CSS Variables**: Use CSS variables for consistent theming across components
+3. **Transition Control**: Use `disableTransitionOnChange` to prevent jarring animations
+4. **Accessibility**: Respect user's system preferences with `enableSystem`
+5. **Persistence**: Let the provider handle theme persistence automatically
+
+### Performance Considerations
+
+- Theme changes are optimized to minimize re-renders
+- CSS variables update instantly without component re-mounting
+- Local storage operations are debounced to prevent excessive writes
+
+## Troubleshooting
+
+### Common Issues
+
+**Hydration Mismatch**
+```tsx
+// ❌ Wrong - will cause hydration issues
+function ThemeAwareComponent() {
+  const { theme } = useTheme();
+  return <div>Current theme: {theme}</div>;
+}
+
+// ✅ Correct - handles SSR properly
+function ThemeAwareComponent() {
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div>Current theme: system</div>;
+  return <div>Current theme: {theme}</div>;
+}
+```
+
+**Theme Not Persisting**
+- Ensure ThemeProvider is at the root level
+- Check that `storageKey` is unique if using multiple apps
+- Verify localStorage is available in your environment

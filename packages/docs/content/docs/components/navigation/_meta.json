@@ -2,6 +2,12 @@
   "title": "Navigation Components", 
   "pages": [
     "index",
-    "sidebar"
+    "sidebar",
+    "sidebar-layout",
+    "breadcrumb",
+    "navigation-menu",
+    "menubar",
+    "pagination",
+    "tabs"
   ]
 }

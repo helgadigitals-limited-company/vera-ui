@@ -1,13 +1,17 @@
 ---
 title: Sidebar
-description: A flexible navigation sidebar with collapsible groups, icons, and responsive behavior
+description: A powerful and flexible sidebar system with ReusableSidebar and SidebarLayout components
 ---
 
 import { Callout } from "fumadocs-ui/components/callout"
 
-# Sidebar
+# Sidebar & SidebarLayout
 
-A comprehensive navigation component that provides a collapsible sidebar with support for icons, badges, grouped items, and responsive behavior. Perfect for application dashboards and admin panels.
+The Vera UI library provides a powerful and flexible sidebar system with two main components: `ReusableSidebar` and `SidebarLayout`. This comprehensive guide covers all functionalities and usage patterns, including the new **Mixed Content Support**.
+
+<Callout type="info">
+The sidebar system has been completely redesigned to provide maximum flexibility with support for mixed content types, auto-detection, and advanced styling options.
+</Callout>
 
 ## Installation
 
@@ -17,35 +21,266 @@ npm install @helgadigitals/vera-ui lucide-react
 
 ## Usage
 
-The Sidebar component requires a SidebarProvider wrapper to manage state:
+```tsx
+import {
+  SidebarLayout,
+  ReusableSidebar,
+  type SidebarItem,
+  type Group,
+  type MixedSidebarItem
+} from "@helgadigitals/vera-ui";
+import { Home, Calendar, Users, Settings } from "lucide-react";
+```
+
+## Data Types
+
+### SidebarItem
+
+```tsx
+type SidebarItem = {
+  title: string;           // Display name
+  path: string;           // Route path
+  icon: React.ElementType; // Lucide icon component
+  exact?: boolean;        // Exact route matching
+  badge?: string | number; // Optional badge/count
+  tooltip?: string;       // Optional tooltip text
+};
+```
+
+### Group
+
+```tsx
+type Group = {
+  key: string;             // Unique identifier
+  label: string;           // Group display name
+  icon?: React.ElementType; // Optional icon
+  items: SidebarItem[];    // Array of sidebar items
+};
+```
+
+### MixedSidebarItem
+
+```tsx
+type MixedSidebarItem = SidebarItem | Group;
+```
+
+This union type allows you to mix individual sidebar items and groups in the same array for maximum flexibility.
+
+## Basic Usage
+
+### 1. Simple Sidebar with Direct Items
+
+When you pass `SidebarItem[]`, the sidebar renders items directly without grouping:
+
+```tsx
+import { SidebarLayout } from "@helgadigitals/vera-ui";
+import { Home, Calendar, Users, Settings } from "lucide-react";
+
+const items: SidebarItem[] = [
+  { title: "Home", path: "/", icon: Home },
+  { title: "Calendar", path: "/calendar", icon: Calendar, badge: 3 },
+  { title: "Users", path: "/users", icon: Users },
+  { title: "Settings", path: "/settings", icon: Settings }
+];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items }}>
+      <div>Your main content here</div>
+    </SidebarLayout>
+  );
+}
+```
+
+### 2. Grouped Sidebar
+
+When you pass `Group[]`, the sidebar renders with collapsible groups:
+
+```tsx
+const groupedItems: Group[] = [
+  {
+    key: "main",
+    label: "Main Navigation",
+    items: [
+      { title: "Dashboard", path: "/dashboard", icon: Home },
+      { title: "Analytics", path: "/analytics", icon: BarChart }
+    ]
+  },
+  {
+    key: "admin",
+    label: "Administration", 
+    items: [
+      { title: "Users", path: "/users", icon: Users, badge: 12 },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  }
+];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items: groupedItems }}>
+      <div>Your main content here</div>
+    </SidebarLayout>
+  );
+}
+```
+
+## Mixed Content Support
+
+The most powerful feature allows you to **mix individual `SidebarItem`s and `Group`s in the same array**:
+
+### Basic Mixed Usage
+
+```tsx
+import { SidebarLayout, type MixedSidebarItem } from "@helgadigitals/vera-ui";
+import { Home, Users, Settings, Profile, BarChart, FileText, Zap } from "lucide-react";
+
+const mixedItems: MixedSidebarItem[] = [
+  // Direct items appear at the top level
+  { title: "Home", path: "/", icon: Home },
+  { title: "Profile", path: "/profile", icon: Profile },
+  
+  // Groups appear below direct items
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "Users", path: "/users", icon: Users },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  },
+  
+  // Another direct item
+  { title: "Quick Action", path: "/quick", icon: Zap },
+  
+  // Another group
+  {
+    key: "reports",
+    label: "Reports",
+    icon: BarChart,
+    items: [
+      { title: "Analytics", path: "/analytics", icon: BarChart },
+      { title: "Documents", path: "/documents", icon: FileText }
+    ]
+  }
+];
+
+function App() {
+  return (
+    <SidebarLayout props={{ items: mixedItems }}>
+      <div>Your main content here</div>
+    </SidebarLayout>
+  );
+}
+```
+
+## Auto-Detection Logic
+
+The sidebar automatically detects the data structure and renders accordingly:
+
+- **Pure `SidebarItem[]`**: Renders flat list of navigation items
+- **Pure `Group[]`**: Renders with collapsible group sections  
+- **Mixed `MixedSidebarItem[]`**: Renders direct items first, then groups
+
+<Callout type="info">
+The auto-detection uses utility functions from `@helgadigitals/vera-ui` to determine the correct rendering mode.
+</Callout>
+
+## Advanced Features
+
+### Badges and Tooltips
+
+```tsx
+const itemsWithExtras: SidebarItem[] = [
+  { 
+    title: "Messages", 
+    path: "/messages", 
+    icon: Mail, 
+    badge: 5,
+    tooltip: "You have 5 unread messages"
+  },
+  { 
+    title: "Notifications", 
+    path: "/notifications", 
+    icon: Bell, 
+    badge: "New",
+    tooltip: "Check your latest notifications"
+  }
+];
+```
+
+### Exact Route Matching
+
+```tsx
+const items: SidebarItem[] = [
+  { title: "Home", path: "/", icon: Home, exact: true },
+  { title: "Users", path: "/users", icon: Users }, // matches /users and /users/*
+];
+```
+
+## Props Reference
+
+### SidebarLayout Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `props.items` | `SidebarItem[] \| Group[] \| MixedSidebarItem[]` | - | Navigation items configuration |
+| `children` | `ReactNode` | - | Main content area |
+
+### SidebarItem Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | - | Display name for the sidebar item |
+| `path` | `string` | - | Route path for navigation |
+| `icon` | `React.ElementType` | - | Lucide icon component |
+| `exact` | `boolean` | `false` | Enable exact route matching |
+| `badge` | `string \| number` | - | Optional badge/count display |
+| `tooltip` | `string` | - | Optional tooltip text |
+
+### Group Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `key` | `string` | - | Unique identifier for the group |
+| `label` | `string` | - | Display name for the group |
+| `icon` | `React.ElementType` | - | Optional icon for the group header |
+| `items` | `SidebarItem[]` | - | Array of sidebar items in the group |
+
+## Features
+
+- ✅ **Mixed Content Support**: Combine individual items and groups seamlessly
+- ✅ **Auto-Detection**: Automatically handles different data structures
+- ✅ **Responsive Design**: Mobile-friendly with collapsible behavior
+- ✅ **Badge Support**: Show counts and status indicators
+- ✅ **Tooltip Support**: Enhanced accessibility with tooltips
+- ✅ **Icon Integration**: Full Lucide React icon support
+- ✅ **Route Matching**: Flexible exact and partial matching
+- ✅ **TypeScript Support**: Fully typed for better development experience
+- ✅ **Collapsible Groups**: Interactive group management
+- ✅ **Theme Support**: Works with light and dark themes
+
+<Callout type="warning">
+When using mixed content, ensure each group has a unique `key` property to avoid rendering issues.
+</Callout>
+
+## Utility Functions
+
+The sidebar system includes several utility functions exported from the library:
 
 ```tsx
 import { 
-  SidebarProvider, 
-  SidebarInset,
-  SidebarTrigger 
-} from "@helgadigitals/vera-ui"
+  isGroupArray, 
+  isMixedArray, 
+  isGroup, 
+  isSidebarItem 
+} from "@helgadigitals/vera-ui";
 
-export default function SidebarExample() {
-  return (
-    <SidebarProvider>
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <h1>My Application</h1>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
-  )
-}
+// Type checking utilities
+const isGroups = isGroupArray(items);
+const isMixed = isMixedArray(items);
+const isItemGroup = isGroup(singleItem);
+const isItemSidebar = isSidebarItem(singleItem);
 ```
 
 ## API Reference

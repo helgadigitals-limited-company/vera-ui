@@ -1,0 +1,10 @@
+{
+  "title": "Layout Components",
+  "pages": [
+    "index",
+    "aspect-ratio",
+    "separator",
+    "resizable",
+    "scroll-area"
+  ]
+}

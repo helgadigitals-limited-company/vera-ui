@@ -1,0 +1,502 @@
+---
+title: Utility Functions
+description: Helper functions and utilities for data transformation and type checking
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+
+# Utility Functions
+
+The Vera UI library provides a comprehensive set of utility functions for common operations like styling, data transformation, and type checking. These utilities help streamline development and maintain consistency across your application.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+```tsx
+import { 
+  cn, 
+  transformToSelectOptions, 
+  splitStringByUnderscore,
+  isGroupArray,
+  isMixedArray,
+  isGroup,
+  isSidebarItem
+} from "@helgadigitals/vera-ui";
+```
+
+## Styling Utilities
+
+### cn
+
+A utility function for conditionally joining CSS classes. Combines `clsx` and `tailwind-merge` for optimal class merging.
+
+```tsx
+function cn(...inputs: ClassValue[]): string
+```
+
+**Usage:**
+
+```tsx
+import { cn } from "@helgadigitals/vera-ui";
+
+// Basic usage
+const className = cn("px-4 py-2", "bg-blue-500", "text-white");
+
+// Conditional classes
+const buttonClass = cn(
+  "px-4 py-2 rounded",
+  {
+    "bg-blue-500": variant === "primary",
+    "bg-gray-500": variant === "secondary",
+    "opacity-50": disabled,
+  },
+  className
+);
+
+// With arrays
+const classes = cn([
+  "base-class",
+  isActive && "active-class",
+  "another-class"
+]);
+
+// Component example
+function Button({ variant, disabled, className, children }) {
+  return (
+    <button
+      className={cn(
+        "inline-flex items-center justify-center rounded-md px-4 py-2",
+        "font-medium transition-colors focus-visible:outline-none",
+        {
+          "bg-primary text-primary-foreground": variant === "default",
+          "bg-destructive text-destructive-foreground": variant === "destructive",
+          "opacity-50 pointer-events-none": disabled,
+        },
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+## Data Transformation Utilities
+
+### transformToSelectOptions
+
+Transforms an array of objects into select options format with customizable label and value fields.
+
+```tsx
+function transformToSelectOptions<T extends Record<string, any>>(
+  data: T[],
+  labelField: keyof T,
+  valueField: keyof T = 'id' as keyof T
+): { value: string; label: string }[]
+```
+
+**Parameters:**
+- `data`: Array of objects to transform
+- `labelField`: Property to use for the option label
+- `valueField`: Property to use for the option value (defaults to 'id')
+
+**Usage:**
+
+```tsx
+import { transformToSelectOptions } from "@helgadigitals/vera-ui";
+
+const users = [
+  { id: 1, name: "John Doe", email: "john@example.com" },
+  { id: 2, name: "Jane Smith", email: "jane@example.com" },
+  { id: 3, name: "Bob Johnson", email: "bob@example.com" }
+];
+
+// Basic transformation
+const userOptions = transformToSelectOptions(users, 'name');
+// Result: [
+//   { value: "1", label: "John Doe" },
+//   { value: "2", label: "Jane Smith" },
+//   { value: "3", label: "Bob Johnson" }
+// ]
+
+// Custom value field
+const emailOptions = transformToSelectOptions(users, 'name', 'email');
+// Result: [
+//   { value: "john@example.com", label: "John Doe" },
+//   { value: "jane@example.com", label: "Jane Smith" },
+//   { value: "bob@example.com", label: "Bob Johnson" }
+// ]
+
+// Usage with Select component
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@helgadigitals/vera-ui";
+
+function UserSelect() {
+  const options = transformToSelectOptions(users, 'name');
+  
+  return (
+    <Select>
+      <SelectTrigger>
+        <SelectValue placeholder="Select a user" />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+```
+
+### splitStringByUnderscore
+
+Splits a string by underscores and joins with spaces, useful for formatting database field names into readable labels.
+
+```tsx
+function splitStringByUnderscore(str: string): string
+```
+
+**Usage:**
+
+```tsx
+import { splitStringByUnderscore } from "@helgadigitals/vera-ui";
+
+// Format field names
+const label1 = splitStringByUnderscore("first_name"); // "first name"
+const label2 = splitStringByUnderscore("user_email_address"); // "user email address"
+const label3 = splitStringByUnderscore("created_at"); // "created at"
+
+// Usage in dynamic table headers
+const columns = ['first_name', 'last_name', 'email_address', 'created_at'];
+
+function TableHeader() {
+  return (
+    <thead>
+      <tr>
+        {columns.map((column) => (
+          <th key={column} className="capitalize">
+            {splitStringByUnderscore(column)}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+}
+
+// Usage with DataTable custom header rendering
+<DataTable
+  tableData={users}
+  tableColumns={['first_name', 'last_name', 'email_address']}
+  customHeadRender={(column) => (
+    <span className="font-semibold capitalize">
+      {splitStringByUnderscore(column)}
+    </span>
+  )}
+/>
+```
+
+## Type Checking Utilities
+
+These utilities are specifically designed for working with sidebar navigation data structures.
+
+### isGroupArray
+
+Checks if an array contains `Group` objects rather than `SidebarItem` objects.
+
+```tsx
+function isGroupArray(items: SidebarItem[] | Group[]): items is Group[]
+```
+
+**Usage:**
+
+```tsx
+import { isGroupArray } from "@helgadigitals/vera-ui";
+
+const items = [
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "Users", path: "/users", icon: Users },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  }
+];
+
+if (isGroupArray(items)) {
+  // TypeScript now knows items is Group[]
+  items.forEach(group => {
+    console.log(`Group: ${group.label} has ${group.items.length} items`);
+  });
+}
+```
+
+### isMixedArray
+
+Checks if an array contains both `SidebarItem` and `Group` objects.
+
+```tsx
+function isMixedArray(items: SidebarItem[] | Group[] | MixedSidebarItem[]): items is MixedSidebarItem[]
+```
+
+**Usage:**
+
+```tsx
+import { isMixedArray } from "@helgadigitals/vera-ui";
+
+const mixedItems = [
+  { title: "Dashboard", path: "/", icon: Home }, // SidebarItem
+  {
+    key: "admin",
+    label: "Administration",
+    items: [{ title: "Users", path: "/users", icon: Users }] // Group
+  }
+];
+
+if (isMixedArray(mixedItems)) {
+  // Handle mixed content rendering
+  console.log("Contains both individual items and groups");
+}
+```
+
+### isGroup
+
+Checks if a single item is a `Group` object.
+
+```tsx
+function isGroup(item: SidebarItem | Group): item is Group
+```
+
+**Usage:**
+
+```tsx
+import { isGroup, isSidebarItem } from "@helgadigitals/vera-ui";
+
+function renderNavigationItem(item: SidebarItem | Group) {
+  if (isGroup(item)) {
+    return (
+      <div>
+        <h3>{item.label}</h3>
+        <ul>
+          {item.items.map(subItem => (
+            <li key={subItem.path}>{subItem.title}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+  
+  if (isSidebarItem(item)) {
+    return <a href={item.path}>{item.title}</a>;
+  }
+  
+  return null;
+}
+```
+
+### isSidebarItem
+
+Checks if a single item is a `SidebarItem` object.
+
+```tsx
+function isSidebarItem(item: SidebarItem | Group): item is SidebarItem
+```
+
+## Advanced Usage Examples
+
+### Dynamic Navigation Rendering
+
+```tsx
+import { 
+  isGroupArray, 
+  isMixedArray, 
+  isGroup, 
+  isSidebarItem 
+} from "@helgadigitals/vera-ui";
+
+function NavigationRenderer({ items }: { items: SidebarItem[] | Group[] | MixedSidebarItem[] }) {
+  // Auto-detect and render appropriate structure
+  if (isGroupArray(items)) {
+    return (
+      <nav>
+        {items.map(group => (
+          <section key={group.key}>
+            <h2>{group.label}</h2>
+            <ul>
+              {group.items.map(item => (
+                <li key={item.path}>
+                  <a href={item.path}>{item.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </nav>
+    );
+  }
+  
+  if (isMixedArray(items)) {
+    const directItems = items.filter(isSidebarItem);
+    const groups = items.filter(isGroup);
+    
+    return (
+      <nav>
+        {/* Render direct items first */}
+        {directItems.length > 0 && (
+          <ul>
+            {directItems.map(item => (
+              <li key={item.path}>
+                <a href={item.path}>{item.title}</a>
+              </li>
+            ))}
+          </ul>
+        )}
+        
+        {/* Render groups */}
+        {groups.map(group => (
+          <section key={group.key}>
+            <h2>{group.label}</h2>
+            <ul>
+              {group.items.map(item => (
+                <li key={item.path}>
+                  <a href={item.path}>{item.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </nav>
+    );
+  }
+  
+  // Default: render as simple items
+  return (
+    <nav>
+      <ul>
+        {(items as SidebarItem[]).map(item => (
+          <li key={item.path}>
+            <a href={item.path}>{item.title}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+```
+
+### Data Processing Pipeline
+
+```tsx
+import { 
+  transformToSelectOptions, 
+  splitStringByUnderscore, 
+  cn 
+} from "@helgadigitals/vera-ui";
+
+function DataProcessor() {
+  const rawData = [
+    { user_id: 1, full_name: "John Doe", email_address: "john@example.com" },
+    { user_id: 2, full_name: "Jane Smith", email_address: "jane@example.com" }
+  ];
+  
+  // Transform for select options
+  const selectOptions = transformToSelectOptions(rawData, 'full_name', 'user_id');
+  
+  // Format column headers
+  const columns = Object.keys(rawData[0]);
+  const formattedHeaders = columns.map(col => ({
+    key: col,
+    label: splitStringByUnderscore(col)
+  }));
+  
+  // Dynamic styling
+  const getRowClassName = (index: number) => cn(
+    "border-b transition-colors",
+    {
+      "bg-muted/50": index % 2 === 0,
+      "hover:bg-muted": true
+    }
+  );
+  
+  return (
+    <div>
+      {/* Select component */}
+      <select>
+        {selectOptions.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      
+      {/* Dynamic table */}
+      <table>
+        <thead>
+          <tr>
+            {formattedHeaders.map(header => (
+              <th key={header.key} className="capitalize font-semibold">
+                {header.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rawData.map((row, index) => (
+            <tr key={row.user_id} className={getRowClassName(index)}>
+              {columns.map(col => (
+                <td key={col}>
+                  {row[col]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+```
+
+## Best Practices
+
+<Callout type="info">
+**Type Safety**: Always use the type checking utilities when working with dynamic data structures to maintain TypeScript safety.
+</Callout>
+
+<Callout type="warning">
+**Performance**: The utility functions are optimized for performance, but avoid calling them in render loops for large datasets.
+</Callout>
+
+### Recommendations
+
+1. **Consistent Naming**: Use the string transformation utilities consistently across your app
+2. **Type Guards**: Leverage type checking utilities for robust navigation components
+3. **Styling**: Use `cn` for all conditional styling to ensure proper class merging
+4. **Data Processing**: Use `transformToSelectOptions` for consistent select component data
+
+### Error Handling
+
+```tsx
+// Safe usage with error handling
+function safeTransformToSelectOptions(data, labelField, valueField) {
+  try {
+    return transformToSelectOptions(data, labelField, valueField);
+  } catch (error) {
+    console.warn("Failed to transform select options:", error);
+    return [];
+  }
+}
+
+// Safe string splitting
+function safeFormatLabel(str) {
+  if (typeof str !== 'string') return str;
+  return splitStringByUnderscore(str);
+}
+```

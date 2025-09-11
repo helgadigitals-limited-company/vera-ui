@@ -2,6 +2,19 @@
   "title": "Form Components",
   "pages": [
     "index",
-    "button"
+    "button",
+    "input",
+    "textarea",
+    "checkbox",
+    "radio-group",
+    "select",
+    "combobox",
+    "multi-select",
+    "switch",
+    "slider",
+    "form",
+    "label",
+    "file-upload",
+    "input-otp"
   ]
 }

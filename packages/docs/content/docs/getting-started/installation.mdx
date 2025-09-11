@@ -5,6 +5,7 @@ description: Learn how to install and set up Vera UI in your project
 
 import { Steps } from "fumadocs-ui/components/steps"
 import { Callout } from "fumadocs-ui/components/callout"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
 
 # Installation
 
@@ -13,12 +14,12 @@ Get started with Vera UI, a modern React component library built with accessibil
 ## Requirements
 
 <Callout type="info">
-  Make sure you have Node.js 18+ and a React project set up before installing Vera UI.
+  Make sure you have Node.js 22+ and a React project set up before installing Vera UI.
 </Callout>
 
 - **React**: ^18.2.0 || ^19.0.0
 - **React DOM**: ^18.2.0 || ^19.0.0  
-- **Node.js**: >=18
+- **Node.js**: >=22
 
 ## Install the Package
 
@@ -26,219 +27,193 @@ Get started with Vera UI, a modern React component library built with accessibil
 
 ### Install Vera UI
 
-```bash npm2yarn
-npm install @helgadigitals/vera-ui
-```
+<Tabs items={['npm', 'pnpm', 'yarn']} persist>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
 
 ### Install Peer Dependencies
 
 Depending on your needs, you may need to install additional peer dependencies:
 
-```bash npm2yarn
-# For forms
-npm install react-hook-form zod
+<Tabs groupId="package" items={['npm', 'pnpm', 'yarn']}>
+  <Tab value="npm">
+    ```bash
+    # For forms
+    npm install react-hook-form zod
 
-# For routing (optional)
-npm install react-router-dom
+    # For routing (optional)
+    npm install react-router-dom
 
-# For advanced table features
-npm install @tanstack/react-table
+    # For advanced table features
+    npm install @tanstack/react-table
 
-# For date handling
-npm install date-fns
-```
+    # For date handling
+    npm install date-fns
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    # For forms
+    pnpm add react-hook-form zod
+
+    # For routing (optional)
+    pnpm add react-router-dom
+
+    # For advanced table features
+    pnpm add @tanstack/react-table
+
+    # For date handling
+    pnpm add date-fns
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    # For forms
+    yarn add react-hook-form zod
+
+    # For routing (optional)
+    yarn add react-router-dom
+
+    # For advanced table features
+    yarn add @tanstack/react-table
+
+    # For date handling
+    yarn add date-fns
+    ```
+  </Tab>
+</Tabs>
 
 ### Set Up Tailwind CSS
 
-Vera UI is built with Tailwind CSS. You need to set up Tailwind in your project:
+Vera UI is built with Tailwind CSS v4. Install Tailwind CSS v4 based on your framework:
 
-```bash npm2yarn
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-```
+<Tabs groupId="framework" items={['Vite', 'Next.js']} persist>
+  <Tab value="Vite">
+    <Tabs groupId="package" items={['npm', 'pnpm', 'yarn']} persist>
+      <Tab value="npm">
+        ```bash
+        npm install @tailwindcss/vite tailwindcss
+        ```
+      </Tab>
+      <Tab value="pnpm">
+        ```bash
+        pnpm add @tailwindcss/vite tailwindcss
+        ```
+      </Tab>
+      <Tab value="yarn">
+        ```bash
+        yarn add @tailwindcss/vite tailwindcss
+        ```
+      </Tab>
+    </Tabs>
+  </Tab>
+  <Tab value="Next.js">
+    <Tabs groupId="package" items={['npm', 'pnpm', 'yarn']} persist>
+      <Tab value="npm">
+        ```bash
+        npm install @tailwindcss/postcss
+        ```
+      </Tab>
+      <Tab value="pnpm">
+        ```bash
+        pnpm add @tailwindcss/postcss
+        ```
+      </Tab>
+      <Tab value="yarn">
+        ```bash
+        yarn add @tailwindcss/postcss
+        ```
+      </Tab>
+    </Tabs>
+  </Tab>
+</Tabs>
 
 ### Configure Tailwind CSS
 
-Update your `tailwind.config.js` to include Vera UI's components:
+With Tailwind CSS v4, configuration is much simpler. No `tailwind.config.js` file is needed.
 
-```js title="tailwind.config.js"
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class"],
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    // Add Vera UI components
-    "./node_modules/@helgadigitals/vera-ui/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {
-    extend: {
-      // Vera UI theme extensions
-      colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
-        },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+Configure Tailwind CSS based on your framework:
+
+<Tabs groupId="framework" items={['Vite', 'Next.js']} persist>
+  <Tab value="Vite">
+    Add the Tailwind plugin to your Vite configuration:
+
+    ```js title="vite.config.ts"
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+    import tailwindcss from '@tailwindcss/vite'
+
+    export default defineConfig({
+      plugins: [react(), tailwindcss()],
+    })
+    ```
+  </Tab>
+  <Tab value="Next.js">
+    Add the Tailwind plugin to your Next.js configuration:
+
+    ```js title="next.config.js"
+    import tailwindcss from '@tailwindcss/vite'
+
+    /** @type {import('next').NextConfig} */
+    const nextConfig = {
+      experimental: {
+        // Enable CSS imports in the app directory
+        turbo: {
+          rules: {
+            '*.css': {
+              loaders: ['@tailwindcss/vite'],
+            },
+          },
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+    }
+
+    export default nextConfig
+    ```
+
+    Or if using the App Router, you can also configure it in your `postcss.config.js`:
+
+    ```js title="postcss.config.js"
+    module.exports = {
+      plugins: {
+        '@tailwindcss/postcss': {},
       },
-    },
-  },
-  plugins: [require("tailwindcss-animate")],
-}
-```
+    }
+    ```
+  </Tab>
+</Tabs>
 
 ### Add CSS Variables
 
-Add the CSS variables to your global CSS file (e.g., `globals.css`):
+Add the required imports to your main CSS file (e.g., `globals.css`):
 
 ```css title="src/globals.css"
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 10.6% 64.9%;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 0 0% 98%;
-    --sidebar-primary-foreground: 240 5.9% 10%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 10.6% 64.9%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+@import "@helgadigitals/vera-ui/dist/vera-ui.css";
+@import "tailwindcss";
+```
 ```
 
 ### Import Vera UI Styles
 
-Finally, import Vera UI's CSS in your main file:
+Import your CSS file in your main application file:
 
 ```tsx title="src/main.tsx" {3}
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import '@helgadigitals/vera-ui/styles'
 import './globals.css'
 import App from './App'
 

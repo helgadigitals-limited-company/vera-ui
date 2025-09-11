@@ -1,0 +1,524 @@
+---
+title: Input
+description: A text input component with multiple variants and states
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+
+# Input
+
+A versatile text input component that supports different types, states, and styling options. Built with accessibility and form integration in mind.
+
+## Installation
+
+```bash npm2yarn
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+```tsx
+import { Input } from "@helgadigitals/vera-ui";
+
+export default function Example() {
+  return <Input placeholder="Enter your email" type="email" />;
+}
+```
+
+## Examples
+
+### Input Types
+
+The Input component supports all HTML input types:
+
+```tsx
+import { Input } from "@helgadigitals/vera-ui";
+
+export default function InputTypesExample() {
+  return (
+    <div className="space-y-4">
+      <Input type="text" placeholder="Text input" />
+      <Input type="email" placeholder="Email input" />
+      <Input type="password" placeholder="Password input" />
+      <Input type="number" placeholder="Number input" />
+      <Input type="tel" placeholder="Phone number" />
+      <Input type="url" placeholder="Website URL" />
+      <Input type="search" placeholder="Search..." />
+    </div>
+  );
+}
+```
+
+### Input States
+
+```tsx
+import { Input } from "@helgadigitals/vera-ui";
+
+export default function InputStatesExample() {
+  return (
+    <div className="space-y-4">
+      <Input placeholder="Default input" />
+      <Input placeholder="Disabled input" disabled />
+      <Input placeholder="Input with error" aria-invalid="true" />
+      <Input placeholder="Required input" required />
+      <Input placeholder="Readonly input" readOnly value="Read-only value" />
+    </div>
+  );
+}
+```
+
+### With Form Integration
+
+```tsx
+import { useState } from "react";
+import { Input, Label, Button } from "@helgadigitals/vera-ui";
+
+export default function FormExample() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
+  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({ ...prev, [field]: e.target.value }));
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+      <div className="space-y-2">
+        <Label htmlFor="firstName">First Name</Label>
+        <Input
+          id="firstName"
+          value={formData.firstName}
+          onChange={handleChange("firstName")}
+          placeholder="Enter your first name"
+          required
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="lastName">Last Name</Label>
+        <Input
+          id="lastName"
+          value={formData.lastName}
+          onChange={handleChange("lastName")}
+          placeholder="Enter your last name"
+          required
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange("email")}
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="phone">Phone</Label>
+        <Input
+          id="phone"
+          type="tel"
+          value={formData.phone}
+          onChange={handleChange("phone")}
+          placeholder="Enter your phone number"
+        />
+      </div>
+      
+      <Button type="submit" className="w-full">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
+
+### With Icons and Addons
+
+```tsx
+import { Input, Button } from "@helgadigitals/vera-ui";
+import { Search, Eye, EyeOff, Copy } from "lucide-react";
+import { useState } from "react";
+
+export default function InputWithAddonsExample() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  return (
+    <div className="space-y-6">
+      {/* Search Input with Icon */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <Input
+          className="pl-10"
+          placeholder="Search..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </div>
+
+      {/* Password Input with Toggle */}
+      <div className="relative">
+        <Input
+          type={showPassword ? "text" : "password"}
+          placeholder="Enter password"
+          className="pr-10"
+        />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="absolute right-0 top-0 h-full px-3"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+        </Button>
+      </div>
+
+      {/* Input with Copy Button */}
+      <div className="flex">
+        <Input
+          value="https://example.com/share/12345"
+          readOnly
+          className="rounded-r-none"
+        />
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-l-none border-l-0"
+          onClick={() => navigator.clipboard.writeText("https://example.com/share/12345")}
+        >
+          <Copy className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Input Validation
+
+```tsx
+import { useState } from "react";
+import { Input, Label } from "@helgadigitals/vera-ui";
+import { cn } from "@helgadigitals/vera-ui";
+
+export default function ValidationExample() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateEmail = (value: string) => {
+    if (!value) return "Email is required";
+    if (!/\S+@\S+\.\S+/.test(value)) return "Email is invalid";
+    return "";
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value) return "Password is required";
+    if (value.length < 8) return "Password must be at least 8 characters";
+    return "";
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    const error = validateEmail(value);
+    setErrors(prev => ({ ...prev, email: error }));
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    const error = validatePassword(value);
+    setErrors(prev => ({ ...prev, password: error }));
+  };
+
+  return (
+    <div className="space-y-4 max-w-md">
+      <div className="space-y-2">
+        <Label htmlFor="email" className={errors.email ? "text-destructive" : ""}>
+          Email
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Enter your email"
+          className={cn(errors.email && "border-destructive")}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
+        />
+        {errors.email && (
+          <p id="email-error" className="text-sm text-destructive">
+            {errors.email}
+          </p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="password" className={errors.password ? "text-destructive" : ""}>
+          Password
+        </Label>
+        <Input
+          id="password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          placeholder="Enter your password"
+          className={cn(errors.password && "border-destructive")}
+          aria-invalid={!!errors.password}
+          aria-describedby={errors.password ? "password-error" : undefined}
+        />
+        {errors.password && (
+          <p id="password-error" className="text-sm text-destructive">
+            {errors.password}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+## Props Reference
+
+The Input component accepts all standard HTML input attributes plus:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional CSS classes |
+| `type` | `string` | `"text"` | HTML input type |
+| `disabled` | `boolean` | `false` | Whether the input is disabled |
+| `readOnly` | `boolean` | `false` | Whether the input is read-only |
+| `required` | `boolean` | `false` | Whether the input is required |
+| `placeholder` | `string` | - | Placeholder text |
+| `value` | `string` | - | Controlled value |
+| `defaultValue` | `string` | - | Default value for uncontrolled |
+| `onChange` | `(event: ChangeEvent<HTMLInputElement>) => void` | - | Change handler |
+| `onFocus` | `(event: FocusEvent<HTMLInputElement>) => void` | - | Focus handler |
+| `onBlur` | `(event: FocusEvent<HTMLInputElement>) => void` | - | Blur handler |
+
+## Styling
+
+### CSS Variables
+
+The component uses these CSS variables:
+
+```css
+.input {
+  --input-background: hsl(var(--background));
+  --input-border: hsl(var(--border));
+  --input-text: hsl(var(--foreground));
+  --input-placeholder: hsl(var(--muted-foreground));
+  --input-focus-border: hsl(var(--ring));
+  --input-disabled-background: hsl(var(--muted));
+  --input-disabled-text: hsl(var(--muted-foreground));
+}
+```
+
+### Custom Styling
+
+```tsx
+// Custom styled input
+<Input
+  className="bg-blue-50 border-blue-200 focus:border-blue-500 focus:ring-blue-500"
+  placeholder="Custom styled input"
+/>
+
+// Large input variant
+<Input
+  className="h-12 px-4 text-lg"
+  placeholder="Large input"
+/>
+
+// Compact input variant
+<Input
+  className="h-8 px-3 text-sm"
+  placeholder="Compact input"
+/>
+```
+
+## Accessibility
+
+The Input component includes built-in accessibility features:
+
+- **Semantic HTML**: Uses proper `input` element
+- **ARIA Support**: Supports `aria-invalid`, `aria-describedby`, and other ARIA attributes
+- **Keyboard Navigation**: Full keyboard support
+- **Screen Readers**: Proper labeling and description association
+- **Focus Management**: Clear focus indicators
+
+### Best Practices
+
+<Callout type="info">
+**Labels**: Always associate inputs with labels using the `htmlFor` attribute or by wrapping the input in a label.
+</Callout>
+
+<Callout type="warning">
+**Validation**: Use `aria-invalid` and `aria-describedby` to associate error messages with inputs for better accessibility.
+</Callout>
+
+```tsx
+// ✅ Good - proper labeling and error association
+<div>
+  <Label htmlFor="email">Email Address</Label>
+  <Input
+    id="email"
+    type="email"
+    aria-invalid={!!emailError}
+    aria-describedby={emailError ? "email-error" : undefined}
+  />
+  {emailError && (
+    <p id="email-error" className="text-destructive text-sm">
+      {emailError}
+    </p>
+  )}
+</div>
+
+// ❌ Bad - no label association
+<div>
+  <span>Email</span>
+  <Input type="email" />
+</div>
+```
+
+## Integration with Form Libraries
+
+### React Hook Form
+
+```tsx
+import { useForm } from "react-hook-form";
+import { Input, Label, Button } from "@helgadigitals/vera-ui";
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+export default function ReactHookFormExample() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Email is invalid"
+            }
+          })}
+          className={errors.email ? "border-destructive" : ""}
+        />
+        {errors.email && (
+          <p className="text-sm text-destructive">{errors.email.message}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
+          type="password"
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters"
+            }
+          })}
+          className={errors.password ? "border-destructive" : ""}
+        />
+        {errors.password && (
+          <p className="text-sm text-destructive">{errors.password.message}</p>
+        )}
+      </div>
+
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+```
+
+### Formik
+
+```tsx
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { Input, Label, Button } from "@helgadigitals/vera-ui";
+
+const validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required")
+});
+
+export default function FormikExample() {
+  return (
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={validationSchema}
+      onSubmit={(values) => console.log(values)}
+    >
+      {({ errors, touched }) => (
+        <Form className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Field
+              as={Input}
+              id="email"
+              name="email"
+              type="email"
+              className={errors.email && touched.email ? "border-destructive" : ""}
+            />
+            {errors.email && touched.email && (
+              <p className="text-sm text-destructive">{errors.email}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Field
+              as={Input}
+              id="password"
+              name="password"
+              type="password"
+              className={errors.password && touched.password ? "border-destructive" : ""}
+            />
+            {errors.password && touched.password && (
+              <p className="text-sm text-destructive">{errors.password}</p>
+            )}
+          </div>
+
+          <Button type="submit">Submit</Button>
+        </Form>
+      )}
+    </Formik>
+  );
+}
+```

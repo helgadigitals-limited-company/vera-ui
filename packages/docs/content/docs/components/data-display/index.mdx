@@ -1,0 +1,133 @@
+---
+title: Data Display Components
+description: Components for displaying and presenting data effectively
+---
+
+# Data Display Components
+
+Data display components are essential for presenting information in a clear, organized, and accessible manner. These components help users understand and interact with data efficiently.
+
+## Components Overview
+
+### Core Data Components
+
+- **[DataTable](/docs/components/data-display/data-table)** - Advanced table with sorting, filtering, pagination, and actions
+- **[Table](/docs/components/data-display/table)** - Basic table component for simple data display
+- **[Pagination](/docs/components/data-display/pagination)** - Navigate through paginated content
+
+### Visual Data Components
+
+- **[Chart](/docs/components/data-display/chart)** - Data visualization with charts and graphs
+- **[Calendar](/docs/components/data-display/calendar)** - Date picker and calendar display
+- **[Progress](/docs/components/data-display/progress)** - Progress indicators and loading states
+
+### Information Display
+
+- **[Card](/docs/components/data-display/card)** - Container for grouping related content
+- **[Badge](/docs/components/data-display/badge)** - Labels and status indicators
+- **[Avatar](/docs/components/data-display/avatar)** - User profile images and initials
+
+### Loading States
+
+- **[Skeleton](/docs/components/data-display/skeleton)** - Loading placeholders for content
+
+## Design Principles
+
+### Hierarchy and Organization
+
+Data display components follow clear visual hierarchy principles:
+
+- **Primary information** stands out prominently
+- **Secondary details** are visually de-emphasized
+- **Related content** is grouped logically
+
+### Accessibility
+
+All data display components include:
+
+- Proper semantic markup
+- ARIA labels and descriptions
+- Keyboard navigation support
+- Screen reader compatibility
+- High contrast support
+
+### Responsive Design
+
+Components adapt gracefully across devices:
+
+- **Mobile-first** approach
+- **Flexible layouts** that reflow content
+- **Touch-friendly** interaction areas
+- **Optimized performance** for all screen sizes
+
+## Common Patterns
+
+### Data Tables
+
+For complex data presentation with interactions:
+
+```tsx
+import { DataTable } from "@helgadigitals/vera-ui";
+
+// Advanced table with all features
+<DataTable
+  tableData={users}
+  tableColumns={['name', 'email', 'role', 'status']}
+  sortableColumns={['name', 'email', 'role']}
+  enableGlobalFilter
+  selectable
+  actions={tableActions}
+/>
+```
+
+### Information Cards
+
+For grouped content presentation:
+
+```tsx
+import { Card, CardHeader, CardTitle, CardContent } from "@helgadigitals/vera-ui";
+
+<Card>
+  <CardHeader>
+    <CardTitle>User Profile</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p>User information content</p>
+  </CardContent>
+</Card>
+```
+
+### Status Indicators
+
+For showing states and categories:
+
+```tsx
+import { Badge } from "@helgadigitals/vera-ui";
+
+<Badge variant="success">Active</Badge>
+<Badge variant="warning">Pending</Badge>
+<Badge variant="destructive">Inactive</Badge>
+```
+
+## Best Practices
+
+### Data Organization
+
+- Group related information together
+- Use consistent spacing and alignment
+- Prioritize the most important data
+- Provide clear labels and context
+
+### Loading States
+
+- Show skeleton loaders for expected content
+- Provide progress indicators for operations
+- Handle empty states gracefully
+- Give users feedback during loading
+
+### Responsive Considerations
+
+- Stack cards vertically on mobile
+- Use horizontal scrolling for wide tables
+- Adjust text sizes for readability
+- Optimize touch targets for mobile interaction

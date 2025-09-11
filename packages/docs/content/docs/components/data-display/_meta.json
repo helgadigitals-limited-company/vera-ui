@@ -1,0 +1,16 @@
+{
+  "title": "Data Display",
+  "pages": [
+    "index",
+    "data-table",
+    "pagination",
+    "table",
+    "card",
+    "badge",
+    "avatar",
+    "skeleton",
+    "progress",
+    "chart",
+    "calendar"
+  ]
+}
