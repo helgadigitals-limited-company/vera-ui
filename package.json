@@ -1,8 +1,8 @@
 {
-  "name": "vera-ui-monorepo",
+  "name": "vera-ui",
   "version": "1.0.0",
   "private": true,
-  "description": "Vera UI monorepo with component library and documentation",
+  "description": "Vera UI workspace with component library and documentation",
   "scripts": {
     "dev": "pnpm --parallel --recursive dev",
     "build": "pnpm --recursive build",
