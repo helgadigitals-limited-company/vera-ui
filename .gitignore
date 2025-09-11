@@ -89,3 +89,7 @@ coverage/
 
 # Vitest
 coverage/
+
+# Always track UI src library
+!packages/ui/src/lib/
+!packages/ui/src/lib/**
