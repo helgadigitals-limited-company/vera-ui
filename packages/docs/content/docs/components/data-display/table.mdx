@@ -1,0 +1,399 @@
+---
+title: Table
+description: A basic table component for displaying tabular data with semantic HTML structure
+---
+
+import { ComponentPreview } from "@/components/component-preview";
+
+# Table
+
+A foundational table component built with semantic HTML elements, providing the building blocks for displaying structured data in rows and columns.
+
+## Features
+
+- **Semantic HTML** - Uses proper table elements for accessibility
+- **Responsive container** - Horizontal scrolling on smaller screens
+- **Flexible styling** - Customizable classes for headers, cells, and rows
+- **Selection support** - Built-in checkbox styling and states
+- **Hover effects** - Visual feedback on row interaction
+
+## Installation
+
+```bash
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+### Basic Table
+
+<ComponentPreview>
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@helgadigitals/vera-ui";
+
+export function BasicTableExample() {
+  const users = [
+    { name: "John Doe", email: "john@example.com", role: "Admin" },
+    { name: "Jane Smith", email: "jane@example.com", role: "User" },
+    { name: "Bob Johnson", email: "bob@example.com", role: "Editor" },
+  ];
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {users.map((user, index) => (
+          <TableRow key={index}>
+            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.role}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+</ComponentPreview>
+
+### Table with Selection
+
+<ComponentPreview>
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@helgadigitals/vera-ui";
+import { useState } from "react";
+
+export function SelectableTableExample() {
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  
+  const data = [
+    { id: 1, name: "Product A", price: 99.99, status: "Active" },
+    { id: 2, name: "Product B", price: 149.99, status: "Inactive" },
+    { id: 3, name: "Product C", price: 79.99, status: "Active" },
+  ];
+
+  const handleSelectRow = (id: number) => {
+    setSelectedRows(prev => 
+      prev.includes(id) 
+        ? prev.filter(rowId => rowId !== id)
+        : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    setSelectedRows(
+      selectedRows.length === data.length ? [] : data.map(item => item.id)
+    );
+  };
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-12">
+            <input
+              type="checkbox"
+              checked={selectedRows.length === data.length}
+              onChange={handleSelectAll}
+              className="rounded"
+            />
+          </TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Price</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data.map((item) => (
+          <TableRow 
+            key={item.id}
+            data-state={selectedRows.includes(item.id) ? "selected" : undefined}
+          >
+            <TableCell>
+              <input
+                type="checkbox"
+                checked={selectedRows.includes(item.id)}
+                onChange={() => handleSelectRow(item.id)}
+                className="rounded"
+              />
+            </TableCell>
+            <TableCell>{item.name}</TableCell>
+            <TableCell>${item.price}</TableCell>
+            <TableCell>
+              <span className={`px-2 py-1 rounded-full text-xs ${
+                item.status === 'Active' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-gray-100 text-gray-800'
+              }`}>
+                {item.status}
+              </span>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+</ComponentPreview>
+
+### Table with Footer
+
+<ComponentPreview>
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@helgadigitals/vera-ui";
+
+export function TableWithFooterExample() {
+  const invoices = [
+    { invoice: "INV001", paymentStatus: "Paid", totalAmount: 250.00 },
+    { invoice: "INV002", paymentStatus: "Pending", totalAmount: 150.00 },
+    { invoice: "INV003", paymentStatus: "Unpaid", totalAmount: 350.00 },
+    { invoice: "INV004", paymentStatus: "Paid", totalAmount: 450.00 },
+  ];
+
+  const total = invoices.reduce((sum, invoice) => sum + invoice.totalAmount, 0);
+
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Invoice</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead className="text-right">Amount</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {invoices.map((invoice) => (
+          <TableRow key={invoice.invoice}>
+            <TableCell className="font-medium">{invoice.invoice}</TableCell>
+            <TableCell>{invoice.paymentStatus}</TableCell>
+            <TableCell className="text-right">${invoice.totalAmount.toFixed(2)}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell colSpan={2}>Total</TableCell>
+          <TableCell className="text-right">${total.toFixed(2)}</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
+  );
+}
+```
+</ComponentPreview>
+
+### Table with Caption
+
+<ComponentPreview>
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@helgadigitals/vera-ui";
+
+export function TableWithCaptionExample() {
+  const recentSales = [
+    { customer: "Liam Johnson", email: "liam@example.com", amount: 250.00 },
+    { customer: "Olivia Smith", email: "olivia@example.com", amount: 150.00 },
+    { customer: "Noah Williams", email: "noah@example.com", amount: 350.00 },
+  ];
+
+  return (
+    <Table>
+      <TableCaption>A list of your recent sales.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Customer</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead className="text-right">Amount</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {recentSales.map((sale, index) => (
+          <TableRow key={index}>
+            <TableCell className="font-medium">{sale.customer}</TableCell>
+            <TableCell>{sale.email}</TableCell>
+            <TableCell className="text-right">${sale.amount.toFixed(2)}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+```
+</ComponentPreview>
+
+## API Reference
+
+### Table
+
+The main table container with responsive overflow handling.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `children` | `ReactNode` | - | Table content |
+
+### TableHeader
+
+Table header section containing column headers.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `children` | `ReactNode` | - | Header rows |
+
+### TableBody
+
+Table body section containing data rows.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `children` | `ReactNode` | - | Body rows |
+
+### TableFooter
+
+Table footer section for summary information.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `children` | `ReactNode` | - | Footer rows |
+
+### TableRow
+
+Individual table row element.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `data-state` | `"selected"` | - | Selection state for styling |
+| `children` | `ReactNode` | - | Row cells |
+
+### TableHead
+
+Header cell element with appropriate styling.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `children` | `ReactNode` | - | Header content |
+
+### TableCell
+
+Data cell element for table content.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `colSpan` | `number` | - | Number of columns to span |
+| `children` | `ReactNode` | - | Cell content |
+
+### TableCaption
+
+Table caption for describing the table content.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes |
+| `children` | `ReactNode` | - | Caption text |
+
+## Use Cases
+
+### Data Presentation
+- **Simple lists** - Product catalogs, user directories
+- **Financial reports** - Invoices, transaction history
+- **Comparison tables** - Feature matrices, pricing tables
+
+### Administrative Interfaces
+- **User management** - List users with roles and permissions
+- **Content management** - Articles, posts with metadata
+- **System logs** - Event listings with timestamps
+
+### Dashboard Components
+- **Recent activity** - Latest actions or updates
+- **Summary tables** - Key metrics and statistics
+- **Status overviews** - System health, task progress
+
+### E-commerce
+- **Product listings** - Inventory with prices and stock
+- **Order history** - Customer purchase records
+- **Shopping carts** - Item lists with quantities
+
+## Accessibility
+
+The Table component includes:
+
+- **Semantic HTML** - Proper table structure for screen readers
+- **ARIA attributes** - Enhanced accessibility information
+- **Keyboard navigation** - Tab through interactive elements
+- **Selection states** - Clear indication of selected rows
+- **Focus management** - Visible focus indicators
+
+## Best Practices
+
+### Structure
+- Use `TableHeader` for column headers
+- Group data in `TableBody`
+- Add summaries in `TableFooter`
+- Include `TableCaption` for context
+
+### Styling
+- Apply consistent alignment (left, center, right)
+- Use appropriate column widths
+- Highlight selected or active rows
+- Provide visual feedback on hover
+
+### Performance
+- Consider virtualization for large datasets
+- Use the [DataTable](/docs/components/data-display/data-table) component for advanced features
+- Implement proper loading states
+- Handle empty states gracefully
+
+### Responsive Design
+- Allow horizontal scrolling on mobile
+- Consider hiding non-essential columns
+- Stack information vertically when needed
+- Maintain touch-friendly targets
+
+## Related Components
+
+- **[DataTable](/docs/components/data-display/data-table)** - Advanced table with sorting, filtering, and pagination
+- **[Card](/docs/components/data-display/card)** - Alternative layout for displaying structured data
+- **[Badge](/docs/components/data-display/badge)** - Status indicators for table cells
+- **[Pagination](/docs/components/data-display/pagination)** - Navigate through large datasets

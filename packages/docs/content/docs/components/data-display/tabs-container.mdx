@@ -1,0 +1,337 @@
+---
+title: Tabs Container
+description: Advanced tabbed interface with URL persistence, scrollable navigation, and enhanced UX features
+---
+
+import { ComponentPreview } from "@/components/component-preview";
+
+# Tabs Container
+
+An enhanced tabbed interface component that provides advanced features like URL persistence, scrollable navigation, and improved accessibility. Perfect for organizing complex content with multiple views.
+
+## Features
+
+- **URL Persistence** - Tab state synced with URL parameters
+- **Scrollable Navigation** - Horizontal scrolling with navigation arrows
+- **Flexible Content** - Support for any React content in tabs
+- **Accessibility** - Enhanced keyboard navigation and ARIA support
+- **Responsive Design** - Adapts to different screen sizes
+- **State Management** - Optional URL persistence with fallback to local state
+
+## Installation
+
+```bash
+npm install @helgadigitals/vera-ui nuqs
+```
+
+## Usage
+
+### Basic Tabs Container
+
+<ComponentPreview>
+```tsx
+import { TabsContainer } from "@helgadigitals/vera-ui";
+
+export function BasicTabsContainerExample() {
+  const tabs = [
+    {
+      value: "overview",
+      label: "Overview",
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Project Overview</h3>
+          <p className="text-muted-foreground">
+            This is the main overview of your project with key metrics and summary information.
+          </p>
+        </div>
+      )
+    },
+    {
+      value: "analytics",
+      label: "Analytics",
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Analytics Dashboard</h3>
+          <p className="text-muted-foreground">
+            View detailed analytics and performance metrics for your project.
+          </p>
+        </div>
+      )
+    },
+    {
+      value: "settings",
+      label: "Settings",
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Project Settings</h3>
+          <p className="text-muted-foreground">
+            Configure your project settings and preferences here.
+          </p>
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <TabsContainer 
+      tabs={tabs}
+      defaultTab="overview"
+      containerHeight="400px"
+    />
+  );
+}
+```
+</ComponentPreview>
+
+### With URL Persistence
+
+<ComponentPreview>
+```tsx
+import { TabsContainer } from "@helgadigitals/vera-ui";
+
+export function URLPersistedTabsExample() {
+  const tabs = [
+    {
+      value: "dashboard",
+      label: "Dashboard",
+      content: (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 border rounded-lg">
+            <h4 className="font-medium">Key Metrics</h4>
+            <p className="text-2xl font-bold text-primary">1,234</p>
+          </div>
+          <div className="p-4 border rounded-lg">
+            <h4 className="font-medium">Active Users</h4>
+            <p className="text-2xl font-bold text-green-600">5,678</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      value: "reports",
+      label: "Reports",
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Generated Reports</h3>
+          <div className="space-y-2">
+            <div className="p-3 border rounded">Monthly Sales Report</div>
+            <div className="p-3 border rounded">User Activity Report</div>
+            <div className="p-3 border rounded">Performance Analysis</div>
+          </div>
+        </div>
+      )
+    },
+    {
+      value: "users",
+      label: "User Management",
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">User Administration</h3>
+          <p className="text-muted-foreground">
+            Manage user accounts, permissions, and access controls.
+          </p>
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <TabsContainer 
+      tabs={tabs}
+      urlParamName="section"
+      persistInUrl={true}
+      defaultTab="dashboard"
+      onTabChange={(value) => console.log('Tab changed to:', value)}
+    />
+  );
+}
+```
+</ComponentPreview>
+
+### Scrollable Tabs with Many Options
+
+<ComponentPreview>
+```tsx
+import { TabsContainer } from "@helgadigitals/vera-ui";
+
+export function ScrollableTabsExample() {
+  const tabs = [
+    { value: "tab1", label: "Overview", content: <div className="p-4">Overview content</div> },
+    { value: "tab2", label: "Analytics", content: <div className="p-4">Analytics content</div> },
+    { value: "tab3", label: "Performance", content: <div className="p-4">Performance content</div> },
+    { value: "tab4", label: "Security", content: <div className="p-4">Security content</div> },
+    { value: "tab5", label: "Integration", content: <div className="p-4">Integration content</div> },
+    { value: "tab6", label: "Documentation", content: <div className="p-4">Documentation content</div> },
+    { value: "tab7", label: "API Reference", content: <div className="p-4">API Reference content</div> },
+    { value: "tab8", label: "Support", content: <div className="p-4">Support content</div> },
+    { value: "tab9", label: "Billing", content: <div className="p-4">Billing content</div> },
+    { value: "tab10", label: "Advanced Settings", content: <div className="p-4">Advanced Settings content</div> }
+  ];
+
+  return (
+    <TabsContainer 
+      tabs={tabs}
+      defaultTab="tab1"
+      containerHeight="300px"
+      persistInUrl={false}
+    />
+  );
+}
+```
+</ComponentPreview>
+
+### With Disabled and Hidden Tabs
+
+<ComponentPreview>
+```tsx
+import { TabsContainer } from "@helgadigitals/vera-ui";
+
+export function ConditionalTabsExample() {
+  const tabs = [
+    {
+      value: "public",
+      label: "Public Data",
+      content: (
+        <div className="p-4">
+          <h3 className="font-semibold">Public Information</h3>
+          <p>This content is available to all users.</p>
+        </div>
+      )
+    },
+    {
+      value: "private",
+      label: "Private Data",
+      content: (
+        <div className="p-4">
+          <h3 className="font-semibold">Private Information</h3>
+          <p>This content requires special permissions.</p>
+        </div>
+      ),
+      disabled: true
+    },
+    {
+      value: "admin",
+      label: "Admin Panel",
+      content: (
+        <div className="p-4">
+          <h3 className="font-semibold">Administrative Controls</h3>
+          <p>Admin-only functionality.</p>
+        </div>
+      ),
+      hidden: true // This tab won't be visible
+    },
+    {
+      value: "help",
+      label: "Help & Support",
+      content: (
+        <div className="p-4">
+          <h3 className="font-semibold">Help Center</h3>
+          <p>Find answers to common questions and get support.</p>
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <TabsContainer 
+      tabs={tabs}
+      defaultTab="public"
+      containerHeight="250px"
+    />
+  );
+}
+```
+</ComponentPreview>
+
+## API Reference
+
+### TabsContainer
+
+The main container component for tabbed interfaces.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `tabs` | `TabItem[]` | - | Array of tab items to display |
+| `defaultTab` | `string` | `tabs[0].value` | Default selected tab value |
+| `className` | `string` | - | Additional CSS classes |
+| `urlParamName` | `string` | `"tab"` | URL parameter name for this tab group |
+| `historyMode` | `"push" \| "replace"` | `"push"` | Control URL history behavior |
+| `shallow` | `boolean` | `true` | Whether to use shallow routing |
+| `onTabChange` | `(value: string) => void` | - | Callback when tab changes |
+| `containerHeight` | `string` | `"calc(100vh-5rem)"` | Container height CSS value |
+| `persistInUrl` | `boolean` | `true` | Whether to persist tab state in URL |
+
+### TabItem
+
+Individual tab configuration object.
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | - | Unique identifier for the tab |
+| `label` | `string` | - | Display text for the tab |
+| `content` | `ReactNode` | - | Content to render in the tab panel |
+| `disabled` | `boolean` | `false` | Whether the tab is disabled |
+| `hidden` | `boolean` | `false` | Whether the tab is hidden |
+
+## Use Cases
+
+### Dashboard Interfaces
+- **Admin panels** - Multiple views for different administrative functions
+- **Analytics dashboards** - Different metric views and time periods
+- **Project management** - Overview, tasks, timeline, and settings
+- **User profiles** - Personal info, preferences, security, and activity
+
+### Content Organization
+- **Documentation sites** - API reference, guides, tutorials, examples
+- **Product catalogs** - Categories, filters, and detailed views
+- **Media galleries** - Photos, videos, albums, and metadata
+- **Knowledge bases** - Articles, FAQs, tutorials, and resources
+
+### Application Views
+- **Settings panels** - General, privacy, notifications, and advanced
+- **Data visualization** - Charts, tables, maps, and export options
+- **Communication tools** - Messages, contacts, groups, and settings
+- **E-commerce** - Products, orders, customers, and analytics
+
+### Development Tools
+- **Code editors** - Files, terminal, debugger, and extensions
+- **API testing** - Requests, responses, history, and documentation
+- **Database tools** - Tables, queries, schemas, and administration
+- **Monitoring dashboards** - Metrics, logs, alerts, and configuration
+
+## Features in Detail
+
+### URL Persistence
+The component automatically syncs tab state with URL parameters:
+- **Shareable URLs** - Users can bookmark specific tab states
+- **Browser navigation** - Back/forward buttons work correctly
+- **Deep linking** - Direct links to specific tabs
+- **History management** - Choose between push/replace modes
+
+### Scrollable Navigation
+When tabs overflow the container:
+- **Smooth scrolling** - Animated horizontal scrolling
+- **Navigation arrows** - Left/right scroll controls
+- **Auto-detection** - Arrows appear/hide based on overflow
+- **Touch support** - Works with touch gestures on mobile
+
+### Accessibility
+- **Keyboard navigation** - Arrow keys, Tab, and Enter support
+- **Screen readers** - Proper ARIA labels and announcements
+- **Focus management** - Clear focus indicators and logical flow
+- **Semantic markup** - Uses proper HTML roles and attributes
+
+## Best Practices
+
+1. **Limit tab count** - Keep to 5-7 visible tabs for optimal UX
+2. **Clear labels** - Use descriptive, concise tab labels
+3. **Logical grouping** - Group related content together
+4. **Loading states** - Show skeleton content while loading
+5. **Error handling** - Gracefully handle missing or invalid tabs
+6. **Mobile optimization** - Ensure tabs work well on small screens
+
+## Related Components
+
+- **[Tabs](/docs/components/ui/tabs)** - Basic tabs component
+- **[Navigation](/docs/components/navigation)** - Navigation components
+- **[Card](/docs/components/data-display/card)** - Content containers for tab panels

@@ -1,0 +1,555 @@
+---
+title: Progress
+description: Visual indicators for showing task completion and loading states
+---
+
+import { ComponentPreview } from "@/components/component-preview";
+
+# Progress
+
+A visual progress indicator component for showing completion percentage, loading states, and task progress. Built on Radix UI with smooth animations and accessibility features.
+
+## Features
+
+- **Smooth animations** - Fluid progress transitions
+- **Accessible** - ARIA attributes and screen reader support
+- **Customizable styling** - Easy to theme and style
+- **Determinate progress** - Show specific completion percentages
+- **Responsive design** - Works across all screen sizes
+
+## Installation
+
+```bash
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+### Basic Progress
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+
+export function BasicProgressExample() {
+  return (
+    <div className="space-y-4">
+      <div>
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>Progress</span>
+          <span>25%</span>
+        </div>
+        <Progress value={25} className="w-full" />
+      </div>
+      
+      <div>
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>Loading</span>
+          <span>60%</span>
+        </div>
+        <Progress value={60} className="w-full" />
+      </div>
+      
+      <div>
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>Complete</span>
+          <span>100%</span>
+        </div>
+        <Progress value={100} className="w-full" />
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Animated Progress
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { useState, useEffect } from "react";
+
+export function AnimatedProgressExample() {
+  const [progress, setProgress] = useState(0);
+
+  const startProgress = () => {
+    setProgress(0);
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 200);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>Download Progress</span>
+          <span>{progress}%</span>
+        </div>
+        <Progress value={progress} className="w-full" />
+      </div>
+      
+      <Button onClick={startProgress} className="w-full">
+        Start Download
+      </Button>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Progress Sizes
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+
+export function ProgressSizesExample() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Small (h-1)</p>
+        <Progress value={75} className="w-full h-1" />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Default (h-2)</p>
+        <Progress value={75} className="w-full" />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Medium (h-3)</p>
+        <Progress value={75} className="w-full h-3" />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Large (h-4)</p>
+        <Progress value={75} className="w-full h-4" />
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Colored Progress Bars
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+
+export function ColoredProgressExample() {
+  return (
+    <div className="space-y-6">
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Default</p>
+        <Progress value={60} className="w-full" />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Success</p>
+        <Progress 
+          value={85} 
+          className="w-full [&>div]:bg-green-500" 
+        />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Warning</p>
+        <Progress 
+          value={45} 
+          className="w-full [&>div]:bg-yellow-500" 
+        />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Danger</p>
+        <Progress 
+          value={25} 
+          className="w-full [&>div]:bg-red-500" 
+        />
+      </div>
+      
+      <div>
+        <p className="text-sm text-muted-foreground mb-2">Info</p>
+        <Progress 
+          value={70} 
+          className="w-full [&>div]:bg-blue-500" 
+        />
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Multi-Step Progress
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { Badge } from "@helgadigitals/vera-ui";
+import { useState } from "react";
+import { Check, Circle } from "lucide-react";
+
+export function MultiStepProgressExample() {
+  const [currentStep, setCurrentStep] = useState(2);
+  
+  const steps = [
+    "Account Setup",
+    "Profile Information", 
+    "Preferences",
+    "Verification",
+    "Complete"
+  ];
+
+  const progress = (currentStep / (steps.length - 1)) * 100;
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <div className="flex justify-between text-sm text-muted-foreground mb-2">
+          <span>Setup Progress</span>
+          <span>Step {currentStep + 1} of {steps.length}</span>
+        </div>
+        <Progress value={progress} className="w-full" />
+      </div>
+      
+      <div className="space-y-2">
+        {steps.map((step, index) => (
+          <div key={index} className="flex items-center space-x-3">
+            <div className="flex-shrink-0">
+              {index < currentStep ? (
+                <div className="flex items-center justify-center w-6 h-6 bg-green-500 rounded-full">
+                  <Check className="w-4 h-4 text-white" />
+                </div>
+              ) : index === currentStep ? (
+                <div className="flex items-center justify-center w-6 h-6 bg-primary rounded-full">
+                  <Circle className="w-3 h-3 text-white fill-current" />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center w-6 h-6 bg-muted rounded-full">
+                  <Circle className="w-3 h-3 text-muted-foreground" />
+                </div>
+              )}
+            </div>
+            <div className="flex-1">
+              <p className={`text-sm ${
+                index <= currentStep ? 'text-foreground' : 'text-muted-foreground'
+              }`}>
+                {step}
+              </p>
+            </div>
+            {index < currentStep && (
+              <Badge variant="outline" className="text-xs">
+                Complete
+              </Badge>
+            )}
+            {index === currentStep && (
+              <Badge variant="default" className="text-xs">
+                Current
+              </Badge>
+            )}
+          </div>
+        ))}
+      </div>
+      
+      <div className="flex space-x-2">
+        <Button 
+          variant="outline" 
+          onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
+          disabled={currentStep === 0}
+        >
+          Previous
+        </Button>
+        <Button 
+          onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
+          disabled={currentStep === steps.length - 1}
+        >
+          {currentStep === steps.length - 1 ? 'Complete' : 'Next'}
+        </Button>
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### File Upload Progress
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { Badge } from "@helgadigitals/vera-ui";
+import { useState } from "react";
+import { Upload, FileText, CheckCircle, XCircle } from "lucide-react";
+
+export function FileUploadProgressExample() {
+  const [files, setFiles] = useState([
+    { name: "document.pdf", size: "2.4 MB", progress: 100, status: "complete" },
+    { name: "image.jpg", size: "1.8 MB", progress: 65, status: "uploading" },
+    { name: "video.mp4", size: "15.2 MB", progress: 25, status: "uploading" },
+    { name: "archive.zip", size: "5.1 MB", progress: 0, status: "error" },
+  ]);
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "complete":
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
+      case "error":
+        return <XCircle className="w-4 h-4 text-red-500" />;
+      default:
+        return <FileText className="w-4 h-4 text-blue-500" />;
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "complete":
+        return <Badge variant="outline" className="text-green-600 border-green-200">Complete</Badge>;
+      case "error":
+        return <Badge variant="destructive">Error</Badge>;
+      default:
+        return <Badge variant="secondary">Uploading</Badge>;
+    }
+  };
+
+  const getProgressColor = (status: string) => {
+    switch (status) {
+      case "complete":
+        return "[&>div]:bg-green-500";
+      case "error":
+        return "[&>div]:bg-red-500";
+      default:
+        return "";
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="border-2 border-dashed border-muted rounded-lg p-6 text-center">
+        <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
+        <p className="text-sm text-muted-foreground mb-2">
+          Drop files here or click to browse
+        </p>
+        <Button variant="outline" size="sm">
+          Select Files
+        </Button>
+      </div>
+
+      <div className="space-y-3">
+        {files.map((file, index) => (
+          <div key={index} className="border rounded-lg p-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center space-x-3">
+                {getStatusIcon(file.status)}
+                <div>
+                  <p className="text-sm font-medium">{file.name}</p>
+                  <p className="text-xs text-muted-foreground">{file.size}</p>
+                </div>
+              </div>
+              {getStatusBadge(file.status)}
+            </div>
+            
+            {file.status !== "error" && (
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>Progress</span>
+                  <span>{file.progress}%</span>
+                </div>
+                <Progress 
+                  value={file.progress} 
+                  className={`w-full ${getProgressColor(file.status)}`}
+                />
+              </div>
+            )}
+            
+            {file.status === "error" && (
+              <p className="text-xs text-red-600 mt-1">
+                Upload failed. Click to retry.
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Circular Progress (Custom)
+
+<ComponentPreview>
+```tsx
+import { Progress } from "@helgadigitals/vera-ui";
+
+export function CircularProgressExample() {
+  const CircularProgress = ({ value, size = 120, strokeWidth = 8 }) => {
+    const radius = (size - strokeWidth) / 2;
+    const circumference = radius * 2 * Math.PI;
+    const offset = circumference - (value / 100) * circumference;
+
+    return (
+      <div className="relative inline-flex items-center justify-center">
+        <svg
+          width={size}
+          height={size}
+          className="transform -rotate-90"
+        >
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke="currentColor"
+            strokeWidth={strokeWidth}
+            fill="transparent"
+            className="text-muted"
+          />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke="currentColor"
+            strokeWidth={strokeWidth}
+            fill="transparent"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            strokeLinecap="round"
+            className="text-primary transition-all duration-300 ease-in-out"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-2xl font-semibold">{value}%</span>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex justify-center space-x-8">
+      <div className="text-center">
+        <CircularProgress value={25} />
+        <p className="text-sm text-muted-foreground mt-2">Downloads</p>
+      </div>
+      
+      <div className="text-center">
+        <CircularProgress value={75} />
+        <p className="text-sm text-muted-foreground mt-2">Uploads</p>
+      </div>
+      
+      <div className="text-center">
+        <CircularProgress value={100} />
+        <p className="text-sm text-muted-foreground mt-2">Complete</p>
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+## API Reference
+
+### Progress
+
+The main progress indicator component.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number` | `0` | Progress value from 0 to 100 |
+| `max` | `number` | `100` | Maximum value for progress calculation |
+| `className` | `string` | - | Additional CSS classes |
+| `getValueLabel` | `(value: number, max: number) => string` | - | Custom value label function |
+
+### Progress Indicator
+
+The inner progress bar element (styled automatically).
+
+- Smooth transitions with CSS transforms
+- Proper ARIA attributes for accessibility
+- Customizable through CSS classes
+
+## Use Cases
+
+### Loading States
+- **Page loading** - Show overall page load progress
+- **Data fetching** - API request completion status
+- **Image loading** - Image download progress
+- **Component mounting** - Progressive component loading
+
+### File Operations
+- **File uploads** - Upload progress with file details
+- **File downloads** - Download completion status
+- **File processing** - Processing status for operations
+- **Batch operations** - Multiple file operation progress
+
+### Task Completion
+- **Form completion** - Multi-step form progress
+- **Onboarding flows** - User setup completion
+- **Tutorial progress** - Step-by-step guide completion
+- **Survey progress** - Question completion status
+
+### Data Processing
+- **Import/export** - Data transfer progress
+- **Sync operations** - Synchronization status
+- **Backup operations** - Backup completion progress
+- **Migration tasks** - Data migration status
+
+### Gaming & Applications
+- **Achievement progress** - Goal completion tracking
+- **Skill development** - Learning progress indicators
+- **Health/fitness** - Goal tracking and progress
+- **Project completion** - Task and milestone tracking
+
+## Accessibility
+
+The Progress component includes:
+
+- **ARIA attributes** - `progressbar` role with value and range
+- **Screen reader support** - Descriptive progress announcements
+- **Keyboard navigation** - When used in interactive contexts
+- **Value labels** - Customizable progress descriptions
+- **High contrast** - Proper contrast ratios for visibility
+
+## Best Practices
+
+### Visual Design
+- **Appropriate sizing** - Match progress bar size to context
+- **Color meaning** - Use colors that convey appropriate meaning
+- **Smooth animations** - Avoid jarring progress updates
+- **Clear labeling** - Include descriptive text with progress
+
+### User Experience
+- **Immediate feedback** - Show progress immediately when operations start
+- **Accurate estimates** - Provide realistic progress calculations
+- **Error handling** - Show clear error states when operations fail
+- **Completion feedback** - Clearly indicate when operations complete
+
+### Performance
+- **Throttled updates** - Avoid excessive progress updates
+- **Efficient calculations** - Optimize progress calculations
+- **Memory management** - Clean up progress tracking properly
+- **Smooth animations** - Use CSS transforms for performance
+
+### Context Awareness
+- **Operation type** - Match progress style to operation context
+- **Time estimates** - Include time remaining when possible
+- **Cancellation** - Allow users to cancel long operations
+- **Background operations** - Handle background task progress appropriately
+
+## Related Components
+
+- **[Skeleton](/docs/components/data-display/skeleton)** - Loading placeholders for content
+- **[Spinner](/docs/components/feedback/spinner)** - Indeterminate loading indicators
+- **[Alert](/docs/components/data-display/alert)** - Status messages and notifications
+- **[Badge](/docs/components/data-display/badge)** - Status indicators and labels

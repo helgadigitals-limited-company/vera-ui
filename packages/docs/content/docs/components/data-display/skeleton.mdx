@@ -1,0 +1,468 @@
+---
+title: Skeleton
+description: Loading placeholders that mimic the shape of content while data loads
+---
+
+import { ComponentPreview } from "@/components/component-preview";
+
+# Skeleton
+
+Skeleton loading components provide visual placeholders that mimic the shape and size of content while it loads. They improve perceived performance and provide a better user experience during loading states.
+
+## Features
+
+- **Smooth animations** - Subtle pulse animation while loading
+- **Flexible shapes** - Easily customizable to match content structure
+- **Lightweight** - Minimal impact on performance
+- **Accessible** - Proper ARIA attributes for screen readers
+- **Responsive** - Adapts to container sizes
+
+## Installation
+
+```bash
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+### Basic Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function BasicSkeletonExample() {
+  return (
+    <div className="space-y-3">
+      <Skeleton className="h-4 w-[250px]" />
+      <Skeleton className="h-4 w-[200px]" />
+      <Skeleton className="h-4 w-[150px]" />
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Card Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function CardSkeletonExample() {
+  return (
+    <div className="flex items-center space-x-4">
+      <Skeleton className="h-12 w-12 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Article Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function ArticleSkeletonExample() {
+  return (
+    <div className="space-y-4 max-w-2xl">
+      {/* Header */}
+      <div className="space-y-2">
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-4 w-1/2" />
+      </div>
+      
+      {/* Image */}
+      <Skeleton className="h-48 w-full rounded-lg" />
+      
+      {/* Content */}
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3" />
+      </div>
+      
+      {/* Author info */}
+      <div className="flex items-center space-x-3 pt-4">
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <div className="space-y-1">
+          <Skeleton className="h-3 w-24" />
+          <Skeleton className="h-3 w-20" />
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Table Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function TableSkeletonExample() {
+  return (
+    <div className="space-y-3">
+      {/* Header */}
+      <div className="grid grid-cols-4 gap-4">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+      </div>
+      
+      {/* Separator */}
+      <Skeleton className="h-px w-full" />
+      
+      {/* Rows */}
+      {Array.from({ length: 5 }).map((_, i) => (
+        <div key={i} className="grid grid-cols-4 gap-4">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-4 w-2/3" />
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Profile Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function ProfileSkeletonExample() {
+  return (
+    <div className="space-y-6 max-w-md">
+      {/* Profile header */}
+      <div className="flex items-center space-x-4">
+        <Skeleton className="h-16 w-16 rounded-full" />
+        <div className="space-y-2 flex-1">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-3 w-20" />
+        </div>
+      </div>
+      
+      {/* Bio */}
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <Skeleton className="h-4 w-3/4" />
+      </div>
+      
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-4">
+        <div className="text-center space-y-1">
+          <Skeleton className="h-6 w-8 mx-auto" />
+          <Skeleton className="h-3 w-12 mx-auto" />
+        </div>
+        <div className="text-center space-y-1">
+          <Skeleton className="h-6 w-8 mx-auto" />
+          <Skeleton className="h-3 w-16 mx-auto" />
+        </div>
+        <div className="text-center space-y-1">
+          <Skeleton className="h-6 w-8 mx-auto" />
+          <Skeleton className="h-3 w-14 mx-auto" />
+        </div>
+      </div>
+      
+      {/* Actions */}
+      <div className="flex space-x-2">
+        <Skeleton className="h-9 flex-1" />
+        <Skeleton className="h-9 w-20" />
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Product Grid Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function ProductGridSkeletonExample() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="space-y-3 border rounded-lg p-4">
+          {/* Product image */}
+          <Skeleton className="h-48 w-full rounded-md" />
+          
+          {/* Product info */}
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-3 w-1/2" />
+            <Skeleton className="h-5 w-20" />
+          </div>
+          
+          {/* Action button */}
+          <Skeleton className="h-9 w-full" />
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Dashboard Skeleton
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+
+export function DashboardSkeletonExample() {
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-9 w-24" />
+      </div>
+      
+      {/* Stats cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="border rounded-lg p-4 space-y-3">
+            <div className="flex justify-between items-center">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-4 w-4 rounded" />
+            </div>
+            <Skeleton className="h-7 w-24" />
+            <Skeleton className="h-3 w-32" />
+          </div>
+        ))}
+      </div>
+      
+      {/* Chart */}
+      <div className="border rounded-lg p-4">
+        <div className="flex justify-between items-center mb-4">
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-8 w-20" />
+        </div>
+        <Skeleton className="h-64 w-full" />
+      </div>
+      
+      {/* Recent activity */}
+      <div className="border rounded-lg p-4">
+        <Skeleton className="h-6 w-40 mb-4" />
+        <div className="space-y-3">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="flex items-center space-x-3">
+              <Skeleton className="h-8 w-8 rounded-full" />
+              <div className="flex-1 space-y-1">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+              <Skeleton className="h-3 w-16" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Loading State Toggle
+
+<ComponentPreview>
+```tsx
+import { Skeleton } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+import { Badge } from "@helgadigitals/vera-ui";
+import { useState } from "react";
+
+export function LoadingStateToggleExample() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const toggleLoading = () => {
+    setIsLoading(!isLoading);
+  };
+
+  return (
+    <div className="space-y-4">
+      <Button onClick={toggleLoading}>
+        {isLoading ? "Show Loaded State" : "Show Loading State"}
+      </Button>
+      
+      <div className="border rounded-lg p-6">
+        {isLoading ? (
+          /* Loading state */
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[160px]" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-3/4" />
+            </div>
+            <div className="flex space-x-2">
+              <Skeleton className="h-6 w-16" />
+              <Skeleton className="h-6 w-20" />
+              <Skeleton className="h-6 w-18" />
+            </div>
+          </div>
+        ) : (
+          /* Loaded state */
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                <AvatarFallback>SH</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-semibold">Sarah Johnson</h3>
+                <p className="text-sm text-muted-foreground">Senior Developer</p>
+              </div>
+            </div>
+            <p className="text-sm">
+              Experienced full-stack developer with expertise in React, Node.js, and 
+              cloud architecture. Passionate about building scalable applications 
+              and mentoring junior developers.
+            </p>
+            <div className="flex space-x-2">
+              <Badge variant="secondary">React</Badge>
+              <Badge variant="secondary">TypeScript</Badge>
+              <Badge variant="secondary">Node.js</Badge>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+## API Reference
+
+### Skeleton
+
+The main skeleton loading component.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | - | Additional CSS classes for styling |
+| `children` | `ReactNode` | - | Optional children (rarely used) |
+
+### Default Styling
+
+The skeleton component comes with built-in styles:
+
+```css
+.skeleton {
+  background-color: hsl(var(--accent));
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.375rem; /* 6px */
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+```
+
+## Use Cases
+
+### Content Loading
+- **Articles and blogs** - Text content and images
+- **News feeds** - Article previews and thumbnails
+- **Documentation** - Code examples and explanations
+- **Comments** - User discussions and replies
+
+### E-commerce
+- **Product listings** - Product cards with images and details
+- **Product details** - Detailed product information pages
+- **Shopping cart** - Cart items and checkout process
+- **Reviews** - Customer reviews and ratings
+
+### Social Media
+- **User profiles** - Profile information and activity
+- **Post feeds** - Social media posts and interactions
+- **Chat interfaces** - Message loading and history
+- **Notifications** - Alert and notification lists
+
+### Dashboard & Analytics
+- **Data visualization** - Charts and graphs
+- **Statistics** - Key performance indicators
+- **Tables** - Data grid loading states
+- **Reports** - Generated report content
+
+### Admin Interfaces
+- **User management** - User lists and details
+- **Content management** - Admin panels and forms
+- **System monitoring** - Status and monitoring data
+- **Settings** - Configuration interfaces
+
+## Accessibility
+
+The Skeleton component includes:
+
+- **ARIA attributes** - Hidden from screen readers by default
+- **Visual indicators** - Clear loading state representation
+- **Animation control** - Respects user motion preferences
+- **Semantic structure** - Maintains content hierarchy during loading
+- **Color contrast** - Sufficient contrast for visibility
+
+## Best Practices
+
+### Design Principles
+- **Match content structure** - Skeleton should mirror final content layout
+- **Consistent spacing** - Maintain spacing and alignment with loaded content
+- **Appropriate timing** - Show skeletons for operations taking > 200ms
+- **Progressive disclosure** - Load critical content first
+
+### Performance
+- **Lightweight animations** - Use CSS transforms and opacity
+- **Efficient rendering** - Minimize DOM manipulation during loading
+- **Proper cleanup** - Remove skeletons completely when content loads
+- **Avoid flash** - Smooth transition from skeleton to content
+
+### User Experience
+- **Predictable layouts** - Maintain layout stability during loading
+- **Realistic representations** - Make skeletons look like actual content
+- **Clear loading context** - Users should understand what's loading
+- **Graceful degradation** - Handle loading errors appropriately
+
+### Implementation
+- **Conditional rendering** - Use loading states to toggle between skeleton and content
+- **Reusable patterns** - Create skeleton components for common layouts
+- **Responsive design** - Ensure skeletons work across screen sizes
+- **Testing** - Test loading states and skeleton appearances
+
+## Related Components
+
+- **[Progress](/docs/components/data-display/progress)** - Determinate loading indicators
+- **[Spinner](/docs/components/feedback/spinner)** - Indeterminate loading indicators
+- **[Card](/docs/components/data-display/card)** - Content containers that often use skeletons
+- **[Avatar](/docs/components/data-display/avatar)** - User representation with loading states

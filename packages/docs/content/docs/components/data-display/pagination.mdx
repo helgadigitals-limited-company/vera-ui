@@ -1,0 +1,189 @@
+---
+title: Pagination
+description: Navigation controls for breaking large datasets into manageable pages
+---
+
+import { ComponentPreview } from "@/components/component-preview";
+
+# Pagination
+
+Navigation component for dividing content across multiple pages with intuitive controls for users to navigate through large datasets efficiently.
+
+## Features
+
+- **Page navigation** - Previous, next, and direct page access
+- **Flexible display** - Show/hide page numbers based on space
+- **Size indicators** - Items per page and total count
+- **Keyboard accessible** - Full keyboard navigation support
+- **Responsive design** - Adapts to different screen sizes
+
+## Installation
+
+```bash
+npm install @helgadigitals/vera-ui
+```
+
+## Usage
+
+### Basic Pagination
+
+<ComponentPreview>
+```tsx
+import { Pagination } from "@helgadigitals/vera-ui";
+
+export function BasicPaginationExample() {
+  return (
+    <Pagination
+      currentPage={3}
+      totalPages={10}
+      onPageChange={(page) => console.log('Page changed:', page)}
+    />
+  );
+}
+```
+</ComponentPreview>
+
+### With Page Size Options
+
+<ComponentPreview>
+```tsx
+import { Pagination } from "@helgadigitals/vera-ui";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@helgadigitals/vera-ui";
+
+export function PaginationWithSizeExample() {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(10);
+  const totalItems = 250;
+  const totalPages = Math.ceil(totalItems / pageSize);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <p className="text-sm text-muted-foreground">
+            Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, totalItems)} of {totalItems} results
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <p className="text-sm text-muted-foreground">Rows per page:</p>
+          <Select
+            value={pageSize.toString()}
+            onValueChange={(value) => {
+              setPageSize(Number(value));
+              setCurrentPage(1);
+            }}
+          >
+            <SelectTrigger className="w-16">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+      
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        showPageSizeSelector={false}
+      />
+    </div>
+  );
+}
+```
+</ComponentPreview>
+
+### Compact Pagination
+
+<ComponentPreview>
+```tsx
+import { Pagination } from "@helgadigitals/vera-ui";
+
+export function CompactPaginationExample() {
+  return (
+    <Pagination
+      currentPage={5}
+      totalPages={20}
+      onPageChange={(page) => console.log('Page changed:', page)}
+      variant="compact"
+      showPageNumbers={false}
+    />
+  );
+}
+```
+</ComponentPreview>
+
+## API Reference
+
+### Pagination
+
+Main pagination component with navigation controls.
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `currentPage` | `number` | `1` | Currently active page |
+| `totalPages` | `number` | - | Total number of pages |
+| `onPageChange` | `(page: number) => void` | - | Callback when page changes |
+| `variant` | `"default" \| "compact"` | `"default"` | Visual variant |
+| `showPageNumbers` | `boolean` | `true` | Whether to show page numbers |
+| `showPageSizeSelector` | `boolean` | `true` | Whether to show page size selector |
+| `pageSizeOptions` | `number[]` | `[10, 20, 50, 100]` | Available page size options |
+| `pageSize` | `number` | `10` | Current page size |
+| `onPageSizeChange` | `(size: number) => void` | - | Callback when page size changes |
+| `totalItems` | `number` | - | Total number of items (for display) |
+| `disabled` | `boolean` | `false` | Whether pagination is disabled |
+| `className` | `string` | - | Additional CSS classes |
+
+## Use Cases
+
+### Data Tables
+- **Search results** - Navigate through search results
+- **User lists** - Browse user directories
+- **Product catalogs** - Browse product listings
+- **Report data** - Navigate through report entries
+
+### Content Lists
+- **Blog posts** - Navigate through article archives
+- **News articles** - Browse news content
+- **Gallery images** - Navigate image collections
+- **Comment threads** - Browse comment pages
+
+### Admin Panels
+- **Management interfaces** - Navigate administrative data
+- **Analytics dashboards** - Browse metric pages
+- **Content management** - Navigate content lists
+- **User administration** - Browse user accounts
+
+### E-commerce
+- **Product listings** - Navigate product categories
+- **Order history** - Browse past orders
+- **Inventory management** - Navigate stock items
+- **Customer lists** - Browse customer data
+
+## Accessibility
+
+The Pagination component follows accessibility best practices:
+
+- **Keyboard navigation** - Arrow keys and Tab navigation
+- **Screen reader support** - Proper ARIA labels and descriptions
+- **Focus management** - Clear focus indicators
+- **Semantic markup** - Uses appropriate HTML elements
+
+## Best Practices
+
+1. **Show context** - Display current page and total pages
+2. **Provide page size options** - Let users control how much they see
+3. **Maintain state** - Remember user's page and size preferences
+4. **Handle loading states** - Show loading indicators during navigation
+5. **Responsive design** - Adapt to different screen sizes
+
+## Related Components
+
+- **[Table](/docs/components/data-display/table)** - Often used together for data display
+- **[DataTable](/docs/components/data-display/data-table)** - Comprehensive data table with built-in pagination
+- **[Button](/docs/components/ui/button)** - Used for navigation controls

@@ -3,14 +3,24 @@
   "pages": [
     "index",
     "data-table",
-    "pagination",
     "table",
-    "card",
     "badge",
+    "card", 
     "avatar",
-    "skeleton",
     "progress",
+    "skeleton",
+    "separator",
+    "alert",
+    "accordion",
+    "pagination",
+    "aspect-ratio",
+    "breadcrumb",
     "chart",
-    "calendar"
+    "collapsible",
+    "hover-card",
+    "popover",
+    "tabs",
+    "tabs-container",
+    "tooltip"
   ]
 }
