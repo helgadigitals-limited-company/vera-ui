@@ -1,3 +1,4 @@
+'use client'
 import { ThemeProviderContext, type Theme } from '@/lib/theme-context'
 import * as React from 'react'
 
