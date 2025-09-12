@@ -4,6 +4,8 @@ description: Visual dividers for organizing and structuring content sections
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Separator
 
@@ -19,9 +21,23 @@ A visual divider component that helps organize content into distinct sections. B
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -470,11 +486,24 @@ export function ContentSectionsExample() {
 
 The main separator component for creating visual divisions.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Direction of the separator |
-| `decorative` | `boolean` | `true` | Whether separator is decorative or semantic |
-| `className` | `string` | - | Additional CSS classes |
+<TypeTable
+  type={{
+    orientation: {
+      type: '"horizontal" | "vertical"',
+      default: '"horizontal"',
+      description: 'Direction of the separator',
+    },
+    decorative: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether separator is decorative or semantic',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
 
 ### Orientation Options
 

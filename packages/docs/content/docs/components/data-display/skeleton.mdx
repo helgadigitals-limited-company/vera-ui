@@ -1,9 +1,11 @@
 ---
 title: Skeleton
-description: Loading placeholders that mimic the shape of content while data loads
+description: Loading placeholders that mimic content structure for improved perceived performance
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Skeleton
 
@@ -19,9 +21,23 @@ Skeleton loading components provide visual placeholders that mimic the shape and
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -366,10 +382,18 @@ export function LoadingStateToggleExample() {
 
 The main skeleton loading component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes for styling |
-| `children` | `ReactNode` | - | Optional children (rarely used) |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes for styling',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Optional children (rarely used)',
+    },
+  }}
+/>
 
 ### Default Styling
 

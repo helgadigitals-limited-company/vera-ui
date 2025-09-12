@@ -1,9 +1,11 @@
 ---
 title: Badge
-description: Small labels and status indicators for categorizing or highlighting information
+description: Compact status indicators and labels with multiple variant styles for displaying categories, notifications, and states
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Badge
 
@@ -19,9 +21,23 @@ A versatile component for displaying small pieces of information such as status 
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -275,12 +291,28 @@ export function CustomBadgeExample() {
 
 The main badge component with support for different variants and styles.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "destructive" \| "outline"` | `"default"` | Visual style variant |
-| `asChild` | `boolean` | `false` | Render as a child element |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Badge content |
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "secondary" | "destructive" | "outline"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Render as a child element',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Badge content',
+    },
+  }}
+/>
 
 ### Variants
 

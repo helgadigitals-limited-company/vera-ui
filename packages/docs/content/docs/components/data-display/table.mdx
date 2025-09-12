@@ -4,6 +4,8 @@ description: A basic table component for displaying tabular data with semantic H
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Table
 
@@ -19,9 +21,23 @@ A foundational table component built with semantic HTML elements, providing the 
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -263,75 +279,145 @@ export function TableWithCaptionExample() {
 
 The main table container with responsive overflow handling.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Table content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Table content',
+    },
+  }}
+/>
 
 ### TableHeader
 
 Table header section containing column headers.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Header rows |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Header rows',
+    },
+  }}
+/>
 
 ### TableBody
 
 Table body section containing data rows.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Body rows |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Body rows',
+    },
+  }}
+/>
 
 ### TableFooter
 
 Table footer section for summary information.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Footer rows |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Footer rows',
+    },
+  }}
+/>
 
 ### TableRow
 
 Individual table row element.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `data-state` | `"selected"` | - | Selection state for styling |
-| `children` | `ReactNode` | - | Row cells |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    'data-state': {
+      type: '"selected"',
+      description: 'Selection state for styling',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Row cells',
+    },
+  }}
+/>
 
 ### TableHead
 
 Header cell element with appropriate styling.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Header content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Header content',
+    },
+  }}
+/>
 
 ### TableCell
 
 Data cell element for table content.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `colSpan` | `number` | - | Number of columns to span |
-| `children` | `ReactNode` | - | Cell content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    colSpan: {
+      type: 'number',
+      description: 'Number of columns to span',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Cell content',
+    },
+  }}
+/>
 
 ### TableCaption
 
 Table caption for describing the table content.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Caption text |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Caption text',
+    },
+  }}
+/>
 
 ## Use Cases
 

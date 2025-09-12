@@ -4,6 +4,8 @@ description: Contextual feedback messages for users about system status and impo
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Alert
 
@@ -19,9 +21,23 @@ An alert component for displaying important messages, notifications, and system 
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -474,29 +490,57 @@ export function SystemAnnouncementsExample() {
 
 The main alert container component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "destructive"` | `"default"` | Visual style variant |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Alert content |
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "destructive"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Alert content',
+    },
+  }}
+/>
 
 ### AlertTitle
 
 The alert title/heading component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Title content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Title content',
+    },
+  }}
+/>
 
 ### AlertDescription
 
 The alert description/content component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Description content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Description content',
+    },
+  }}
+/>
 
 ## Use Cases
 

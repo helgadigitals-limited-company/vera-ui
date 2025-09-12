@@ -4,6 +4,8 @@ description: Visual indicators for showing task completion and loading states
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Progress
 
@@ -19,9 +21,23 @@ A visual progress indicator component for showing completion percentage, loading
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -464,12 +480,28 @@ export function CircularProgressExample() {
 
 The main progress indicator component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `number` | `0` | Progress value from 0 to 100 |
-| `max` | `number` | `100` | Maximum value for progress calculation |
-| `className` | `string` | - | Additional CSS classes |
-| `getValueLabel` | `(value: number, max: number) => string` | - | Custom value label function |
+<TypeTable
+  type={{
+    value: {
+      type: 'number',
+      default: '0',
+      description: 'Progress value from 0 to 100',
+    },
+    max: {
+      type: 'number',
+      default: '100',
+      description: 'Maximum value for progress calculation',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    getValueLabel: {
+      type: '(value: number, max: number) => string',
+      description: 'Custom value label function',
+    },
+  }}
+/>
 
 ### Progress Indicator
 

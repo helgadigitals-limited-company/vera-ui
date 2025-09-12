@@ -4,6 +4,8 @@ description: Collapsible content sections for organizing information hierarchica
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
 
 # Accordion
 
@@ -19,9 +21,24 @@ A vertically stacked set of interactive headings that each reveal a section of c
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -131,41 +148,87 @@ export function MultipleAccordionExample() {
 
 The root accordion container.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `type` | `"single" \| "multiple"` | - | Whether one or multiple items can be open |
-| `collapsible` | `boolean` | `false` | Whether all items can be closed (single type only) |
-| `value` | `string` | - | Controlled value for single type |
-| `defaultValue` | `string` | - | Default value for single type |
-| `onValueChange` | `(value: string) => void` | - | Callback for single type value changes |
+<TypeTable
+  type={{
+    type: {
+      type: '"single" | "multiple"',
+      description: 'Whether one or multiple items can be open',
+    },
+    collapsible: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether all items can be closed (single type only)',
+    },
+    value: {
+      type: 'string',
+      description: 'Controlled value for single type',
+    },
+    defaultValue: {
+      type: 'string',
+      description: 'Default value for single type',
+    },
+    onValueChange: {
+      type: '(value: string) => void',
+      description: 'Callback for single type value changes',
+    },
+  }}
+/>
 
 ### AccordionItem
 
 Individual accordion section container.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | Unique identifier for the item |
-| `disabled` | `boolean` | `false` | Whether the item is disabled |
-| `className` | `string` | - | Additional CSS classes |
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'Unique identifier for the item',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the item is disabled',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
 
 ### AccordionTrigger
 
 The clickable header that toggles the content.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Trigger content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Trigger content',
+    },
+  }}
+/>
 
 ### AccordionContent
 
 The collapsible content area.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Content to show/hide |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Content to show/hide',
+    },
+  }}
+/>
 
 ## Use Cases
 

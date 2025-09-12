@@ -1,9 +1,11 @@
 ---
 title: Card
-description: Flexible content containers for grouping related information and actions
+description: Flexible content containers with modular structure for organizing information and actions
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Card
 
@@ -19,9 +21,23 @@ A versatile container component for grouping related content and actions. Cards 
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -409,19 +425,35 @@ export function NotificationCardExample() {
 
 The main card container component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Card content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Card content',
+    },
+  }}
+/>
 
 ### CardHeader
 
 Container for card title, description, and actions.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Header content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Header content',
+    },
+  }}
+/>
 
 **Features:**
 - Automatic grid layout when `CardAction` is present
@@ -432,28 +464,52 @@ Container for card title, description, and actions.
 
 Main heading for the card.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Title content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Title content',
+    },
+  }}
+/>
 
 ### CardDescription
 
 Subtitle or description text for the card.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Description content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Description content',
+    },
+  }}
+/>
 
 ### CardAction
 
 Action buttons or controls positioned in the header.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Action elements |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Action elements',
+    },
+  }}
+/>
 
 **Features:**
 - Automatically positioned in top-right of header
@@ -464,19 +520,35 @@ Action buttons or controls positioned in the header.
 
 Main content area of the card.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Content elements |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Content elements',
+    },
+  }}
+/>
 
 ### CardFooter
 
 Footer area for actions or additional information.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Footer content |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Footer content',
+    },
+  }}
+/>
 
 ## Use Cases
 

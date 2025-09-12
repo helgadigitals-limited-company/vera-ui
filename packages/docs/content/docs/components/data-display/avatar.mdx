@@ -1,9 +1,11 @@
 ---
 title: Avatar
-description: User profile images with automatic fallbacks and accessibility features
+description: User profile images with intelligent fallback system for consistent identity display
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Avatar
 
@@ -19,9 +21,23 @@ A flexible avatar component for displaying user profile images with automatic fa
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -347,20 +363,39 @@ export function ProfileHeaderExample() {
 
 The root avatar container component.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Avatar image and fallback |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Avatar image and fallback',
+    },
+  }}
+/>
 
 ### AvatarImage
 
 The avatar image component with automatic error handling.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `src` | `string` | - | Image source URL |
-| `alt` | `string` | - | Alternative text for accessibility |
-| `className` | `string` | - | Additional CSS classes |
+<TypeTable
+  type={{
+    src: {
+      type: 'string',
+      description: 'Image source URL',
+    },
+    alt: {
+      type: 'string',
+      description: 'Alternative text for accessibility',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
 
 **Features:**
 - Automatic fallback when image fails to load
@@ -371,10 +406,18 @@ The avatar image component with automatic error handling.
 
 The fallback content shown when image is unavailable.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `className` | `string` | - | Additional CSS classes |
-| `children` | `ReactNode` | - | Fallback content (usually initials) |
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Fallback content (usually initials)',
+    },
+  }}
+/>
 
 **Features:**
 - Only displays when image is unavailable

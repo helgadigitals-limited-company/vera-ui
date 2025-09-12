@@ -4,6 +4,8 @@ description: Navigation controls for breaking large datasets into manageable pag
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Pagination
 
@@ -19,9 +21,23 @@ Navigation component for dividing content across multiple pages with intuitive c
 
 ## Installation
 
-```bash
-npm install @helgadigitals/vera-ui
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
 
 ## Usage
 
@@ -124,20 +140,65 @@ export function CompactPaginationExample() {
 
 Main pagination component with navigation controls.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `currentPage` | `number` | `1` | Currently active page |
-| `totalPages` | `number` | - | Total number of pages |
-| `onPageChange` | `(page: number) => void` | - | Callback when page changes |
-| `variant` | `"default" \| "compact"` | `"default"` | Visual variant |
-| `showPageNumbers` | `boolean` | `true` | Whether to show page numbers |
-| `showPageSizeSelector` | `boolean` | `true` | Whether to show page size selector |
-| `pageSizeOptions` | `number[]` | `[10, 20, 50, 100]` | Available page size options |
-| `pageSize` | `number` | `10` | Current page size |
-| `onPageSizeChange` | `(size: number) => void` | - | Callback when page size changes |
-| `totalItems` | `number` | - | Total number of items (for display) |
-| `disabled` | `boolean` | `false` | Whether pagination is disabled |
-| `className` | `string` | - | Additional CSS classes |
+<TypeTable
+  type={{
+    currentPage: {
+      type: 'number',
+      default: '1',
+      description: 'Currently active page',
+    },
+    totalPages: {
+      type: 'number',
+      description: 'Total number of pages',
+    },
+    onPageChange: {
+      type: '(page: number) => void',
+      description: 'Callback when page changes',
+    },
+    variant: {
+      type: '"default" | "compact"',
+      default: '"default"',
+      description: 'Visual variant',
+    },
+    showPageNumbers: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to show page numbers',
+    },
+    showPageSizeSelector: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to show page size selector',
+    },
+    pageSizeOptions: {
+      type: 'number[]',
+      default: '[10, 20, 50, 100]',
+      description: 'Available page size options',
+    },
+    pageSize: {
+      type: 'number',
+      default: '10',
+      description: 'Current page size',
+    },
+    onPageSizeChange: {
+      type: '(size: number) => void',
+      description: 'Callback when page size changes',
+    },
+    totalItems: {
+      type: 'number',
+      description: 'Total number of items (for display)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether pagination is disabled',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
 
 ## Use Cases
 

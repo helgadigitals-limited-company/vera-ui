@@ -1,9 +1,28 @@
 ---
-title: Tabs Container
-description: Advanced tabbed interface with URL persistence, scrollable navigation, and enhanced UX features
+title: Tabs Contai## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>escription: Advanced tabbed interface with URL persistence, scrollable navigation, and enhanced UX features
 ---
 
 import { ComponentPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Tabs Container
 
@@ -249,29 +268,83 @@ export function ConditionalTabsExample() {
 
 The main container component for tabbed interfaces.
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `tabs` | `TabItem[]` | - | Array of tab items to display |
-| `defaultTab` | `string` | `tabs[0].value` | Default selected tab value |
-| `className` | `string` | - | Additional CSS classes |
-| `urlParamName` | `string` | `"tab"` | URL parameter name for this tab group |
-| `historyMode` | `"push" \| "replace"` | `"push"` | Control URL history behavior |
-| `shallow` | `boolean` | `true` | Whether to use shallow routing |
-| `onTabChange` | `(value: string) => void` | - | Callback when tab changes |
-| `containerHeight` | `string` | `"calc(100vh-5rem)"` | Container height CSS value |
-| `persistInUrl` | `boolean` | `true` | Whether to persist tab state in URL |
+<TypeTable
+  type={{
+    tabs: {
+      type: 'TabItem[]',
+      description: 'Array of tab items to display',
+    },
+    defaultTab: {
+      type: 'string',
+      default: 'tabs[0].value',
+      description: 'Default selected tab value',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    urlParamName: {
+      type: 'string',
+      default: '"tab"',
+      description: 'URL parameter name for this tab group',
+    },
+    historyMode: {
+      type: '"push" | "replace"',
+      default: '"push"',
+      description: 'Control URL history behavior',
+    },
+    shallow: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to use shallow routing',
+    },
+    onTabChange: {
+      type: '(value: string) => void',
+      description: 'Callback when tab changes',
+    },
+    containerHeight: {
+      type: 'string',
+      default: '"calc(100vh-5rem)"',
+      description: 'Container height CSS value',
+    },
+    persistInUrl: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to persist tab state in URL',
+    },
+  }}
+/>
 
 ### TabItem
 
 Individual tab configuration object.
 
-| Property | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `string` | - | Unique identifier for the tab |
-| `label` | `string` | - | Display text for the tab |
-| `content` | `ReactNode` | - | Content to render in the tab panel |
-| `disabled` | `boolean` | `false` | Whether the tab is disabled |
-| `hidden` | `boolean` | `false` | Whether the tab is hidden |
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'Unique identifier for the tab',
+    },
+    label: {
+      type: 'string',
+      description: 'Display text for the tab',
+    },
+    content: {
+      type: 'ReactNode',
+      description: 'Content to render in the tab panel',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the tab is disabled',
+    },
+    hidden: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the tab is hidden',
+    },
+  }}
+/>
 
 ## Use Cases
 
