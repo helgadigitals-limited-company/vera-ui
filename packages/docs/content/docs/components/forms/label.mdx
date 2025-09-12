@@ -1,0 +1,436 @@
+---
+title: Label
+description: A label component for form controls that provides accessible labeling
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Label } from "@helgadigitals/vera-ui"
+
+# Label
+
+A label component built on Radix UI's Label primitive that provides accessible labeling for form controls. It automatically associates with form elements and supports proper focus management.
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
+
+## Usage
+
+```tsx
+import { Label } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="email">Email address</Label>
+      <input id="email" type="email" className="..." />
+    </div>
+  )
+}
+```
+
+## Examples
+
+### Basic Label
+
+```tsx
+import { Label, Input } from "@helgadigitals/vera-ui"
+
+export default function BasicExample() {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="username">Username</Label>
+      <Input id="username" type="text" placeholder="Enter your username" />
+    </div>
+  )
+}
+```
+
+### Required Field Label
+
+```tsx
+import { Label, Input } from "@helgadigitals/vera-ui"
+
+export default function RequiredExample() {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="password">
+        Password *
+      </Label>
+      <Input id="password" type="password" required />
+    </div>
+  )
+}
+```
+
+### Label with Icon
+
+```tsx
+import { User } from "lucide-react"
+import { Label, Input } from "@helgadigitals/vera-ui"
+
+export default function WithIconExample() {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor="profile" className="flex items-center gap-2">
+        <User className="h-4 w-4" />
+        Profile Name
+      </Label>
+      <Input id="profile" type="text" />
+    </div>
+  )
+}
+```
+
+### Different States
+
+```tsx
+import { Label, Input } from "@helgadigitals/vera-ui"
+
+export default function StatesExample() {
+  return (
+    <div className="space-y-6">
+      {/* Normal state */}
+      <div className="space-y-2">
+        <Label htmlFor="normal">Normal Label</Label>
+        <Input id="normal" type="text" />
+      </div>
+
+      {/* Disabled state */}
+      <div className="space-y-2" data-disabled="true">
+        <Label htmlFor="disabled">Disabled Label</Label>
+        <Input id="disabled" type="text" disabled />
+      </div>
+
+      {/* Error state - using custom styling */}
+      <div className="space-y-2">
+        <Label htmlFor="error" className="text-destructive">
+          Error Label
+        </Label>
+        <Input 
+          id="error" 
+          type="text" 
+          className="border-destructive focus-visible:ring-destructive/20" 
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+### Checkbox and Radio Labels
+
+```tsx
+import { Label, Checkbox, RadioGroup, RadioGroupItem } from "@helgadigitals/vera-ui"
+
+export default function CheckboxRadioExample() {
+  return (
+    <div className="space-y-6">
+      {/* Checkbox label */}
+      <div className="flex items-center space-x-2">
+        <Checkbox id="terms" />
+        <Label htmlFor="terms">
+          I agree to the terms and conditions
+        </Label>
+      </div>
+
+      {/* Radio group labels */}
+      <RadioGroup defaultValue="option1">
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="option1" id="r1" />
+          <Label htmlFor="r1">Option 1</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="option2" id="r2" />
+          <Label htmlFor="r2">Option 2</Label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <RadioGroupItem value="option3" id="r3" />
+          <Label htmlFor="r3">Option 3</Label>
+        </div>
+      </RadioGroup>
+    </div>
+  )
+}
+```
+
+### Label with Description
+
+```tsx
+import { Label, Input } from "@helgadigitals/vera-ui"
+
+export default function WithDescriptionExample() {
+  return (
+    <div className="space-y-2">
+      <div>
+        <Label htmlFor="api-key">API Key</Label>
+        <p className="text-sm text-muted-foreground">
+          Your API key is used to authenticate requests
+        </p>
+      </div>
+      <Input id="api-key" type="text" placeholder="Enter your API key" />
+    </div>
+  )
+}
+```
+
+### Form Field Integration
+
+```tsx
+import { useForm } from "react-hook-form"
+import { 
+  Label, 
+  Input, 
+  Button,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage 
+} from "@helgadigitals/vera-ui"
+
+export default function FormIntegrationExample() {
+  const form = useForm()
+
+  return (
+    <form className="space-y-4">
+      {/* Using standalone Label */}
+      <div className="space-y-2">
+        <Label htmlFor="standalone">Standalone Label</Label>
+        <Input id="standalone" type="text" />
+      </div>
+
+      {/* Using FormLabel (automatically integrated) */}
+      <FormField
+        control={form.control}
+        name="integrated"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Integrated Form Label</FormLabel>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </form>
+  )
+}
+```
+
+### Custom Styling
+
+```tsx
+import { Label, Input } from "@helgadigitals/vera-ui"
+
+export default function CustomStylingExample() {
+  return (
+    <div className="space-y-6">
+      {/* Large label */}
+      <div className="space-y-2">
+        <Label htmlFor="large" className="text-base font-semibold">
+          Large Label
+        </Label>
+        <Input id="large" type="text" />
+      </div>
+
+      {/* Colored label */}
+      <div className="space-y-2">
+        <Label htmlFor="colored" className="text-blue-600 font-medium">
+          Colored Label
+        </Label>
+        <Input id="colored" type="text" />
+      </div>
+
+      {/* Label with background */}
+      <div className="space-y-2">
+        <Label 
+          htmlFor="background" 
+          className="bg-muted px-2 py-1 rounded text-sm"
+        >
+          Label with Background
+        </Label>
+        <Input id="background" type="text" />
+      </div>
+    </div>
+  )
+}
+```
+
+## API Reference
+
+### Props
+
+The Label component accepts all props from Radix UI's Label component:
+
+<TypeTable
+  type={{
+    htmlFor: {
+      type: 'string',
+      description: 'The id of the form control this label is associated with',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'The content of the label',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    onClick: {
+      type: '() => void',
+      description: 'Click handler for the label',
+    },
+  }}
+/>
+
+All other standard HTML label attributes are also supported.
+
+## Data Attributes
+
+The following data attributes are automatically applied and can be used for styling:
+
+| Attribute | Description |
+|-----------|-------------|
+| `data-slot` | Always set to `"label"` for styling purposes |
+
+## Accessibility
+
+The Label component follows WAI-ARIA guidelines:
+
+- **Association**: Properly associates with form controls via `htmlFor` attribute
+- **Focus Management**: Clicking the label focuses the associated form control
+- **Screen Readers**: Provides accessible labeling for assistive technologies
+- **Keyboard Navigation**: Supports all standard keyboard interactions
+
+<Callout type="info">
+  **Always Associate Labels**: Use the `htmlFor` attribute to associate labels with their corresponding form controls. This ensures proper accessibility and focus management.
+</Callout>
+
+```tsx
+// Good: Properly associated label
+<Label htmlFor="email">Email</Label>
+<Input id="email" type="email" />
+
+// Avoid: Label without association
+<Label>Email</Label>
+<Input type="email" />
+```
+
+## Best Practices
+
+### Clear and Descriptive
+Labels should be clear, concise, and descriptive:
+
+```tsx
+// Good: Clear and specific
+<Label htmlFor="firstName">First Name</Label>
+
+// Avoid: Vague or unclear
+<Label htmlFor="name">Name</Label>
+```
+
+### Required Field Indicators
+Mark required fields clearly:
+
+```tsx
+// Good: Clear indication of required field
+<Label htmlFor="email">
+  Email Address *
+</Label>
+
+// Also good: Using visual indicators
+<Label htmlFor="email" className="after:content-['*'] after:ml-1 after:text-destructive">
+  Email Address
+</Label>
+```
+
+### Consistent Styling
+Maintain consistent label styling across your application:
+
+```tsx
+// Define consistent label classes
+const labelStyles = "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+
+<Label htmlFor="input" className={labelStyles}>
+  Consistent Label
+</Label>
+```
+
+## Integration with Form Components
+
+The Label component works seamlessly with all form components:
+
+```tsx
+import { 
+  Label, 
+  Input, 
+  Textarea, 
+  Select, 
+  Checkbox, 
+  RadioGroup,
+  Switch 
+} from "@helgadigitals/vera-ui"
+
+function FormExample() {
+  return (
+    <div className="space-y-4">
+      {/* Text input */}
+      <div className="space-y-2">
+        <Label htmlFor="text">Text Input</Label>
+        <Input id="text" type="text" />
+      </div>
+
+      {/* Textarea */}
+      <div className="space-y-2">
+        <Label htmlFor="message">Message</Label>
+        <Textarea id="message" />
+      </div>
+
+      {/* Checkbox */}
+      <div className="flex items-center space-x-2">
+        <Checkbox id="agree" />
+        <Label htmlFor="agree">I agree to the terms</Label>
+      </div>
+
+      {/* Switch */}
+      <div className="flex items-center space-x-2">
+        <Switch id="notifications" />
+        <Label htmlFor="notifications">Enable notifications</Label>
+      </div>
+    </div>
+  )
+}
+```
+
+## Styling
+
+The Label component supports custom styling and automatically inherits theme colors:
+
+```tsx
+<Label 
+  htmlFor="custom"
+  className="text-lg font-bold text-primary"
+>
+  Custom Styled Label
+</Label>
+```

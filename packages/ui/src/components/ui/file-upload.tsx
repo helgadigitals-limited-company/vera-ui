@@ -14,6 +14,7 @@ import {
 import { useRef, useState, useEffect } from "react";
 import { Badge } from "./badge";
 import { Progress } from "./progress";
+import { Input } from "./input";
 
 interface FileUploadProps {
   value?: File | File[] | null;
@@ -433,7 +434,7 @@ export  function FileUpload({
           </div>
         </div>
 
-        <input
+        <Input
           ref={inputRef}
           id={id}
           type="file"

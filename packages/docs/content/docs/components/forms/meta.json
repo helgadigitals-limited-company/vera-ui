@@ -1,0 +1,19 @@
+{
+  "title": "Form Components",
+  "pages": [
+    "index",
+    "button",
+    "checkbox",
+    "combobox",
+    "file-upload",
+    "form",
+    "input",
+    "input-otp",
+    "label",
+    "multi-select",
+    "radio-group",
+    "select",
+    "switch",
+    "textarea"
+  ]
+}

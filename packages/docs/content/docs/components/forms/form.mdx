@@ -1,0 +1,1135 @@
+---
+title: Form
+description: Accessible form components with validation and error handling built on React Hook Form
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { 
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+  Input,
+  Button,
+  Checkbox,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea
+} from "@helgadigitals/vera-ui"
+
+# Form
+
+A collection of form components built on React Hook Form that provides validation, accessibility, and consistent styling. These components work together to create comprehensive, accessible forms with built-in error handling.
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
+
+## Architecture
+
+The form system consists of several components that work together:
+
+- **`Form`** - Provides form context (alias for React Hook Form's `FormProvider`)
+- **`FormField`** - Wraps React Hook Form's `Controller` with field context
+- **`FormItem`** - Container for individual form fields with spacing
+- **`FormLabel`** - Accessible label with error styling
+- **`FormControl`** - Wrapper for form inputs with ARIA attributes
+- **`FormDescription`** - Helper text for form fields
+- **`FormMessage`** - Error and validation messages
+
+## Basic Usage
+
+```tsx
+import { useForm } from "react-hook-form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Button,
+} from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  const form = useForm({
+    defaultValues: {
+      username: "",
+    },
+  })
+
+  function onSubmit(values) {
+    console.log(values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter username" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+## Examples
+
+### Complete Registration Form
+
+```tsx
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Button,
+  Checkbox,
+} from "@helgadigitals/vera-ui"
+
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Please enter a valid email address.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  confirmPassword: z.string(),
+  terms: z.boolean().refine((value) => value, {
+    message: "You must accept the terms and conditions.",
+  }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+})
+
+export default function RegistrationForm() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      terms: false,
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("Registration data:", values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="johndoe" {...field} />
+              </FormControl>
+              <FormDescription>
+                Your unique username (minimum 2 characters)
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input 
+                  type="email" 
+                  placeholder="john@example.com" 
+                  {...field} 
+                />
+              </FormControl>
+              <FormDescription>
+                We'll never share your email with anyone else
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormDescription>
+                Must be at least 8 characters long
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="terms"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  Accept terms and conditions
+                </FormLabel>
+                <FormDescription>
+                  You agree to our Terms of Service and Privacy Policy
+                </FormDescription>
+                <FormMessage />
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" className="w-full">
+          Create Account
+        </Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+### Profile Settings Form
+
+```tsx
+import { useForm } from "react-hook-form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Textarea,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Button,
+} from "@helgadigitals/vera-ui"
+
+const profileSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  bio: z.string().max(500, "Bio must be 500 characters or less"),
+  country: z.string().min(1, "Please select a country"),
+  website: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
+})
+
+export default function ProfileForm() {
+  const form = useForm<z.infer<typeof profileSchema>>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      bio: "",
+      country: "",
+      website: "",
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof profileSchema>) {
+    console.log("Profile updated:", values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bio</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Tell us about yourself..."
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Brief description for your profile. Maximum 500 characters.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="country"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Country</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your country" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="us">United States</SelectItem>
+                  <SelectItem value="ca">Canada</SelectItem>
+                  <SelectItem value="uk">United Kingdom</SelectItem>
+                  <SelectItem value="au">Australia</SelectItem>
+                  <SelectItem value="de">Germany</SelectItem>
+                  <SelectItem value="fr">France</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Website</FormLabel>
+              <FormControl>
+                <Input 
+                  type="url" 
+                  placeholder="https://yourwebsite.com" 
+                  {...field} 
+                />
+              </FormControl>
+              <FormDescription>
+                Your personal or professional website (optional)
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex gap-4">
+          <Button type="submit">Save Changes</Button>
+          <Button type="button" variant="outline" onClick={() => form.reset()}>
+            Reset
+          </Button>
+        </div>
+      </form>
+    </Form>
+  )
+}
+```
+
+### Form with Dynamic Fields
+
+```tsx
+import { useForm, useFieldArray } from "react-hook-form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Button,
+} from "@helgadigitals/vera-ui"
+
+export default function DynamicFieldsForm() {
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      emails: [{ value: "" }],
+    },
+  })
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "emails",
+  })
+
+  function onSubmit(values) {
+    console.log("Form data:", values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="space-y-4">
+          <FormLabel>Email Addresses</FormLabel>
+          {fields.map((field, index) => (
+            <FormField
+              control={form.control}
+              key={field.id}
+              name={`emails.${index}.value`}
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex gap-2">
+                    <FormControl className="flex-1">
+                      <Input
+                        {...field}
+                        placeholder="email@example.com"
+                      />
+                    </FormControl>
+                    {fields.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => remove(index)}
+                      >
+                        Remove
+                      </Button>
+                    )}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+          
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => append({ value: "" })}
+          >
+            Add Email
+          </Button>
+        </div>
+
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+### Form with File Upload
+
+```tsx
+import { useForm } from "react-hook-form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  FileUpload,
+  Button,
+} from "@helgadigitals/vera-ui"
+
+export default function FileUploadForm() {
+  const form = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+      files: [],
+    },
+  })
+
+  function onSubmit(values) {
+    console.log("Submitted:", values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="files"
+          render={({ field: { onChange, value, ...field } }) => (
+            <FormItem>
+              <FormLabel>Attachments</FormLabel>
+              <FormControl>
+                <FileUpload
+                  onFilesChange={onChange}
+                  multiple
+                  accept="image/*,.pdf,.doc,.docx"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Upload images, PDFs, or documents (max 10MB each)
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit">Upload Files</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+### Custom Validation Messages
+
+```tsx
+import { useForm } from "react-hook-form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Button,
+} from "@helgadigitals/vera-ui"
+
+export default function CustomValidationForm() {
+  const form = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+    },
+  })
+
+  function onSubmit(values) {
+    console.log(values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          rules={{
+            required: "Username is required",
+            minLength: {
+              value: 3,
+              message: "Username must be at least 3 characters"
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9_]+$/,
+              message: "Username can only contain letters, numbers, and underscores"
+            }
+          }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          rules={{
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Please enter a valid email address"
+            }
+          }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="Enter email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+### Async Validation
+
+```tsx
+import { useForm } from "react-hook-form"
+import { useState } from "react"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Button,
+} from "@helgadigitals/vera-ui"
+
+// Mock API call
+const checkUsernameAvailability = async (username: string) => {
+  await new Promise(resolve => setTimeout(resolve, 1000))
+  return username !== "admin" && username !== "test"
+}
+
+export default function AsyncValidationForm() {
+  const [isChecking, setIsChecking] = useState(false)
+  
+  const form = useForm({
+    defaultValues: {
+      username: "",
+    },
+  })
+
+  const validateUsername = async (value: string) => {
+    if (!value) return "Username is required"
+    if (value.length < 3) return "Username must be at least 3 characters"
+    
+    setIsChecking(true)
+    try {
+      const isAvailable = await checkUsernameAvailability(value)
+      return isAvailable || "Username is already taken"
+    } finally {
+      setIsChecking(false)
+    }
+  }
+
+  function onSubmit(values) {
+    console.log("Form submitted:", values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          rules={{ validate: validateUsername }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input {...field} />
+                  {isChecking && (
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                    </div>
+                  )}
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button 
+          type="submit" 
+          disabled={isChecking || !form.formState.isValid}
+        >
+          Submit
+        </Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+## API Reference
+
+### Form
+
+Alias for React Hook Form's `FormProvider`. Provides form context to child components.
+
+<TypeTable
+  type={{
+    'All React Hook Form FormProvider props': {
+      type: '-',
+      description: 'See React Hook Form documentation',
+    },
+  }}
+/>
+
+### FormField
+
+Wrapper around React Hook Form's `Controller` with additional field context.
+
+<TypeTable
+  type={{
+    'All React Hook Form Controller props': {
+      type: '-',
+      description: 'See React Hook Form documentation',
+    },
+  }}
+/>
+
+### FormItem
+
+Container for individual form fields with consistent spacing.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Form field components',
+    },
+  }}
+/>
+
+### FormLabel
+
+Accessible form label with error state styling.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    'All Label component props': {
+      type: '-',
+      description: 'Inherits from Label component',
+    },
+  }}
+/>
+
+### FormControl
+
+Wrapper for form inputs that adds proper ARIA attributes.
+
+<TypeTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: 'Form input component',
+    },
+    'All Slot component props': {
+      type: '-',
+      description: 'Passes props to child component',
+    },
+  }}
+/>
+
+### FormDescription
+
+Helper text that provides additional context for form fields.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Description text',
+    },
+  }}
+/>
+
+### FormMessage
+
+Displays validation errors and messages.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Custom message (overrides field error)',
+    },
+  }}
+/>
+
+### useFormField Hook
+
+Custom hook that provides field state and accessibility IDs.
+
+**Returns:**
+```tsx
+{
+  id: string                    // Unique field ID
+  name: string                  // Field name
+  formItemId: string           // ID for form item
+  formDescriptionId: string    // ID for description
+  formMessageId: string        // ID for error message
+  invalid: boolean             // Whether field has errors
+  isDirty: boolean            // Whether field value changed
+  isTouched: boolean          // Whether field was focused
+  error?: FieldError          // Field error object
+}
+```
+
+## Features
+
+### Accessibility
+- **ARIA Attributes**: Proper `aria-describedby`, `aria-invalid`, and `id` associations
+- **Error Announcements**: Screen readers announce validation errors
+- **Label Association**: Labels properly associated with form controls
+- **Focus Management**: Logical tab order and focus indicators
+
+### Validation
+- **Built-in Rules**: Required, pattern, min/max length, custom validation
+- **Async Validation**: Support for server-side validation
+- **Real-time Feedback**: Validation on blur, change, or submit
+- **Error Display**: Consistent error message styling and positioning
+
+### Developer Experience
+- **TypeScript Support**: Full type safety with form schemas
+- **Schema Validation**: Works with Zod, Yup, Joi, and other validation libraries
+- **Flexible Layout**: Compose forms with any layout structure
+- **Performance**: Optimized re-renders and validation timing
+
+## Accessibility
+
+The form components provide comprehensive accessibility features:
+
+- **Screen Reader Support**: Proper ARIA labels, descriptions, and error announcements
+- **Keyboard Navigation**: Full keyboard support for all form elements
+- **Focus Management**: Logical tab order and visible focus indicators
+- **Error Handling**: Clear error messages with proper associations
+- **Semantic HTML**: Uses appropriate form elements and structure
+
+<Callout type="info">
+  **Best Practice**: Always use `FormLabel`, `FormDescription`, and `FormMessage` together with `FormControl` to ensure proper accessibility and consistent styling.
+</Callout>
+
+## Schema Validation
+
+The form components work seamlessly with schema validation libraries:
+
+### With Zod
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+
+const schema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+})
+
+const form = useForm({
+  resolver: zodResolver(schema),
+  defaultValues: { email: "", password: "" },
+})
+```
+
+### With Yup
+
+```tsx
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+
+const schema = yup.object({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup.string().min(8, "Password too short").required("Password is required"),
+})
+
+const form = useForm({
+  resolver: yupResolver(schema),
+  defaultValues: { email: "", password: "" },
+})
+```
+
+## Styling
+
+### Custom Form Layouts
+
+```tsx
+// Horizontal form layout
+<FormItem className="flex flex-row items-center space-x-4 space-y-0">
+  <FormLabel className="w-1/4">Label</FormLabel>
+  <FormControl className="flex-1">
+    <Input />
+  </FormControl>
+</FormItem>
+
+// Inline form
+<FormItem className="flex items-center gap-2">
+  <FormLabel>Search:</FormLabel>
+  <FormControl>
+    <Input className="w-auto" />
+  </FormControl>
+  <Button size="sm">Go</Button>
+</FormItem>
+```
+
+### Error State Customization
+
+```tsx
+// Custom error styling
+<FormMessage className="text-orange-500 font-medium" />
+
+// Conditional error display
+<FormField
+  render={({ field, fieldState }) => (
+    <FormItem>
+      <FormControl>
+        <Input 
+          {...field}
+          className={fieldState.error ? "border-red-500" : ""}
+        />
+      </FormControl>
+      {fieldState.error && (
+        <FormMessage className="text-red-600" />
+      )}
+    </FormItem>
+  )}
+/>
+```
+
+## Common Patterns
+
+### Form Submission States
+
+```tsx
+const form = useForm()
+const [isSubmitting, setIsSubmitting] = useState(false)
+
+const onSubmit = async (data) => {
+  setIsSubmitting(true)
+  try {
+    await submitForm(data)
+  } finally {
+    setIsSubmitting(false)
+  }
+}
+
+return (
+  <Button type="submit" disabled={isSubmitting}>
+    {isSubmitting ? "Submitting..." : "Submit"}
+  </Button>
+)
+```
+
+### Conditional Fields
+
+```tsx
+const showAdvanced = form.watch("showAdvanced")
+
+return (
+  <>
+    <FormField
+      name="showAdvanced"
+      render={({ field }) => (
+        <FormItem>
+          <FormControl>
+            <Checkbox
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+          </FormControl>
+          <FormLabel>Show advanced options</FormLabel>
+        </FormItem>
+      )}
+    />
+    
+    {showAdvanced && (
+      <FormField
+        name="advancedOption"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Advanced Setting</FormLabel>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    )}
+  </>
+)
+```
+
+### Form Reset and Default Values
+
+```tsx
+// Reset to default values
+<Button 
+  type="button" 
+  variant="outline"
+  onClick={() => form.reset()}
+>
+  Reset
+</Button>
+
+// Reset with new default values
+<Button 
+  type="button"
+  onClick={() => form.reset({ name: "", email: "user@example.com" })}
+>
+  Reset to Template
+</Button>
+
+// Reset specific field
+<Button 
+  type="button"
+  onClick={() => form.resetField("email")}
+>
+  Clear Email
+</Button>
+```

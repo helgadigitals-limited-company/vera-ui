@@ -1,0 +1,423 @@
+---
+title: Combobox
+description: A searchable dropdown component that combines an input with a popup list
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Combobox } from "@helgadigitals/vera-ui"
+
+# Combobox
+
+A combobox is an input widget that has an associated popup that enables users to select a value for the input from a collection of possible values. It combines the functionality of a dropdown and search input, allowing users to either select from a list or type to filter options.
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
+
+## Usage
+
+```tsx
+import { Combobox } from "@helgadigitals/vera-ui"
+
+const options = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+]
+
+export default function Example() {
+  const [value, setValue] = useState("")
+
+  return (
+    <Combobox
+      options={options}
+      value={value}
+      onValueChange={setValue}
+      placeholder="Select an option..."
+    />
+  )
+}
+```
+
+## Examples
+
+### Basic Combobox
+
+```tsx
+import { useState } from "react"
+import { Combobox } from "@helgadigitals/vera-ui"
+
+const frameworks = [
+  { value: "react", label: "React" },
+  { value: "vue", label: "Vue.js" },
+  { value: "angular", label: "Angular" },
+  { value: "svelte", label: "Svelte" },
+]
+
+export default function BasicExample() {
+  const [selectedFramework, setSelectedFramework] = useState("")
+
+  return (
+    <Combobox
+      options={frameworks}
+      value={selectedFramework}
+      onValueChange={setSelectedFramework}
+      placeholder="Select a framework..."
+    />
+  )
+}
+```
+
+### With Icons
+
+```tsx
+import { useState } from "react"
+import { User, Mail, Phone, MessageSquare } from "lucide-react"
+import { Combobox } from "@helgadigitals/vera-ui"
+
+const contactMethods = [
+  { value: "email", label: "Email", icon: Mail },
+  { value: "phone", label: "Phone", icon: Phone },
+  { value: "message", label: "Message", icon: MessageSquare },
+  { value: "in-person", label: "In Person", icon: User },
+]
+
+export default function WithIconsExample() {
+  const [selectedMethod, setSelectedMethod] = useState("")
+
+  return (
+    <Combobox
+      options={contactMethods}
+      value={selectedMethod}
+      onValueChange={setSelectedMethod}
+      placeholder="Choose contact method..."
+    />
+  )
+}
+```
+
+### Loading State
+
+```tsx
+import { useState, useEffect } from "react"
+import { Combobox } from "@helgadigitals/vera-ui"
+
+export default function LoadingExample() {
+  const [options, setOptions] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [selectedValue, setSelectedValue] = useState("")
+
+  useEffect(() => {
+    // Simulate API call
+    const timer = setTimeout(() => {
+      setOptions([
+        { value: "option1", label: "Loaded Option 1" },
+        { value: "option2", label: "Loaded Option 2" },
+        { value: "option3", label: "Loaded Option 3" },
+      ])
+      setIsLoading(false)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  return (
+    <Combobox
+      options={options}
+      value={selectedValue}
+      onValueChange={setSelectedValue}
+      isLoading={isLoading}
+      placeholder="Loading options..."
+    />
+  )
+}
+```
+
+### Error State
+
+```tsx
+import { useState } from "react"
+import { Combobox } from "@helgadigitals/vera-ui"
+
+export default function ErrorExample() {
+  const [selectedValue, setSelectedValue] = useState("")
+
+  return (
+    <Combobox
+      options={[]}
+      value={selectedValue}
+      onValueChange={setSelectedValue}
+      isError={true}
+      errorMessage="Failed to load options"
+      placeholder="Select an option..."
+    />
+  )
+}
+```
+
+### Different Variants
+
+```tsx
+import { useState } from "react"
+import { Combobox } from "@helgadigitals/vera-ui"
+
+const options = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+]
+
+export default function VariantsExample() {
+  const [value1, setValue1] = useState("")
+  const [value2, setValue2] = useState("")
+  const [value3, setValue3] = useState("")
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label>Default Variant</label>
+        <Combobox
+          options={options}
+          value={value1}
+          onValueChange={setValue1}
+          placeholder="Default variant..."
+        />
+      </div>
+      
+      <div>
+        <label>Secondary Variant</label>
+        <Combobox
+          options={options}
+          value={value2}
+          onValueChange={setValue2}
+          variant="secondary"
+          placeholder="Secondary variant..."
+        />
+      </div>
+      
+      <div>
+        <label>Destructive Variant</label>
+        <Combobox
+          options={options}
+          value={value3}
+          onValueChange={setValue3}
+          variant="destructive"
+          placeholder="Destructive variant..."
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+### Form Integration
+
+```tsx
+import { useForm, Controller } from "react-hook-form"
+import { Combobox, Button } from "@helgadigitals/vera-ui"
+
+const countries = [
+  { value: "us", label: "United States" },
+  { value: "ca", label: "Canada" },
+  { value: "mx", label: "Mexico" },
+  { value: "uk", label: "United Kingdom" },
+]
+
+export default function FormExample() {
+  const { control, handleSubmit, formState: { errors } } = useForm()
+
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label>Country *</label>
+        <Controller
+          name="country"
+          control={control}
+          rules={{ required: "Please select a country" }}
+          render={({ field }) => (
+            <Combobox
+              options={countries}
+              value={field.value || ""}
+              onValueChange={field.onChange}
+              placeholder="Select your country..."
+              variant={errors.country ? "error" : "default"}
+            />
+          )}
+        />
+        {errors.country && (
+          <p className="text-sm text-destructive mt-1">
+            {errors.country.message}
+          </p>
+        )}
+      </div>
+      
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+}
+```
+
+### Modal Popover
+
+```tsx
+import { useState } from "react"
+import { Combobox } from "@helgadigitals/vera-ui"
+
+const options = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" },
+]
+
+export default function ModalExample() {
+  const [selectedValue, setSelectedValue] = useState("")
+
+  return (
+    <Combobox
+      options={options}
+      value={selectedValue}
+      onValueChange={setSelectedValue}
+      modalPopover={true}
+      placeholder="Modal combobox..."
+    />
+  )
+}
+```
+
+## API Reference
+
+### Props
+
+<TypeTable
+  type={{
+    options: {
+      type: 'Array<{label: string, value: string, icon?: ComponentType}>',
+      description: 'Array of option objects to display',
+    },
+    onValueChange: {
+      type: '(value: string) => void',
+      description: 'Callback fired when the selected value changes',
+    },
+    value: {
+      type: 'string',
+      description: 'The controlled selected value',
+    },
+    defaultValue: {
+      type: 'string',
+      default: '""',
+      description: 'The default selected value when uncontrolled',
+    },
+    placeholder: {
+      type: 'string',
+      default: '"Select an option"',
+      description: 'Placeholder text displayed when no value is selected',
+    },
+    modalPopover: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the popover should be modal',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    variant: {
+      type: '"default" | "secondary" | "destructive" | "error"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    isLoading: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the component is in a loading state',
+    },
+    isError: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the component encountered an error',
+    },
+    errorMessage: {
+      type: 'string',
+      default: '"Failed to load options"',
+      description: 'Custom error message to display',
+    },
+    noOptionsMessage: {
+      type: 'string',
+      default: '"No options available"',
+      description: 'Message when no options are available',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the combobox is disabled',
+    },
+  }}
+/>
+
+### Option Object
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `label` | `string` | Yes | The text to display for the option |
+| `value` | `string` | Yes | The unique value associated with the option |
+| `icon` | `React.ComponentType<{className?: string}>` | No | Optional icon component to display |
+
+## Accessibility
+
+The Combobox component follows WAI-ARIA guidelines for combobox patterns:
+
+- **Keyboard Navigation**: 
+  - Arrow keys to navigate options
+  - Enter to select an option
+  - Escape to close the popover
+  - Backspace to clear selection when input is empty
+- **Screen Readers**: Proper ARIA attributes and announcements
+- **Focus Management**: Focus is properly managed between trigger and popover
+- **Search**: Users can type to filter options
+
+<Callout type="info">
+  **Search Functionality**: The combobox includes built-in search functionality. Users can type in the input to filter the available options in real-time.
+</Callout>
+
+## States
+
+The Combobox component supports several visual states:
+
+- **Default**: Normal interactive state
+- **Loading**: Shows loading spinner and message
+- **Error**: Displays error styling and message
+- **Disabled**: Non-interactive state
+- **Empty**: When no options are available
+
+## Styling
+
+The component uses class-variance-authority (cva) for consistent styling across variants. You can customize the appearance using the `className` prop:
+
+```tsx
+<Combobox
+  className="w-full max-w-md"
+  // ... other props
+/>
+```

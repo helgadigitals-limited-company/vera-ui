@@ -1,0 +1,495 @@
+---
+title: File Upload
+description: A comprehensive file upload component with drag and drop, preview, and validation
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+# File Upload
+
+A feature-rich file upload component that supports drag and drop, file previews, validation, progress tracking, and multiple file selection. Built with accessibility and user experience in mind.
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </Tab>
+</Tabs>
+
+## Usage
+
+```tsx
+import { useState } from "react"
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  const [files, setFiles] = useState(null)
+
+  return (
+    <FileUpload
+      value={files}
+      onChange={setFiles}
+      label="Upload your files"
+      helperText="Select files or drag and drop here"
+    />
+  )
+}
+```
+
+## Examples
+
+### Basic File Upload
+
+```tsx
+import { useState } from "react"
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function BasicExample() {
+  const [file, setFile] = useState(null)
+
+  return (
+    <div className="space-y-4">
+      <FileUpload
+        value={file}
+        onChange={setFile}
+        label="Choose a file"
+        helperText="Select any file to upload"
+      />
+      
+      {file && (
+        <p className="text-sm text-muted-foreground">
+          Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+        </p>
+      )}
+    </div>
+  )
+}
+```
+
+### Multiple File Upload
+
+```tsx
+import { useState } from "react"
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function MultipleExample() {
+  const [files, setFiles] = useState([])
+
+  return (
+    <div className="space-y-4">
+      <FileUpload
+        value={files}
+        onChange={setFiles}
+        multiple={true}
+        maxFiles={5}
+        label="Choose multiple files"
+        helperText="Select up to 5 files"
+      />
+      
+      {files && files.length > 0 && (
+        <div>
+          <p className="text-sm font-medium mb-2">
+            {files.length} file(s) selected:
+          </p>
+          <ul className="text-sm text-muted-foreground space-y-1">
+            {files.map((file, index) => (
+              <li key={index}>• {file.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}
+```
+
+### Image Upload with Preview
+
+```tsx
+import { useState } from "react"
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function ImageExample() {
+  const [images, setImages] = useState([])
+
+  return (
+    <FileUpload
+      value={images}
+      onChange={setImages}
+      accept="image/*"
+      multiple={true}
+      maxFiles={3}
+      maxSize={5}
+      showPreview={true}
+      label="Upload images"
+      helperText="PNG, JPG, GIF up to 5MB each"
+    />
+  )
+}
+```
+
+### File Type Restrictions
+
+```tsx
+import { useState } from "react"
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function RestrictedExample() {
+  const [document, setDocument] = useState(null)
+  const [error, setError] = useState("")
+
+  return (
+    <FileUpload
+      value={document}
+      onChange={setDocument}
+      accept=".pdf,.doc,.docx"
+      allowedTypes={[
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ]}
+      maxSize={10}
+      label="Upload document"
+      helperText="PDF, DOC, or DOCX files only"
+      error={error}
+      onError={setError}
+    />
+  )
+}
+```
+
+### With Upload Progress
+
+```tsx
+import { useState } from "react"
+import { FileUpload, Button } from "@helgadigitals/vera-ui"
+
+export default function ProgressExample() {
+  const [file, setFile] = useState(null)
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [isUploading, setIsUploading] = useState(false)
+
+  const simulateUpload = async () => {
+    if (!file) return
+    
+    setIsUploading(true)
+    setUploadProgress(0)
+
+    // Simulate upload progress
+    for (let i = 0; i <= 100; i += 10) {
+      await new Promise(resolve => setTimeout(resolve, 200))
+      setUploadProgress(i)
+    }
+
+    setIsUploading(false)
+    setUploadProgress(0)
+  }
+
+  return (
+    <div className="space-y-4">
+      <FileUpload
+        value={file}
+        onChange={setFile}
+        uploadProgress={isUploading ? uploadProgress : undefined}
+        disabled={isUploading}
+        label="Upload file"
+        helperText="Choose a file to upload"
+      />
+      
+      {file && !isUploading && (
+        <Button onClick={simulateUpload}>
+          Start Upload
+        </Button>
+      )}
+    </div>
+  )
+}
+```
+
+### Compact Mode
+
+```tsx
+import { useState } from "react"
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function CompactExample() {
+  const [files, setFiles] = useState([])
+
+  return (
+    <FileUpload
+      value={files}
+      onChange={setFiles}
+      multiple={true}
+      compact={true}
+      maxFiles={10}
+      label="Quick file upload"
+      helperText="Files will be shown as compact badges"
+    />
+  )
+}
+```
+
+### Form Integration
+
+```tsx
+import { useForm, Controller } from "react-hook-form"
+import { FileUpload, Button } from "@helgadigitals/vera-ui"
+
+export default function FormExample() {
+  const { control, handleSubmit, formState: { errors } } = useForm()
+
+  const onSubmit = (data) => {
+    console.log("Form data:", data)
+    // Handle file upload here
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div>
+        <label className="block text-sm font-medium mb-2">
+          Profile Picture *
+        </label>
+        <Controller
+          name="profilePicture"
+          control={control}
+          rules={{
+            required: "Please upload a profile picture"
+          }}
+          render={({ field }) => (
+            <FileUpload
+              value={field.value || null}
+              onChange={field.onChange}
+              accept="image/*"
+              maxSize={2}
+              showPreview={true}
+              label="Choose profile picture"
+              helperText="PNG or JPG, max 2MB"
+              error={errors.profilePicture?.message}
+            />
+          )}
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-2">
+          Documents (Optional)
+        </label>
+        <Controller
+          name="documents"
+          control={control}
+          render={({ field }) => (
+            <FileUpload
+              value={field.value || []}
+              onChange={field.onChange}
+              multiple={true}
+              maxFiles={5}
+              accept=".pdf,.doc,.docx"
+              label="Upload documents"
+              helperText="PDF, DOC, or DOCX files"
+            />
+          )}
+        />
+      </div>
+
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+}
+```
+
+### Disabled State
+
+```tsx
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+export default function DisabledExample() {
+  return (
+    <FileUpload
+      value={null}
+      onChange={() => {}}
+      disabled={true}
+      label="Upload disabled"
+      helperText="This upload area is currently disabled"
+    />
+  )
+}
+```
+
+## API Reference
+
+### Props
+
+<TypeTable
+  type={{
+    value: {
+      type: 'File | File[] | null',
+      description: 'The controlled file value(s)',
+    },
+    onChange: {
+      type: '(files: File | File[] | null) => void',
+      description: 'Callback when files change',
+    },
+    accept: {
+      type: 'string',
+      default: '"*/*"',
+      description: 'File input accept attribute',
+    },
+    multiple: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Allow multiple file selection',
+    },
+    id: {
+      type: 'string',
+      default: '"file-upload"',
+      description: 'Input element ID',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    label: {
+      type: 'string',
+      default: '"Choose file(s)"',
+      description: 'Main upload area label',
+    },
+    error: {
+      type: 'string',
+      description: 'Error message to display',
+    },
+    helperText: {
+      type: 'string',
+      description: 'Helpful text below the label',
+    },
+    showPreview: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Show image previews',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Disable the upload area',
+    },
+    maxSize: {
+      type: 'number',
+      default: '10',
+      description: 'Maximum file size in MB',
+    },
+    maxFiles: {
+      type: 'number',
+      default: '10',
+      description: 'Maximum number of files (when multiple)',
+    },
+    allowedTypes: {
+      type: 'string[]',
+      default: '[]',
+      description: 'Array of allowed MIME types',
+    },
+    onError: {
+      type: '(error: string) => void',
+      description: 'Callback when validation fails',
+    },
+    uploadProgress: {
+      type: 'number',
+      description: 'Upload progress percentage (0-100)',
+    },
+    dragAndDrop: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Enable drag and drop functionality',
+    },
+    compact: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Show selected files as compact badges',
+    },
+  }}
+/>
+
+### File Validation
+
+The component automatically validates files based on:
+
+- **File size**: Checked against `maxSize` prop
+- **File count**: Checked against `maxFiles` prop (when multiple)
+- **File types**: Checked against `allowedTypes` array
+
+When validation fails, the `onError` callback is triggered with a descriptive message.
+
+## Features
+
+### Drag and Drop
+- Full drag and drop support for modern browsers
+- Visual feedback during drag operations
+- Automatic file validation on drop
+
+### File Previews
+- Image thumbnails for supported formats
+- File type icons for non-image files
+- File size and type information
+
+### Validation
+- File size limits
+- File type restrictions
+- Maximum file count limits
+- Custom error handling
+
+### Progress Tracking
+- Upload progress bar support
+- Loading states and feedback
+- Progress percentage display
+
+### Accessibility
+- Full keyboard navigation support
+- Screen reader friendly
+- Proper ARIA labels and descriptions
+- Focus management
+
+## Styling
+
+The FileUpload component supports custom styling through the `className` prop and automatically adapts to your theme:
+
+```tsx
+<FileUpload
+  className="border-2 border-dashed border-blue-300"
+  // ... other props
+/>
+```
+
+## File Type Support
+
+The component automatically detects and displays appropriate icons for:
+
+- **Images**: PNG, JPG, GIF, WebP, etc.
+- **Videos**: MP4, WebM, AVI, etc.
+- **Audio**: MP3, WAV, OGG, etc.
+- **Documents**: PDF, DOC, DOCX, TXT, etc.
+- **Archives**: ZIP, RAR, 7Z, etc.
+- **Other**: Generic file icon for unknown types
+
+<Callout type="info">
+  **Image Previews**: When `showPreview` is enabled, image files will display thumbnails instead of generic icons, making it easier for users to identify their uploaded images.
+</Callout>
+
+## Browser Support
+
+- Modern browsers with File API support
+- Drag and drop on browsers that support it
+- Graceful fallback to click-to-upload on older browsers
