@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client'
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { cn, splitStringByUnderscore } from "@/lib/utils";
 import {

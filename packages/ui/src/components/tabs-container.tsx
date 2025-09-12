@@ -1,3 +1,4 @@
+'use client'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import { useRef, useState, useEffect } from "react"
