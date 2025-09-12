@@ -47,6 +47,7 @@ export default defineConfig({
         "react-resizable-panels",
         "vaul",
         "zod",
+        "@emotion/is-prop-valid",
       ],
       output: {
         banner: '"use client";',
