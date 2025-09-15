@@ -56,7 +56,7 @@ pnpm build:ui
 - **Vite**: Build tool with alias `@` → `./src`
 
 ## Documentation Patterns
-- **Fumadocs**: MDX-based docs with `_meta.json` structure
+- **Fumadocs**: MDX-based docs with `meta.json` structure
 - **Component previews**: Use `component-preview.tsx` wrapper
 - **Code examples**: Include both installation and usage patterns
 
