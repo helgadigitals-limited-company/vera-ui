@@ -6,7 +6,10 @@ description: A label component for form controls that provides accessible labeli
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Label } from "@helgadigitals/vera-ui"
+import { Label, Input, Checkbox, RadioGroup, RadioGroupItem } from "@helgadigitals/vera-ui"
+import { User } from "lucide-react"
+import { ComponentPreview } from "@/components/component-preview"
+import { WithDescriptionExample, FormIntegrationExample, CustomStylingExample } from "@/components/form-components-examples/label-examples"
 
 # Label
 
@@ -34,8 +37,9 @@ A label component built on Radix UI's Label primitive that provides accessible l
 
 ## Usage
 
-```tsx
-import { Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Basic label associated with an input field"
+  code={`import { Label } from "@helgadigitals/vera-ui"
 
 export default function Example() {
   return (
@@ -44,15 +48,21 @@ export default function Example() {
       <input id="email" type="email" className="..." />
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-2">
+    <Label htmlFor="email">Email address</Label>
+    <Input id="email" type="email" placeholder="Enter your email" />
+  </div>
+</ComponentPreview>
 
 ## Examples
 
 ### Basic Label
 
-```tsx
-import { Label, Input } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Label paired with an input component"
+  code={`import { Label, Input } from "@helgadigitals/vera-ui"
 
 export default function BasicExample() {
   return (
@@ -61,13 +71,19 @@ export default function BasicExample() {
       <Input id="username" type="text" placeholder="Enter your username" />
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-2">
+    <Label htmlFor="username">Username</Label>
+    <Input id="username" type="text" placeholder="Enter your username" />
+  </div>
+</ComponentPreview>
 
 ### Required Field Label
 
-```tsx
-import { Label, Input } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Label indicating a required field"
+  code={`import { Label, Input } from "@helgadigitals/vera-ui"
 
 export default function RequiredExample() {
   return (
@@ -78,13 +94,21 @@ export default function RequiredExample() {
       <Input id="password" type="password" required />
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-2">
+    <Label htmlFor="password">
+      Password *
+    </Label>
+    <Input id="password" type="password" required />
+  </div>
+</ComponentPreview>
 
 ### Label with Icon
 
-```tsx
-import { User } from "lucide-react"
+<ComponentPreview
+  description="Label enhanced with an icon"
+  code={`import { User } from "lucide-react"
 import { Label, Input } from "@helgadigitals/vera-ui"
 
 export default function WithIconExample() {
@@ -97,13 +121,22 @@ export default function WithIconExample() {
       <Input id="profile" type="text" />
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-2">
+    <Label htmlFor="profile" className="flex items-center gap-2">
+      <User className="h-4 w-4" />
+      Profile Name
+    </Label>
+    <Input id="profile" type="text" />
+  </div>
+</ComponentPreview>
 
 ### Different States
 
-```tsx
-import { Label, Input } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Labels in different states (normal, disabled, error)"
+  code={`import { Label, Input } from "@helgadigitals/vera-ui"
 
 export default function StatesExample() {
   return (
@@ -133,13 +166,37 @@ export default function StatesExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-6">
+    <div className="space-y-2">
+      <Label htmlFor="normal">Normal Label</Label>
+      <Input id="normal" type="text" />
+    </div>
+
+    <div className="space-y-2">
+      <Label htmlFor="disabled" className="text-muted-foreground">Disabled Label</Label>
+      <Input id="disabled" type="text" disabled />
+    </div>
+
+    <div className="space-y-2">
+      <Label htmlFor="error" className="text-destructive">
+        Error Label
+      </Label>
+      <Input 
+        id="error" 
+        type="text" 
+        className="border-destructive focus-visible:ring-destructive/20" 
+      />
+    </div>
+  </div>
+</ComponentPreview>
 
 ### Checkbox and Radio Labels
 
-```tsx
-import { Label, Checkbox, RadioGroup, RadioGroupItem } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Labels for checkbox and radio button components"
+  code={`import { Label, Checkbox, RadioGroup, RadioGroupItem } from "@helgadigitals/vera-ui"
 
 export default function CheckboxRadioExample() {
   return (
@@ -169,13 +226,38 @@ export default function CheckboxRadioExample() {
       </RadioGroup>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-6">
+    <div className="flex items-center space-x-2">
+      <Checkbox id="terms" />
+      <Label htmlFor="terms">
+        I agree to the terms and conditions
+      </Label>
+    </div>
+
+    <RadioGroup defaultValue="option1">
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="option1" id="r1" />
+        <Label htmlFor="r1">Option 1</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="option2" id="r2" />
+        <Label htmlFor="r2">Option 2</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="option3" id="r3" />
+        <Label htmlFor="r3">Option 3</Label>
+      </div>
+    </RadioGroup>
+  </div>
+</ComponentPreview>
 
 ### Label with Description
 
-```tsx
-import { Label, Input } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Label with additional descriptive text"
+  code={`import { Label, Input } from "@helgadigitals/vera-ui"
 
 export default function WithDescriptionExample() {
   return (
@@ -189,13 +271,16 @@ export default function WithDescriptionExample() {
       <Input id="api-key" type="text" placeholder="Enter your API key" />
     </div>
   )
-}
-```
+}`}
+>
+  <WithDescriptionExample />
+</ComponentPreview>
 
 ### Form Field Integration
 
-```tsx
-import { useForm } from "react-hook-form"
+<ComponentPreview
+  description="Using Label standalone vs integrated with Form components"
+  code={`import { useForm } from "react-hook-form"
 import { 
   Label, 
   Input, 
@@ -234,13 +319,16 @@ export default function FormIntegrationExample() {
       />
     </form>
   )
-}
-```
+}`}
+>
+  <FormIntegrationExample />
+</ComponentPreview>
 
 ### Custom Styling
 
-```tsx
-import { Label, Input } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Labels with different styling approaches"
+  code={`import { Label, Input } from "@helgadigitals/vera-ui"
 
 export default function CustomStylingExample() {
   return (
@@ -273,8 +361,10 @@ export default function CustomStylingExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <CustomStylingExample />
+</ComponentPreview>
 
 ## API Reference
 

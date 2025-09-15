@@ -3,10 +3,21 @@ title: Multi Select
 description: A multi-select component that allows users to select multiple options from a dropdown list
 ---
 
+
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { MultiSelect } from "@helgadigitals/vera-ui"
+import { ComponentPreview } from "@/components/component-preview"
+import { 
+  BasicMultiSelectExample,
+  WithIconsExample, 
+  WithAnimationExample, 
+  MaxCountExample, 
+  FormIntegrationExample, 
+  ModalPopoverExample, 
+  LargeDatasetExample 
+} from "@/components/form-components-examples/multi-select-examples"
 
 # Multi Select
 
@@ -34,8 +45,9 @@ A powerful multi-select component that allows users to choose multiple values fr
 
 ## Usage
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Basic multi-select with framework options"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 const options = [
@@ -57,15 +69,27 @@ export default function Example() {
       maxCount={3}
     />
   )
-}
-```
+}`}
+>
+  <MultiSelect
+    options={[
+      { value: "react", label: "React" },
+      { value: "vue", label: "Vue" },
+      { value: "angular", label: "Angular" },
+      { value: "svelte", label: "Svelte" },
+    ]}
+    placeholder="Select frameworks"
+    maxCount={3}
+  />
+</ComponentPreview>
 
 ## Examples
 
 ### Basic Multi Select
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select with fruit options and value display"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 const fruits = [
@@ -94,24 +118,46 @@ export default function BasicExample() {
       
       {selectedFruits.length > 0 && (
         <div>
-          <p className="text-sm font-medium mb-2">Selected fruits:</p>
-          <ul className="text-sm text-muted-foreground">
-            {selectedFruits.map((value) => {
-              const fruit = fruits.find(f => f.value === value)
-              return <li key={value}>• {fruit?.label}</li>
-            })}
-          </ul>
+          <p className="text-sm text-muted-foreground">
+            Selected: {selectedFruits.join(", ")}
+          </p>
         </div>
       )}
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Choose your favorite fruits</label>
+      <MultiSelect
+        options={[
+          { value: "apple", label: "Apple" },
+          { value: "banana", label: "Banana" },
+          { value: "orange", label: "Orange" },
+          { value: "grape", label: "Grape" },
+          { value: "strawberry", label: "Strawberry" },
+        ]}
+        placeholder="Select fruits"
+        className="w-full max-w-md"
+      />
+    </div>
+    
+    <div>
+      <p className="text-sm text-muted-foreground">
+        Select fruits to see them listed here
+      </p>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Examples
 
 ### With Icons
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select with icon-enhanced options"
+  code={`import { useState } from "react"
 import { Code, Database, Globe, Smartphone } from "lucide-react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
@@ -137,13 +183,16 @@ export default function WithIconsExample() {
       />
     </div>
   )
-}
-```
+}`}
+>
+  <WithIconsExample />
+</ComponentPreview>
 
 ### Different Variants
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select with different visual variants"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 const colors = [
@@ -197,13 +246,61 @@ export default function VariantsExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-6">
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Default Variant</label>
+      <MultiSelect
+        options={[
+          { value: "red", label: "Red" },
+          { value: "blue", label: "Blue" },
+          { value: "green", label: "Green" },
+          { value: "yellow", label: "Yellow" },
+        ]}
+        placeholder="Select colors"
+        variant="default"
+        className="w-full max-w-md"
+      />
+    </div>
+
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Secondary Variant</label>
+      <MultiSelect
+        options={[
+          { value: "red", label: "Red" },
+          { value: "blue", label: "Blue" },
+          { value: "green", label: "Green" },
+          { value: "yellow", label: "Yellow" },
+        ]}
+        placeholder="Select colors"
+        variant="secondary"
+        className="w-full max-w-md"
+      />
+    </div>
+
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Destructive Variant</label>
+      <MultiSelect
+        options={[
+          { value: "red", label: "Red" },
+          { value: "blue", label: "Blue" },
+          { value: "green", label: "Green" },
+          { value: "yellow", label: "Yellow" },
+        ]}
+        placeholder="Select colors"
+        variant="destructive"
+        className="w-full max-w-md"
+      />
+    </div>
+  </div>
+</ComponentPreview>
 
 ### With Animation
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select with badge animation effects"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 const countries = [
@@ -233,13 +330,16 @@ export default function AnimationExample() {
       </p>
     </div>
   )
-}
-```
+}`}
+>
+  <WithAnimationExample />
+</ComponentPreview>
 
 ### Custom Max Count
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select with different maxCount settings"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 const skills = [
@@ -285,13 +385,16 @@ export default function MaxCountExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <MaxCountExample />
+</ComponentPreview>
 
 ### Form Integration
 
-```tsx
-import { useForm, Controller } from "react-hook-form"
+<ComponentPreview
+  description="Multi-select integrated with React Hook Form including validation"
+  code={`import { useForm, Controller } from "react-hook-form"
 import { MultiSelect, Button } from "@helgadigitals/vera-ui"
 
 const interests = [
@@ -365,13 +468,16 @@ export default function FormExample() {
       <Button type="submit">Submit</Button>
     </form>
   )
-}
-```
+}`}
+>
+  <FormIntegrationExample />
+</ComponentPreview>
 
 ### Modal Popover
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select with modal popover that blocks interaction with other elements"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 const languages = [
@@ -402,20 +508,23 @@ export default function ModalExample() {
       </p>
     </div>
   )
-}
-```
+}`}
+>
+  <ModalPopoverExample />
+</ComponentPreview>
 
 ### Large Dataset
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Multi-select handling large datasets with search functionality"
+  code={`import { useState } from "react"
 import { MultiSelect } from "@helgadigitals/vera-ui"
 
 // Generate a large list of options
 const generateOptions = (count: number) => {
   return Array.from({ length: count }, (_, i) => ({
-    value: `option-${i + 1}`,
-    label: `Option ${i + 1}`,
+    value: \`option-\${i + 1}\`,
+    label: \`Option \${i + 1}\`,
   }))
 }
 
@@ -438,8 +547,10 @@ export default function LargeDatasetExample() {
       />
     </div>
   )
-}
-```
+}`}
+>
+  <LargeDatasetExample />
+</ComponentPreview>
 
 ## API Reference
 

@@ -1,3 +1,11 @@
+@import "@helgadigitals/vera-ui/dist/vera-ui.css";
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+
+/* Background grid pattern for component previews */
+.bg-grid-pattern {
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.15) 1px, transparent 0);
+  background-size: 20px 20px;
+}

@@ -16,6 +16,16 @@ import {
   SelectLabel,
   SelectSeparator 
 } from "@helgadigitals/vera-ui"
+import { ComponentPreview } from "@/components/component-preview"
+import { 
+  ControlledSelectExample,
+  GroupedSelectExample,
+  SizesSelectExample,
+  DisabledSelectExample,
+  WithIconsSelectExample,
+  FormIntegrationSelectExample,
+  LongListSelectExample
+} from "@/components/form-components-examples/select-examples"
 
 # Select
 
@@ -43,8 +53,9 @@ A select component built on Radix UI's Select primitive that allows users to cho
 
 ## Usage
 
-```tsx
-import { 
+<ComponentPreview
+  description="Basic select with options"
+  code={`import { 
   Select, 
   SelectContent, 
   SelectItem, 
@@ -65,46 +76,86 @@ export default function Example() {
       </SelectContent>
     </Select>
   )
-}
-```
+}`}
+>
+  <Select>
+    <SelectTrigger className="w-[180px]">
+      <SelectValue placeholder="Select a fruit" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="apple">Apple</SelectItem>
+      <SelectItem value="banana">Banana</SelectItem>
+      <SelectItem value="orange">Orange</SelectItem>
+    </SelectContent>
+  </Select>
+</ComponentPreview>
 
 ## Examples
 
-### Basic Select
+### With Groups
 
-```tsx
-import { 
+<ComponentPreview
+  description="Select with grouped options"
+  code={`import { 
   Select, 
   SelectContent, 
   SelectItem, 
   SelectTrigger, 
-  SelectValue 
+  SelectValue,
+  SelectGroup,
+  SelectLabel 
 } from "@helgadigitals/vera-ui"
 
-export default function BasicExample() {
+export default function GroupedExample() {
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium">Choose a framework</label>
-      <Select>
-        <SelectTrigger className="w-[200px]">
-          <SelectValue placeholder="Select framework" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="react">React</SelectItem>
-          <SelectItem value="vue">Vue</SelectItem>
-          <SelectItem value="angular">Angular</SelectItem>
-          <SelectItem value="svelte">Svelte</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
+    <Select>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Select a food" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Fruits</SelectLabel>
+          <SelectItem value="apple">Apple</SelectItem>
+          <SelectItem value="banana">Banana</SelectItem>
+          <SelectItem value="orange">Orange</SelectItem>
+        </SelectGroup>
+        <SelectGroup>
+          <SelectLabel>Vegetables</SelectLabel>
+          <SelectItem value="carrot">Carrot</SelectItem>
+          <SelectItem value="broccoli">Broccoli</SelectItem>
+          <SelectItem value="spinach">Spinach</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   )
-}
-```
+}`}
+>
+  <Select>
+    <SelectTrigger className="w-[180px]">
+      <SelectValue placeholder="Select a food" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Fruits</SelectLabel>
+        <SelectItem value="apple">Apple</SelectItem>
+        <SelectItem value="banana">Banana</SelectItem>
+        <SelectItem value="orange">Orange</SelectItem>
+      </SelectGroup>
+      <SelectGroup>
+        <SelectLabel>Vegetables</SelectLabel>
+        <SelectItem value="carrot">Carrot</SelectItem>
+        <SelectItem value="broccoli">Broccoli</SelectItem>
+        <SelectItem value="spinach">Spinach</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+</ComponentPreview> 
 
 ### Controlled Select
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Controlled select with state display"
+  code={`import { useState } from "react"
 import { 
   Select, 
   SelectContent, 
@@ -140,13 +191,16 @@ export default function ControlledExample() {
       )}
     </div>
   )
-}
-```
+}`}
+>
+  <ControlledSelectExample />
+</ComponentPreview>
 
 ### With Groups and Labels
 
-```tsx
-import { 
+<ComponentPreview
+  description="Select with grouped options and separators"
+  code={`import { 
   Select, 
   SelectContent, 
   SelectItem, 
@@ -195,13 +249,16 @@ export default function GroupedExample() {
       </Select>
     </div>
   )
-}
-```
+}`}
+>
+  <GroupedSelectExample />
+</ComponentPreview>
 
 ### Different Sizes
 
-```tsx
-import { 
+<ComponentPreview
+  description="Select component in different sizes"
+  code={`import { 
   Select, 
   SelectContent, 
   SelectItem, 
@@ -239,13 +296,16 @@ export default function SizesExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <SizesSelectExample />
+</ComponentPreview>
 
 ### Disabled States
 
-```tsx
-import { 
+<ComponentPreview
+  description="Select with disabled states and disabled options"
+  code={`import { 
   Select, 
   SelectContent, 
   SelectItem, 
@@ -288,13 +348,16 @@ export default function DisabledExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <DisabledSelectExample />
+</ComponentPreview>
 
 ### With Icons
 
-```tsx
-import { User, Mail, Phone, MessageSquare } from "lucide-react"
+<ComponentPreview
+  description="Select with icon-enhanced options"
+  code={`import { User, Mail, Phone, MessageSquare } from "lucide-react"
 import { 
   Select, 
   SelectContent, 
@@ -332,13 +395,16 @@ export default function WithIconsExample() {
       </Select>
     </div>
   )
-}
-```
+}`}
+>
+  <WithIconsSelectExample />
+</ComponentPreview>
 
 ### Form Integration
 
-```tsx
-import { useForm, Controller } from "react-hook-form"
+<ComponentPreview
+  description="Select integrated with React Hook Form including validation"
+  code={`import { useForm, Controller } from "react-hook-form"
 import { 
   Select, 
   SelectContent, 
@@ -410,13 +476,16 @@ export default function FormExample() {
       <Button type="submit">Submit</Button>
     </form>
   )
-}
-```
+}`}
+>
+  <FormIntegrationSelectExample />
+</ComponentPreview>
 
 ### Long Lists with Search
 
-```tsx
-import { 
+<ComponentPreview
+  description="Select with a large dataset demonstrating search functionality"
+  code={`import { 
   Select, 
   SelectContent, 
   SelectItem, 
@@ -460,8 +529,10 @@ export default function LongListExample() {
       </Select>
     </div>
   )
-}
-```
+}`}
+>
+  <LongListSelectExample />
+</ComponentPreview>
 
 ## API Reference
 

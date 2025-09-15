@@ -12,3 +12,9 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...components,
   };
 }
+
+export const mdxComponents = {
+  ...defaultMdxComponents,
+  ...TabsComponents,
+  ComponentPreview,
+};

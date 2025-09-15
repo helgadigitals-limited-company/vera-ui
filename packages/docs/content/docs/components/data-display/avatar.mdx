@@ -6,6 +6,21 @@ description: User profile images with intelligent fallback system for consistent
 import { ComponentPreview } from "@/components/component-preview";
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@helgadigitals/vera-ui";
+import { User } from "lucide-react";
+import { 
+  BasicAvatarExample,
+  AvatarSizesExample,
+  AvatarFallbackExample,
+  AvatarGroupExample,
+  AvatarWithImage,
+  UserListExample, 
+  ProfileHeaderExample 
+} from "@/components/data-display-examples/avatar-examples";
 
 # Avatar
 
@@ -43,77 +58,102 @@ A flexible avatar component for displaying user profile images with automatic fa
 
 ### Basic Avatar
 
-<ComponentPreview>
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Basic avatar examples with images and automatic fallbacks"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
 
 export function BasicAvatarExample() {
   return (
     <div className="flex space-x-4">
       <Avatar>
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback>VC</AvatarFallback>
+        <AvatarFallback>JD</AvatarFallback>
       </Avatar>
       
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarFallback>JS</AvatarFallback>
       </Avatar>
       
       <Avatar>
-        <AvatarImage src="https://github.com/octocat.png" alt="@octocat" />
-        <AvatarFallback>OC</AvatarFallback>
+        <AvatarFallback>BJ</AvatarFallback>
       </Avatar>
     </div>
   );
-}
-```
+}`}
+>
+  <BasicAvatarExample />
+</ComponentPreview>
+
+### Avatar with Image
+
+<ComponentPreview
+  description="Avatar with image source and automatic fallback handling"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+
+export function AvatarWithImage() {
+  return (
+    <div className="flex space-x-4">
+      <Avatar>
+        <AvatarImage 
+          src="https://ui.shadcn.com/avatars/shadcn.png" 
+          alt="User avatar"
+        />
+        <AvatarFallback>SN</AvatarFallback>
+      </Avatar>
+      
+      <Avatar>
+        <AvatarImage 
+          src="https://images.unsplash.com/photo-1756312148347-611b60723c7a?q=80&w=1036&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+          alt="Broken image"
+        />
+        <AvatarFallback>FB</AvatarFallback>
+      </Avatar>
+    </div>
+  );
+}`}
+>
+  <AvatarWithImage />
 </ComponentPreview>
 
 ### Avatar Sizes
 
-<ComponentPreview>
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Avatar components in different sizes from small to large"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
 
 export function AvatarSizesExample() {
   return (
     <div className="flex items-center space-x-4">
       <Avatar className="h-6 w-6">
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback className="text-xs">VC</AvatarFallback>
+        <AvatarFallback className="text-xs">U</AvatarFallback>
       </Avatar>
       
       <Avatar className="h-8 w-8">
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback className="text-sm">VC</AvatarFallback>
+        <AvatarFallback className="text-sm">U</AvatarFallback>
       </Avatar>
       
       <Avatar className="h-10 w-10">
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback>VC</AvatarFallback>
+        <AvatarFallback>U</AvatarFallback>
       </Avatar>
       
       <Avatar className="h-12 w-12">
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback className="text-lg">VC</AvatarFallback>
+        <AvatarFallback className="text-lg">U</AvatarFallback>
       </Avatar>
       
       <Avatar className="h-16 w-16">
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback className="text-xl">VC</AvatarFallback>
+        <AvatarFallback className="text-xl">U</AvatarFallback>
       </Avatar>
     </div>
   );
-}
-```
+}`}
+>
+  <AvatarSizesExample />
 </ComponentPreview>
 
 ### Fallback Examples
 
-<ComponentPreview>
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Avatar fallback behaviors including broken images, custom icons, and styling"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
 import { User } from "lucide-react";
 
 export function AvatarFallbackExample() {
@@ -121,19 +161,19 @@ export function AvatarFallbackExample() {
     <div className="flex space-x-4">
       {/* Image loads successfully */}
       <Avatar>
-        <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-        <AvatarFallback>VC</AvatarFallback>
+        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Success" alt="@user" />
+        <AvatarFallback>JD</AvatarFallback>
       </Avatar>
       
-      {/* Broken image URL - shows fallback */}
+      {/* Invalid image URL - shows fallback */}
       <Avatar>
-        <AvatarImage src="/broken-image.jpg" alt="Broken" />
+        <AvatarImage src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Invalid" />
         <AvatarFallback>BK</AvatarFallback>
       </Avatar>
       
       {/* No image - shows fallback */}
       <Avatar>
-        <AvatarFallback>JD</AvatarFallback>
+        <AvatarFallback>JS</AvatarFallback>
       </Avatar>
       
       {/* Custom fallback with icon */}
@@ -151,15 +191,16 @@ export function AvatarFallbackExample() {
       </Avatar>
     </div>
   );
-}
-```
+}`}
+>
+  <AvatarFallbackExample />
 </ComponentPreview>
 
 ### User List with Avatars
 
-<ComponentPreview>
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="User list displaying avatars with status indicators, fallback behavior, and role badges"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
 import { Badge } from "@helgadigitals/vera-ui";
 
 export function UserListExample() {
@@ -168,7 +209,6 @@ export function UserListExample() {
       id: 1,
       name: "John Doe",
       email: "john@example.com",
-      avatar: "https://github.com/johndoe.png",
       status: "online",
       role: "Admin"
     },
@@ -176,7 +216,6 @@ export function UserListExample() {
       id: 2,
       name: "Jane Smith",
       email: "jane@example.com",
-      avatar: "/broken-image.jpg", // Will show fallback
       status: "offline",
       role: "Editor"
     },
@@ -184,7 +223,6 @@ export function UserListExample() {
       id: 3,
       name: "Bob Johnson",
       email: "bob@example.com",
-      avatar: undefined, // No image, will show fallback
       status: "away",
       role: "User"
     },
@@ -209,10 +247,9 @@ export function UserListExample() {
         <div key={user.id} className="flex items-center space-x-4 p-4 border rounded-lg">
           <div className="relative">
             <Avatar>
-              <AvatarImage src={user.avatar} alt={`@${user.name}`} />
               <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
             </Avatar>
-            <div className={`absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-white ${getStatusColor(user.status)}`} />
+            <div className={\`absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-white \${getStatusColor(user.status)}\`} />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">
@@ -229,15 +266,15 @@ export function UserListExample() {
       ))}
     </div>
   );
-}
-```
+}`}>
+  <UserListExample />
 </ComponentPreview>
 
 ### Avatar Group
 
-<ComponentPreview>
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Grouped avatars in overlapping and spaced layouts, perfect for team displays"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
 
 export function AvatarGroupExample() {
   const users = [
@@ -294,15 +331,16 @@ export function AvatarGroupExample() {
       </div>
     </div>
   );
-}
-```
+}`}
+>
+  <AvatarGroupExample />
 </ComponentPreview>
 
 ### Profile Header with Avatar
 
-<ComponentPreview>
-```tsx
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Complete profile header layout with avatar, user information, action buttons, and skill badges"
+  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
 import { Button } from "@helgadigitals/vera-ui";
 import { Badge } from "@helgadigitals/vera-ui";
 import { MapPin, Calendar, Mail } from "lucide-react";
@@ -353,8 +391,8 @@ export function ProfileHeaderExample() {
       </div>
     </div>
   );
-}
-```
+}`}>
+  <ProfileHeaderExample />
 </ComponentPreview>
 
 ## API Reference

@@ -7,6 +7,13 @@ import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+import { ComponentPreview } from "@/components/component-preview"
+import { 
+  WithDescriptionsExample, 
+  DisabledStateExample, 
+  FormIntegrationExample, 
+  CardStyleExample 
+} from "@/components/form-components-examples/radio-group-examples"
 
 # Radio Group
 
@@ -34,8 +41,9 @@ A radio group is a set of checkable buttons where only one can be checked at a t
 
 ## Usage
 
-```tsx
-import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Basic radio group with selectable options"
+  code={`import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 
 export default function Example() {
   return (
@@ -50,15 +58,27 @@ export default function Example() {
       </div>
     </RadioGroup>
   )
-}
-```
+}`}
+>
+  <RadioGroup defaultValue="option1">
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="option1" id="r1" />
+      <Label htmlFor="r1">Option 1</Label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <RadioGroupItem value="option2" id="r2" />
+      <Label htmlFor="r2">Option 2</Label>
+    </div>
+  </RadioGroup>
+</ComponentPreview>
 
 ## Examples
 
 ### Basic Radio Group
 
-```tsx
-import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Radio group for size selection"
+  code={`import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 
 export default function BasicExample() {
   return (
@@ -80,13 +100,32 @@ export default function BasicExample() {
       </RadioGroup>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-3">
+    <h3 className="text-sm font-medium">Choose your preferred size</h3>
+    <RadioGroup defaultValue="medium">
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="small" id="size-small" />
+        <Label htmlFor="size-small">Small</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="medium" id="size-medium" />
+        <Label htmlFor="size-medium">Medium</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="large" id="size-large" />
+        <Label htmlFor="size-large">Large</Label>
+      </div>
+    </RadioGroup>
+  </div>
+</ComponentPreview>
 
 ### Controlled Radio Group
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Controlled radio group with state display"
+  code={`import { useState } from "react"
 import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 
 export default function ControlledExample() {
@@ -115,13 +154,36 @@ export default function ControlledExample() {
       </p>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-3">
+    <h3 className="text-sm font-medium">Select a plan</h3>
+    <RadioGroup defaultValue="pro">
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="free" id="plan-free" />
+        <Label htmlFor="plan-free">Free - $0/month</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="pro" id="plan-pro" />
+        <Label htmlFor="plan-pro">Pro - $10/month</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="enterprise" id="plan-enterprise" />
+        <Label htmlFor="plan-enterprise">Enterprise - $50/month</Label>
+      </div>
+    </RadioGroup>
+    
+    <p className="text-sm text-muted-foreground">
+      Selected: pro
+    </p>
+  </div>
+</ComponentPreview>
 
 ### Horizontal Layout
 
-```tsx
-import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Radio group arranged horizontally"
+  code={`import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 
 export default function HorizontalExample() {
   return (
@@ -143,13 +205,32 @@ export default function HorizontalExample() {
       </RadioGroup>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-3">
+    <h3 className="text-sm font-medium">Payment method</h3>
+    <RadioGroup defaultValue="card" className="flex space-x-6">
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="card" id="payment-card" />
+        <Label htmlFor="payment-card">Credit Card</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="paypal" id="payment-paypal" />
+        <Label htmlFor="payment-paypal">PayPal</Label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <RadioGroupItem value="bank" id="payment-bank" />
+        <Label htmlFor="payment-bank">Bank Transfer</Label>
+      </div>
+    </RadioGroup>
+  </div>
+</ComponentPreview>
 
 ### With Descriptions
 
-```tsx
-import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Radio group with descriptive text for each option"
+  code={`import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 
 export default function WithDescriptionsExample() {
   return (
@@ -186,13 +267,16 @@ export default function WithDescriptionsExample() {
       </RadioGroup>
     </div>
   )
-}
-```
+}`}
+>
+  <WithDescriptionsExample />
+</ComponentPreview>
 
 ### Disabled State
 
-```tsx
-import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Radio group with disabled options and groups"
+  code={`import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 
 export default function DisabledExample() {
   return (
@@ -232,13 +316,16 @@ export default function DisabledExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <DisabledStateExample />
+</ComponentPreview>
 
 ### Form Integration
 
-```tsx
-import { useForm, Controller } from "react-hook-form"
+<ComponentPreview
+  description="Radio group integrated with React Hook Form including validation"
+  code={`import { useForm, Controller } from "react-hook-form"
 import { RadioGroup, RadioGroupItem, Label, Button } from "@helgadigitals/vera-ui"
 
 export default function FormExample() {
@@ -318,13 +405,16 @@ export default function FormExample() {
       <Button type="submit">Submit</Button>
     </form>
   )
-}
-```
+}`}
+>
+  <FormIntegrationExample />
+</ComponentPreview>
 
 ### Card-style Options
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Radio group with card-style options for plan selection"
+  code={`import { useState } from "react"
 import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
 import { Check } from "lucide-react"
 
@@ -364,19 +454,19 @@ export default function CardStyleExample() {
         ].map((plan) => (
           <div
             key={plan.value}
-            className={`relative flex items-start p-4 border rounded-lg cursor-pointer transition-colors ${
+            className={\`relative flex items-start p-4 border rounded-lg cursor-pointer transition-colors \${
               selectedTier === plan.value 
                 ? "border-primary bg-primary/5" 
                 : "border-input hover:bg-accent"
-            }`}
+            }\`}
           >
             <RadioGroupItem 
               value={plan.value} 
-              id={`plan-${plan.value}`}
+              id={\`plan-\${plan.value}\`}
               className="mt-1"
             />
             <div className="ml-3 flex-1">
-              <Label htmlFor={`plan-${plan.value}`} className="font-medium cursor-pointer">
+              <Label htmlFor={\`plan-\${plan.value}\`} className="font-medium cursor-pointer">
                 {plan.title} - {plan.price}/month
               </Label>
               <p className="text-sm text-muted-foreground mb-2">
@@ -396,8 +486,10 @@ export default function CardStyleExample() {
       </RadioGroup>
     </div>
   )
-}
-```
+}`}
+>
+  <CardStyleExample />
+</ComponentPreview>
 
 ## API Reference
 

@@ -6,6 +6,13 @@ description: An accessible one-time password input component with customizable s
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { ComponentPreview } from '@/components/component-preview';
+import { 
+  FormIntegrationExample,
+  WithTimerAndResendExample,
+  CustomStylingExample,
+  AlphanumericCodeExample
+} from '@/components/form-components-examples/input-otp-examples';
 import { 
   InputOTP, 
   InputOTPGroup, 
@@ -39,8 +46,9 @@ A one-time password (OTP) input component built on the `input-otp` library. Perf
 
 ## Usage
 
-```tsx
-import {
+<ComponentPreview
+  description="Basic 6-digit OTP input"
+  code={`import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
@@ -59,15 +67,27 @@ export default function Example() {
       </InputOTPGroup>
     </InputOTP>
   )
-}
-```
+}`}
+>
+  <InputOTP maxLength={6}>
+    <InputOTPGroup>
+      <InputOTPSlot index={0} />
+      <InputOTPSlot index={1} />
+      <InputOTPSlot index={2} />
+      <InputOTPSlot index={3} />
+      <InputOTPSlot index={4} />
+      <InputOTPSlot index={5} />
+    </InputOTPGroup>
+  </InputOTP>
+</ComponentPreview>
 
 ## Examples
 
 ### Basic OTP Input
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="OTP input with value display"
+  code={`import { useState } from "react"
 import {
   InputOTP,
   InputOTPGroup,
@@ -106,13 +126,34 @@ export default function BasicExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Enter verification code</label>
+      <InputOTP maxLength={6}>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
+    </div>
+    
+    <div className="text-center text-sm text-muted-foreground">
+      Enter your one-time password
+    </div>
+  </div>
+</ComponentPreview>
 
 ### With Separator
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="OTP input with visual separator between groups"
+  code={`import { useState } from "react"
 import {
   InputOTP,
   InputOTPGroup,
@@ -151,63 +192,37 @@ export default function WithSeparatorExample() {
       </p>
     </div>
   )
-}
-```
-
-### Pattern Validation
-
-```tsx
-import { useState } from "react"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@helgadigitals/vera-ui"
-
-const REGEXP_ONLY_DIGITS = "^\\d+$"
-
-export default function PatternValidationExample() {
-  const [value, setValue] = useState("")
-
-  return (
-    <div className="space-y-4">
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Enter numeric code (digits only)
-        </label>
-        <InputOTP
-          maxLength={4}
-          pattern={REGEXP_ONLY_DIGITS}
-          value={value}
-          onChange={(value) => setValue(value)}
-        >
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-          </InputOTPGroup>
-        </InputOTP>
-      </div>
-      
-      <div className="text-center text-sm">
-        {value.length === 4 ? (
-          <span className="text-green-600">✓ Code complete</span>
-        ) : (
-          <span className="text-muted-foreground">
-            {4 - value.length} digits remaining
-          </span>
-        )}
-      </div>
+}`}
+>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <label className="text-sm font-medium">Enter SMS code</label>
+      <InputOTP maxLength={6}>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+        </InputOTPGroup>
+        <InputOTPSeparator />
+        <InputOTPGroup>
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
     </div>
-  )
-}
-```
+    
+    <p className="text-xs text-muted-foreground text-center">
+      Please enter the 6-digit code sent to your phone
+    </p>
+  </div>
+</ComponentPreview>
 
 ### Different Lengths
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="OTP inputs with different digit lengths"
+  code={`import { useState } from "react"
 import {
   InputOTP,
   InputOTPGroup,
@@ -217,7 +232,6 @@ import {
 export default function DifferentLengthsExample() {
   const [value4, setValue4] = useState("")
   const [value6, setValue6] = useState("")
-  const [value8, setValue8] = useState("")
 
   return (
     <div className="space-y-8">
@@ -256,15 +270,57 @@ export default function DifferentLengthsExample() {
           </InputOTPGroup>
         </InputOTP>
       </div>
+    </div>
+  )
+}`}
+>
+  <div className="space-y-8">
+    <div className="space-y-2">
+      <label className="text-sm font-medium">4-digit PIN</label>
+      <InputOTP maxLength={4}>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+        </InputOTPGroup>
+      </InputOTP>
+    </div>
 
-      {/* 8-digit code */}
+    <div className="space-y-2">
+      <label className="text-sm font-medium">6-digit verification</label>
+      <InputOTP maxLength={6}>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
+    </div>
+  </div>
+</ComponentPreview>
+
+### Disabled State
+
+<ComponentPreview
+  description="OTP input in disabled state"
+  code={`import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@helgadigitals/vera-ui"
+
+export default function DisabledExample() {
+  return (
+    <div className="space-y-4">
       <div className="space-y-2">
-        <label className="text-sm font-medium">8-digit backup code</label>
-        <InputOTP
-          maxLength={8}
-          value={value8}
-          onChange={(value) => setValue8(value)}
-        >
+        <label className="text-sm font-medium text-muted-foreground">
+          Verification code (disabled)
+        </label>
+        <InputOTP maxLength={6} disabled>
           <InputOTPGroup>
             <InputOTPSlot index={0} />
             <InputOTPSlot index={1} />
@@ -272,20 +328,45 @@ export default function DifferentLengthsExample() {
             <InputOTPSlot index={3} />
             <InputOTPSlot index={4} />
             <InputOTPSlot index={5} />
-            <InputOTPSlot index={6} />
-            <InputOTPSlot index={7} />
           </InputOTPGroup>
         </InputOTP>
       </div>
+      
+      <p className="text-sm text-muted-foreground">
+        Please enable two-factor authentication to use this feature
+      </p>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <label className="text-sm font-medium text-muted-foreground">
+        Verification code (disabled)
+      </label>
+      <InputOTP maxLength={6} disabled>
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
+    </div>
+    
+    <p className="text-sm text-muted-foreground">
+      Please enable two-factor authentication to use this feature
+    </p>
+  </div>
+</ComponentPreview>
 
 ### Form Integration
 
-```tsx
-import { useForm, Controller } from "react-hook-form"
+<ComponentPreview
+  description="OTP input with form validation using React Hook Form"
+  code={`import { useForm, Controller } from "react-hook-form"
 import {
   InputOTP,
   InputOTPGroup,
@@ -345,13 +426,16 @@ export default function FormExample() {
       </Button>
     </form>
   )
-}
-```
+}`}
+>
+  <FormIntegrationExample />
+</ComponentPreview>
 
 ### With Timer and Resend
 
-```tsx
-import { useState, useEffect } from "react"
+<ComponentPreview
+  description="OTP input with countdown timer and resend functionality"
+  code={`import { useState, useEffect } from "react"
 import {
   InputOTP,
   InputOTPGroup,
@@ -384,7 +468,7 @@ export default function WithTimerExample() {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
+    return \`\${mins}:\${secs.toString().padStart(2, '0')}\`
   }
 
   return (
@@ -422,49 +506,16 @@ export default function WithTimerExample() {
       </div>
     </div>
   )
-}
-```
-
-### Disabled State
-
-```tsx
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@helgadigitals/vera-ui"
-
-export default function DisabledExample() {
-  return (
-    <div className="space-y-4">
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-muted-foreground">
-          Verification code (disabled)
-        </label>
-        <InputOTP maxLength={6} disabled>
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-          </InputOTPGroup>
-        </InputOTP>
-      </div>
-      
-      <p className="text-sm text-muted-foreground">
-        Please enable two-factor authentication to use this feature
-      </p>
-    </div>
-  )
-}
-```
+}`}
+>
+  <WithTimerAndResendExample />
+</ComponentPreview>
 
 ### Custom Styling
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="OTP input with custom slot styling and sizes"
+  code={`import { useState } from "react"
 import {
   InputOTP,
   InputOTPGroup,
@@ -543,13 +594,16 @@ export default function CustomStylingExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <CustomStylingExample />
+</ComponentPreview>
 
 ### Alphanumeric Code
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="OTP input accepting letters and numbers with pattern validation"
+  code={`import { useState } from "react"
 import {
   InputOTP,
   InputOTPGroup,
@@ -595,8 +649,10 @@ export default function AlphanumericExample() {
       </p>
     </div>
   )
-}
-```
+}`}
+>
+  <AlphanumericCodeExample />
+</ComponentPreview>
 
 ## API Reference
 

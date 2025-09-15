@@ -7,6 +7,16 @@ import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Textarea, Label } from "@helgadigitals/vera-ui"
+import { ComponentPreview } from "@/components/component-preview"
+import { 
+  DifferentSizesExample,
+  DisabledReadonlyStatesExample,
+  FormIntegrationExample,
+  AutoResizeExample,
+  WithHelperTextExample,
+  MessageComposerExample,
+  CodeEditorExample
+} from "@/components/form-components-examples/textarea-examples"
 
 # Textarea
 
@@ -34,47 +44,85 @@ A textarea component for multi-line text input with automatic resizing support. 
 
 ## Usage
 
-```tsx
-import { Textarea } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Basic textarea with placeholder"
+  code={`import { Textarea } from "@helgadigitals/vera-ui"
 
 export default function Example() {
   return (
-    <Textarea placeholder="Type your message here..." />
+    <Textarea placeholder="Type your message here..." className="w-[300px]" />
   )
-}
-```
+}`}
+>
+  <Textarea placeholder="Type your message here..." className="w-[300px]" />
+</ComponentPreview>
 
 ## Examples
 
-### Basic Textarea
+### With Label
 
-```tsx
-import { Textarea, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Textarea with label and description"
+  code={`import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function BasicExample() {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-[300px]">
       <Label htmlFor="message">Message</Label>
       <Textarea
         id="message"
         placeholder="Enter your message..."
+        rows={4}
+        className="w-[300px]"
       />
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-2 w-[300px]">
+    <label htmlFor="message" className="text-sm font-medium">Message</label>
+    <Textarea
+      id="message"
+      placeholder="Enter your message..."
+      rows={4}
+      className="w-[300px]"
+    />
+  </div>
+</ComponentPreview>
 
-### Controlled Textarea
+### Disabled State
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Disabled textarea with readonly variant"
+  code={`import { Textarea } from "@helgadigitals/vera-ui"
+
+export default function DisabledExample() {
+  return (
+    <div className="space-y-4 w-[300px]">
+      <Textarea placeholder="Disabled textarea" disabled className="w-[300px]" />
+      <Textarea placeholder="Readonly textarea" readOnly defaultValue="This is read-only content" className="w-[300px]" />
+    </div>
+  )
+}`}
+>
+  <div className="space-y-4 w-[300px]">
+    <Textarea placeholder="Disabled textarea" disabled className="w-[300px]" />
+    <Textarea placeholder="Readonly textarea" readOnly defaultValue="This is read-only content" className="w-[300px]" />
+  </div>
+</ComponentPreview>
+
+### Controlled State
+
+<ComponentPreview
+  description="Controlled textarea with character count"
+  code={`import { useState } from "react"
 import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function ControlledExample() {
   const [value, setValue] = useState("")
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full max-w-md">
       <div className="space-y-2">
         <Label htmlFor="controlled">Description</Label>
         <Textarea
@@ -82,6 +130,7 @@ export default function ControlledExample() {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Enter a description..."
+          className="w-full"
         />
       </div>
       
@@ -90,13 +139,29 @@ export default function ControlledExample() {
       </p>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-4 w-full max-w-md">
+    <div className="space-y-2">
+      <Label htmlFor="controlled">Description</Label>
+      <Textarea
+        id="controlled"
+        placeholder="Enter a description..."
+        className="w-full"
+      />
+    </div>
+    
+    <p className="text-sm text-muted-foreground">
+      Character count: 0
+    </p>
+  </div>
+</ComponentPreview>
 
 ### With Character Limit
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Textarea with character limit and validation styling"
+  code={`import { useState } from "react"
 import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function CharacterLimitExample() {
@@ -104,7 +169,7 @@ export default function CharacterLimitExample() {
   const maxLength = 200
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-[300px]">
       <Label htmlFor="limited">Bio (max 200 characters)</Label>
       <Textarea
         id="limited"
@@ -112,38 +177,57 @@ export default function CharacterLimitExample() {
         onChange={(e) => setValue(e.target.value)}
         placeholder="Tell us about yourself..."
         maxLength={maxLength}
-        className={value.length >= maxLength ? "border-yellow-500" : ""}
+        className={\`w-[300px] \${value.length >= maxLength ? "border-yellow-500" : ""}\`}
       />
       <div className="flex justify-between text-sm">
         <span className="text-muted-foreground">
           Keep it concise and engaging
         </span>
-        <span className={`${
+        <span className={\`\${
           value.length >= maxLength ? "text-yellow-600" : "text-muted-foreground"
-        }`}>
+        }\`}>
           {value.length}/{maxLength}
         </span>
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-2 w-[300px]">
+    <Label htmlFor="limited">Bio (max 200 characters)</Label>
+    <Textarea
+      id="limited"
+      placeholder="Tell us about yourself..."
+      maxLength={200}
+      className="w-[300px]"
+    />
+    <div className="flex justify-between text-sm">
+      <span className="text-muted-foreground">
+        Keep it concise and engaging
+      </span>
+      <span className="text-muted-foreground">
+        0/200
+      </span>
+    </div>
+  </div>
+</ComponentPreview>
 
 ### Different Sizes
 
-```tsx
-import { Textarea, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Textarea components in different sizes with proper width styling"
+  code={`import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function SizesExample() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-md">
       {/* Small textarea */}
       <div className="space-y-2">
         <Label htmlFor="small">Small Textarea</Label>
         <Textarea
           id="small"
           placeholder="Small textarea..."
-          className="min-h-[80px]"
+          className="min-h-[80px] w-full"
         />
       </div>
 
@@ -153,6 +237,7 @@ export default function SizesExample() {
         <Textarea
           id="default"
           placeholder="Default textarea..."
+          className="w-full"
         />
       </div>
 
@@ -162,22 +247,25 @@ export default function SizesExample() {
         <Textarea
           id="large"
           placeholder="Large textarea..."
-          className="min-h-[150px]"
+          className="min-h-[150px] w-full"
         />
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <DifferentSizesExample />
+</ComponentPreview>
 
 ### Disabled and Read-only States
 
-```tsx
-import { Textarea, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Textarea in disabled and read-only states with full width"
+  code={`import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function StatesExample() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-md">
       {/* Disabled textarea */}
       <div className="space-y-2">
         <Label htmlFor="disabled">Disabled Textarea</Label>
@@ -185,6 +273,7 @@ export default function StatesExample() {
           id="disabled"
           placeholder="This textarea is disabled"
           disabled
+          className="w-full"
         />
       </div>
 
@@ -195,28 +284,34 @@ export default function StatesExample() {
           id="readonly"
           value="This textarea is read-only and cannot be edited."
           readOnly
+          className="w-full"
         />
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <DisabledReadonlyStatesExample />
+</ComponentPreview>
 
 ### Form Integration
 
-```tsx
-import { useForm, Controller } from "react-hook-form"
+<ComponentPreview
+  description="Textarea with React Hook Form integration and validation"
+  code={`import { useForm, Controller } from "react-hook-form"
 import { Textarea, Label, Button } from "@helgadigitals/vera-ui"
 
 export default function FormExample() {
-  const { control, handleSubmit, formState: { errors } } = useForm()
+  const { control, handleSubmit, formState: { errors }, watch } = useForm()
+
+  const watchedValues = watch()
 
   const onSubmit = (data) => {
     console.log(data)
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full max-w-md">
       <div className="space-y-2">
         <Label htmlFor="feedback">Feedback *</Label>
         <Controller
@@ -233,7 +328,7 @@ export default function FormExample() {
             <Textarea
               id="feedback"
               placeholder="Please share your feedback..."
-              className={errors.feedback ? "border-destructive" : ""}
+              className={\`w-full \${errors.feedback ? "border-destructive" : ""}\`}
               {...field}
             />
           )}
@@ -254,22 +349,26 @@ export default function FormExample() {
             <Textarea
               id="comments"
               placeholder="Any additional comments (optional)..."
+              className="w-full"
               {...field}
             />
           )}
         />
       </div>
 
-      <Button type="submit">Submit Feedback</Button>
+      <Button type="submit" className="w-full">Submit Feedback</Button>
     </form>
   )
-}
-```
+}`}
+>
+  <FormIntegrationExample />
+</ComponentPreview>
 
 ### Auto-resizing Textarea
 
-```tsx
-import { useState, useRef, useEffect } from "react"
+<ComponentPreview
+  description="Textarea that automatically resizes based on content"
+  code={`import { useState, useRef, useEffect } from "react"
 import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 function AutoResizeTextarea({ value, onChange, ...props }) {
@@ -280,7 +379,7 @@ function AutoResizeTextarea({ value, onChange, ...props }) {
       // Reset height to get accurate scrollHeight
       textareaRef.current.style.height = 'auto'
       // Set height to scrollHeight
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`
+      textareaRef.current.style.height = \`\${textareaRef.current.scrollHeight}px\`
     }
   }, [value])
 
@@ -289,7 +388,7 @@ function AutoResizeTextarea({ value, onChange, ...props }) {
       ref={textareaRef}
       value={value}
       onChange={onChange}
-      className="resize-none overflow-hidden"
+      className="resize-none overflow-hidden w-full"
       {...props}
     />
   )
@@ -299,7 +398,7 @@ export default function AutoResizeExample() {
   const [value, setValue] = useState("")
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full max-w-md">
       <Label htmlFor="auto-resize">Auto-resizing Textarea</Label>
       <AutoResizeTextarea
         id="auto-resize"
@@ -309,13 +408,16 @@ export default function AutoResizeExample() {
       />
     </div>
   )
-}
-```
+}`}
+>
+  <AutoResizeExample />
+</ComponentPreview>
 
 ### With Helper Text and Error
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Textarea with helper text, validation, and character count"
+  code={`import { useState } from "react"
 import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function WithHelperTextExample() {
@@ -339,14 +441,14 @@ export default function WithHelperTextExample() {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full max-w-md">
       <Label htmlFor="description">Product Description</Label>
       <Textarea
         id="description"
         value={value}
         onChange={handleChange}
         placeholder="Describe your product..."
-        className={error ? "border-destructive focus-visible:ring-destructive/20" : ""}
+        className={\`w-full \${error ? "border-destructive focus-visible:ring-destructive/20" : ""}\`}
       />
       <div className="flex justify-between text-sm">
         <div className="space-y-1">
@@ -363,13 +465,16 @@ export default function WithHelperTextExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <WithHelperTextExample />
+</ComponentPreview>
 
 ### Message Composer
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Message composer with send button and keyboard shortcut"
+  code={`import { useState } from "react"
 import { Send } from "lucide-react"
 import { Textarea, Button } from "@helgadigitals/vera-ui"
 
@@ -391,19 +496,19 @@ export default function MessageComposerExample() {
   }
 
   return (
-    <div className="border rounded-lg p-4 space-y-3">
+    <div className="border rounded-lg p-4 space-y-3 w-full max-w-md">
       <Textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Type your message... (Cmd/Ctrl + Enter to send)"
-        className="border-0 shadow-none resize-none focus-visible:ring-0 p-0"
+        className="border-0 shadow-none resize-none focus-visible:ring-0 p-0 w-full"
         rows={3}
       />
       
       <div className="flex justify-between items-center">
         <p className="text-xs text-muted-foreground">
-          {message.length > 0 && `${message.length} characters`}
+          {message.length > 0 && \`\${message.length} characters\`}
         </p>
         <Button
           onClick={handleSend}
@@ -417,37 +522,42 @@ export default function MessageComposerExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <MessageComposerExample />
+</ComponentPreview>
 
 ### Code Editor Style
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Textarea styled like a code editor with monospace font"
+  code={`import { useState } from "react"
 import { Textarea, Label } from "@helgadigitals/vera-ui"
 
 export default function CodeEditorExample() {
-  const [code, setCode] = useState(`function greet(name) {
-  return \`Hello, \${name}!\`;
+  const [code, setCode] = useState(\`function greet(name) {
+  return \\\`Hello, \\\${name}!\\\`;
 }
 
-console.log(greet("World"));`)
+console.log(greet("World"));\`)
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full max-w-md">
       <Label htmlFor="code">JavaScript Code</Label>
       <Textarea
         id="code"
         value={code}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Enter your code here..."
-        className="font-mono text-sm min-h-[200px] bg-muted/30"
+        className="font-mono text-sm min-h-[200px] bg-muted/30 w-full"
         spellCheck={false}
       />
     </div>
   )
-}
-```
+}`}
+>
+  <CodeEditorExample />
+</ComponentPreview>
 
 ## API Reference
 

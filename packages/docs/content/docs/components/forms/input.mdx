@@ -5,6 +5,7 @@ description: A text input component with multiple variants and states
 
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Input } from "@helgadigitals/vera-ui"
 
 # Input
 
@@ -32,22 +33,24 @@ A versatile text input component that supports different types, states, and styl
 
 ## Usage
 
-```tsx
-import { Input } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Basic input with placeholder"
+  code={`import { Input } from "@helgadigitals/vera-ui"
 
 export default function Example() {
-  return <Input placeholder="Enter your email" type="email" />;
-}
-```
+  return <Input placeholder="Enter your email" type="email" />
+}`}
+>
+  <Input placeholder="Enter your email" type="email" />
+</ComponentPreview>
 
 ## Examples
 
 ### Input Types
 
-The Input component supports all HTML input types:
-
-```tsx
-import { Input } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Different input types for various data formats"
+  code={`import { Input } from "@helgadigitals/vera-ui"
 
 export default function InputTypesExample() {
   return (
@@ -58,16 +61,25 @@ export default function InputTypesExample() {
       <Input type="number" placeholder="Number input" />
       <Input type="tel" placeholder="Phone number" />
       <Input type="url" placeholder="Website URL" />
-      <Input type="search" placeholder="Search..." />
     </div>
-  );
-}
-```
+  )
+}`}
+>
+  <div className="space-y-4">
+    <Input type="text" placeholder="Text input" />
+    <Input type="email" placeholder="Email input" />
+    <Input type="password" placeholder="Password input" />
+    <Input type="number" placeholder="Number input" />
+    <Input type="tel" placeholder="Phone number" />
+    <Input type="url" placeholder="Website URL" />
+  </div>
+</ComponentPreview>
 
 ### Input States
 
-```tsx
-import { Input } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Different input states and interactions"
+  code={`import { Input } from "@helgadigitals/vera-ui"
 
 export default function InputStatesExample() {
   return (
@@ -78,32 +90,36 @@ export default function InputStatesExample() {
       <Input placeholder="Required input" required />
       <Input placeholder="Readonly input" readOnly value="Read-only value" />
     </div>
-  );
-}
-```
+  )
+}`}
+>
+  <div className="space-y-4">
+    <Input placeholder="Default input" />
+    <Input placeholder="Disabled input" disabled />
+    <Input placeholder="Input with error" aria-invalid="true" />
+    <Input placeholder="Required input" required />
+    <Input placeholder="Readonly input" readOnly defaultValue="Read-only value" />
+  </div>
+</ComponentPreview>
 
 ### With Form Integration
 
-```tsx
-import { useState } from "react";
-import { Input, Label, Button } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Input components integrated with form handling"
+  code={`import { useState } from "react"
+import { Input, Label, Button } from "@helgadigitals/vera-ui"
 
 export default function FormExample() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    phone: ""
-  });
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-  };
-
-  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, [field]: e.target.value }));
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("Form submitted:", formData)
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
@@ -111,116 +127,85 @@ export default function FormExample() {
         <Label htmlFor="firstName">First Name</Label>
         <Input
           id="firstName"
-          value={formData.firstName}
-          onChange={handleChange("firstName")}
           placeholder="Enter your first name"
           required
         />
       </div>
-      
       <div className="space-y-2">
         <Label htmlFor="lastName">Last Name</Label>
         <Input
           id="lastName"
-          value={formData.lastName}
-          onChange={handleChange("lastName")}
           placeholder="Enter your last name"
           required
         />
       </div>
-      
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input
           id="email"
           type="email"
-          value={formData.email}
-          onChange={handleChange("email")}
           placeholder="Enter your email"
           required
         />
       </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="phone">Phone</Label>
-        <Input
-          id="phone"
-          type="tel"
-          value={formData.phone}
-          onChange={handleChange("phone")}
-          placeholder="Enter your phone number"
-        />
-      </div>
-      
-      <Button type="submit" className="w-full">
-        Submit
-      </Button>
+      <Button type="submit">Submit</Button>
     </form>
-  );
-}
-```
-
-### With Icons and Addons
-
-```tsx
-import { Input, Button } from "@helgadigitals/vera-ui";
-import { Search, Eye, EyeOff, Copy } from "lucide-react";
-import { useState } from "react";
-
-export default function InputWithAddonsExample() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-
-  return (
-    <div className="space-y-6">
-      {/* Search Input with Icon */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-        <Input
-          className="pl-10"
-          placeholder="Search..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-      </div>
-
-      {/* Password Input with Toggle */}
-      <div className="relative">
-        <Input
-          type={showPassword ? "text" : "password"}
-          placeholder="Enter password"
-          className="pr-10"
-        />
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="absolute right-0 top-0 h-full px-3"
-          onClick={() => setShowPassword(!showPassword)}
-        >
-          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-        </Button>
-      </div>
-
-      {/* Input with Copy Button */}
-      <div className="flex">
-        <Input
-          value="https://example.com/share/12345"
-          readOnly
-          className="rounded-r-none"
-        />
-        <Button
-          type="button"
-          variant="outline"
-          className="rounded-l-none border-l-0"
-          onClick={() => navigator.clipboard.writeText("https://example.com/share/12345")}
-        >
-          <Copy className="h-4 w-4" />
-        </Button>
-      </div>
+  )
+}`}
+>
+  <div className="space-y-4 max-w-md">
+    <div className="space-y-2">
+      <label htmlFor="firstName" className="text-sm font-medium">First Name</label>
+      <Input
+        id="firstName"
+        placeholder="Enter your first name"
+        required
+      />
     </div>
-  );
-}
+    <div className="space-y-2">
+      <label htmlFor="lastName" className="text-sm font-medium">Last Name</label>
+      <Input
+        id="lastName"
+        placeholder="Enter your last name"
+        required
+      />
+    </div>
+    <div className="space-y-2">
+      <label htmlFor="email" className="text-sm font-medium">Email</label>
+      <Input
+        id="email"
+        type="email"
+        placeholder="Enter your email"
+        required
+      />
+    </div>
+  </div>
+</ComponentPreview>
+
+## API Reference
+
+### Props
+
+The Input component accepts all standard HTML input attributes plus:
+
+<Callout type="info">
+The Input component is built on the native HTML input element and supports all its standard attributes including `type`, `placeholder`, `disabled`, `required`, etc.
+</Callout>
+
+## Accessibility
+
+- The Input component maintains focus management and keyboard navigation
+- Supports ARIA attributes for screen readers
+- Works with form labels and validation messages
+- Follows WAI-ARIA guidelines for input elements
+
+## Best Practices
+
+- Always provide meaningful placeholder text or labels
+- Use appropriate input types for better user experience
+- Include validation feedback for form inputs
+- Consider disabled and readonly states appropriately
+- Test with keyboard navigation and screen readers
 ```
 
 ### Input Validation

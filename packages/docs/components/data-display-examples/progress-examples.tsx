@@ -1,60 +1,10 @@
----
-title: Progress
-description: Visual indicators for showing task completion and loading states
----
+"use client";
 
-import { ComponentPreview } from "@/components/component-preview";
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import {
-  BasicProgressExample,
-  AnimatedProgressExample,
-  ProgressSizesExample,
-  ColoredProgressExample,
-  MultiStepProgressExample,
-  FileUploadProgressExample,
-  CircularProgressExample,
-  SkillProgressExample,
-} from "@/components/data-display-examples/progress-examples";
-
-# Progress
-
-A visual progress indicator component for showing completion percentage, loading states, and task progress. Built on Radix UI with smooth animations and accessibility features.
-
-## Features
-
-- **Smooth animations** - Fluid progress transitions
-- **Accessible** - ARIA attributes and screen reader support
-- **Customizable styling** - Easy to theme and style
-- **Determinate progress** - Show specific completion percentages
-- **Responsive design** - Works across all screen sizes
-
-## Installation
-
-<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
-    <Tab value="pnpm" >
-      ```bash
-      pnpm add @helgadigitals/vera-ui
-      ```
-    </Tab>
-    <Tab value="npm" >
-      ```bash
-      npm install @helgadigitals/vera-ui
-      ```
-    </Tab>
-    <Tab value="yarn" >
-      ```bash
-      yarn add @helgadigitals/vera-ui
-      ```
-    </Tab>
-</Tabs>
-
-## Usage
-
-### Basic Progress
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
+import { Progress } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { Badge } from "@helgadigitals/vera-ui";
+import { useState } from "react";
+import { Check, Circle, Upload, FileText, CheckCircle, XCircle } from "lucide-react";
 
 export function BasicProgressExample() {
   return (
@@ -84,17 +34,7 @@ export function BasicProgressExample() {
       </div>
     </div>
   );
-}`}
->
-  <BasicProgressExample />
-</ComponentPreview>
-
-### Animated Progress
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { useState } from "react";
+}
 
 export function AnimatedProgressExample() {
   const [progress, setProgress] = useState(0);
@@ -154,15 +94,7 @@ export function AnimatedProgressExample() {
       )}
     </div>
   );
-}`}
->
-  <AnimatedProgressExample />
-</ComponentPreview>
-
-### Progress Sizes
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
+}
 
 export function ProgressSizesExample() {
   return (
@@ -188,15 +120,7 @@ export function ProgressSizesExample() {
       </div>
     </div>
   );
-}`}
->
-  <ProgressSizesExample />
-</ComponentPreview>
-
-### Colored Progress Bars
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
+}
 
 export function ColoredProgressExample() {
   return (
@@ -239,19 +163,7 @@ export function ColoredProgressExample() {
       </div>
     </div>
   );
-}`}
->
-  <ColoredProgressExample />
-</ComponentPreview>
-
-### Multi-Step Progress
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-import { useState } from "react";
-import { Check, Circle } from "lucide-react";
+}
 
 export function MultiStepProgressExample() {
   const [currentStep, setCurrentStep] = useState(2);
@@ -295,9 +207,9 @@ export function MultiStepProgressExample() {
               )}
             </div>
             <div className="flex-1">
-              <p className={\`text-sm \${
+              <p className={`text-sm ${
                 index <= currentStep ? 'text-foreground' : 'text-muted-foreground'
-              }\`}>
+              }`}>
                 {step}
               </p>
             </div>
@@ -332,19 +244,7 @@ export function MultiStepProgressExample() {
       </div>
     </div>
   );
-}`}
->
-  <MultiStepProgressExample />
-</ComponentPreview>
-
-### File Upload Progress
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-import { useState } from "react";
-import { Upload, FileText, CheckCircle, XCircle } from "lucide-react";
+}
 
 export function FileUploadProgressExample() {
   const [files, setFiles] = useState([
@@ -452,7 +352,7 @@ export function FileUploadProgressExample() {
                 </div>
                 <Progress 
                   value={file.progress} 
-                  className={\`w-full \${getProgressColor(file.status)}\`}
+                  className={`w-full ${getProgressColor(file.status)}`}
                 />
               </div>
             )}
@@ -467,15 +367,7 @@ export function FileUploadProgressExample() {
       </div>
     </div>
   );
-}`}
->
-  <FileUploadProgressExample />
-</ComponentPreview>
-
-### Circular Progress (Custom)
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
+}
 
 export function CircularProgressExample() {
   const CircularProgress = ({ value, size = 120, strokeWidth = 8 }: { value: number, size?: number, strokeWidth?: number }) => {
@@ -537,15 +429,7 @@ export function CircularProgressExample() {
       </div>
     </div>
   );
-}`}
->
-  <CircularProgressExample />
-</ComponentPreview>
-
-### Skill Progress
-
-<ComponentPreview 
-  code={`import { Progress } from "@helgadigitals/vera-ui";
+}
 
 export function SkillProgressExample() {
   const skills = [
@@ -569,126 +453,11 @@ export function SkillProgressExample() {
             </div>
             <Progress 
               value={skill.level} 
-              className={\`w-full h-2 \${skill.color}\`}
+              className={`w-full h-2 ${skill.color}`}
             />
           </div>
         ))}
       </div>
     </div>
   );
-}`}
->
-  <SkillProgressExample />
-</ComponentPreview>
-
-## API Reference
-
-### Progress
-
-The main progress indicator component.
-
-<TypeTable
-  type={{
-    value: {
-      type: 'number',
-      default: '0',
-      description: 'Progress value from 0 to 100',
-    },
-    max: {
-      type: 'number',
-      default: '100',
-      description: 'Maximum value for progress calculation',
-    },
-    className: {
-      type: 'string',
-      description: 'Additional CSS classes',
-    },
-    getValueLabel: {
-      type: '(value: number, max: number) => string',
-      description: 'Custom value label function',
-    },
-  }}
-/>
-
-### Progress Indicator
-
-The inner progress bar element (styled automatically).
-
-- Smooth transitions with CSS transforms
-- Proper ARIA attributes for accessibility
-- Customizable through CSS classes
-
-## Use Cases
-
-### Loading States
-- **Page loading** - Show overall page load progress
-- **Data fetching** - API request completion status
-- **Image loading** - Image download progress
-- **Component mounting** - Progressive component loading
-
-### File Operations
-- **File uploads** - Upload progress with file details
-- **File downloads** - Download completion status
-- **File processing** - Processing status for operations
-- **Batch operations** - Multiple file operation progress
-
-### Task Completion
-- **Form completion** - Multi-step form progress
-- **Onboarding flows** - User setup completion
-- **Tutorial progress** - Step-by-step guide completion
-- **Survey progress** - Question completion status
-
-### Data Processing
-- **Import/export** - Data transfer progress
-- **Sync operations** - Synchronization status
-- **Backup operations** - Backup completion progress
-- **Migration tasks** - Data migration status
-
-### Gaming & Applications
-- **Achievement progress** - Goal completion tracking
-- **Skill development** - Learning progress indicators
-- **Health/fitness** - Goal tracking and progress
-- **Project completion** - Task and milestone tracking
-
-## Accessibility
-
-The Progress component includes:
-
-- **ARIA attributes** - `progressbar` role with value and range
-- **Screen reader support** - Descriptive progress announcements
-- **Keyboard navigation** - When used in interactive contexts
-- **Value labels** - Customizable progress descriptions
-- **High contrast** - Proper contrast ratios for visibility
-
-## Best Practices
-
-### Visual Design
-- **Appropriate sizing** - Match progress bar size to context
-- **Color meaning** - Use colors that convey appropriate meaning
-- **Smooth animations** - Avoid jarring progress updates
-- **Clear labeling** - Include descriptive text with progress
-
-### User Experience
-- **Immediate feedback** - Show progress immediately when operations start
-- **Accurate estimates** - Provide realistic progress calculations
-- **Error handling** - Show clear error states when operations fail
-- **Completion feedback** - Clearly indicate when operations complete
-
-### Performance
-- **Throttled updates** - Avoid excessive progress updates
-- **Efficient calculations** - Optimize progress calculations
-- **Memory management** - Clean up progress tracking properly
-- **Smooth animations** - Use CSS transforms for performance
-
-### Context Awareness
-- **Operation type** - Match progress style to operation context
-- **Time estimates** - Include time remaining when possible
-- **Cancellation** - Allow users to cancel long operations
-- **Background operations** - Handle background task progress appropriately
-
-## Related Components
-
-- **[Skeleton](/docs/components/data-display/skeleton)** - Loading placeholders for content
-- **[Spinner](/docs/components/feedback/spinner)** - Indeterminate loading indicators
-- **[Alert](/docs/components/data-display/alert)** - Status messages and notifications
-- **[Badge](/docs/components/data-display/badge)** - Status indicators and labels
+}

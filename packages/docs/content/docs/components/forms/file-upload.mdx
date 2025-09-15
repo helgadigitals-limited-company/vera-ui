@@ -34,8 +34,9 @@ A feature-rich file upload component that supports drag and drop, file previews,
 
 ## Usage
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Basic file upload with drag and drop"
+  code={`import { useState } from "react"
 import { FileUpload } from "@helgadigitals/vera-ui"
 
 export default function Example() {
@@ -49,15 +50,23 @@ export default function Example() {
       helperText="Select files or drag and drop here"
     />
   )
-}
-```
+}`}
+>
+  <div className="w-full max-w-md">
+    <FileUpload
+      label="Upload your files"
+      helperText="Select files or drag and drop here"
+    />
+  </div>
+</ComponentPreview>
 
 ## Examples
 
 ### Basic File Upload
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Simple file upload with file information display"
+  code={`import { useState } from "react"
 import { FileUpload } from "@helgadigitals/vera-ui"
 
 export default function BasicExample() {
@@ -79,13 +88,21 @@ export default function BasicExample() {
       )}
     </div>
   )
-}
-```
+}`}
+>
+  <div className="w-full max-w-md">
+    <FileUpload
+      label="Choose a file"
+      helperText="Select any file to upload"
+    />
+  </div>
+</ComponentPreview>
 
 ### Multiple File Upload
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Upload multiple files with count display"
+  code={`import { useState } from "react"
 import { FileUpload } from "@helgadigitals/vera-ui"
 
 export default function MultipleExample() {
@@ -116,13 +133,23 @@ export default function MultipleExample() {
       )}
     </div>
   )
-}
-```
+}`}
+>
+  <div className="w-full max-w-md">
+    <FileUpload
+      multiple={true}
+      maxFiles={5}
+      label="Choose multiple files"
+      helperText="Select up to 5 files"
+    />
+  </div>
+</ComponentPreview>
 
 ### Image Upload with Preview
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Image upload with preview thumbnails"
+  code={`import { useState } from "react"
 import { FileUpload } from "@helgadigitals/vera-ui"
 
 export default function ImageExample() {
@@ -141,13 +168,26 @@ export default function ImageExample() {
       helperText="PNG, JPG, GIF up to 5MB each"
     />
   )
-}
-```
+}`}
+>
+  <div className="w-full max-w-md">
+    <FileUpload
+      accept="image/*"
+      multiple={true}
+      maxFiles={3}
+      maxSize={5}
+      showPreview={true}
+      label="Upload images"
+      helperText="PNG, JPG, GIF up to 5MB each"
+    />
+  </div>
+</ComponentPreview>
 
 ### File Type Restrictions
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Upload restricted to specific document types"
+  code={`import { useState } from "react"
 import { FileUpload } from "@helgadigitals/vera-ui"
 
 export default function RestrictedExample() {
@@ -171,152 +211,23 @@ export default function RestrictedExample() {
       onError={setError}
     />
   )
-}
-```
-
-### With Upload Progress
-
-```tsx
-import { useState } from "react"
-import { FileUpload, Button } from "@helgadigitals/vera-ui"
-
-export default function ProgressExample() {
-  const [file, setFile] = useState(null)
-  const [uploadProgress, setUploadProgress] = useState(0)
-  const [isUploading, setIsUploading] = useState(false)
-
-  const simulateUpload = async () => {
-    if (!file) return
-    
-    setIsUploading(true)
-    setUploadProgress(0)
-
-    // Simulate upload progress
-    for (let i = 0; i <= 100; i += 10) {
-      await new Promise(resolve => setTimeout(resolve, 200))
-      setUploadProgress(i)
-    }
-
-    setIsUploading(false)
-    setUploadProgress(0)
-  }
-
-  return (
-    <div className="space-y-4">
-      <FileUpload
-        value={file}
-        onChange={setFile}
-        uploadProgress={isUploading ? uploadProgress : undefined}
-        disabled={isUploading}
-        label="Upload file"
-        helperText="Choose a file to upload"
-      />
-      
-      {file && !isUploading && (
-        <Button onClick={simulateUpload}>
-          Start Upload
-        </Button>
-      )}
-    </div>
-  )
-}
-```
-
-### Compact Mode
-
-```tsx
-import { useState } from "react"
-import { FileUpload } from "@helgadigitals/vera-ui"
-
-export default function CompactExample() {
-  const [files, setFiles] = useState([])
-
-  return (
+}`}
+>
+  <div className="w-full max-w-md">
     <FileUpload
-      value={files}
-      onChange={setFiles}
-      multiple={true}
-      compact={true}
-      maxFiles={10}
-      label="Quick file upload"
-      helperText="Files will be shown as compact badges"
+      accept=".pdf,.doc,.docx"
+      maxSize={10}
+      label="Upload document"
+      helperText="PDF, DOC, or DOCX files only"
     />
-  )
-}
-```
-
-### Form Integration
-
-```tsx
-import { useForm, Controller } from "react-hook-form"
-import { FileUpload, Button } from "@helgadigitals/vera-ui"
-
-export default function FormExample() {
-  const { control, handleSubmit, formState: { errors } } = useForm()
-
-  const onSubmit = (data) => {
-    console.log("Form data:", data)
-    // Handle file upload here
-  }
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Profile Picture *
-        </label>
-        <Controller
-          name="profilePicture"
-          control={control}
-          rules={{
-            required: "Please upload a profile picture"
-          }}
-          render={({ field }) => (
-            <FileUpload
-              value={field.value || null}
-              onChange={field.onChange}
-              accept="image/*"
-              maxSize={2}
-              showPreview={true}
-              label="Choose profile picture"
-              helperText="PNG or JPG, max 2MB"
-              error={errors.profilePicture?.message}
-            />
-          )}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Documents (Optional)
-        </label>
-        <Controller
-          name="documents"
-          control={control}
-          render={({ field }) => (
-            <FileUpload
-              value={field.value || []}
-              onChange={field.onChange}
-              multiple={true}
-              maxFiles={5}
-              accept=".pdf,.doc,.docx"
-              label="Upload documents"
-              helperText="PDF, DOC, or DOCX files"
-            />
-          )}
-        />
-      </div>
-
-      <Button type="submit">Submit</Button>
-    </form>
-  )
-}
-```
+  </div>
+</ComponentPreview>
 
 ### Disabled State
 
-```tsx
-import { FileUpload } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="File upload in disabled state"
+  code={`import { FileUpload } from "@helgadigitals/vera-ui"
 
 export default function DisabledExample() {
   return (
@@ -328,8 +239,16 @@ export default function DisabledExample() {
       helperText="This upload area is currently disabled"
     />
   )
-}
-```
+}`}
+>
+  <div className="w-full max-w-md">
+    <FileUpload
+      disabled={true}
+      label="Upload disabled"
+      helperText="This upload area is currently disabled"
+    />
+  </div>
+</ComponentPreview>
 
 ## API Reference
 
