@@ -117,11 +117,7 @@ jobs:
             echo "Extracting $ARCHIVE -> $NEW_RELEASE_DIR"
             tar -xzf "$ARCHIVE" -C "$NEW_RELEASE_DIR"
 
-            if ! command -v pnpm >/dev/null 2>&1; then
-              corepack enable || true
-              corepack prepare pnpm@latest --activate || true
-            fi
-
+            # Install production deps
             cd "$NEW_RELEASE_DIR"
             if [ -f pnpm-lock.yaml ]; then
               pnpm install --prod --frozen-lockfile
@@ -129,6 +125,7 @@ jobs:
               pnpm install --prod
             fi
 
+            # Point current -> new release
             sudo ln -sfn "$NEW_RELEASE_DIR" "$APP_DIR/current"
             sudo chown -h "$USER":"$USER" "$APP_DIR/current" || true
 
