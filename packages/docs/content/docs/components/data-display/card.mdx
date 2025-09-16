@@ -6,6 +6,15 @@ description: Flexible content containers with modular structure for organizing i
 import { ComponentPreview } from "@/components/component-preview";
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { 
+  BasicCardExample,
+  CardWithFooterExample,
+  CardWithActionExample,
+  ProfileCardExample,
+  StatsCardExample,
+  ProductCardExample,
+  NotificationCardExample
+} from "@/components/data-display-examples/card-examples";
 
 # Card
 
@@ -43,9 +52,7 @@ A versatile container component for grouping related content and actions. Cards 
 
 ### Basic Card
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardContent,
   CardDescription,
@@ -67,15 +74,13 @@ export function BasicCardExample() {
       </CardContent>
     </Card>
   );
-}
-```
+}`}>
+<BasicCardExample />
 </ComponentPreview>
 
 ### Card with Footer
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardContent,
   CardDescription,
@@ -124,15 +129,13 @@ export function CardWithFooterExample() {
       </CardFooter>
     </Card>
   );
-}
-```
+}`}>
+<CardWithFooterExample />
 </ComponentPreview>
 
 ### Card with Action
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardAction,
   CardContent,
@@ -169,15 +172,13 @@ export function CardWithActionExample() {
       </CardContent>
     </Card>
   );
-}
-```
+}`}>
+<CardWithActionExample />
 </ComponentPreview>
 
 ### Profile Card
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardContent,
   CardDescription,
@@ -225,15 +226,13 @@ export function ProfileCardExample() {
       </CardFooter>
     </Card>
   );
-}
-```
+}`}>
+<ProfileCardExample />
 </ComponentPreview>
 
 ### Stats Card
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardContent,
   CardDescription,
@@ -294,15 +293,13 @@ export function StatsCardExample() {
       ))}
     </div>
   );
-}
-```
+}`}>
+<StatsCardExample />
 </ComponentPreview>
 
 ### Product Card
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardContent,
   CardDescription,
@@ -347,15 +344,13 @@ export function ProductCardExample() {
       </CardFooter>
     </Card>
   );
-}
-```
+}`}>
+<ProductCardExample />
 </ComponentPreview>
 
 ### Notification Card
 
-<ComponentPreview>
-```tsx
-import {
+<ComponentPreview code={`import {
   Card,
   CardContent,
   CardDescription,
@@ -400,7 +395,10 @@ export function NotificationCardExample() {
                   <Badge variant="destructive" className="h-2 w-2 p-0"></Badge>
                 )}
               </div>
-              <button className="text-muted-foreground hover:text-foreground">
+              <button 
+                className="text-muted-foreground hover:text-foreground" 
+                aria-label="Dismiss notification"
+              >
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -415,8 +413,8 @@ export function NotificationCardExample() {
       ))}
     </div>
   );
-}
-```
+}`}>
+<NotificationCardExample />
 </ComponentPreview>
 
 ## API Reference

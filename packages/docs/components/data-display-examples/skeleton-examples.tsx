@@ -1,59 +1,10 @@
----
-title: Skeleton
-description: Loading placeholders that mimic content structure for improved perceived performance
----
+"use client";
 
-import { ComponentPreview } from "@/components/component-preview";
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import {
-  BasicSkeletonExample,
-  CardSkeletonExample,
-  ArticleSkeletonExample,
-  TableSkeletonExample,
-  ProfileSkeletonExample,
-  ProductGridSkeletonExample,
-  DashboardSkeletonExample,
-  LoadingStateToggleExample,
-} from "@/components/data-display-examples/skeleton-examples";
-
-# Skeleton
-
-Skeleton loading components provide visual placeholders that mimic the shape and size of content while it loads. They improve perceived performance and provide a better user experience during loading states.
-
-## Features
-
-- **Smooth animations** - Subtle pulse animation while loading
-- **Flexible shapes** - Easily customizable to match content structure
-- **Lightweight** - Minimal impact on performance
-- **Accessible** - Proper ARIA attributes for screen readers
-- **Responsive** - Adapts to container sizes
-
-## Installation
-
-<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
-    <Tab value="pnpm" >
-      ```bash
-      pnpm add @helgadigitals/vera-ui
-      ```
-    </Tab>
-    <Tab value="npm" >
-      ```bash
-      npm install @helgadigitals/vera-ui
-      ```
-    </Tab>
-    <Tab value="yarn" >
-      ```bash
-      yarn add @helgadigitals/vera-ui
-      ```
-    </Tab>
-</Tabs>
-
-## Usage
-
-### Basic Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+import { Skeleton } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+import { Badge } from "@helgadigitals/vera-ui";
+import { useState } from "react";
 
 export function BasicSkeletonExample() {
   return (
@@ -63,13 +14,7 @@ export function BasicSkeletonExample() {
       <Skeleton className="h-4 w-[150px]" />
     </div>
   );
-}`}>
-  <BasicSkeletonExample />
-</ComponentPreview>
-
-### Card Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+}
 
 export function CardSkeletonExample() {
   return (
@@ -81,13 +26,7 @@ export function CardSkeletonExample() {
       </div>
     </div>
   );
-}`}>
-  <CardSkeletonExample />
-</ComponentPreview>
-
-### Article Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+}
 
 export function ArticleSkeletonExample() {
   return (
@@ -120,13 +59,7 @@ export function ArticleSkeletonExample() {
       </div>
     </div>
   );
-}`}>
-  <ArticleSkeletonExample />
-</ComponentPreview>
-
-### Table Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+}
 
 export function TableSkeletonExample() {
   return (
@@ -153,13 +86,7 @@ export function TableSkeletonExample() {
       ))}
     </div>
   );
-}`}>
-  <TableSkeletonExample />
-</ComponentPreview>
-
-### Profile Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+}
 
 export function ProfileSkeletonExample() {
   return (
@@ -204,13 +131,7 @@ export function ProfileSkeletonExample() {
       </div>
     </div>
   );
-}`}>
-  <ProfileSkeletonExample />
-</ComponentPreview>
-
-### Product Grid Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+}
 
 export function ProductGridSkeletonExample() {
   return (
@@ -233,13 +154,7 @@ export function ProductGridSkeletonExample() {
       ))}
     </div>
   );
-}`}>
-  <ProductGridSkeletonExample />
-</ComponentPreview>
-
-### Dashboard Skeleton
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
+}
 
 export function DashboardSkeletonExample() {
   return (
@@ -291,17 +206,7 @@ export function DashboardSkeletonExample() {
       </div>
     </div>
   );
-}`}>
-  <DashboardSkeletonExample />
-</ComponentPreview>
-
-### Loading State Toggle
-
-<ComponentPreview code={`import { Skeleton } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-import { useState } from "react";
+}
 
 export function LoadingStateToggleExample() {
   const [isLoading, setIsLoading] = useState(true);
@@ -366,121 +271,4 @@ export function LoadingStateToggleExample() {
       </div>
     </div>
   );
-}`}>
-  <LoadingStateToggleExample />
-</ComponentPreview>
-
-## API Reference
-
-### Skeleton
-
-The main skeleton loading component.
-
-<TypeTable
-  type={{
-    className: {
-      type: 'string',
-      description: 'Additional CSS classes for styling',
-    },
-    children: {
-      type: 'ReactNode',
-      description: 'Optional children (rarely used)',
-    },
-  }}
-/>
-
-### Default Styling
-
-The skeleton component comes with built-in styles:
-
-```css
-.skeleton {
-  background-color: hsl(var(--accent));
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  border-radius: 0.375rem; /* 6px */
 }
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-```
-
-## Use Cases
-
-### Content Loading
-- **Articles and blogs** - Text content and images
-- **News feeds** - Article previews and thumbnails
-- **Documentation** - Code examples and explanations
-- **Comments** - User discussions and replies
-
-### E-commerce
-- **Product listings** - Product cards with images and details
-- **Product details** - Detailed product information pages
-- **Shopping cart** - Cart items and checkout process
-- **Reviews** - Customer reviews and ratings
-
-### Social Media
-- **User profiles** - Profile information and activity
-- **Post feeds** - Social media posts and interactions
-- **Chat interfaces** - Message loading and history
-- **Notifications** - Alert and notification lists
-
-### Dashboard & Analytics
-- **Data visualization** - Charts and graphs
-- **Statistics** - Key performance indicators
-- **Tables** - Data grid loading states
-- **Reports** - Generated report content
-
-### Admin Interfaces
-- **User management** - User lists and details
-- **Content management** - Admin panels and forms
-- **System monitoring** - Status and monitoring data
-- **Settings** - Configuration interfaces
-
-## Accessibility
-
-The Skeleton component includes:
-
-- **ARIA attributes** - Hidden from screen readers by default
-- **Visual indicators** - Clear loading state representation
-- **Animation control** - Respects user motion preferences
-- **Semantic structure** - Maintains content hierarchy during loading
-- **Color contrast** - Sufficient contrast for visibility
-
-## Best Practices
-
-### Design Principles
-- **Match content structure** - Skeleton should mirror final content layout
-- **Consistent spacing** - Maintain spacing and alignment with loaded content
-- **Appropriate timing** - Show skeletons for operations taking > 200ms
-- **Progressive disclosure** - Load critical content first
-
-### Performance
-- **Lightweight animations** - Use CSS transforms and opacity
-- **Efficient rendering** - Minimize DOM manipulation during loading
-- **Proper cleanup** - Remove skeletons completely when content loads
-- **Avoid flash** - Smooth transition from skeleton to content
-
-### User Experience
-- **Predictable layouts** - Maintain layout stability during loading
-- **Realistic representations** - Make skeletons look like actual content
-- **Clear loading context** - Users should understand what's loading
-- **Graceful degradation** - Handle loading errors appropriately
-
-### Implementation
-- **Conditional rendering** - Use loading states to toggle between skeleton and content
-- **Reusable patterns** - Create skeleton components for common layouts
-- **Responsive design** - Ensure skeletons work across screen sizes
-- **Testing** - Test loading states and skeleton appearances
-
-## Related Components
-
-- **[Progress](/docs/components/data-display/progress)** - Determinate loading indicators
-- **[Spinner](/docs/components/feedback/spinner)** - Indeterminate loading indicators
-- **[Card](/docs/components/data-display/card)** - Content containers that often use skeletons
-- **[Avatar](/docs/components/data-display/avatar)** - User representation with loading states

@@ -3,7 +3,21 @@ title: DataTable
 description: A powerful and flexible data table component with sorting, filtering, pagination, selection, and actions
 ---
 
-import { Callout } from "fumadocs-ui/components/callout"
+import { ComponentPreview } from "@/components/component-preview";
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { 
+  BasicDataTableExample,
+  SortableDataTableExample,
+  SearchableDataTableExample,
+  RowExpansionDataTableExample,
+  SelectableDataTableExample,
+  ActionsDataTableExample,
+  CustomRenderDataTableExample,
+  ProductsDataTableExample,
+  AdvancedDataTableExample
+} from "@/components/data-display-examples/data-table-examples";
 
 # DataTable
 
@@ -11,14 +25,27 @@ A feature-rich data table component that provides advanced functionality for dis
 
 ## Installation
 
-```bash npm2yarn
-npm install @helgadigitals/vera-ui lucide-react
-```
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <Tab value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui lucide-react
+      ```
+    </Tab>
+    <Tab value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui lucide-react
+      ```
+    </Tab>
+    <Tab value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui lucide-react
+      ```
+    </Tab>
+</Tabs>
 
 ## Basic Usage
 
-```tsx
-import { DataTable } from "@helgadigitals/vera-ui";
+<ComponentPreview code={`import { DataTable } from "@helgadigitals/vera-ui";
 
 const users = [
   { id: 1, name: "John Doe", email: "john@example.com", role: "Admin", status: "Active" },
@@ -33,8 +60,9 @@ function UsersTable() {
       tableColumns={['name', 'email', 'role', 'status']}
     />
   );
-}
-```
+}`}>
+<BasicDataTableExample />
+</ComponentPreview>
 
 ## Features
 
@@ -42,60 +70,109 @@ function UsersTable() {
 
 Enable sorting on specific columns:
 
-```tsx
-<DataTable
+<ComponentPreview code={`<DataTable
   tableData={users}
-  tableColumns={['name', 'email', 'role', 'status']}
-  sortableColumns={['name', 'email', 'role']}
+  tableColumns={['name', 'email', 'role', 'status', 'lastLogin']}
+  sortableColumns={['name', 'email', 'role', 'lastLogin']}
   multiSort={true}
   defaultSortState={[{ key: 'name', direction: 'asc' }]}
-/>
-```
+/>`}>
+<SortableDataTableExample />
+</ComponentPreview>
+
+## Row Expansion
+
+Enable expansion to display specific information about that row
+
+<ComponentPreview code={ `<DataTable
+      expandable={true}
+      expandOnRowClick={false}
+      expandIcon={
+          <Plus className="w-3 h-3 hover:bg-white hover:text-black transition-colors" strokeWidth={4} />
+        }
+        collapseIcon={
+          <Minus className="w-3 h-3 hover:bg-white hover:text-black transition-colors" strokeWidth={4} />
+        }
+         expandedContent={(row) => (
+          <div className="p-4 bg-white dark:bg-gray-800 rounded border dark:border-gray-600">
+            <h4 className="font-semibold mb-2 dark:text-white">Users Details</h4>
+            <div className="grid grid-cols-2 gap-4 text-sm dark:text-gray-200">
+              <div>
+                <strong className="dark:text-white">Full Name:</strong> {row.name}
+              </div>
+              <div>
+                <strong className="dark:text-white">Role:</strong> {row.role}
+              </div>
+              <div>
+                <strong className="dark:text-white">Status:</strong> {row.status}
+              </div>
+              <div>
+                <strong className="dark:text-white">Last Login:</strong> {row.lastLogin}
+              </div>
+              <div>
+                <strong className="dark:text-white">Email:</strong> {row.email}
+              </div>
+              <div>
+                <strong className="dark:text-white">Department:</strong> {row.department}
+              </div>
+              </div>
+            </div>
+        )}
+    />`}>
+    <RowExpansionDataTableExample/>
+    </ComponentPreview>
 
 ### Global Search
 
 Add a global search filter:
 
-```tsx
-<DataTable
+<ComponentPreview code={`<DataTable
   tableData={users}
-  tableColumns={['name', 'email', 'role', 'status']}
+  tableColumns={['name', 'email', 'role', 'status', 'department']}
   enableGlobalFilter={true}
   globalFilterPlaceholder="Search users..."
-/>
-```
+  sortableColumns={['name', 'email', 'role']}
+/>`}>
+<SearchableDataTableExample />
+</ComponentPreview>
 
 ### Row Selection
 
 Enable single or multiple row selection:
 
-```tsx
-function SelectableTable() {
+<ComponentPreview code={`function SelectableTable() {
   const [selectedRows, setSelectedRows] = useState<Array<string | number>>([]);
 
   return (
-    <DataTable
-      tableData={users}
-      tableColumns={['name', 'email', 'role', 'status']}
-      selectable={true}
-      selectionMode="multiple"
-      selectedRowIds={selectedRows}
-      onSelectionChange={setSelectedRows}
-      maxSelections={5}
-      onMaxSelectionsReached={(id) => {
-        console.log(`Maximum selections reached. Attempted to select: ${id}`);
-      }}
-    />
+    <div className="space-y-4">
+      {selectedRows.length > 0 && (
+        <div className="text-sm text-muted-foreground">
+          Selected {selectedRows.length} row(s): {selectedRows.join(', ')}
+        </div>
+      )}
+      <DataTable
+        tableData={users}
+        tableColumns={['name', 'email', 'role', 'status']}
+        selectable={true}
+        selectionMode="multiple"
+        selectedRowIds={selectedRows}
+        onSelectionChange={setSelectedRows}
+        maxSelections={3}
+        onMaxSelectionsReached={(id) => {
+          console.log(\`Maximum selections reached. Attempted to select: \${id}\`);
+        }}
+      />
+    </div>
   );
-}
-```
+}`}>
+<SelectableDataTableExample />
+</ComponentPreview>
 
 ### Custom Actions
 
 Add action buttons for each row:
 
-```tsx
-import { Edit, Trash2, Eye } from "lucide-react";
+<ComponentPreview code={`import { Edit, Trash2, Eye } from "lucide-react";
 
 const actions = [
   {
@@ -125,45 +202,64 @@ const actions = [
   tableColumns={['name', 'email', 'role', 'status']}
   actions={actions}
   actionsPlacement="end"
-/>
-```
+  actionsColumnHeader="Actions"
+/>`}>
+<ActionsDataTableExample />
+</ComponentPreview>
 
 ### Custom Cell Rendering
 
 Customize how data is displayed:
 
-```tsx
-<DataTable
+<ComponentPreview code={`<DataTable
   tableData={users}
-  tableColumns={['name', 'email', 'role', 'status']}
+  tableColumns={['name', 'email', 'role', 'status', 'lastLogin']}
+  sortableColumns={['name', 'email', 'lastLogin']}
   customBodyRender={(rowData, column) => {
     if (column === 'status') {
       return (
-        <Badge variant={rowData.status === 'Active' ? 'success' : 'secondary'}>
+        <Badge variant={rowData.status === 'Active' ? 'default' : 'secondary'}>
           {rowData.status}
         </Badge>
       );
     }
     if (column === 'email') {
-      return <a href={`mailto:${rowData.email}`}>{rowData.email}</a>;
+      return (
+        <a 
+          href={\`mailto:\${rowData.email}\`}
+          className="text-primary hover:underline"
+        >
+          {rowData.email}
+        </a>
+      );
+    }
+    if (column === 'role') {
+      return (
+        <Badge variant={rowData.role === 'Admin' ? 'destructive' : 'outline'}>
+          {rowData.role}
+        </Badge>
+      );
+    }
+    if (column === 'lastLogin') {
+      return new Date(rowData.lastLogin).toLocaleDateString();
     }
     return null; // Use default rendering
   }}
-  customHeadRender={(column, helpers) => {
+  customHeadRender={(column) => {
     if (column === 'status') {
       return <span className="font-bold text-primary">Status</span>;
     }
     return null; // Use default rendering
   }}
-/>
-```
+/>`}>
+<CustomRenderDataTableExample />
+</ComponentPreview>
 
 ### Loading and Empty States
 
 Handle loading and empty data states:
 
-```tsx
-<DataTable
+<ComponentPreview code={`<DataTable
   tableData={users}
   tableColumns={['name', 'email', 'role', 'status']}
   loading={isLoading}
@@ -175,137 +271,157 @@ Handle loading and empty data states:
       <Button onClick={handleAddUser}>Add First User</Button>
     </div>
   }
-/>
-```
+/>`}>
+<BasicDataTableExample />
+</ComponentPreview>
+
+### Products Example
+
+Example with different data types and formatting:
+
+<ComponentPreview code={`const products = [
+  {
+    id: 1,
+    name: "Laptop Pro",
+    category: "Electronics",
+    price: 1299,
+    stock: 45,
+    status: "In Stock"
+  },
+  {
+    id: 2,
+    name: "Wireless Mouse",
+    category: "Accessories", 
+    price: 29,
+    stock: 150,
+    status: "In Stock"
+  },
+  {
+    id: 3,
+    name: "Gaming Keyboard",
+    category: "Accessories",
+    price: 89,
+    stock: 0,
+    status: "Out of Stock"
+  }
+];
+
+<DataTable
+  tableData={products}
+  tableColumns={['name', 'category', 'price', 'stock', 'status']}
+  enableGlobalFilter={true}
+  globalFilterPlaceholder="Search products..."
+  sortableColumns={['name', 'category', 'price', 'stock']}
+  customBodyRender={(rowData, column) => {
+    if (column === 'price') {
+      return \`$\${rowData.price.toFixed(2)}\`;
+    }
+    if (column === 'status') {
+      let variant = rowData.status === 'Out of Stock' ? 'destructive' 
+                  : rowData.status === 'Low Stock' ? 'secondary' : 'default';
+      return <Badge variant={variant}>{rowData.status}</Badge>;
+    }
+    if (column === 'stock') {
+      return (
+        <span className={rowData.stock === 0 ? 'text-destructive font-semibold' : ''}>
+          {rowData.stock} units
+        </span>
+      );
+    }
+    return null;
+  }}
+/>`}>
+<ProductsDataTableExample />
+</ComponentPreview>
 
 ## Advanced Usage
 
 ### Complete Feature Example
 
-```tsx
-import { DataTable, Badge, Button } from "@helgadigitals/vera-ui";
+<ComponentPreview code={`import { DataTable, Badge, Button } from "@helgadigitals/vera-ui";
 import { Edit, Trash2, Eye, Plus } from "lucide-react";
 import { useState, useMemo } from "react";
 
 function AdvancedUsersTable() {
-  const [users, setUsers] = useState([
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Admin", status: "Active", lastLogin: "2024-01-15" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "User", status: "Inactive", lastLogin: "2024-01-10" },
-    // ... more users
-  ]);
-
   const [selectedRows, setSelectedRows] = useState<Array<string | number>>([]);
-  const [sortState, setSortState] = useState([{ key: 'name', direction: 'asc' as const }]);
+  const [sortState, setSortState] = useState([{ key: 'name', direction: 'asc' }]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [columnFilters, setColumnFilters] = useState({});
 
   const actions = useMemo(() => [
     {
       id: "view",
       label: "View Details",
       icon: <Eye className="h-4 w-4" />,
-      onClick: (row) => handleViewUser(row),
+      onClick: (row) => console.log("View user", row),
     },
     {
-      id: "edit",
+      id: "edit", 
       label: "Edit User",
       icon: <Edit className="h-4 w-4" />,
-      onClick: (row) => handleEditUser(row),
+      onClick: (row) => console.log("Edit user", row),
     },
     {
       id: "delete",
-      label: "Delete User",
+      label: "Delete User", 
       icon: <Trash2 className="h-4 w-4" />,
-      onClick: (row) => handleDeleteUser(row),
+      onClick: (row) => console.log("Delete user", row),
       variant: "destructive",
       disabled: (row) => row.role === "Admin",
       hidden: (row) => row.status === "Inactive",
     },
   ], []);
 
-  const handleBulkAction = () => {
-    console.log("Bulk action for:", selectedRows);
-  };
-
   return (
     <div className="space-y-4">
-      {/* Header with actions */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Users Management</h2>
+        <h3 className="text-lg font-semibold">Users Management</h3>
         <div className="flex gap-2">
           {selectedRows.length > 0 && (
-            <Button onClick={handleBulkAction} variant="outline">
+            <Button variant="outline" size="sm">
               Bulk Action ({selectedRows.length})
             </Button>
           )}
-          <Button onClick={handleAddUser}>
+          <Button size="sm">
             <Plus className="h-4 w-4 mr-2" />
             Add User
           </Button>
         </div>
       </div>
 
-      {/* Advanced DataTable */}
       <DataTable
         tableData={users}
-        tableColumns={['name', 'email', 'role', 'status', 'lastLogin']}
-        excludeColumns={['id']}
-        
-        // Sorting
+        tableColumns={['name', 'email', 'role', 'status', 'department', 'lastLogin']}
         sortableColumns={['name', 'email', 'role', 'lastLogin']}
         multiSort={true}
         sortState={sortState}
         onSortChange={setSortState}
-        
-        // Filtering
         enableGlobalFilter={true}
         globalFilter={globalFilter}
         onGlobalFilterChange={setGlobalFilter}
-        globalFilterPlaceholder="Search users by name, email, or role..."
-        filterableColumns={['role', 'status']}
-        columnFilters={columnFilters}
-        onColumnFiltersChange={setColumnFilters}
-        
-        // Selection
         selectable={true}
         selectionMode="multiple"
         selectedRowIds={selectedRows}
         onSelectionChange={setSelectedRows}
-        maxSelections={10}
-        onMaxSelectionsReached={(id) => {
-          toast.warning("Maximum 10 users can be selected at once");
-        }}
-        
-        // Actions
+        maxSelections={3}
         actions={actions}
         actionsPlacement="end"
-        actionsColumnHeader="Actions"
-        
-        // Custom rendering
         customBodyRender={(rowData, column) => {
           switch (column) {
             case 'status':
               return (
-                <Badge 
-                  variant={rowData.status === 'Active' ? 'success' : 'secondary'}
-                >
+                <Badge variant={rowData.status === 'Active' ? 'default' : 'secondary'}>
                   {rowData.status}
                 </Badge>
               );
             case 'role':
               return (
-                <Badge 
-                  variant={rowData.role === 'Admin' ? 'destructive' : 'outline'}
-                >
+                <Badge variant={rowData.role === 'Admin' ? 'destructive' : 'outline'}>
                   {rowData.role}
                 </Badge>
               );
             case 'email':
               return (
-                <a 
-                  href={`mailto:${rowData.email}`}
-                  className="text-primary hover:underline"
-                >
+                <a href={\`mailto:\${rowData.email}\`} className="text-primary hover:underline">
                   {rowData.email}
                 </a>
               );
@@ -315,107 +431,222 @@ function AdvancedUsersTable() {
               return null;
           }
         }}
-        
-        // Row interactions
         onRowClick={(row) => console.log("Row clicked:", row)}
-        rowClassName={(row) => 
-          row.status === 'Inactive' ? 'opacity-60' : ''
-        }
-        
-        // Styling
+        rowClassName={(row) => row.status === 'Inactive' ? 'opacity-60' : ''}
         className="border rounded-lg"
-        
-        // Loading states
-        loading={false}
-        emptyMessage="No users found matching your criteria"
-        emptyStateComponent={
-          <div className="text-center py-12">
-            <h3 className="text-lg font-semibold mb-2">No Users Found</h3>
-            <p className="text-muted-foreground mb-4">
-              Get started by adding your first user.
-            </p>
-            <Button onClick={handleAddUser}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add First User
-            </Button>
-          </div>
-        }
       />
     </div>
   );
-}
-```
+}`}>
+<AdvancedDataTableExample />
+</ComponentPreview>
 
 ## Props Reference
 
 ### Core Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `tableData` | `T[]` | - | Array of data objects to display |
-| `tableColumns` | `StringKeys<T>[]` | - | Column keys to display from data |
-| `excludeColumns` | `StringKeys<T>[]` | - | Column keys to exclude from display |
-| `className` | `string` | - | Additional CSS classes |
-| `rowClassName` | `string \| ((row: T) => string)` | - | CSS classes for rows |
-| `loading` | `boolean` | `false` | Show loading state |
-| `loadingComponent` | `ReactNode` | - | Custom loading component |
-| `emptyStateComponent` | `ReactNode` | - | Custom empty state component |
-| `emptyMessage` | `string` | - | Empty state message |
+<TypeTable
+  type={{
+    tableData: {
+      type: 'T[]',
+      description: 'Array of data objects to display',
+    },
+    tableColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Column keys to display from data',
+    },
+    excludeColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Column keys to exclude from display',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    rowClassName: {
+      type: 'string | ((row: T) => string)',
+      description: 'CSS classes for rows',
+    },
+    loading: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Show loading state',
+    },
+    loadingComponent: {
+      type: 'ReactNode',
+      description: 'Custom loading component',
+    },
+    emptyStateComponent: {
+      type: 'ReactNode',
+      description: 'Custom empty state component',
+    },
+    emptyMessage: {
+      type: 'string',
+      description: 'Empty state message',
+    },
+  }}
+/>
 
 ### Selection Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `selectable` | `boolean` | `false` | Enable row selection |
-| `selectionMode` | `"single" \| "multiple"` | `"multiple"` | Selection mode |
-| `selectedRowIds` | `Array<string \| number>` | - | Controlled selected row IDs |
-| `onSelectionChange` | `(ids: Array<string \| number>) => void` | - | Selection change handler |
-| `maxSelections` | `number` | - | Maximum selections allowed |
-| `onMaxSelectionsReached` | `(id: string \| number) => void` | - | Max selections callback |
-| `selectionColumnHeader` | `ReactNode` | - | Custom selection column header |
+<TypeTable
+  type={{
+    selectable: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Enable row selection',
+    },
+    selectionMode: {
+      type: '"single" | "multiple"',
+      default: '"multiple"',
+      description: 'Selection mode',
+    },
+    selectedRowIds: {
+      type: 'Array<string | number>',
+      description: 'Controlled selected row IDs',
+    },
+    onSelectionChange: {
+      type: '(ids: Array<string | number>) => void',
+      description: 'Selection change handler',
+    },
+    maxSelections: {
+      type: 'number',
+      description: 'Maximum selections allowed',
+    },
+    onMaxSelectionsReached: {
+      type: '(id: string | number) => void',
+      description: 'Max selections callback',
+    },
+    selectionColumnHeader: {
+      type: 'ReactNode',
+      description: 'Custom selection column header',
+    },
+  }}
+/>
 
 ### Sorting Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `sortableColumns` | `StringKeys<T>[]` | - | Columns that can be sorted |
-| `multiSort` | `boolean` | `false` | Enable multiple column sorting |
-| `sortState` | `Array<{key: StringKeys<T>, direction: "asc" \| "desc"}>` | - | Controlled sort state |
-| `defaultSortState` | `Array<{key: StringKeys<T>, direction: "asc" \| "desc"}>` | - | Default sort state |
-| `onSortChange` | `(state) => void` | - | Sort change handler |
-| `sortFns` | `Partial<Record<StringKeys<T>, (a, b) => number>>` | - | Custom sort functions |
-| `manualSort` | `boolean` | `false` | Disable automatic sorting |
+<TypeTable
+  type={{
+    sortableColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Columns that can be sorted',
+    },
+    multiSort: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Enable multiple column sorting',
+    },
+    sortState: {
+      type: 'Array<{key: StringKeys<T>, direction: "asc" | "desc"}>',
+      description: 'Controlled sort state',
+    },
+    defaultSortState: {
+      type: 'Array<{key: StringKeys<T>, direction: "asc" | "desc"}>',
+      description: 'Default sort state',
+    },
+    onSortChange: {
+      type: '(state) => void',
+      description: 'Sort change handler',
+    },
+    sortFns: {
+      type: 'Partial<Record<StringKeys<T>, (a, b) => number>>',
+      description: 'Custom sort functions',
+    },
+    manualSort: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Disable automatic sorting',
+    },
+  }}
+/>
 
 ### Filtering Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `enableGlobalFilter` | `boolean` | `false` | Enable global search |
-| `globalFilter` | `string` | - | Controlled global filter value |
-| `onGlobalFilterChange` | `(value: string) => void` | - | Global filter change handler |
-| `globalFilterPlaceholder` | `string` | - | Global filter input placeholder |
-| `globalFilterFn` | `(row: T, searchTerm: string) => boolean` | - | Custom global filter function |
-| `filterableColumns` | `StringKeys<T>[]` | - | Columns that can be filtered |
-| `columnFilters` | `Partial<Record<StringKeys<T>, string>>` | - | Controlled column filters |
-| `onColumnFiltersChange` | `(filters) => void` | - | Column filters change handler |
+<TypeTable
+  type={{
+    enableGlobalFilter: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Enable global search',
+    },
+    globalFilter: {
+      type: 'string',
+      description: 'Controlled global filter value',
+    },
+    onGlobalFilterChange: {
+      type: '(value: string) => void',
+      description: 'Global filter change handler',
+    },
+    globalFilterPlaceholder: {
+      type: 'string',
+      description: 'Global filter input placeholder',
+    },
+    globalFilterFn: {
+      type: '(row: T, searchTerm: string) => boolean',
+      description: 'Custom global filter function',
+    },
+    filterableColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Columns that can be filtered',
+    },
+    columnFilters: {
+      type: 'Partial<Record<StringKeys<T>, string>>',
+      description: 'Controlled column filters',
+    },
+    onColumnFiltersChange: {
+      type: '(filters) => void',
+      description: 'Column filters change handler',
+    },
+  }}
+/>
 
 ### Actions Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `actions` | `TableAction<T>[]` | - | Array of action configurations |
-| `actionsRender` | `(row: T) => ReactNode` | - | Custom actions render function |
-| `actionsColumnHeader` | `ReactNode` | - | Custom actions column header |
-| `actionsPlacement` | `"start" \| "end"` | `"end"` | Actions column placement |
+<TypeTable
+  type={{
+    actions: {
+      type: 'TableAction<T>[]',
+      description: 'Array of action configurations',
+    },
+    actionsRender: {
+      type: '(row: T) => ReactNode',
+      description: 'Custom actions render function',
+    },
+    actionsColumnHeader: {
+      type: 'ReactNode',
+      description: 'Custom actions column header',
+    },
+    actionsPlacement: {
+      type: '"start" | "end"',
+      default: '"end"',
+      description: 'Actions column placement',
+    },
+  }}
+/>
 
 ### Custom Rendering Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `customHeadRender` | `(col, helpers?) => ReactNode` | - | Custom header cell renderer |
-| `customBodyRender` | `(rowData, col) => ReactNode` | - | Custom body cell renderer |
-| `onRowClick` | `(rowData: T) => void` | - | Row click handler |
-| `getRowId` | `(row: T, index: number) => string \| number` | - | Custom row ID function |
+<TypeTable
+  type={{
+    customHeadRender: {
+      type: '(col, helpers?) => ReactNode',
+      description: 'Custom header cell renderer',
+    },
+    customBodyRender: {
+      type: '(rowData, col) => ReactNode',
+      description: 'Custom body cell renderer',
+    },
+    onRowClick: {
+      type: '(rowData: T) => void',
+      description: 'Row click handler',
+    },
+    getRowId: {
+      type: '(row: T, index: number) => string | number',
+      description: 'Custom row ID function',
+    },
+  }}
+/>
 
 ## TableAction Interface
 

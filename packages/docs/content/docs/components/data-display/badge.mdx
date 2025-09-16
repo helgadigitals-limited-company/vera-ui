@@ -6,6 +6,18 @@ description: Compact status indicators and labels with multiple variant styles f
 import { ComponentPreview } from "@/components/component-preview";
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Badge } from "@helgadigitals/vera-ui";
+import { 
+  CheckCircle, 
+  AlertCircle, 
+  XCircle, 
+  Clock,
+  Bell,
+  Mail,
+  ShoppingCart,
+  Star
+} from "lucide-react";
+import { InteractiveBadgeExample } from "@/components/data-display-examples/badge-examples";
 
 # Badge
 
@@ -43,9 +55,9 @@ A versatile component for displaying small pieces of information such as status 
 
 ### Basic Badges
 
-<ComponentPreview>
-```tsx
-import { Badge } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Basic badge examples showing all available variants"
+  code={`import { Badge } from "@helgadigitals/vera-ui";
 
 export function BasicBadgeExample() {
   return (
@@ -56,15 +68,21 @@ export function BasicBadgeExample() {
       <Badge variant="outline">Outline</Badge>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="flex flex-wrap gap-2">
+    <Badge>Default</Badge>
+    <Badge variant="secondary">Secondary</Badge>
+    <Badge variant="destructive">Destructive</Badge>
+    <Badge variant="outline">Outline</Badge>
+  </div>
 </ComponentPreview>
 
 ### Status Indicators
 
-<ComponentPreview>
-```tsx
-import { Badge } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Badge examples for different status types and categories"
+  code={`import { Badge } from "@helgadigitals/vera-ui";
 
 export function StatusBadgeExample() {
   const statuses = [
@@ -98,15 +116,36 @@ export function StatusBadgeExample() {
       </div>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <h4 className="text-sm font-medium">User Status</h4>
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="default">Active</Badge>
+        <Badge variant="secondary">Pending</Badge>
+        <Badge variant="outline">Inactive</Badge>
+        <Badge variant="destructive">Error</Badge>
+      </div>
+    </div>
+    
+    <div className="space-y-2">
+      <h4 className="text-sm font-medium">Order Status</h4>
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="outline">Draft</Badge>
+        <Badge variant="secondary">Processing</Badge>
+        <Badge variant="default">Shipped</Badge>
+        <Badge variant="outline">Delivered</Badge>
+      </div>
+    </div>
+  </div>
 </ComponentPreview>
 
 ### Badges with Icons
 
-<ComponentPreview>
-```tsx
-import { Badge } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Badges enhanced with icons for better visual communication"
+  code={`import { Badge } from "@helgadigitals/vera-ui";
 import { CheckCircle, AlertCircle, XCircle, Clock } from "lucide-react";
 
 export function BadgeWithIconExample() {
@@ -130,15 +169,33 @@ export function BadgeWithIconExample() {
       </Badge>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="flex flex-wrap gap-2">
+    <Badge variant="default">
+      <CheckCircle />
+      Completed
+    </Badge>
+    <Badge variant="secondary">
+      <Clock />
+      Pending
+    </Badge>
+    <Badge variant="destructive">
+      <XCircle />
+      Failed
+    </Badge>
+    <Badge variant="outline">
+      <AlertCircle />
+      Warning
+    </Badge>
+  </div>
 </ComponentPreview>
 
 ### Interactive Badges
 
-<ComponentPreview>
-```tsx
-import { Badge } from "@helgadigitals/vera-ui";
+<ComponentPreview 
+  description="Interactive badges with removable tags and clickable categories"
+  code={`import { Badge } from "@helgadigitals/vera-ui";
 import { X } from "lucide-react";
 import { useState } from "react";
 
@@ -162,6 +219,7 @@ export function InteractiveBadgeExample() {
               <button
                 onClick={() => removeTag(tag)}
                 className="ml-1 hover:bg-black/10 rounded-full p-0.5"
+                aria-label={\`Remove \${tag} tag\`}
               >
                 <X className="h-3 w-3" />
               </button>
@@ -192,15 +250,15 @@ export function InteractiveBadgeExample() {
       </div>
     </div>
   );
-}
-```
+}`}>
+  <InteractiveBadgeExample />
 </ComponentPreview>
 
 ### Count Badges
 
-<ComponentPreview>
-```tsx
-import { Badge } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Notification-style badges positioned over icons for counts and ratings"
+  code={`import { Badge } from "@helgadigitals/vera-ui";
 import { Bell, Mail, ShoppingCart, Star } from "lucide-react";
 
 export function CountBadgeExample() {
@@ -242,15 +300,51 @@ export function CountBadgeExample() {
       </div>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="flex flex-wrap gap-6">
+    <div className="relative">
+      <Bell className="h-6 w-6" />
+      <Badge 
+        variant="destructive" 
+        className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-xs"
+      >
+        3
+      </Badge>
+    </div>
+    
+    <div className="relative">
+      <Mail className="h-6 w-6" />
+      <Badge 
+        variant="default" 
+        className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-xs"
+      >
+        12
+      </Badge>
+    </div>
+    
+    <div className="relative">
+      <ShoppingCart className="h-6 w-6" />
+      <Badge 
+        variant="secondary" 
+        className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-xs"
+      >
+        5
+      </Badge>
+    </div>
+    
+    <div className="flex items-center gap-1">
+      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+      <Badge variant="outline">4.8</Badge>
+    </div>
+  </div>
 </ComponentPreview>
 
 ### Custom Styled Badges
 
-<ComponentPreview>
-```tsx
-import { Badge } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Custom colored badges for priority levels and department categorization"
+  code={`import { Badge } from "@helgadigitals/vera-ui";
 
 export function CustomBadgeExample() {
   return (
@@ -281,8 +375,34 @@ export function CustomBadgeExample() {
       </div>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <h4 className="text-sm font-medium">Priority Levels</h4>
+      <div className="flex flex-wrap gap-2">
+        <Badge className="bg-red-100 text-red-800 hover:bg-red-200">
+          High Priority
+        </Badge>
+        <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+          Medium Priority
+        </Badge>
+        <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+          Low Priority
+        </Badge>
+      </div>
+    </div>
+    
+    <div className="space-y-2">
+      <h4 className="text-sm font-medium">Department Tags</h4>
+      <div className="flex flex-wrap gap-2">
+        <Badge className="bg-blue-100 text-blue-800">Engineering</Badge>
+        <Badge className="bg-purple-100 text-purple-800">Design</Badge>
+        <Badge className="bg-pink-100 text-pink-800">Marketing</Badge>
+        <Badge className="bg-orange-100 text-orange-800">Sales</Badge>
+      </div>
+    </div>
+  </div>
 </ComponentPreview>
 
 ## API Reference

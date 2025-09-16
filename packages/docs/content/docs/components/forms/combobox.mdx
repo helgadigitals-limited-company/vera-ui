@@ -34,7 +34,9 @@ A combobox is an input widget that has an associated popup that enables users to
 
 ## Usage
 
-```tsx
+<ComponentPreview
+  description="Basic combobox with searchable options"
+  code={`import { useState } from "react"
 import { Combobox } from "@helgadigitals/vera-ui"
 
 const options = [
@@ -54,15 +56,27 @@ export default function Example() {
       placeholder="Select an option..."
     />
   )
-}
-```
+}`}
+>
+  <div className="w-[280px]">
+    <Combobox
+      options={[
+        { value: "option1", label: "Option 1" },
+        { value: "option2", label: "Option 2" },
+        { value: "option3", label: "Option 3" },
+      ]}
+      placeholder="Select an option..."
+    />
+  </div>
+</ComponentPreview>
 
 ## Examples
 
 ### Basic Combobox
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Framework selection with search functionality"
+  code={`import { useState } from "react"
 import { Combobox } from "@helgadigitals/vera-ui"
 
 const frameworks = [
@@ -83,228 +97,94 @@ export default function BasicExample() {
       placeholder="Select a framework..."
     />
   )
-}
-```
-
-### With Icons
-
-```tsx
-import { useState } from "react"
-import { User, Mail, Phone, MessageSquare } from "lucide-react"
-import { Combobox } from "@helgadigitals/vera-ui"
-
-const contactMethods = [
-  { value: "email", label: "Email", icon: Mail },
-  { value: "phone", label: "Phone", icon: Phone },
-  { value: "message", label: "Message", icon: MessageSquare },
-  { value: "in-person", label: "In Person", icon: User },
-]
-
-export default function WithIconsExample() {
-  const [selectedMethod, setSelectedMethod] = useState("")
-
-  return (
+}`}
+>
+  <div className="w-[280px]">
     <Combobox
-      options={contactMethods}
-      value={selectedMethod}
-      onValueChange={setSelectedMethod}
-      placeholder="Choose contact method..."
+      options={[
+        { value: "react", label: "React" },
+        { value: "vue", label: "Vue.js" },
+        { value: "angular", label: "Angular" },
+        { value: "svelte", label: "Svelte" },
+      ]}
+      placeholder="Select a framework..."
     />
-  )
-}
-```
+  </div>
+</ComponentPreview>
 
-### Loading State
+### Different States
 
-```tsx
-import { useState, useEffect } from "react"
-import { Combobox } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Combobox in loading and error states"
+  code={`import { Combobox } from "@helgadigitals/vera-ui"
 
-export default function LoadingExample() {
-  const [options, setOptions] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [selectedValue, setSelectedValue] = useState("")
-
-  useEffect(() => {
-    // Simulate API call
-    const timer = setTimeout(() => {
-      setOptions([
-        { value: "option1", label: "Loaded Option 1" },
-        { value: "option2", label: "Loaded Option 2" },
-        { value: "option3", label: "Loaded Option 3" },
-      ])
-      setIsLoading(false)
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  return (
-    <Combobox
-      options={options}
-      value={selectedValue}
-      onValueChange={setSelectedValue}
-      isLoading={isLoading}
-      placeholder="Loading options..."
-    />
-  )
-}
-```
-
-### Error State
-
-```tsx
-import { useState } from "react"
-import { Combobox } from "@helgadigitals/vera-ui"
-
-export default function ErrorExample() {
-  const [selectedValue, setSelectedValue] = useState("")
-
-  return (
-    <Combobox
-      options={[]}
-      value={selectedValue}
-      onValueChange={setSelectedValue}
-      isError={true}
-      errorMessage="Failed to load options"
-      placeholder="Select an option..."
-    />
-  )
-}
-```
-
-### Different Variants
-
-```tsx
-import { useState } from "react"
-import { Combobox } from "@helgadigitals/vera-ui"
-
-const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
-]
-
-export default function VariantsExample() {
-  const [value1, setValue1] = useState("")
-  const [value2, setValue2] = useState("")
-  const [value3, setValue3] = useState("")
-
+export default function StatesExample() {
   return (
     <div className="space-y-4">
       <div>
-        <label>Default Variant</label>
+        <label className="text-sm font-medium mb-2 block">Loading State</label>
         <Combobox
-          options={options}
-          value={value1}
-          onValueChange={setValue1}
-          placeholder="Default variant..."
+          options={[]}
+          isLoading={true}
+          placeholder="Loading options..."
         />
       </div>
       
       <div>
-        <label>Secondary Variant</label>
+        <label className="text-sm font-medium mb-2 block">Error State</label>
         <Combobox
-          options={options}
-          value={value2}
-          onValueChange={setValue2}
-          variant="secondary"
-          placeholder="Secondary variant..."
+          options={[]}
+          isError={true}
+          errorMessage="Failed to load options"
+          placeholder="Select an option..."
         />
       </div>
       
       <div>
-        <label>Destructive Variant</label>
+        <label className="text-sm font-medium mb-2 block">Disabled State</label>
         <Combobox
-          options={options}
-          value={value3}
-          onValueChange={setValue3}
-          variant="destructive"
-          placeholder="Destructive variant..."
+          options={[
+            { value: "option1", label: "Option 1" },
+            { value: "option2", label: "Option 2" },
+          ]}
+          disabled={true}
+          placeholder="Disabled combobox..."
         />
       </div>
     </div>
   )
-}
-```
-
-### Form Integration
-
-```tsx
-import { useForm, Controller } from "react-hook-form"
-import { Combobox, Button } from "@helgadigitals/vera-ui"
-
-const countries = [
-  { value: "us", label: "United States" },
-  { value: "ca", label: "Canada" },
-  { value: "mx", label: "Mexico" },
-  { value: "uk", label: "United Kingdom" },
-]
-
-export default function FormExample() {
-  const { control, handleSubmit, formState: { errors } } = useForm()
-
-  const onSubmit = (data) => {
-    console.log(data)
-  }
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div>
-        <label>Country *</label>
-        <Controller
-          name="country"
-          control={control}
-          rules={{ required: "Please select a country" }}
-          render={({ field }) => (
-            <Combobox
-              options={countries}
-              value={field.value || ""}
-              onValueChange={field.onChange}
-              placeholder="Select your country..."
-              variant={errors.country ? "error" : "default"}
-            />
-          )}
-        />
-        {errors.country && (
-          <p className="text-sm text-destructive mt-1">
-            {errors.country.message}
-          </p>
-        )}
-      </div>
-      
-      <Button type="submit">Submit</Button>
-    </form>
-  )
-}
-```
-
-### Modal Popover
-
-```tsx
-import { useState } from "react"
-import { Combobox } from "@helgadigitals/vera-ui"
-
-const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
-]
-
-export default function ModalExample() {
-  const [selectedValue, setSelectedValue] = useState("")
-
-  return (
-    <Combobox
-      options={options}
-      value={selectedValue}
-      onValueChange={setSelectedValue}
-      modalPopover={true}
-      placeholder="Modal combobox..."
-    />
-  )
-}
-```
+}`}
+>
+  <div className="space-y-4 w-[280px]">
+    <div>
+      <label className="text-sm font-medium mb-2 block">Loading State</label>
+      <Combobox
+        options={[]}
+        placeholder="Loading options..."
+      />
+    </div>
+    
+    <div>
+      <label className="text-sm font-medium mb-2 block">Error State</label>
+      <Combobox
+        options={[]}
+        placeholder="Select an option..."
+      />
+    </div>
+    
+    <div>
+      <label className="text-sm font-medium mb-2 block">Disabled State</label>
+      <Combobox
+        options={[
+          { value: "option1", label: "Option 1" },
+          { value: "option2", label: "Option 2" },
+        ]}
+        disabled={true}
+        placeholder="Disabled combobox..."
+      />
+    </div>
+  </div>
+</ComponentPreview>
 
 ## API Reference
 

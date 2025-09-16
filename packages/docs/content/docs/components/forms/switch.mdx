@@ -6,7 +6,13 @@ description: A switch control for toggling between on and off states
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Switch, Label } from "@helgadigitals/vera-ui"
+import { Switch, Label, Button, Input } from "@helgadigitals/vera-ui"
+import { Sun, Moon } from "lucide-react"
+import { ComponentPreview } from "@/components/component-preview"
+import { 
+  FeatureTogglesExample,
+  CustomStylingExample
+} from "@/components/form-components-examples/switch-examples"
 
 # Switch
 
@@ -34,8 +40,9 @@ A switch component built on Radix UI's Switch primitive that allows users to tog
 
 ## Usage
 
-```tsx
-import { Switch, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Basic switch with label for toggling airplane mode"
+  code={`import { Switch, Label } from "@helgadigitals/vera-ui"
 
 export default function Example() {
   return (
@@ -44,15 +51,21 @@ export default function Example() {
       <Label htmlFor="airplane-mode">Airplane mode</Label>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="flex items-center space-x-2">
+    <Switch id="airplane-mode" />
+    <Label htmlFor="airplane-mode">Airplane mode</Label>
+  </div>
+</ComponentPreview>
 
 ## Examples
 
 ### Basic Switch
 
-```tsx
-import { Switch, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Simple switch for enabling notifications"
+  code={`import { Switch, Label } from "@helgadigitals/vera-ui"
 
 export default function BasicExample() {
   return (
@@ -61,13 +74,19 @@ export default function BasicExample() {
       <Label htmlFor="notifications">Enable notifications</Label>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="flex items-center space-x-2">
+    <Switch id="notifications" />
+    <Label htmlFor="notifications">Enable notifications</Label>
+  </div>
+</ComponentPreview>
 
 ### Controlled Switch
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Controlled switch with state display"
+  code={`import { useState } from "react"
 import { Switch, Label } from "@helgadigitals/vera-ui"
 
 export default function ControlledExample() {
@@ -91,13 +110,27 @@ export default function ControlledExample() {
       </p>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="flex items-center space-x-2">
+      <Switch id="controlled" />
+      <Label htmlFor="controlled">
+        Dark mode (Off)
+      </Label>
+    </div>
+    
+    <p className="text-sm text-muted-foreground">
+      Toggle the switch to see state changes
+    </p>
+  </div>
+</ComponentPreview>
 
 ### Disabled Switch
 
-```tsx
-import { Switch, Label } from "@helgadigitals/vera-ui"
+<ComponentPreview
+  description="Switches in disabled states"
+  code={`import { Switch, Label } from "@helgadigitals/vera-ui"
 
 export default function DisabledExample() {
   return (
@@ -115,13 +148,26 @@ export default function DisabledExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    <div className="flex items-center space-x-2">
+      <Switch id="disabled-off" disabled />
+      <Label htmlFor="disabled-off">Disabled (off)</Label>
+    </div>
+
+    <div className="flex items-center space-x-2">
+      <Switch id="disabled-on" disabled checked />
+      <Label htmlFor="disabled-on">Disabled (on)</Label>
+    </div>
+  </div>
+</ComponentPreview>
 
 ### Settings Panel
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Settings panel with multiple switches for privacy controls"
+  code={`import { useState } from "react"
 import { Switch, Label } from "@helgadigitals/vera-ui"
 
 export default function SettingsPanelExample() {
@@ -207,13 +253,68 @@ export default function SettingsPanelExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="space-y-6 max-w-md">
+    <h3 className="text-lg font-semibold">Privacy Settings</h3>
+    
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="space-y-0.5">
+          <Label htmlFor="notifications" className="text-base">
+            Push Notifications
+          </Label>
+          <p className="text-sm text-muted-foreground">
+            Receive notifications about updates and messages
+          </p>
+        </div>
+        <Switch id="notifications" defaultChecked />
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="space-y-0.5">
+          <Label htmlFor="marketing" className="text-base">
+            Marketing Emails
+          </Label>
+          <p className="text-sm text-muted-foreground">
+            Receive emails about new features and offers
+          </p>
+        </div>
+        <Switch id="marketing" />
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="space-y-0.5">
+          <Label htmlFor="analytics" className="text-base">
+            Analytics
+          </Label>
+          <p className="text-sm text-muted-foreground">
+            Help us improve by sharing usage analytics
+          </p>
+        </div>
+        <Switch id="analytics" defaultChecked />
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="space-y-0.5">
+          <Label htmlFor="cookies" className="text-base">
+            Third-party Cookies
+          </Label>
+          <p className="text-sm text-muted-foreground">
+            Allow third-party cookies for enhanced functionality
+          </p>
+        </div>
+        <Switch id="cookies" />
+      </div>
+    </div>
+  </div>
+</ComponentPreview>
 
 ### Form Integration
 
-```tsx
-import { useForm, Controller } from "react-hook-form"
+<ComponentPreview
+  description="Switch components integrated with React Hook Form"
+  code={`import { useForm, Controller } from "react-hook-form"
 import { Switch, Label, Button } from "@helgadigitals/vera-ui"
 
 export default function FormExample() {
@@ -296,13 +397,43 @@ export default function FormExample() {
       </Button>
     </form>
   )
-}
-```
+}`}
+>
+  <form className="space-y-6">
+    <div className="space-y-4">
+      <div className="flex items-center space-x-2">
+        <Switch id="newsletter" />
+        <Label htmlFor="newsletter">
+          Subscribe to newsletter
+        </Label>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Switch id="marketing" />
+        <Label htmlFor="marketing">
+          Receive marketing communications
+        </Label>
+      </div>
+
+      <div className="flex items-center space-x-2">
+        <Switch id="terms" />
+        <Label htmlFor="terms">
+          I agree to the terms and conditions *
+        </Label>
+      </div>
+    </div>
+
+    <Button type="submit" className="w-full">
+      Submit
+    </Button>
+  </form>
+</ComponentPreview>
 
 ### Feature Toggles
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Interactive feature toggles with state management"
+  code={`import { useState } from "react"
 import { Switch, Label, Card } from "@helgadigitals/vera-ui"
 
 export default function FeatureTogglesExample() {
@@ -368,13 +499,16 @@ export default function FeatureTogglesExample() {
       </div>
     </Card>
   )
-}
-```
+}`}
+>
+  <FeatureTogglesExample />
+</ComponentPreview>
 
 ### Custom Styling
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Switch components with custom styling variations"
+  code={`import { useState } from "react"
 import { Switch, Label } from "@helgadigitals/vera-ui"
 
 export default function CustomStylingExample() {
@@ -422,13 +556,16 @@ export default function CustomStylingExample() {
       </div>
     </div>
   )
-}
-```
+}`}
+>
+  <CustomStylingExample />
+</ComponentPreview>
 
 ### With Icons
 
-```tsx
-import { useState } from "react"
+<ComponentPreview
+  description="Switch with sun and moon icons for theme toggle"
+  code={`import { useState } from "react"
 import { Moon, Sun } from "lucide-react"
 import { Switch, Label } from "@helgadigitals/vera-ui"
 
@@ -449,8 +586,17 @@ export default function WithIconsExample() {
       </Label>
     </div>
   )
-}
-```
+}`}
+>
+  <div className="flex items-center space-x-3">
+    <Sun className="h-4 w-4" />
+    <Switch id="theme-toggle" />
+    <Moon className="h-4 w-4" />
+    <Label htmlFor="theme-toggle">
+      Light mode
+    </Label>
+  </div>
+</ComponentPreview>
 
 ## API Reference
 

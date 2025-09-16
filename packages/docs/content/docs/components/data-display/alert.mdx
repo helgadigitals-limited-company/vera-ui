@@ -6,6 +6,27 @@ description: Contextual feedback messages for users about system status and impo
 import { ComponentPreview } from "@/components/component-preview";
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+} from "@helgadigitals/vera-ui";
+import { 
+  Terminal, 
+  AlertCircle, 
+  CheckCircle, 
+  Info, 
+  AlertTriangle,
+  XCircle,
+  X
+} from "lucide-react";
+import { 
+  InteractiveAlertsExample,
+  StatusNotificationsExample,
+  FormValidationExample,
+  SystemAnnouncementsExample
+} from "@/components/data-display-examples/alert-examples";
 
 # Alert
 
@@ -43,9 +64,9 @@ An alert component for displaying important messages, notifications, and system 
 
 ### Basic Alert
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="A basic alert with icon, title, and description"
+  code={`import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
 import { Terminal } from "lucide-react";
 
 export function BasicAlertExample() {
@@ -58,15 +79,22 @@ export function BasicAlertExample() {
       </AlertDescription>
     </Alert>
   );
-}
-```
+}`}
+>
+  <Alert>
+    <Terminal className="h-4 w-4" />
+    <AlertTitle>Heads up!</AlertTitle>
+    <AlertDescription>
+      You can add components to your app using the cli.
+    </AlertDescription>
+  </Alert>
 </ComponentPreview>
 
 ### Alert Variants
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Different alert variants showing various states and styling options"
+  code={`import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from "lucide-react";
 
 export function AlertVariantsExample() {
@@ -109,15 +137,52 @@ export function AlertVariantsExample() {
       </Alert>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="space-y-4">
+    {/* Default/Info Alert */}
+    <Alert>
+      <Info className="h-4 w-4" />
+      <AlertTitle>Information</AlertTitle>
+      <AlertDescription>
+        This is a general information message for your attention.
+      </AlertDescription>
+    </Alert>
+
+    {/* Success Alert (using custom styling) */}
+    <Alert className="border-green-200 bg-green-50 text-green-800">
+      <CheckCircle className="h-4 w-4" />
+      <AlertTitle>Success</AlertTitle>
+      <AlertDescription>
+        Your changes have been saved successfully.
+      </AlertDescription>
+    </Alert>
+
+    {/* Warning Alert (using custom styling) */}
+    <Alert className="border-yellow-200 bg-yellow-50 text-yellow-800">
+      <AlertTriangle className="h-4 w-4" />
+      <AlertTitle>Warning</AlertTitle>
+      <AlertDescription>
+        Please review your settings before proceeding.
+      </AlertDescription>
+    </Alert>
+
+    {/* Destructive Alert */}
+    <Alert variant="destructive">
+      <AlertCircle className="h-4 w-4" />
+      <AlertTitle>Error</AlertTitle>
+      <AlertDescription>
+        Something went wrong. Please try again later.
+      </AlertDescription>
+    </Alert>
+  </div>
 </ComponentPreview>
 
 ### Simple Alerts
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Simple alerts without titles, showing just descriptions with icons"
+  code={`import { Alert, AlertDescription } from "@helgadigitals/vera-ui";
 import { Info, CheckCircle, AlertTriangle, XCircle } from "lucide-react";
 
 export function SimpleAlertsExample() {
@@ -152,18 +217,53 @@ export function SimpleAlertsExample() {
       </Alert>
     </div>
   );
-}
-```
+}`}
+>
+  <div className="space-y-3">
+    <Alert>
+      <Info className="h-4 w-4" />
+      <AlertDescription>
+        System maintenance scheduled for tonight at 11 PM EST.
+      </AlertDescription>
+    </Alert>
+
+    <Alert className="border-green-200 bg-green-50 text-green-800">
+      <CheckCircle className="h-4 w-4" />
+      <AlertDescription>
+        Profile updated successfully.
+      </AlertDescription>
+    </Alert>
+
+    <Alert className="border-yellow-200 bg-yellow-50 text-yellow-800">
+      <AlertTriangle className="h-4 w-4" />
+      <AlertDescription>
+        Your trial expires in 3 days. Upgrade your plan to continue.
+      </AlertDescription>
+    </Alert>
+
+    <Alert variant="destructive">
+      <XCircle className="h-4 w-4" />
+      <AlertDescription>
+        Failed to connect to server. Check your internet connection.
+      </AlertDescription>
+    </Alert>
+  </div>
 </ComponentPreview>
 
 ### Interactive Alerts
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { AlertTriangle, X } from "lucide-react";
+<ComponentPreview
+  description="Alerts with interactive elements like dismiss buttons and action buttons"
+  code={`"use client";
+
 import { useState } from "react";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+} from "@helgadigitals/vera-ui";
+import { AlertTriangle, X } from "lucide-react";
 
 export function InteractiveAlertsExample() {
   const [showAlert1, setShowAlert1] = useState(true);
@@ -238,15 +338,16 @@ export function InteractiveAlertsExample() {
       )}
     </div>
   );
-}
-```
+}`}
+>
+  <InteractiveAlertsExample />
 </ComponentPreview>
 
 ### Status Notifications
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Status alerts with badges showing different operational states and notifications"
+  code={`import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
 import { Badge } from "@helgadigitals/vera-ui";
 import { 
   Clock, 
@@ -329,15 +430,16 @@ export function StatusNotificationsExample() {
       </Alert>
     </div>
   );
-}
-```
+}`}
+>
+  <StatusNotificationsExample />
 </ComponentPreview>
 
 ### Form Validation Alerts
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="Form validation examples showing error and success states with alert feedback"
+  code={`import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
 import { Button } from "@helgadigitals/vera-ui";
 import { AlertCircle, CheckCircle } from "lucide-react";
 
@@ -397,15 +499,16 @@ export function FormValidationExample() {
       </Button>
     </div>
   );
-}
-```
+}`}
+>
+  <FormValidationExample />
 </ComponentPreview>
 
 ### System Announcements
 
-<ComponentPreview>
-```tsx
-import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
+<ComponentPreview
+  description="System announcements with interactive buttons for feature updates, security notices, and maintenance alerts"
+  code={`import { Alert, AlertDescription, AlertTitle } from "@helgadigitals/vera-ui";
 import { Button } from "@helgadigitals/vera-ui";
 import { 
   Megaphone, 
@@ -421,67 +524,76 @@ export function SystemAnnouncementsExample() {
       {/* Feature Announcement */}
       <Alert className="border-purple-200 bg-purple-50 text-purple-800">
         <Star className="h-4 w-4" />
-        <div className="flex-1">
-          <AlertTitle>New Feature: Dark Mode</AlertTitle>
-          <AlertDescription>
-            We've added dark mode support! Toggle it in your profile settings.
-          </AlertDescription>
+        <div className="col-start-2 flex items-start justify-between">
+          <div className="flex-1">
+            <AlertTitle>New Feature: Dark Mode</AlertTitle>
+            <AlertDescription>
+              We've added dark mode support! Toggle it in your profile settings.
+            </AlertDescription>
+          </div>
+          <Button size="sm" variant="outline" className="ml-4 border-purple-300 text-purple-700 hover:bg-purple-100">
+            Try It Now
+          </Button>
         </div>
-        <Button size="sm" variant="outline" className="ml-4 border-purple-300 text-purple-700 hover:bg-purple-100">
-          Try It Now
-        </Button>
       </Alert>
 
       {/* Security Update */}
       <Alert className="border-blue-200 bg-blue-50 text-blue-800">
         <Shield className="h-4 w-4" />
-        <div className="flex-1">
-          <AlertTitle>Security Update Available</AlertTitle>
-          <AlertDescription>
-            A critical security update is available. Please update your application.
-          </AlertDescription>
+        <div className="col-start-2 flex items-start justify-between">
+          <div className="flex-1">
+            <AlertTitle>Security Update Available</AlertTitle>
+            <AlertDescription>
+              A critical security update is available. Please update your application.
+            </AlertDescription>
+          </div>
+          <Button size="sm" variant="outline" className="ml-4 border-blue-300 text-blue-700 hover:bg-blue-100">
+            Update Now
+          </Button>
         </div>
-        <Button size="sm" variant="outline" className="ml-4 border-blue-300 text-blue-700 hover:bg-blue-100">
-          Update Now
-        </Button>
       </Alert>
 
       {/* Maintenance Notice */}
       <Alert className="border-yellow-200 bg-yellow-50 text-yellow-800">
         <Calendar className="h-4 w-4" />
-        <div className="flex-1">
-          <AlertTitle>Scheduled Maintenance</AlertTitle>
-          <AlertDescription>
-            System maintenance is scheduled for March 15, 2024 from 2-4 AM EST.
-          </AlertDescription>
+        <div className="col-start-2 flex items-start justify-between">
+          <div className="flex-1">
+            <AlertTitle>Scheduled Maintenance</AlertTitle>
+            <AlertDescription>
+              System maintenance is scheduled for March 15, 2024 from 2-4 AM EST.
+            </AlertDescription>
+          </div>
+          <Button 
+            size="sm" 
+            variant="outline" 
+            className="ml-4 border-yellow-300 text-yellow-700 hover:bg-yellow-100"
+          >
+            <ExternalLink className="h-3 w-3 mr-1" />
+            Details
+          </Button>
         </div>
-        <Button 
-          size="sm" 
-          variant="outline" 
-          className="ml-4 border-yellow-300 text-yellow-700 hover:bg-yellow-100"
-        >
-          <ExternalLink className="h-3 w-3 mr-1" />
-          Details
-        </Button>
       </Alert>
 
       {/* General Announcement */}
       <Alert>
         <Megaphone className="h-4 w-4" />
-        <div className="flex-1">
-          <AlertTitle>Join Our Webinar</AlertTitle>
-          <AlertDescription>
-            Learn about our latest features in our upcoming webinar on March 20th.
-          </AlertDescription>
+        <div className="col-start-2 flex items-start justify-between">
+          <div className="flex-1">
+            <AlertTitle>Join Our Webinar</AlertTitle>
+            <AlertDescription>
+              Learn about our latest features in our upcoming webinar on March 20th.
+            </AlertDescription>
+          </div>
+          <Button size="sm" variant="outline" className="ml-4">
+            Register
+          </Button>
         </div>
-        <Button size="sm" variant="outline" className="ml-4">
-          Register
-        </Button>
       </Alert>
     </div>
   );
-}
-```
+}`}
+>
+  <SystemAnnouncementsExample />
 </ComponentPreview>
 
 ## API Reference

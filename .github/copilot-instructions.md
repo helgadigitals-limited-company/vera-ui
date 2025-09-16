@@ -16,11 +16,10 @@ This is a **monorepo** with a React component library (`packages/ui`) and docume
 - **Utils**: Always use `cn()` from `@/lib/utils` for conditional classes (combines clsx + tailwind-merge)
 - **Exports**: All components must be exported from `packages/ui/src/index.ts` in alphabetical order
 
-### Tailwind CSS Dual Support
-**Critical**: This library supports BOTH Tailwind v3 and v4:
+### Tailwind CSS  Support
+**Critical**: This library supports  v4:
 - Primary CSS built with Tailwind v4 (`vera-ui.css`)
-- v3 compatibility via `scripts/build-v3-css.js` (`vera-ui-v3.css`)
-- Never assume v3-only or v4-only syntax - use compatible patterns
+- Does not include the tailwind.config.ts or tailwind.config.js file
 
 ### Build & Development Workflow
 ```bash
@@ -56,7 +55,7 @@ pnpm build:ui
 - **Vite**: Build tool with alias `@` → `./src`
 
 ## Documentation Patterns
-- **Fumadocs**: MDX-based docs with `_meta.json` structure
+- **Fumadocs**: MDX-based docs with `meta.json` structure
 - **Component previews**: Use `component-preview.tsx` wrapper
 - **Code examples**: Include both installation and usage patterns
 

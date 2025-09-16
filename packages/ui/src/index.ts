@@ -59,6 +59,7 @@ export * from './components/SidebarLayout'
 export * from './components/theme-toggle'
 export * from './components/DataTable'
 export * from './components/Pagination'
+// export * from './components/tabs-container' // Temporarily disabled due to nuqs dependency issues
 
 // Export utilities
 export * from './lib/utils'

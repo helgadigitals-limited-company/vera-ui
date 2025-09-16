@@ -1,60 +1,28 @@
----
-title: Separator
-description: Visual dividers for organizing and structuring content sections
----
+"use client";
 
-import { ComponentPreview } from "@/components/component-preview";
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import {
-  BasicSeparatorExample,
-  VerticalSeparatorExample,
-  NavigationMenuExample,
-  BreadcrumbExample,
-  CardSectionsExample,
-  ToolbarExample,
-  StatsDashboardExample,
-  ContentSectionsExample,
-} from "@/components/data-display-examples/separator-examples";
-
-# Separator
-
-A visual divider component that helps organize content into distinct sections. Built on Radix UI with proper accessibility support and flexible orientation options.
-
-## Features
-
-- **Dual orientation** - Horizontal and vertical separators
-- **Accessible** - Proper ARIA attributes and semantic meaning
-- **Flexible styling** - Easy to customize appearance
-- **Semantic HTML** - Uses appropriate separator role
-- **Responsive** - Adapts to container dimensions
-
-## Installation
-
-<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
-    <Tab value="pnpm" >
-      ```bash
-      pnpm add @helgadigitals/vera-ui
-      ```
-    </Tab>
-    <Tab value="npm" >
-      ```bash
-      npm install @helgadigitals/vera-ui
-      ```
-    </Tab>
-    <Tab value="yarn" >
-      ```bash
-      yarn add @helgadigitals/vera-ui
-      ```
-    </Tab>
-</Tabs>
-
-## Usage
-
-### Basic Separator
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
+import { Separator } from "@helgadigitals/vera-ui";
+import { Button } from "@helgadigitals/vera-ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@helgadigitals/vera-ui";
+import { Badge } from "@helgadigitals/vera-ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
+import { 
+  Calendar, 
+  MapPin, 
+  Users, 
+  Bold, 
+  Italic, 
+  Underline, 
+  AlignLeft, 
+  AlignCenter, 
+  AlignRight,
+  Undo,
+  Redo,
+  Save,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  Clock
+} from "lucide-react";
 
 export function BasicSeparatorExample() {
   return (
@@ -76,15 +44,7 @@ export function BasicSeparatorExample() {
       </div>
     </div>
   );
-}`}
->
-  <BasicSeparatorExample />
-</ComponentPreview>
-
-### Vertical Separator
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
+}
 
 export function VerticalSeparatorExample() {
   return (
@@ -96,16 +56,7 @@ export function VerticalSeparatorExample() {
       <div className="text-sm">Right content</div>
     </div>
   );
-}`}
->
-  <VerticalSeparatorExample />
-</ComponentPreview>
-
-### Navigation Menu
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
+}
 
 export function NavigationMenuExample() {
   return (
@@ -144,15 +95,7 @@ export function NavigationMenuExample() {
       </Button>
     </div>
   );
-}`}
->
-  <NavigationMenuExample />
-</ComponentPreview>
-
-### Breadcrumb Navigation
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
+}
 
 export function BreadcrumbExample() {
   const breadcrumbs = [
@@ -171,11 +114,11 @@ export function BreadcrumbExample() {
           )}
           <a 
             href={item.href}
-            className={\`hover:underline \${
+            className={`hover:underline ${
               index === breadcrumbs.length - 1 
                 ? 'text-foreground font-medium' 
                 : 'text-muted-foreground'
-            }\`}
+            }`}
           >
             {item.label}
           </a>
@@ -183,18 +126,7 @@ export function BreadcrumbExample() {
       ))}
     </nav>
   );
-}`}
->
-  <BreadcrumbExample />
-</ComponentPreview>
-
-### Card Sections
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
-import { Card, CardContent, CardHeader, CardTitle } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-import { Calendar, MapPin, Users } from "lucide-react";
+}
 
 export function CardSectionsExample() {
   return (
@@ -243,27 +175,7 @@ export function CardSectionsExample() {
       </CardContent>
     </Card>
   );
-}`}
->
-  <CardSectionsExample />
-</ComponentPreview>
-
-### Toolbar Separators
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { 
-  Bold, 
-  Italic, 
-  Underline, 
-  AlignLeft, 
-  AlignCenter, 
-  AlignRight,
-  Undo,
-  Redo,
-  Save
-} from "lucide-react";
+}
 
 export function ToolbarExample() {
   return (
@@ -306,16 +218,7 @@ export function ToolbarExample() {
       </Button>
     </div>
   );
-}`}
->
-  <ToolbarExample />
-</ComponentPreview>
-
-### Statistics Dashboard
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+}
 
 export function StatsDashboardExample() {
   const stats = [
@@ -365,13 +268,13 @@ export function StatsDashboardExample() {
             <p className="text-2xl font-bold">{stat.value}</p>
             <div className="flex items-center space-x-1">
               {getTrendIcon(stat.trend)}
-              <span className={\`text-xs \${
+              <span className={`text-xs ${
                 stat.trend === "up" 
                   ? "text-green-600" 
                   : stat.trend === "down" 
                   ? "text-red-600" 
                   : "text-gray-600"
-              }\`}>
+              }`}>
                 {stat.change}
               </span>
               <span className="text-xs text-muted-foreground">
@@ -383,18 +286,7 @@ export function StatsDashboardExample() {
       ))}
     </div>
   );
-}`}
->
-  <StatsDashboardExample />
-</ComponentPreview>
-
-### Content Sections
-
-<ComponentPreview
-  code={`import { Separator } from "@helgadigitals/vera-ui";
-import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-import { Calendar, Clock } from "lucide-react";
+}
 
 export function ContentSectionsExample() {
   return (
@@ -441,7 +333,7 @@ export function ContentSectionsExample() {
           scalable applications requires careful planning and adherence to best practices.
         </p>
         <p>
-          In this article, we'll explore key strategies for creating React applications 
+          In this article, we&apos;ll explore key strategies for creating React applications 
           that can grow with your team and user base while maintaining code quality 
           and performance.
         </p>
@@ -484,139 +376,4 @@ export function ContentSectionsExample() {
       </footer>
     </article>
   );
-}`}
->
-  <ContentSectionsExample />
-</ComponentPreview>
-
-## API Reference
-
-### Separator
-
-The main separator component for creating visual divisions.
-
-<TypeTable
-  type={{
-    orientation: {
-      type: '"horizontal" | "vertical"',
-      default: '"horizontal"',
-      description: 'Direction of the separator',
-    },
-    decorative: {
-      type: 'boolean',
-      default: 'true',
-      description: 'Whether separator is decorative or semantic',
-    },
-    className: {
-      type: 'string',
-      description: 'Additional CSS classes',
-    },
-  }}
-/>
-
-### Orientation Options
-
-#### Horizontal
-Default orientation for separating content vertically stacked.
-
-```tsx
-<Separator orientation="horizontal" />
-```
-
-#### Vertical
-For separating content arranged horizontally.
-
-```tsx
-<Separator orientation="vertical" />
-```
-
-### Decorative vs Semantic
-
-#### Decorative (default)
-Used for visual organization only, hidden from screen readers.
-
-```tsx
-<Separator decorative={true} />
-```
-
-#### Semantic
-Has semantic meaning and is announced by screen readers.
-
-```tsx
-<Separator decorative={false} />
-```
-
-## Use Cases
-
-### Content Organization
-- **Article sections** - Separate different parts of content
-- **Page sections** - Divide content into logical groups
-- **Form sections** - Group related form fields
-- **Comment threads** - Separate individual comments
-
-### Navigation
-- **Menu groups** - Organize navigation items
-- **Breadcrumbs** - Separate breadcrumb items
-- **Toolbar sections** - Group related tools and actions
-- **Tab content** - Divide tabbed content sections
-
-### Dashboard Layouts
-- **Statistics panels** - Separate key metrics
-- **Widget boundaries** - Define widget areas
-- **Chart sections** - Organize data visualizations
-- **Status indicators** - Group related status information
-
-### Data Display
-- **Table sections** - Separate table groups
-- **List categories** - Organize list items
-- **Card content** - Divide card sections
-- **Timeline events** - Separate timeline items
-
-### UI Components
-- **Modal sections** - Organize modal content
-- **Sidebar sections** - Group sidebar items
-- **Header sections** - Divide header content
-- **Footer sections** - Organize footer links
-
-## Accessibility
-
-The Separator component includes:
-
-- **ARIA role** - Proper `separator` role for semantic separators
-- **Screen reader support** - Appropriate handling for decorative vs semantic use
-- **Keyboard navigation** - Does not interfere with focus flow
-- **Visual clarity** - Sufficient contrast for visibility
-- **Semantic meaning** - Can convey structure to assistive technology
-
-## Best Practices
-
-### Visual Design
-- **Consistent spacing** - Maintain uniform spacing around separators
-- **Appropriate thickness** - Use thin lines that don't dominate content
-- **Color harmony** - Choose colors that complement your design system
-- **Context awareness** - Match separator style to surrounding content
-
-### Semantic Usage
-- **Meaningful divisions** - Use separators for logical content breaks
-- **Avoid overuse** - Don't separate every piece of content
-- **Hierarchy respect** - Separators should support content hierarchy
-- **Alternative methods** - Consider spacing, headings, or containers instead
-
-### Responsive Design
-- **Mobile adaptation** - Consider how separators work on small screens
-- **Orientation switching** - Vertical separators may become horizontal on mobile
-- **Touch interfaces** - Ensure separators don't interfere with touch targets
-- **Content reflow** - Separators should adapt to content changes
-
-### Performance
-- **Lightweight rendering** - Separators should have minimal performance impact
-- **CSS optimization** - Use efficient CSS for separator styling
-- **Avoid animations** - Keep separators static for performance
-- **Reusable patterns** - Create consistent separator patterns
-
-## Related Components
-
-- **[Card](/docs/components/data-display/card)** - Content containers that often use separators
-- **[Tabs](/docs/components/data-display/tabs)** - Tabbed interfaces with content separation
-- **[Breadcrumb](/docs/components/navigation/breadcrumb)** - Navigation that uses separators
-- **[DropdownMenu](/docs/components/navigation/dropdown-menu)** - Menus that group items with separators
+}
