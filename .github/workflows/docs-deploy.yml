@@ -144,7 +144,7 @@ jobs:
             # Install production deps
             cd "$NEW_RELEASE_DIR"
             if [ -f pnpm-lock.yaml ]; then
-              pnpm install --prod --frozen-lockfile
+              pnpm install --prod --no-frozen-lockfile
             else
               pnpm install --prod
             fi
