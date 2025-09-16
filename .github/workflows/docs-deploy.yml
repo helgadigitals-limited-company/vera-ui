@@ -5,11 +5,12 @@ on:
     branches: [main]
     paths:
       - "packages/docs/**"
-      - "packages/ui/src/**"
+      - "packages/ui/**"
   workflow_dispatch:
 
 env:
   DOCS_PATH: ./packages/docs
+  UI_PATH: ./packages/ui
   BUILD_TAR: vera-ui-docs-deploy.tar.gz
   PNPM_VERSION: "10"
 
@@ -38,13 +39,12 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: "latest"
-
       - name: Install dependencies (root workspace)
         run: pnpm install --frozen-lockfile
+
+      # 🔑 build UI first
+      - name: Build UI package
+        run: pnpm --filter @helgadigitals/vera-ui build
 
       - name: Build docs (SSR Next app)
         run: |
@@ -57,20 +57,12 @@ jobs:
         run: |
           set -e
           cd ${{ env.DOCS_PATH }}
-          # files to include in the deploy tarball:
-          #  - .next  (built app)
-          #  - package.json
-          #  - pnpm-lock.yaml (if present)
-          #  - public
-          #  - next.config.js (if present)
-          #  - node server startup script (if you use a custom start script)
           TAR_PATH="$(pwd)/../../${{ env.BUILD_TAR }}"
           rm -f "$TAR_PATH"
           tar -czf "$TAR_PATH" \
             .next \
             package.json \
             pnpm-lock.yaml 2>/dev/null || true
-          # include optional files if they exist
           if [ -d public ]; then tar -rzf "$TAR_PATH" public; fi
           if [ -f next.config.js ]; then tar -rzf "$TAR_PATH" next.config.js; fi
           echo "Created $TAR_PATH"
@@ -85,7 +77,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y rsync
-          # add server to known_hosts to avoid prompt
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
         shell: bash
@@ -110,7 +101,6 @@ jobs:
           TARGET_DIR: ${{ secrets.DEPLOY_DIR }}
           SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
         run: |
-          # remote commands: extract and flip symlink to new release, install prod deps and restart service
           ssh -p "${TARGET_PORT:-22}" "${TARGET_USER}@${TARGET_HOST}" bash -s <<'REMOTE_EOF'
             set -euo pipefail
 
@@ -127,37 +117,30 @@ jobs:
             echo "Extracting $ARCHIVE -> $NEW_RELEASE_DIR"
             tar -xzf "$ARCHIVE" -C "$NEW_RELEASE_DIR"
 
-            # Ensure corepack/pnpm exist and install production deps in the release dir
             if ! command -v pnpm >/dev/null 2>&1; then
-              echo "Enabling corepack + pnpm"
               corepack enable || true
               corepack prepare pnpm@latest --activate || true
             fi
 
             cd "$NEW_RELEASE_DIR"
-            # Install only production deps (make sure pnpm-lock.yaml is included in tarball for reproducible installs)
             if [ -f pnpm-lock.yaml ]; then
               pnpm install --prod --frozen-lockfile
             else
               pnpm install --prod
             fi
 
-            # Update current symlink (atomic)
             sudo ln -sfn "$NEW_RELEASE_DIR" "$APP_DIR/current"
             sudo chown -h "$USER":"$USER" "$APP_DIR/current" || true
 
-            # Clean up uploaded archive
             rm -f "$ARCHIVE"
 
-            # Restart systemd service (service should be configured beforehand)
             if [ -n "${SERVICE_NAME:-}" ]; then
               echo "Restarting service: ${SERVICE_NAME}"
               sudo systemctl restart "${SERVICE_NAME}"
               sudo systemctl status "${SERVICE_NAME}" --no-pager
             else
-              echo "No SERVICE_NAME provided; you may want to restart the process yourself."
+              echo "No SERVICE_NAME provided; restart manually if needed."
             fi
 
-                echo "Deployment finished. New release: $NEW_RELEASE_DIR"
-            REMOTE_EOF
-
+            echo "Deployment finished. New release: $NEW_RELEASE_DIR"
+          REMOTE_EOF
