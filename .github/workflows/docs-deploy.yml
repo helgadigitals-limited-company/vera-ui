@@ -104,6 +104,15 @@ jobs:
           ssh -p "${TARGET_PORT:-22}" "${TARGET_USER}@${TARGET_HOST}" bash -s <<'REMOTE_EOF'
             set -euo pipefail
 
+            # Add nvm's pnpm path manually
+            export PATH="/root/.nvm/versions/node/v22.12.0/bin:$PATH"
+
+            if ! command -v pnpm >/dev/null 2>&1; then
+              echo "❌ pnpm not found in PATH"
+              exit 1
+            fi
+            echo "✅ Found pnpm at: $(which pnpm)"
+
             APP_DIR="${TARGET_DIR:-/var/www/vera-ui-docs}"
             ARCHIVE="/tmp/vera-ui-docs-deploy.tar.gz"
             RELEASES_DIR="$APP_DIR/releases"
@@ -125,7 +134,6 @@ jobs:
               pnpm install --prod
             fi
 
-            # Point current -> new release
             sudo ln -sfn "$NEW_RELEASE_DIR" "$APP_DIR/current"
             sudo chown -h "$USER":"$USER" "$APP_DIR/current" || true
 
@@ -139,5 +147,5 @@ jobs:
               echo "No SERVICE_NAME provided; restart manually if needed."
             fi
 
-            echo "Deployment finished. New release: $NEW_RELEASE_DIR"
+            echo "✅ Deployment finished. New release: $NEW_RELEASE_DIR"
           REMOTE_EOF
