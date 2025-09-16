@@ -70,16 +70,27 @@ jobs:
         run: |
           set -e
           cd ${{ env.DOCS_PATH }}
+
           TAR_PATH="$(pwd)/../../${{ env.BUILD_TAR }}"
           rm -f "$TAR_PATH"
+
+          # Tar up build output, lockfile, and UI tarball
           tar -czf "$TAR_PATH" \
             .next \
             package.json \
-            ../../pnpm-lock.yaml
-          if [ -d public ]; then tar -rzf "$TAR_PATH" public; fi
-          if [ -f next.config.js ]; then tar -rzf "$TAR_PATH" next.config.js; fi
-          echo "Created $TAR_PATH"
+            ../../pnpm-lock.yaml \
+            helgadigitals-vera-ui-*.tgz
+
+          if [ -d public ]; then
+            tar -rzf "$TAR_PATH" public
+          fi
+          if [ -f next.config.js ]; then
+            tar -rzf "$TAR_PATH" next.config.js
+          fi
+
+          echo "✅ Created $TAR_PATH (with UI tarball included)"
         shell: bash
+
 
       # 🔑 Add SSH key
       - name: Add SSH key to agent
