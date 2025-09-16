@@ -42,18 +42,31 @@ jobs:
       - name: Install dependencies (root workspace)
         run: pnpm install --frozen-lockfile
 
-      # 🔑 build UI first
+      # 🔑 Build UI and pack it
       - name: Build UI package
-        run: pnpm --filter @helgadigitals/vera-ui build
+        run: |
+          cd ${{ env.UI_PATH }}
+          pnpm build
+          pnpm pack --pack-destination ../docs
 
-      - name: Build docs (SSR Next app)
+      # 🔑 Replace workspace dependency with local tarball
+      - name: Install UI tarball into docs
+        run: |
+          cd ${{ env.DOCS_PATH }}
+          UI_TGZ=$(ls *.tgz | head -n 1)
+          echo "Found UI package tarball: $UI_TGZ"
+          pnpm add ./$(basename "$UI_TGZ")
+
+      # 🔨 Build docs (SSR Next.js app)
+      - name: Build docs
         run: |
           cd ${{ env.DOCS_PATH }}
           pnpm build
         env:
           NODE_ENV: production
 
-      - name: Create deploy package (includes .next and runtime files)
+      # 📦 Create deploy package
+      - name: Create deploy package
         run: |
           set -e
           cd ${{ env.DOCS_PATH }}
@@ -62,26 +75,20 @@ jobs:
           tar -czf "$TAR_PATH" \
             .next \
             package.json \
-            pnpm-lock.yaml 2>/dev/null || true
+            pnpm-lock.yaml
           if [ -d public ]; then tar -rzf "$TAR_PATH" public; fi
           if [ -f next.config.js ]; then tar -rzf "$TAR_PATH" next.config.js; fi
           echo "Created $TAR_PATH"
         shell: bash
 
+      # 🔑 Add SSH key
       - name: Add SSH key to agent
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: Ensure rsync & ssh-known-hosts
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
-          mkdir -p ~/.ssh
-          ssh-keyscan -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
-        shell: bash
-
-      - name: Copy build artifact to VPS (rsync)
+      # 📨 Copy artifact to VPS
+      - name: Copy build artifact to VPS
         env:
           TARGET_USER: ${{ secrets.VPS_USER }}
           TARGET_HOST: ${{ secrets.VPS_HOST }}
@@ -93,6 +100,7 @@ jobs:
           rsync -avz -e "ssh -p ${TARGET_PORT:-22}" "$TAR" "${TARGET_USER}@${TARGET_HOST}:/tmp/${{ env.BUILD_TAR }}"
         shell: bash
 
+      # 🚀 Extract & restart app on VPS
       - name: Extract, install & restart app on VPS
         env:
           TARGET_USER: ${{ secrets.VPS_USER }}
@@ -103,15 +111,6 @@ jobs:
         run: |
           ssh -p "${TARGET_PORT:-22}" "${TARGET_USER}@${TARGET_HOST}" bash -s <<'REMOTE_EOF'
             set -euo pipefail
-
-            # Add nvm's pnpm path manually
-            export PATH="/root/.nvm/versions/node/v22.12.0/bin:$PATH"
-
-            if ! command -v pnpm >/dev/null 2>&1; then
-              echo "❌ pnpm not found in PATH"
-              exit 1
-            fi
-            echo "✅ Found pnpm at: $(which pnpm)"
 
             APP_DIR="${TARGET_DIR:-/var/www/vera-ui-docs}"
             ARCHIVE="/tmp/vera-ui-docs-deploy.tar.gz"
@@ -126,13 +125,8 @@ jobs:
             echo "Extracting $ARCHIVE -> $NEW_RELEASE_DIR"
             tar -xzf "$ARCHIVE" -C "$NEW_RELEASE_DIR"
 
-            # Install production deps
             cd "$NEW_RELEASE_DIR"
-            if [ -f pnpm-lock.yaml ]; then
-              pnpm install --prod --frozen-lockfile
-            else
-              pnpm install --prod
-            fi
+            pnpm install --prod --frozen-lockfile
 
             sudo ln -sfn "$NEW_RELEASE_DIR" "$APP_DIR/current"
             sudo chown -h "$USER":"$USER" "$APP_DIR/current" || true
@@ -147,5 +141,5 @@ jobs:
               echo "No SERVICE_NAME provided; restart manually if needed."
             fi
 
-            echo "✅ Deployment finished. New release: $NEW_RELEASE_DIR"
+            echo "Deployment finished. New release: $NEW_RELEASE_DIR"
           REMOTE_EOF
