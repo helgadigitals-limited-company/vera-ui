@@ -75,7 +75,7 @@ jobs:
           tar -czf "$TAR_PATH" \
             .next \
             package.json \
-            pnpm-lock.yaml
+            ../../pnpm-lock.yaml
           if [ -d public ]; then tar -rzf "$TAR_PATH" public; fi
           if [ -f next.config.js ]; then tar -rzf "$TAR_PATH" next.config.js; fi
           echo "Created $TAR_PATH"
