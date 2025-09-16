@@ -6,7 +6,7 @@ on:
     paths:
       - "packages/docs/**"
       - "packages/ui/**"
-  workflow_dispatch:
+  # workflow_dispatch:
 
 env:
   DOCS_PATH: ./packages/docs
