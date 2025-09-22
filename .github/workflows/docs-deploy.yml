@@ -155,7 +155,7 @@ jobs:
             # Install production deps
             cd "$NEW_RELEASE_DIR"
             if [ -f pnpm-lock.yaml ]; then
-              export NODE_OPTIONS="--max_old_space_size=256"
+              export NODE_OPTIONS="--max_old_space_size=4096"
               pnpm store prune
               pnpm install --prod --no-frozen-lockfile --no-optional --network-concurrency=1 --child-concurrency=1
             else
