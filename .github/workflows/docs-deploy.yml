@@ -157,7 +157,7 @@ jobs:
             if [ -f pnpm-lock.yaml ]; then
               export NODE_OPTIONS="--max_old_space_size=4096"
               pnpm store prune
-              pnpm install --prod --no-frozen-lockfile --no-optional --network-concurrency=1 --child-concurrency=1
+              pnpm install --prod --no-frozen-lockfile --network-concurrency=1 --child-concurrency=1
             else
               echo "No pnpm-lock.yaml found, skipping install"
               pnpm store prune
