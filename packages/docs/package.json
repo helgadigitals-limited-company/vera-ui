@@ -6,7 +6,7 @@
     "build": "next build",
     "dev": "next dev --turbo",
     "start": "next start",
-    "postinstall": "fumadocs-mdx",
+    "postinstall": "pnpm rebuild esbuild && fumadocs-mdx"
     "lint": "eslint"
   },
   "dependencies": {
