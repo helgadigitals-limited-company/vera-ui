@@ -24,6 +24,9 @@ COPY packages/docs/package.json packages/docs/
 COPY packages/docs/source.config.ts packages/docs/
 COPY packages/docs/vite-env.d.ts packages/docs/
 
+# Copy public directory with static assets
+COPY packages/docs/public packages/docs/public
+
 # Set environment for Next.js specific MDX generation
 ENV FUMADOCS_RUNTIME=next
 
@@ -33,18 +36,23 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --frozen-lo
 # Copy remaining source
 COPY . .
 
-# 🔑 Build UI package and pack it
+# Build UI package and pack it
 RUN cd packages/ui && \
     pnpm build && \
     pnpm pack --pack-destination ../docs
 
-# 🔑 Replace workspace dependency with local tarball in docs
+# Replace workspace dependency with local tarball in docs
 RUN cd packages/docs && \
     UI_TGZ=$(ls *.tgz | head -n 1) && \
     echo "Found UI package tarball: $UI_TGZ" && \
     pnpm add ./$(basename "$UI_TGZ")
 
-# 🔨 Build docs app
+# Regenerate fumadocs source files to avoid version compatibility issues
+RUN cd packages/docs && \
+    rm -rf .source .next && \
+    pnpm fumadocs-mdx
+
+# Build docs app
 RUN cd packages/docs && pnpm build
 
 # -------------------------------
@@ -55,12 +63,16 @@ ENV NODE_ENV=production
 WORKDIR /app
 RUN apk add --no-cache libc6-compat
 
-# Copy standalone Next.js server (already has prod node_modules)
+# Copy the entire standalone Next.js server structure
 COPY --from=build /app/packages/docs/.next/standalone ./
-COPY --from=build /app/packages/docs/.next/static ./.next/static
-COPY --from=build /app/packages/docs/public ./public
 
-# ✅ Also ship UI tarball into runtime for debugging / reinstallation
+# Copy static files to the correct location relative to the server
+COPY --from=build /app/packages/docs/.next/static ./packages/docs/.next/static
+
+# Copy public directory to the correct location relative to the server
+COPY --from=build /app/packages/docs/public ./packages/docs/public
+
+# Also ship UI tarball into runtime for debugging / reinstallation
 RUN mkdir -p ./vendor
 COPY --from=build /app/packages/docs/*.tgz ./vendor/
 
