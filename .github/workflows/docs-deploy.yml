@@ -1,4 +1,4 @@
-name: Deploy Vera UI Docs to VPS
+name: Deploy Vera UI Docs to VPS (Docker)
 
 on:
   push:
@@ -9,18 +9,18 @@ on:
   workflow_dispatch:
 
 env:
-  DOCS_PATH: ./packages/docs
-  UI_PATH: ./packages/ui
-  BUILD_TAR: vera-ui-docs-deploy.tar.gz
-  PNPM_VERSION: "10"
+  REGISTRY: ${{ secrets.DOCKER_REGISTRY || 'docker.io' }}
+  IMAGE_NAME: vera-ui-docs
+  CONTAINER_NAME: vera-ui-docs
+  CONTAINER_PORT: 3000
 
 jobs:
   build-and-deploy:
-    name: Build and deploy to VPS
+    name: Build Docker image and deploy to VPS
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
+      packages: write
 
     steps:
       - name: Checkout
@@ -28,154 +28,118 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      # Extract version from UI package.json
+      - name: Extract UI version
+        id: version
+        run: |
+          UI_VERSION=$(jq -r '.version' packages/ui/package.json)
+          echo "UI_VERSION=$UI_VERSION" >> $GITHUB_OUTPUT
+          echo "IMAGE_TAG=${UI_VERSION}-${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
+          echo "📦 UI Version: $UI_VERSION"
+          echo "🏷️  Image Tag: ${UI_VERSION}-${GITHUB_SHA:0:7}"
+
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login to Docker Registry
+      - name: Login to Docker Registry
+        uses: docker/login-action@v3
         with:
-          version: ${{ env.PNPM_VERSION }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # Build and push Docker image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
         with:
-          node-version: "20"
-          cache: "pnpm"
+          context: .
+          file: ./packages/docs/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME || github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.IMAGE_TAG }}
+            ${{ env.REGISTRY }}/${{ secrets.DOCKER_USERNAME || github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
 
-      - name: Install dependencies (root workspace)
-        run: pnpm install --frozen-lockfile
-
-      # 🔑 Build UI and pack it
-      - name: Build UI package
-        run: |
-          cd ${{ env.UI_PATH }}
-          pnpm build
-          pnpm pack --pack-destination ../docs
-
-      # 🔑 Replace workspace dependency with local tarball
-      - name: Install UI tarball into docs
-        run: |
-          cd ${{ env.DOCS_PATH }}
-          UI_TGZ=$(ls *.tgz | head -n 1)
-          echo "Found UI package tarball: $UI_TGZ"
-          pnpm add ./$(basename "$UI_TGZ")
-
-      # 🔨 Build docs (SSR Next.js app)
-      - name: Build docs
-        run: |
-          cd ${{ env.DOCS_PATH }}
-          pnpm build
-        env:
-          NODE_ENV: production
-
-      # 📦 Create deploy package
-      - name: Create deploy package
-        run: |
-          set -e
-          cd ${{ env.DOCS_PATH }}
-
-          TAR_PATH="$(pwd)/../../${{ env.BUILD_TAR }}"
-          rm -f "$TAR_PATH"
-
-          # Tar up build output, lockfile, and UI tarball
-          tar -czf "$TAR_PATH" \
-            .next \
-            package.json \
-            ../../pnpm-lock.yaml \
-            helgadigitals-vera-ui-*.tgz
-
-          if [ -d public ]; then
-            tar -rzf "$TAR_PATH" public
-          fi
-          if [ -f next.config.js ]; then
-            tar -rzf "$TAR_PATH" next.config.js
-          fi
-
-          echo "✅ Created $TAR_PATH (with UI tarball included)"
-        shell: bash
-
-
-      # 🔑 Add SSH key
+      # Add SSH key
       - name: Add SSH key to agent
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-        # 🛠 Add VPS host key
+      # Add VPS host key
       - name: Add VPS host to known_hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.VPS_PORT }}" -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
 
-
-      # 📨 Copy artifact to VPS
-      - name: Copy build artifact to VPS
+      # Deploy to VPS
+      - name: Deploy to VPS
         env:
           TARGET_USER: ${{ secrets.VPS_USER }}
           TARGET_HOST: ${{ secrets.VPS_HOST }}
           TARGET_PORT: ${{ secrets.VPS_PORT }}
-          TARGET_DIR: ${{ secrets.DEPLOY_DIR }}
+          IMAGE_TAG: ${{ steps.version.outputs.IMAGE_TAG }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME || github.repository_owner }}
         run: |
-          TAR="${{ github.workspace }}/${{ env.BUILD_TAR }}"
-          echo "Copying $TAR -> ${TARGET_USER}@${TARGET_HOST}:${TARGET_DIR}"
-          rsync -avz -e "ssh -p ${TARGET_PORT:-22}" "$TAR" "${TARGET_USER}@${TARGET_HOST}:/tmp/${{ env.BUILD_TAR }}"
-        shell: bash
-
-      # 🚀 Extract & restart app on VPS
-      - name: Extract, install & restart app on VPS
-        env:
-          TARGET_USER: ${{ secrets.VPS_USER }}
-          TARGET_HOST: ${{ secrets.VPS_HOST }}
-          TARGET_PORT: ${{ secrets.VPS_PORT }}
-          TARGET_DIR: ${{ secrets.DEPLOY_DIR }}
-          SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-        run: |
-          ssh -p "${TARGET_PORT:-22}" "${TARGET_USER}@${TARGET_HOST}" bash -s <<'REMOTE_EOF'
+          ssh -p "${TARGET_PORT:-22}" "${TARGET_USER}@${TARGET_HOST}" bash -s <<REMOTE_EOF
             set -euo pipefail
 
-            # Add nvm's pnpm path manually
-            export PATH="/root/.nvm/versions/node/v22.12.0/bin:$PATH"
+            # Variables
+            REGISTRY="${{ env.REGISTRY }}"
+            IMAGE_NAME="${{ env.IMAGE_NAME }}"
+            CONTAINER_NAME="${{ env.CONTAINER_NAME }}"
+            CONTAINER_PORT="${{ env.CONTAINER_PORT }}"
+            IMAGE_TAG="${IMAGE_TAG}"
+            DOCKER_USERNAME="${DOCKER_USERNAME}"
+            FULL_IMAGE="\$REGISTRY/\$DOCKER_USERNAME/\$IMAGE_NAME:\$IMAGE_TAG"
 
-            if ! command -v pnpm >/dev/null 2>&1; then
-              echo "❌ pnpm not found in PATH"
-              exit 1
-            fi
-            echo "✅ Found pnpm at: $(which pnpm)"
+            echo "🐳 Deploying Docker image: \$FULL_IMAGE"
 
-            APP_DIR="${TARGET_DIR:-/var/www/vera-ui-docs}"
-            ARCHIVE="/tmp/vera-ui-docs-deploy.tar.gz"
-            RELEASES_DIR="$APP_DIR/releases"
-            TIMESTAMP="$(date +%s)"
-            NEW_RELEASE_DIR="$RELEASES_DIR/$TIMESTAMP"
+            # Login to Docker registry on VPS
+            echo "${{ secrets.DOCKER_TOKEN }}" | docker login "\$REGISTRY" -u "\$DOCKER_USERNAME" --password-stdin
 
-            echo "Creating release dir: $NEW_RELEASE_DIR"
-            sudo mkdir -p "$NEW_RELEASE_DIR"
-            sudo chown "$USER":"$USER" "$NEW_RELEASE_DIR" || true
+            # Pull the new image
+            echo "📥 Pulling new image..."
+            docker pull "\$FULL_IMAGE"
 
-            echo "Extracting $ARCHIVE -> $NEW_RELEASE_DIR"
-            tar -xzf "$ARCHIVE" -C "$NEW_RELEASE_DIR"
+            # Stop and remove existing container
+            echo "🛑 Stopping existing container..."
+            docker stop "\$CONTAINER_NAME" 2>/dev/null || true
+            docker rm "\$CONTAINER_NAME" 2>/dev/null || true
 
-            # Install production deps
-            cd "$NEW_RELEASE_DIR"
-            if [ -f pnpm-lock.yaml ]; then
-              export NODE_OPTIONS="--max_old_space_size=4096"
-              pnpm store prune
-              pnpm install --prod --no-frozen-lockfile --network-concurrency=1 --child-concurrency=1
-            else
-              echo "No pnpm-lock.yaml found, skipping install"
-              pnpm store prune
-              pnpm install --prod
-            fi
+            # Run new container
+            echo "🚀 Starting new container..."
+            docker run -d \
+              --name "\$CONTAINER_NAME" \
+              --restart unless-stopped \
+              -p "\$CONTAINER_PORT:3000" \
+              "\$FULL_IMAGE"
 
-            sudo ln -sfn "$NEW_RELEASE_DIR" "$APP_DIR/current"
-            sudo chown -h "$USER":"$USER" "$APP_DIR/current" || true
+            # Wait for container to be healthy
+            echo "⏳ Waiting for container to be healthy..."
+            for i in {1..30}; do
+              if docker inspect --format='{{.State.Health.Status}}' "\$CONTAINER_NAME" 2>/dev/null | grep -q "healthy"; then
+                echo "✅ Container is healthy!"
+                break
+              elif [ \$i -eq 30 ]; then
+                echo "❌ Container failed to become healthy"
+                docker logs "\$CONTAINER_NAME" --tail 50
+                exit 1
+              else
+                echo "⏳ Attempt \$i/30: Container not healthy yet, waiting..."
+                sleep 10
+              fi
+            done
 
-            rm -f "$ARCHIVE"
+            # Clean up old images (keep last 3 versions)
+            echo "🧹 Cleaning up old images..."
+            docker images "\$REGISTRY/\$DOCKER_USERNAME/\$IMAGE_NAME" --format "table {{.Repository}}:{{.Tag}}\t{{.CreatedAt}}" | tail -n +2 | sort -k2 -r | tail -n +4 | awk '{print \$1}' | xargs -r docker rmi || true
 
-            if [ -n "${SERVICE_NAME:-}" ]; then
-              echo "Restarting service: ${SERVICE_NAME}"
-              sudo systemctl restart "${SERVICE_NAME}"
-              sudo systemctl status "${SERVICE_NAME}" --no-pager
-            else
-              echo "No SERVICE_NAME provided; restart manually if needed."
-            fi
-
-            echo "✅ Deployment finished. New release: $NEW_RELEASE_DIR"
+            echo "✅ Deployment completed successfully!"
+            echo "📊 Container status:"
+            docker ps --filter name="\$CONTAINER_NAME" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
           REMOTE_EOF
