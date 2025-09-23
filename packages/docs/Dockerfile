@@ -61,7 +61,7 @@ RUN cd packages/docs && pnpm build
 FROM node:22-alpine AS runner
 ENV NODE_ENV=production
 WORKDIR /app
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat curl
 
 # Copy the entire standalone Next.js server structure
 COPY --from=build /app/packages/docs/.next/standalone ./
@@ -77,4 +77,9 @@ RUN mkdir -p ./vendor
 COPY --from=build /app/packages/docs/*.tgz ./vendor/
 
 EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:3000/api/health || exit 1
+
 CMD ["node", "packages/docs/server.js"]
