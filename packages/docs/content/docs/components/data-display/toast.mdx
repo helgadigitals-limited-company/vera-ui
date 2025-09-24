@@ -1,0 +1,364 @@
+---
+title: Toast
+description: A succinct message that is displayed temporarily to provide feedback about an action result.
+---
+
+import { ComponentPreview, AutoExtractPreview } from '@/components/component-preview';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { 
+  BasicToastExample,
+  ToastTypesExample,
+  ToastWithDescriptionExample,
+  ToastWithActionsExample,
+  ToastWithCustomIconExample,
+  ToastPositionExample,
+  ToastDurationExample,
+  ToastPromiseExample,
+  ToastCustomExample
+} from '@/components/data-display-examples/toast-examples';
+
+# Toast
+
+A succinct message that is displayed temporarily to provide feedback about an action result. Built on top of [Sonner](https://sonner.emilkowal.ski/) for an excellent toast experience.
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Setup
+
+Add the `<Toaster />` component to your app's root layout:
+
+```tsx
+// app/layout.tsx or pages/_app.tsx
+import { Toaster } from "@helgadigitals/vera-ui";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+```
+
+## Usage
+
+Import the `toast` function and use it to display notifications:
+
+```tsx
+import { toast } from "@helgadigitals/vera-ui";
+
+function MyComponent() {
+  return (
+    <button onClick={() => toast("Hello World!")}>
+      Show Toast
+    </button>
+  );
+}
+```
+
+## Examples
+
+### Basic Toast
+
+Display a simple toast message.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="BasicToastExample"
+>
+  <BasicToastExample />
+</AutoExtractPreview>
+
+### Toast Types
+
+Use different toast types to convey the appropriate message tone.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastTypesExample"
+>
+    <ToastTypesExample />
+</AutoExtractPreview>
+
+
+### Toast with Description
+
+Add additional context with a description.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastWithDescriptionExample"
+>
+    <ToastWithDescriptionExample />
+</AutoExtractPreview>
+
+
+
+### Toast with Actions
+
+Include action buttons for user interaction.
+
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastWithActionsExample" >
+  <ToastWithActionsExample />
+</AutoExtractPreview>
+
+
+### Toast with Custom Icons
+
+Customize the toast appearance with custom icons.
+
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastWithCustomIconExample"
+>
+  <ToastWithCustomIconExample />
+</AutoExtractPreview>
+
+
+### Toast Positioning
+
+Control where toasts appear on the screen.
+
+<ComponentPreview>
+  <ToastPositionExample />
+</ComponentPreview>
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastPositionExample"
+>
+  <ToastPositionExample />
+</AutoExtractPreview>
+
+
+
+### Toast Duration
+
+Control how long toasts remain visible.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastDurationExample">  
+  <ToastDurationExample />
+</AutoExtractPreview>
+
+
+
+### Promise Toasts
+
+Show loading states and handle async operations.
+
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastPromiseExample">
+  <ToastPromiseExample />
+</AutoExtractPreview>
+
+
+### Custom Toast
+
+Create completely custom toast content.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/toast-examples.tsx" 
+  functionName="ToastCustomExample"
+>
+  <ToastCustomExample />
+</AutoExtractPreview>
+
+
+
+## API Reference
+
+### toast(message, options?)
+
+Display a basic toast.
+
+- `message` (string): The main toast message
+- `options` (ToastOptions): Configuration options
+
+### toast.success(message, options?)
+
+Display a success toast with checkmark icon.
+
+### toast.error(message, options?)
+
+Display an error toast with X icon.
+
+### toast.warning(message, options?)
+
+Display a warning toast with warning icon.
+
+### toast.info(message, options?)
+
+Display an info toast with info icon.
+
+### toast.promise(promise, options)
+
+Handle promise states with loading, success, and error toasts.
+
+### toast.custom(content)
+
+Display a completely custom toast.
+
+### toast.dismiss(id?)
+
+Dismiss a specific toast by ID, or all toasts if no ID provided.
+
+## ToastOptions
+
+<TypeTable
+  type={{
+    description: {
+      description: 'Additional description text',
+      type: 'string',
+    },
+    duration: {
+      description: 'Duration in milliseconds',
+      type: 'number',
+      default: 4000,
+    },
+    position: {
+      description: 'Toast position on screen',
+      type: '"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"',
+      default: '"bottom-right"',
+    },
+    action: {
+      description: 'Action button configuration with label and onClick handler',
+      type: '{ label: string; onClick: () => void }',
+    },
+    icon: {
+      description: 'Custom icon element to display in the toast',
+      type: 'ReactNode',
+    },
+    dismissible: {
+      description: 'Whether toast can be manually dismissed',
+      type: 'boolean',
+      default: true,
+    },
+    className: {
+      description: 'Additional CSS classes for styling',
+      type: 'string',
+    },
+  }}
+/>
+
+## Toaster Props
+
+<TypeTable
+  type={{
+    position: {
+      description: 'Default position for all toasts',
+      type: '"top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right"',
+      default: '"bottom-right"',
+    },
+    theme: {
+      description: 'Theme mode for the toaster',
+      type: '"light" | "dark" | "system"',
+      default: '"system"',
+    },
+    richColors: {
+      description: 'Use rich colors for different toast types',
+      type: 'boolean',
+      default: false,
+    },
+    expand: {
+      description: 'Allow toasts to expand on hover for better readability',
+      type: 'boolean',
+      default: true,
+    },
+    duration: {
+      description: 'Default duration for all toasts in milliseconds',
+      type: 'number',
+      default: 4000,
+    },
+    gap: {
+      description: 'Gap between toast notifications in pixels',
+      type: 'number',
+      default: 14,
+    },
+    visibleToasts: {
+      description: 'Maximum number of toasts visible at once',
+      type: 'number',
+      default: 3,
+    },
+  }}
+/>
+
+## Accessibility
+
+- Toasts are announced to screen readers using ARIA live regions
+- Keyboard navigation support for interactive elements
+- Automatic dismissal respects user preferences for reduced motion
+- High contrast mode compatibility
+
+## Best Practices
+
+### When to Use
+- **User feedback** - Confirm successful actions
+- **Error notifications** - Alert users to problems
+- **System status** - Inform about background processes
+- **Temporary information** - Show brief, contextual messages
+
+### When Not to Use
+- **Critical errors** - Use modals or alerts instead
+- **Long content** - Keep messages concise
+- **Primary navigation** - Don't rely on toasts for essential flow
+- **Persistent information** - Use permanent UI elements
+
+### Content Guidelines
+- **Be concise** - Keep messages short and scannable
+- **Be specific** - Clearly state what happened
+- **Be actionable** - Include relevant actions when appropriate
+- **Use appropriate tone** - Match the message type (success, error, etc.)
+
+## Theming
+
+The toast component automatically adapts to your app's theme using CSS variables:
+
+```css
+:root {
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --border: 214.3 31.8% 91.4%;
+}
+
+.dark {
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+}
+```
+
+## Related Components
+
+- [Alert](/docs/components/data-display/alert) - For more prominent messaging
+- [Badge](/docs/components/data-display/badge) - For status indicators
+- [Progress](/docs/components/data-display/progress) - For operation progress
