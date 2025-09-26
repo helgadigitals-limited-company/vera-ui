@@ -6,7 +6,14 @@ description: A checkbox control that allows users to select one or more options 
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Checkbox } from "@helgadigitals/vera-ui"
+import { ComponentPreview, AutoExtractPreview } from '@/components/component-preview';
+import { 
+  CheckboxExample,
+  BasicCheckboxExample,
+  DisabledExample,
+  CheckboxFormExample,
+  CheckboxIndeterminateExample
+} from '@/components/form-components-examples/checkbox-examples';
 
 # Checkbox
 
@@ -34,197 +41,50 @@ A checkbox is a form control that allows users to select zero or more options fr
 
 ## Usage
 
-<ComponentPreview
-  description="Basic checkbox with label"
-  code={`import { Checkbox } from "@helgadigitals/vera-ui"
-
-export default function Example() {
-  return (
-    <div className="flex items-center space-x-2">
-      <Checkbox id="terms" />
-      <label htmlFor="terms">Accept terms and conditions</label>
-    </div>
-  )
-}`}
+<AutoExtractPreview 
+  source="components/form-components-examples/checkbox-examples.tsx" 
+  functionName="CheckboxExample"
 >
-  <div className="flex items-center space-x-2">
-    <Checkbox id="terms" />
-    <label htmlFor="terms">Accept terms and conditions</label>
-  </div>
-</ComponentPreview>
+  <CheckboxExample/>
+</AutoExtractPreview>
 
 ## Examples
 
 ### Basic Checkbox
 
-<ComponentPreview
-  description="A simple checkbox example"
-  code={`import { Checkbox } from "@helgadigitals/vera-ui"
-
-export default function BasicExample() {
-  return (
-    <div className="flex items-center space-x-2">
-      <Checkbox id="example" />
-      <label htmlFor="example">Example checkbox</label>
-    </div>
-  )
-}`}
+<AutoExtractPreview 
+  source="components/form-components-examples/checkbox-examples.tsx" 
+  functionName="BasicCheckboxExample"
 >
-  <div className="flex items-center space-x-2">
-    <Checkbox id="example" />
-    <label htmlFor="example">Example checkbox</label>
-  </div>
-</ComponentPreview>
+  <BasicCheckboxExample/>
+</AutoExtractPreview>
 
 ### Disabled State
 
-<ComponentPreview
-  description="Checkboxes in disabled state"
-  code={`import { Checkbox } from "@helgadigitals/vera-ui"
-
-export default function DisabledExample() {
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center space-x-2">
-        <Checkbox id="disabled-unchecked" disabled />
-        <label htmlFor="disabled-unchecked">Disabled unchecked</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="disabled-checked" disabled checked />
-        <label htmlFor="disabled-checked">Disabled checked</label>
-      </div>
-    </div>
-  )
-}`}
+<AutoExtractPreview 
+  source="components/form-components-examples/checkbox-examples.tsx" 
+  functionName="DisabledExample"
 >
-  <div className="space-y-2">
-    <div className="flex items-center space-x-2">
-      <Checkbox id="disabled-unchecked" disabled />
-      <label htmlFor="disabled-unchecked">Disabled unchecked</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <Checkbox id="disabled-checked" disabled defaultChecked />
-      <label htmlFor="disabled-checked">Disabled checked</label>
-    </div>
-  </div>
-</ComponentPreview>
+  <DisabledExample/>
+</AutoExtractPreview>
 
 ### With Form Integration
 
-<ComponentPreview
-  description="Checkbox integrated with React Hook Form"
-  code={`import { useForm, Controller } from "react-hook-form"
-import { Checkbox, Button } from "@helgadigitals/vera-ui"
-
-export default function FormExample() {
-  const { control, handleSubmit } = useForm()
-
-  const onSubmit = (data) => {
-    console.log(data)
-  }
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Controller
-        name="newsletter"
-        control={control}
-        render={({ field }) => (
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="newsletter"
-              checked={field.value}
-              onCheckedChange={field.onChange}
-            />
-            <label htmlFor="newsletter">Subscribe to newsletter</label>
-          </div>
-        )}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
-  )
-}`}
+<AutoExtractPreview 
+  source="components/form-components-examples/checkbox-examples.tsx" 
+  functionName="CheckboxFormExample"
 >
-  <div className="flex items-center space-x-2">
-    <Checkbox id="newsletter" />
-    <label htmlFor="newsletter">Subscribe to newsletter</label>
-  </div>
-</ComponentPreview>
+  <CheckboxFormExample/>
+</AutoExtractPreview>
 
 ### Indeterminate State
 
-<ComponentPreview
-  description="Checkbox with indeterminate state for partial selection"
-  code={`import { useState } from "react"
-import { Checkbox } from "@helgadigitals/vera-ui"
-
-export default function IndeterminateExample() {
-  const [items, setItems] = useState([
-    { id: 1, checked: false, label: "Item 1" },
-    { id: 2, checked: true, label: "Item 2" },
-    { id: 3, checked: false, label: "Item 3" },
-  ])
-
-  const allChecked = items.every((item) => item.checked)
-  const someChecked = items.some((item) => item.checked)
-
-  const handleSelectAll = (checked) => {
-    setItems(items.map((item) => ({ ...item, checked })))
-  }
-
-  const handleItemChange = (id, checked) => {
-    setItems(items.map((item) => 
-      item.id === id ? { ...item, checked } : item
-    ))
-  }
-
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="select-all"
-          checked={allChecked}
-          indeterminate={someChecked && !allChecked}
-          onCheckedChange={handleSelectAll}
-        />
-        <label htmlFor="select-all">Select all</label>
-      </div>
-      <div className="ml-6 space-y-2">
-        {items.map((item) => (
-          <div key={item.id} className="flex items-center space-x-2">
-            <Checkbox
-              id={\`item-\${item.id}\`}
-              checked={item.checked}
-              onCheckedChange={(checked) => handleItemChange(item.id, checked)}
-            />
-            <label htmlFor={\`item-\${item.id}\`}>{item.label}</label>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}`}
+<AutoExtractPreview 
+  source="components/form-components-examples/checkbox-examples.tsx" 
+  functionName="CheckboxIndeterminateExample"
 >
-  <div className="space-y-2">
-    <div className="flex items-center space-x-2">
-      <Checkbox id="select-all" />
-      <label htmlFor="select-all">Select all</label>
-    </div>
-    <div className="ml-6 space-y-2">
-      <div className="flex items-center space-x-2">
-        <Checkbox id="item-1" />
-        <label htmlFor="item-1">Item 1</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="item-2" defaultChecked />
-        <label htmlFor="item-2">Item 2</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="item-3" />
-        <label htmlFor="item-3">Item 3</label>
-      </div>
-    </div>
-  </div>
-</ComponentPreview>
+  <CheckboxIndeterminateExample/>
+</AutoExtractPreview>
 
 ## API Reference
 

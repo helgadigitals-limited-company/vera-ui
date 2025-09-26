@@ -53,29 +53,51 @@ export function extractFunctionFromFile(
 
 function extractImports(lines: string[]): string {
   const imports: string[] = [];
+  let inMultiLineImport = false;
   
   for (const line of lines) {
     const trimmed = line.trim();
     
-    // Skip "use client" directive
-    if (trimmed === '"use client";' || trimmed === "'use client';") {
+    // Skip "use client" directive (with or without semicolon)
+    if (trimmed === '"use client"' || trimmed === '"use client";' || trimmed === "'use client'" || trimmed === "'use client';") {
       continue;
     }
     
-    // Collect import statements
+    // Check if we're starting a new import statement
     if (trimmed.startsWith('import ')) {
       imports.push(line);
-    } else if (trimmed && !trimmed.startsWith('//') && !trimmed.startsWith('/*')) {
-      // Stop at first non-import, non-comment line
-      break;
+      // Check if this is a multi-line import (contains opening brace but doesn't end with quote and semicolon)
+      if (trimmed.includes('{') && !trimmed.match(/}.*from.*['"].*['"];?\s*$/)) {
+        inMultiLineImport = true;
+      }
+      continue;
     }
+    
+    // If we're inside a multi-line import, continue collecting lines
+    if (inMultiLineImport) {
+      imports.push(line);
+      // Check if this line ends the multi-line import (ends with } from "..." pattern)
+      if (trimmed.match(/}.*from.*['"].*['"];?\s*$/)) {
+        inMultiLineImport = false;
+      }
+      continue;
+    }
+    
+    // Skip empty lines and comments at the top of the file
+    if (trimmed === '' || trimmed.startsWith('//') || trimmed.startsWith('/*')) {
+      continue;
+    }
+    
+    // Stop at first non-import, non-comment, non-empty line
+    break;
   }
   
   return imports.join('\n');
 }
 
 function extractFunction(lines: string[], functionName: string): string | null {
-  const startPattern = new RegExp(`^export\\s+function\\s+${functionName}\\s*\\(`);
+  // Match both regular and default exports
+  const startPattern = new RegExp(`^export\\s+(default\\s+)?function\\s+${functionName}\\s*\\(`);
   let startIndex = -1;
   
   // Find the function start
@@ -116,9 +138,9 @@ function extractFunction(lines: string[], functionName: string): string | null {
   // Extract the function and clean up
   const functionLines = lines.slice(startIndex, endIndex + 1);
   
-  // Remove 'export' from the function declaration
+  // Remove 'export' and 'default' from the function declaration
   if (functionLines[0]) {
-    functionLines[0] = functionLines[0].replace(/^export\s+/, '');
+    functionLines[0] = functionLines[0].replace(/^export\s+(default\s+)?/, '');
   }
   
   return functionLines.join('\n');

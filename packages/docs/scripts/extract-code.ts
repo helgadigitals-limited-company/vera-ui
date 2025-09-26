@@ -127,6 +127,20 @@ async function main() {
   await extractor.autoExtractFromDirectory('components/data-display-examples');
   await extractor.autoExtractFromDirectory('components/form-components-examples');
   
+  // Use a more inclusive pattern for form components that might not end with "Example"
+  await extractor.autoExtractFromDirectory(
+    'components/form-components-examples', 
+    /export function (\w+)/g
+  );
+  
+  // Manually register form functions that don't follow the naming pattern
+  extractor.registerComponent('components/form-components-examples/form-examples.tsx', 'FormExample');
+  extractor.registerComponent('components/form-components-examples/form-examples.tsx', 'RegistrationForm');
+  
+  // Manually register button functions that don't follow the naming pattern
+  extractor.registerComponent('components/form-components-examples/button-examples.tsx', 'ButtonUsageExample');
+  
+  
   // Extract all and save
   await extractor.extractAll();
 }
