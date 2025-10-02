@@ -198,9 +198,7 @@ Vera UI uses CSS variables for theming, making it easy to customize:
 
 ## 📚 Documentation
 
-- **[Documentation Site](https://vera-ui-docs.example.com)** - Complete component documentation
-- **[Storybook](https://vera-ui-storybook.example.com)** - Interactive component examples
-- **[Examples](https://github.com/helgadigitals-limited-company/vera-ui/tree/main/examples)** - Real-world usage examples
+- **[Documentation Site](https://veraui.helgadigitals.com/)** - Complete component documentation
 
 ## 🔧 TypeScript Support
 
@@ -256,7 +254,7 @@ pnpm dev:ui
 
 - [GitHub Repository](https://github.com/helgadigitals-limited-company/vera-ui)
 - [NPM Package](https://www.npmjs.com/package/@helgadigitals/vera-ui)
-- [Documentation](https://vera-ui-docs.example.com)
+- [Documentation](https://veraui.helgadigitals.com/)
 - [Issue Tracker](https://github.com/helgadigitals-limited-company/vera-ui/issues)
 
 ## 📄 License
