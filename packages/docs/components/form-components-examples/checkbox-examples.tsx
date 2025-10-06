@@ -44,7 +44,7 @@ export function DisabledExample() {
 export function CheckboxFormExample() {
   const { control, handleSubmit } = useForm()
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: Record<string, unknown>) => {
     console.log(data)
   }
 
@@ -78,37 +78,39 @@ export function CheckboxIndeterminateExample() {
   ])
 
   const allChecked = items.every((item) => item.checked)
-  const someChecked = items.some((item) => item.checked)
+  const someChecked = items.some((item) => item.checked) && !allChecked
 
-  const handleSelectAll = (checked: any) => {
-    setItems(items.map((item) => ({ ...item, checked })))
+  const handleSelectAll = (checked: boolean | string) => {
+    setItems(items.map((item) => ({ ...item, checked: checked === true })))
   }
 
-  const handleItemChange = (id: any, checked: any) => {
+  const handleItemChange = (id: number, checked: boolean | string) => {
     setItems(items.map((item) => 
-      item.id === id ? { ...item, checked } : item
+      item.id === id ? { ...item, checked: checked === true } : item
     ))
   }
 
   return (
     <div className="space-y-2">
     <div className="flex items-center space-x-2">
-      <Checkbox id="select-all" />
+      <Checkbox 
+        id="select-all"
+        checked={allChecked}
+        onCheckedChange={handleSelectAll}
+      />
       <label htmlFor="select-all">Select all</label>
     </div>
     <div className="ml-6 space-y-2">
-      <div className="flex items-center space-x-2">
-        <Checkbox id="item-1" />
-        <label htmlFor="item-1">Item 1</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="item-2" defaultChecked />
-        <label htmlFor="item-2">Item 2</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox id="item-3" />
-        <label htmlFor="item-3">Item 3</label>
-      </div>
+      {items.map((item) => (
+        <div key={item.id} className="flex items-center space-x-2">
+          <Checkbox 
+            id={`item-${item.id}`}
+            checked={item.checked}
+            onCheckedChange={(checked) => handleItemChange(item.id, checked)}
+          />
+          <label htmlFor={`item-${item.id}`}>{item.label}</label>
+        </div>
+      ))}
     </div>
   </div>
   )
