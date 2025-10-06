@@ -3,7 +3,7 @@ title: Avatar
 description: User profile images with intelligent fallback system for consistent identity display
 ---
 
-import { ComponentPreview } from "@/components/component-preview";
+import { ComponentPreview, AutoExtractPreview } from "@/components/component-preview";
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import {
@@ -58,342 +58,216 @@ A flexible avatar component for displaying user profile images with automatic fa
 
 ### Basic Avatar
 
-<ComponentPreview
-  description="Basic avatar examples with images and automatic fallbacks"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-
-export function BasicAvatarExample() {
-  return (
-    <div className="flex space-x-4">
-      <Avatar>
-        <AvatarFallback>JD</AvatarFallback>
-      </Avatar>
-      
-      <Avatar>
-        <AvatarFallback>JS</AvatarFallback>
-      </Avatar>
-      
-      <Avatar>
-        <AvatarFallback>BJ</AvatarFallback>
-      </Avatar>
-    </div>
-  );
-}`}
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="BasicAvatarExample"
 >
   <BasicAvatarExample />
-</ComponentPreview>
+</AutoExtractPreview>
 
 ### Avatar with Image
 
-<ComponentPreview
-  description="Avatar with image source and automatic fallback handling"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-
-export function AvatarWithImage() {
-  return (
-    <div className="flex space-x-4">
-      <Avatar>
-        <AvatarImage 
-          src="https://ui.shadcn.com/avatars/shadcn.png" 
-          alt="User avatar"
-        />
-        <AvatarFallback>SN</AvatarFallback>
-      </Avatar>
-      
-      <Avatar>
-        <AvatarImage 
-          src="https://images.unsplash.com/photo-1756312148347-611b60723c7a?q=80&w=1036&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-          alt="Broken image"
-        />
-        <AvatarFallback>FB</AvatarFallback>
-      </Avatar>
-    </div>
-  );
-}`}
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="AvatarWithImage"
 >
   <AvatarWithImage />
-</ComponentPreview>
+</AutoExtractPreview>
 
 ### Avatar Sizes
 
-<ComponentPreview
-  description="Avatar components in different sizes from small to large"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-
-export function AvatarSizesExample() {
-  return (
-    <div className="flex items-center space-x-4">
-      <Avatar className="h-6 w-6">
-        <AvatarFallback className="text-xs">U</AvatarFallback>
-      </Avatar>
-      
-      <Avatar className="h-8 w-8">
-        <AvatarFallback className="text-sm">U</AvatarFallback>
-      </Avatar>
-      
-      <Avatar className="h-10 w-10">
-        <AvatarFallback>U</AvatarFallback>
-      </Avatar>
-      
-      <Avatar className="h-12 w-12">
-        <AvatarFallback className="text-lg">U</AvatarFallback>
-      </Avatar>
-      
-      <Avatar className="h-16 w-16">
-        <AvatarFallback className="text-xl">U</AvatarFallback>
-      </Avatar>
-    </div>
-  );
-}`}
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="AvatarSizesExample"
 >
   <AvatarSizesExample />
-</ComponentPreview>
+</AutoExtractPreview>
 
 ### Fallback Examples
 
-<ComponentPreview
-  description="Avatar fallback behaviors including broken images, custom icons, and styling"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-import { User } from "lucide-react";
-
-export function AvatarFallbackExample() {
-  return (
-    <div className="flex space-x-4">
-      {/* Image loads successfully */}
-      <Avatar>
-        <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Success" alt="@user" />
-        <AvatarFallback>JD</AvatarFallback>
-      </Avatar>
-      
-      {/* Invalid image URL - shows fallback */}
-      <Avatar>
-        <AvatarImage src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Invalid" />
-        <AvatarFallback>BK</AvatarFallback>
-      </Avatar>
-      
-      {/* No image - shows fallback */}
-      <Avatar>
-        <AvatarFallback>JS</AvatarFallback>
-      </Avatar>
-      
-      {/* Custom fallback with icon */}
-      <Avatar>
-        <AvatarFallback>
-          <User className="h-4 w-4" />
-        </AvatarFallback>
-      </Avatar>
-      
-      {/* Custom colored fallback */}
-      <Avatar>
-        <AvatarFallback className="bg-blue-500 text-white">
-          AB
-        </AvatarFallback>
-      </Avatar>
-    </div>
-  );
-}`}
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="AvatarFallbackExample"
 >
   <AvatarFallbackExample />
-</ComponentPreview>
+</AutoExtractPreview>
 
 ### User List with Avatars
 
-<ComponentPreview
-  description="User list displaying avatars with status indicators, fallback behavior, and role badges"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-
-export function UserListExample() {
-  const users = [
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      status: "online",
-      role: "Admin"
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      status: "offline",
-      role: "Editor"
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      status: "away",
-      role: "User"
-    },
-  ];
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      case 'offline': return 'bg-gray-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
-  };
-
-  return (
-    <div className="space-y-4">
-      {users.map((user) => (
-        <div key={user.id} className="flex items-center space-x-4 p-4 border rounded-lg">
-          <div className="relative">
-            <Avatar>
-              <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-            </Avatar>
-            <div className={\`absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-white \${getStatusColor(user.status)}\`} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">
-              {user.name}
-            </p>
-            <p className="text-sm text-gray-500 truncate">
-              {user.email}
-            </p>
-          </div>
-          <Badge variant={user.role === 'Admin' ? 'default' : 'secondary'}>
-            {user.role}
-          </Badge>
-        </div>
-      ))}
-    </div>
-  );
-}`}>
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="UserListExample"
+>
   <UserListExample />
-</ComponentPreview>
+</AutoExtractPreview>
 
 ### Avatar Group
 
-<ComponentPreview
-  description="Grouped avatars in overlapping and spaced layouts, perfect for team displays"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-
-export function AvatarGroupExample() {
-  const users = [
-    { name: "John Doe", avatar: "https://github.com/johndoe.png" },
-    { name: "Jane Smith", avatar: "https://github.com/janesmith.png" },
-    { name: "Bob Johnson", avatar: "https://github.com/bobjohnson.png" },
-    { name: "Alice Williams", avatar: "https://github.com/alicewilliams.png" },
-    { name: "Charlie Brown", avatar: "https://github.com/charliebrown.png" },
-  ];
-
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
-  };
-
-  const displayUsers = users.slice(0, 4);
-  const remainingCount = Math.max(0, users.length - 4);
-
-  return (
-    <div className="space-y-6">
-      <div>
-        <h4 className="text-sm font-medium mb-2">Overlapping Avatars</h4>
-        <div className="flex -space-x-2">
-          {displayUsers.map((user, index) => (
-            <Avatar key={index} className="border-2 border-white">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-            </Avatar>
-          ))}
-          {remainingCount > 0 && (
-            <Avatar className="border-2 border-white">
-              <AvatarFallback className="bg-muted">
-                +{remainingCount}
-              </AvatarFallback>
-            </Avatar>
-          )}
-        </div>
-      </div>
-
-      <div>
-        <h4 className="text-sm font-medium mb-2">Spaced Avatars</h4>
-        <div className="flex space-x-2">
-          {displayUsers.map((user, index) => (
-            <Avatar key={index} className="h-8 w-8">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback className="text-xs">{getInitials(user.name)}</AvatarFallback>
-            </Avatar>
-          ))}
-          {remainingCount > 0 && (
-            <div className="flex items-center justify-center h-8 w-8 rounded-full bg-muted text-xs font-medium">
-              +{remainingCount}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}`}
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="AvatarGroupExample"
 >
   <AvatarGroupExample />
-</ComponentPreview>
+</AutoExtractPreview>
 
 ### Profile Header with Avatar
 
-<ComponentPreview
-  description="Complete profile header layout with avatar, user information, action buttons, and skill badges"
-  code={`import { Avatar, AvatarFallback, AvatarImage } from "@helgadigitals/vera-ui";
-import { Button } from "@helgadigitals/vera-ui";
-import { Badge } from "@helgadigitals/vera-ui";
-import { MapPin, Calendar, Mail } from "lucide-react";
-
-export function ProfileHeaderExample() {
-  return (
-    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm border p-6">
-      <div className="flex flex-col sm:flex-row sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-        <Avatar className="h-24 w-24 mx-auto sm:mx-0">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback className="text-2xl">SH</AvatarFallback>
-        </Avatar>
-        
-        <div className="flex-1 text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Sarah Johnson</h1>
-              <p className="text-gray-600">Senior Frontend Developer</p>
-            </div>
-            <div className="mt-3 sm:mt-0 flex justify-center sm:justify-end space-x-2">
-              <Button variant="outline" size="sm">Message</Button>
-              <Button size="sm">Follow</Button>
-            </div>
-          </div>
-          
-          <div className="mt-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-600">
-            <div className="flex items-center justify-center sm:justify-start">
-              <MapPin className="h-4 w-4 mr-1" />
-              San Francisco, CA
-            </div>
-            <div className="flex items-center justify-center sm:justify-start">
-              <Calendar className="h-4 w-4 mr-1" />
-              Joined March 2020
-            </div>
-            <div className="flex items-center justify-center sm:justify-start">
-              <Mail className="h-4 w-4 mr-1" />
-              sarah@example.com
-            </div>
-          </div>
-          
-          <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
-            <Badge variant="secondary">React</Badge>
-            <Badge variant="secondary">TypeScript</Badge>
-            <Badge variant="secondary">Node.js</Badge>
-            <Badge variant="secondary">GraphQL</Badge>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}`}>
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="ProfileHeaderExample"
+>
   <ProfileHeaderExample />
-</ComponentPreview>
+</AutoExtractPreview>
+
+## API Reference
+
+### Avatar
+
+The root avatar container component.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Avatar image and fallback',
+    },
+  }}
+/>
+
+### AvatarImage
+
+The avatar image component with automatic error handling.
+
+<TypeTable
+  type={{
+    src: {
+      type: 'string',
+      description: 'Image source URL',
+    },
+    alt: {
+      type: 'string',
+      description: 'Alternative text for accessibility',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+**Features:**
+- Automatic fallback when image fails to load
+- Proper aspect ratio maintenance
+- Accessibility attributes
+
+### AvatarFallback
+
+The fallback content shown when image is unavailable.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Fallback content (usually initials)',
+    },
+  }}
+/>
+
+**Features:**
+- Only displays when image is unavailable
+- Supports text, icons, or custom content
+- Customizable styling and colors
+
+## Use Cases
+
+### User Identification
+- **Profile headers** - User profile pages and settings
+- **Comment sections** - Associate comments with users
+- **Team members** - Display team member information
+- **Author attribution** - Article and content authors
+
+### Navigation & Menus
+- **User menus** - Dropdown menus with user avatar
+- **Header navigation** - Current user identification
+- **Sidebar profiles** - User info in navigation areas
+- **Account switchers** - Multiple account selection
+
+### Social Features
+- **Friend lists** - Social connections and contacts
+- **Activity feeds** - User actions and posts
+- **Chat interfaces** - Message sender identification
+- **Collaboration tools** - Team member presence
+
+### Content Attribution
+- **Blog authors** - Article writer identification
+- **Review authors** - Product and service reviewers
+- **Forum posts** - Discussion participant identification
+- **Project contributors** - Code and content contributors
+
+### Administrative Interfaces
+- **User management** - Admin panels and user lists
+- **Audit logs** - Action tracking with user identification
+- **Permission management** - Role and access control
+- **Support tickets** - Customer service interfaces
+
+## Accessibility
+
+The Avatar component includes:
+
+- **Alt text support** - Proper image descriptions for screen readers
+- **Semantic markup** - Appropriate HTML structure
+- **Keyboard navigation** - When used in interactive contexts
+- **Focus management** - Proper focus indicators
+- **ARIA attributes** - Enhanced accessibility information
+
+## Best Practices
+
+### Image Optimization
+- **Appropriate sizes** - Use correctly sized images for avatars
+- **File formats** - Use WebP or other optimized formats
+- **Loading states** - Provide immediate fallbacks
+- **Error handling** - Graceful degradation for broken images
+
+### Fallback Design
+- **Meaningful initials** - Use first letter of first and last name
+- **Consistent styling** - Maintain visual consistency with images
+- **Color schemes** - Use branded or thematic colors
+- **Icon alternatives** - Consider icons for system users
+
+### Performance
+- **Lazy loading** - Load avatar images only when needed
+- **Caching** - Implement proper image caching strategies
+- **Placeholder content** - Show fallbacks immediately
+- **Size optimization** - Use appropriate image dimensions
+
+### Visual Consistency
+- **Uniform sizing** - Consistent avatar sizes in similar contexts
+- **Border treatment** - Consistent border and shadow styling
+- **Spacing** - Proper spacing around avatars
+- **Color harmony** - Fallback colors that complement your design
+
+## Related Components
+
+- **[Badge](/docs/components/data-display/badge)** - Status indicators often used with avatars
+- **[Card](/docs/components/data-display/card)** - Profile cards containing avatars
+- **[DropdownMenu](/docs/components/navigation/dropdown-menu)** - User menus triggered by avatars
+- **[HoverCard](/docs/components/data-display/hover-card)** - User info on avatar hover
+### Profile Header with Avatar
+
+<AutoExtractPreview 
+  source="components/data-display-examples/avatar-examples.tsx" 
+  functionName="ProfileHeaderExample"
+>
+  <ProfileHeaderExample />
+</AutoExtractPreview>
 
 ## API Reference
 

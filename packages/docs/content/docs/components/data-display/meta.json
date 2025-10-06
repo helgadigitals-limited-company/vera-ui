@@ -21,6 +21,7 @@
     "tabs",
     "tabs-container",
     "table",
+    "toast",
     "tooltip"
   ]
 }
