@@ -38,31 +38,13 @@ function App() {
 
 ## 🎨 Tailwind CSS Setup
 
-Vera UI supports both **Tailwind CSS v3** and **v4**.
+**Vera UI is built with Tailwind CSS v4 and only supports tailwind CSS v4** 
 
 ### Tailwind v4 (Recommended)
 
 ```css
 /* In your main CSS file */
 @import "tailwindcss";
-@import "@helgadigitals/vera-ui/dist/vera-ui.css";
-```
-
-### Tailwind v3
-
-```bash
-# Install dependencies
-npm install tailwindcss@^3 postcss autoprefixer tailwindcss-animate
-
-# Copy Tailwind config (if needed)
-cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js
-```
-
-```css
-/* In your main CSS file */
-@tailwind base;
-@tailwind components;  
-@tailwind utilities;
 @import "@helgadigitals/vera-ui/dist/vera-ui.css";
 ```
 
