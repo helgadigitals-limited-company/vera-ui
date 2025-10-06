@@ -1,3 +1,41 @@
+## [1.1.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.0.0...v1.1.0) (2025-10-06)
+
+### 🚀 Features
+
+* Add README for Vera UI component library with usage and setup instructions ([0f551f1](https://github.com/helgadigitals-limited-company/vera-ui/commit/0f551f15c85c19ed9baa9b87488ef8b5fe3df6de))
+* add source code extraction for component examples ([12f383e](https://github.com/helgadigitals-limited-company/vera-ui/commit/12f383e46fc7adff51e0e71e84508224f993a42d))
+* **docs:** add Dockerfile and update configuration for Vite integration ([2c28bdd](https://github.com/helgadigitals-limited-company/vera-ui/commit/2c28bdd2bf4df5b4cdc433d0c7f2d56e262fa332))
+* **docs:** update Dockerfile and layout to include static assets and new logo ([d3df0e8](https://github.com/helgadigitals-limited-company/vera-ui/commit/d3df0e8b6701e5ad035f33d76ca7e3e3916b96a8))
+* Enhance source extraction and add new component examples ([b85449b](https://github.com/helgadigitals-limited-company/vera-ui/commit/b85449b829e28798ffbea463ffb7450ca022a03e))
+
+### 🐛 Bug Fixes
+
+* **dependencies:** downgrade typescript version from ^5.9.2 to ~5.8.3 in package.json and pnpm-lock.yaml ([903c53b](https://github.com/helgadigitals-limited-company/vera-ui/commit/903c53b9211eee2c63df73d9020549dc6d9d338e))
+* **docs-deploy:** add pnpm path check and improve deployment success message ([2429df2](https://github.com/helgadigitals-limited-company/vera-ui/commit/2429df28163481eb2aa64b1cb940e10f990c4877))
+* **docs-deploy:** add VPS host key to known_hosts for secure SSH connections ([e73245f](https://github.com/helgadigitals-limited-company/vera-ui/commit/e73245fcb5b3370cf11a881f4c27cff4b3c09ed0))
+* **docs-deploy:** comment out workflow_dispatch trigger in deployment workflow ([28c7690](https://github.com/helgadigitals-limited-company/vera-ui/commit/28c7690dcf9b6886f82d9ee7ff6d4a437671b1bc))
+* **docs-deploy:** enhance deployment script to check for pnpm and install production dependencies conditionally ([77ea7db](https://github.com/helgadigitals-limited-company/vera-ui/commit/77ea7dbbfbf0168e5f71c6d4b3d71008ba577a10))
+* **docs-deploy:** include UI tarball in deploy package and improve tar command structure ([c6a7eb2](https://github.com/helgadigitals-limited-company/vera-ui/commit/c6a7eb2e05af3ccc4909813cfe58abbc7374aa21))
+* **docs-deploy:** optimize production dependency installation with improved memory management and network concurrency ([2db8d55](https://github.com/helgadigitals-limited-company/vera-ui/commit/2db8d55ec5e37dce564e6e3202dc27d9114853f4))
+* **docs-deploy:** reduce Node.js memory limit for production dependency installation ([304052d](https://github.com/helgadigitals-limited-company/vera-ui/commit/304052db22ec82d4f863e9f0c53df470e0e63347))
+* **docs-deploy:** refine build and deployment steps for UI and docs ([b282524](https://github.com/helgadigitals-limited-company/vera-ui/commit/b282524626c8b2770342c9ae2a04e99253274065))
+* **docs-deploy:** refine production dependency installation with improved concurrency settings ([2680ffd](https://github.com/helgadigitals-limited-company/vera-ui/commit/2680ffdfb55d788dd287a281c8e1cfa46184d13e))
+* **docs-deploy:** streamline production dependency installation and update symlink for new release ([7701532](https://github.com/helgadigitals-limited-company/vera-ui/commit/7701532c812a43f841b6d7e84597f44c94eff8d9))
+* **docs-deploy:** uncomment workflow_dispatch trigger in deployment workflow ([b8cd608](https://github.com/helgadigitals-limited-company/vera-ui/commit/b8cd6083e56971b63f7114d3189ad32cc7e9ea07))
+* **docs-deploy:** update installation command to use --no-frozen-lockfile for production dependencies ([30b33f3](https://github.com/helgadigitals-limited-company/vera-ui/commit/30b33f313d3cea03ab20504eaf98289011a0bb5a))
+* **docs-deploy:** update paths and improve deployment script ([3527c27](https://github.com/helgadigitals-limited-company/vera-ui/commit/3527c275b66714c8ff0968739be3a986e6ea2ed1))
+* **docs-deploy:** update tar command to reference pnpm-lock.yaml correctly ([41c9a6f](https://github.com/helgadigitals-limited-company/vera-ui/commit/41c9a6f125e6b0bf49f652b16b837015c9f6b15b))
+* Update documentation links to point to the new Vera UI site ([e0bc899](https://github.com/helgadigitals-limited-company/vera-ui/commit/e0bc899ddf8f6e89f3523924ccf231e289373103))
+
+### 📚 Documentation
+
+* add comprehensive Docker guide for Vera UI documentation site ([7842849](https://github.com/helgadigitals-limited-company/vera-ui/commit/7842849658991050ce0c70aec8fccc81fedaf6ee))
+* Clarify Tailwind CSS version support in README ([b6cfde1](https://github.com/helgadigitals-limited-company/vera-ui/commit/b6cfde14360d67a0ca71f247056874d35522e221))
+* **deploy:** specify pnpm version in deployment workflow: ([2693ee6](https://github.com/helgadigitals-limited-company/vera-ui/commit/2693ee6a2e55f91458687c7faaaa20d2e6108d41))
+* **docker:** implement Docker-based deployment workflow and health check API ([7dca997](https://github.com/helgadigitals-limited-company/vera-ui/commit/7dca99727f73b1bc16f71c1ec9bacc7680a4f9f7))
+* **favicon:** add README for favicon setup and enhance metadata in layout ([cb580c0](https://github.com/helgadigitals-limited-company/vera-ui/commit/cb580c0a866a34f647f7f003df56bdb0d02d30be))
+* Remove unused card examples from documentation ([5308b39](https://github.com/helgadigitals-limited-company/vera-ui/commit/5308b39314a73dcb603ada1449a70b805ad0d517))
+
 ## 1.0.0 (2025-09-16)
 
 ### ⚠ BREAKING CHANGES
