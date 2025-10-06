@@ -7,7 +7,7 @@
     "dev": "pnpm --parallel --recursive dev",
     "build": "pnpm --recursive build",
     "dev:ui": "pnpm --filter @helgadigitals/vera-ui dev",
-    "dev:docs": "pnpm --filter docs dev",
+    "dev:docs": "pnpm run build:ui && pnpm --filter docs dev",
     "build:ui": "pnpm --filter @helgadigitals/vera-ui build",
     "build:docs": "pnpm --filter docs build",
     "lint": "pnpm --recursive lint",
