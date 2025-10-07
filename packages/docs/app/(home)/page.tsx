@@ -22,7 +22,7 @@ export default async function HomePage() {
 
 
   return (
-    <main className="min-h-screen w-full relative">
+    <main className="bg-fade-grid min-h-screen w-full relative">
       {/* Hero Section */}
       <section className="relative z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10" />

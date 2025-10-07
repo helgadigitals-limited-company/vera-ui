@@ -2,7 +2,7 @@ import "@/app/global.css";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
-import { Toaster } from "@helgadigitals/vera-ui";
+import { Toaster, ThemeProvider } from "@helgadigitals/vera-ui";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,8 +23,10 @@ export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
-        <RootProvider>{children}</RootProvider>
-        <Toaster />
+        <ThemeProvider defaultTheme="system" storageKey="vera-ui-theme">
+          <RootProvider>{children}</RootProvider>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
