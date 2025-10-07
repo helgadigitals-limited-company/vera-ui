@@ -1,6 +1,23 @@
+
 import Link from 'next/link';
 
-export default function HomePage() {
+const getVeraUiLatestVersion = async () => {
+  try {
+    const res = await fetch("https://registry.npmjs.org/@helgadigitals/vera-ui/latest", {
+      next: { revalidate: 3600 } // Cache for 1 hour
+    });
+    if (!res.ok) return "1.0.0";
+    const data = await res.json();
+    return data.version || "1.0.0";
+  } catch {
+    return "1.0.0";
+  }
+}
+
+export default async function HomePage() {
+  const version = await getVeraUiLatestVersion();
+
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -11,7 +28,7 @@ export default function HomePage() {
           <div className="text-center">
             <div className="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 mb-8">
               <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-              Latest version 2.3.3
+              Latest version : {version}
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-white dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-6">
