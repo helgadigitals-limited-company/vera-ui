@@ -9,3 +9,15 @@
     radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.15) 1px, transparent 0);
   background-size: 20px 20px;
 }
+
+/* === Custom background gradient === */
+.bg-radial-theme {
+  background-image: radial-gradient(125% 125% at 50% 100%, #ffffff 40%, #bfbfcb 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Dark mode version */
+.dark .bg-radial-theme {
+  background-image: radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%);
+}
