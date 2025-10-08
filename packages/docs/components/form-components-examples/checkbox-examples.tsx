@@ -95,7 +95,7 @@ export function CheckboxIndeterminateExample() {
     <div className="flex items-center space-x-2">
       <Checkbox 
         id="select-all"
-        checked={allChecked}
+        checked={someChecked ? "indeterminate" : allChecked}
         onCheckedChange={handleSelectAll}
       />
       <label htmlFor="select-all">Select all</label>
