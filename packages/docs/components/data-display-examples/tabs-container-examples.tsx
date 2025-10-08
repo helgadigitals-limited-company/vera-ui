@@ -92,7 +92,6 @@ export function URLPersistedTabsExample() {
         </div>
       ),
       disabled: false,
-
     },
   ];
   return (
