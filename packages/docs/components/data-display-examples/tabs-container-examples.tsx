@@ -51,6 +51,7 @@ export function BasicTabsContainerExample() {
         defaultTab="overview"
         persistInUrl={false}
         containerHeight="300px"
+        onTabChange={(tab) => { console.log("Tab changed to:", tab); }}
         />
     );
 
