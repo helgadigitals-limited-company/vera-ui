@@ -10,7 +10,7 @@ npm install @helgadigitals/vera-ui
 
 ### Tailwind CSS Compatibility
 
-Vera UI supports Only **Tailwind CSS **v4**.
+Vera UI supports Only **Tailwind CSS v4**.
 
 ## 🚀 Usage
 
@@ -59,7 +59,6 @@ function App() {
 - **Radix UI** - Headless UI primitives
 - **TypeScript** - Type safety
 - **Vite** - Build tool
-- **Storybook** - Component documentation
 
 ## 📦 Available Components
 
