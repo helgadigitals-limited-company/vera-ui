@@ -98,7 +98,9 @@ export function URLPersistedTabsExample() {
     <TabsContainer
       tabs={tabs}
       defaultTab="dashboard"
-      persistInUrl={false}
+      persistInUrl={true}
+      urlParamName="tab"
+      historyMode="replace"
       containerHeight="300px"
     />
   );
