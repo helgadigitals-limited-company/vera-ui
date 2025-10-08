@@ -14,7 +14,7 @@
     "test": "pnpm --recursive test"
   },
   "devDependencies": {
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3"  
   },
   "engines": {
     "node": ">=18",
