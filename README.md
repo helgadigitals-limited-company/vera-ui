@@ -12,9 +12,6 @@ npm install @helgadigitals/vera-ui
 
 Vera UI supports Only **Tailwind CSS **v4**.
 
-**For detailed setup instructions, see [TAILWIND_SETUP.md](./TAILWIND_SETUP.md)**
-
-
 ## 🚀 Usage
 
 ```tsx
