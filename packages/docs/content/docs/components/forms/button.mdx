@@ -1,24 +1,18 @@
 ---
 title: Button
-description: A versatile button component with multiple variants, sizes, and states
+description: A fundamental interactive element that triggers an action when activated. The Button component supports multiple variants, sizes, and states to fit different use cases in your application.
 ---
 
 import { Callout } from "fumadocs-ui/components/callout"
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Button } from "@helgadigitals/vera-ui"
-import { ComponentPreview, AutoExtractPreview } from '@/components/component-preview';
-import { 
-  ButtonUsageExample,
-  ButtonVariantsExample,
-  ButtonSizesExample,
-  ButtonIconExample,
-} from '@/components/form-components-examples/button-examples';
+import { ComponentPreview } from "@/components/component-preview"
 import { PlusIcon } from "lucide-react"
 
-# Button
+{/* # Button
 
-A fundamental interactive element that triggers an action when activated. The Button component supports multiple variants, sizes, and states to fit different use cases in your application.
+A fundamental interactive element that triggers an action when activated. The Button component supports multiple variants, sizes, and states to fit different use cases in your application. */}
 
 ## Installation
 
@@ -41,32 +35,80 @@ A fundamental interactive element that triggers an action when activated. The Bu
 </Tabs>
 ## Usage
 
-<AutoExtractPreview 
-  source="components/form-components-examples/button-examples.tsx" 
-  functionName="ButtonUsageExample"
+<ComponentPreview
+  title="Basic Usage"
+  description="The simplest way to use a button."
+  code={`import { Button } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return <Button>Click me</Button>
+}`}
 >
-  <ButtonUsageExample/>
-</AutoExtractPreview>
+  <Button>Click me</Button>
+</ComponentPreview>
 
 ## Examples
 
 ### Variants
 
-<AutoExtractPreview 
-  source="components/form-components-examples/button-examples.tsx" 
-  functionName="ButtonVariantsExample"
+<ComponentPreview
+  title="Button Variants"
+  description="Different visual styles for various use cases."
+  code={`import { Button } from "@helgadigitals/vera-ui"
+
+export default function Example() {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <Button variant="default">Default</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
+    </div>
+  )
+}`}
 >
-  <ButtonVariantsExample/>
-</AutoExtractPreview>
+  <div className="flex flex-wrap gap-2">
+    <Button variant="default">Default</Button>
+    <Button variant="destructive">Destructive</Button>
+    <Button variant="outline">Outline</Button>
+    <Button variant="secondary">Secondary</Button>
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="link">Link</Button>
+  </div>
+</ComponentPreview>
 
 ### Sizes
 
-<AutoExtractPreview 
-  source="components/form-components-examples/button-examples.tsx" 
-  functionName="ButtonSizesExample"
+<ComponentPreview
+  title="Button Sizes"
+  description="Different sizes for various contexts."
+  code={`import { Button } from "@helgadigitals/vera-ui"
+import { PlusIcon } from "lucide-react"
+
+export default function Example() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Button size="sm">Small</Button>
+      <Button size="default">Default</Button>
+      <Button size="lg">Large</Button>
+      <Button size="icon">
+        <PlusIcon className="h-4 w-4" />
+      </Button>
+    </div>
+  )
+}`}
 >
-  <ButtonSizesExample/>
-</AutoExtractPreview>
+  <div className="flex flex-wrap items-center gap-2">
+    <Button size="sm">Small</Button>
+    <Button size="default">Default</Button>
+    <Button size="lg">Large</Button>
+    <Button size="icon">
+      <PlusIcon className="h-4 w-4" />
+    </Button>
+  </div>
+</ComponentPreview>
 
 ## API Reference
 
@@ -116,10 +158,21 @@ The Button component follows WAI-ARIA guidelines:
   **ARIA Labels**: For icon-only buttons, always provide an `aria-label` or `aria-describedby` attribute for screen readers.
 </Callout>
 
-## Icon
-<AutoExtractPreview 
-  source="components/form-components-examples/button-examples.tsx" 
-  functionName="ButtonIconExample"
+<ComponentPreview
+  title="Accessible Icon Button"
+  description="Icon button with proper accessibility attributes."
+  code={`import { Button } from "@helgadigitals/vera-ui"
+import { PlusIcon } from "lucide-react"
+
+export default function Example() {
+  return (
+    <Button size="icon" aria-label="Add new item">
+      <PlusIcon className="h-4 w-4" />
+    </Button>
+  )
+}`}
 >
-  <ButtonIconExample/>
-</AutoExtractPreview>
+  <Button size="icon" aria-label="Add new item">
+    <PlusIcon className="h-4 w-4" />
+  </Button>
+</ComponentPreview>
