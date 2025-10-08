@@ -7,10 +7,12 @@ import Image from 'next/image';
 import { Button, ThemeToggle } from '@helgadigitals/vera-ui';
 import { Search, Menu, Github, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
+import { useSearchContext } from 'fumadocs-ui/provider';
 import veralogo from '@/public/vera.png';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { setOpenSearch } = useSearchContext();
 
   const navigationItems = [
     { href: '/docs', label: 'Documentation' },
@@ -59,6 +61,7 @@ export default function Navbar() {
             variant="ghost"
             size="sm"
             className="hidden sm:flex items-center space-x-2 text-muted-foreground hover:text-foreground w-64 justify-start"
+            onClick={() => setOpenSearch(true)}
           >
             <Search className="size-4" />
             <span className="text-sm">Search documentation...</span>
@@ -68,7 +71,12 @@ export default function Navbar() {
           </Button>
 
           {/* Mobile Search */}
-          <Button variant="ghost" size="sm" className="sm:hidden">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="sm:hidden"
+            onClick={() => setOpenSearch(true)}
+          >
             <Search className="size-4" />
           </Button>
 
