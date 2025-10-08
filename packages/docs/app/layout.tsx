@@ -2,12 +2,8 @@ import "@/app/global.css";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
-<<<<<<< HEAD
 import { ThemeProvider, Toaster } from "@helgadigitals/vera-ui";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
-=======
-import { Toaster, ThemeProvider } from "@helgadigitals/vera-ui";
->>>>>>> feature-theme
 
 const inter = Inter({
   subsets: ["latin"],
