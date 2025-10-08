@@ -14,31 +14,6 @@ Vera UI supports Only **Tailwind CSS **v4**.
 
 **For detailed setup instructions, see [TAILWIND_SETUP.md](./TAILWIND_SETUP.md)**
 
-#### Quick Setup for Tailwind v4 (Recommended)
-
-```css
-/* In your main CSS file */
-@import "tailwindcss";
-@import "@helgadigitals/vera-ui/dist/vera-ui.css";
-```
-
-#### Quick Setup for Tailwind v3
-
-```bash
-# Install dependencies
-npm install tailwindcss@^3 postcss autoprefixer tailwindcss-animate
-
-# Copy Tailwind config
-cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js
-```
-
-```css
-/* In your main CSS file */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import "@helgadigitals/vera-ui/dist/vera-ui-v3.css";
-```
 
 ## 🚀 Usage
 
@@ -83,7 +58,7 @@ function App() {
 ## 🛠 Tech Stack
 
 - **React** - UI library
-- **Tailwind CSS** - Utility-first CSS framework (v3 & v4 compatible)
+- **Tailwind CSS** - Utility-first CSS compatible with Tailwind v4
 - **Radix UI** - Headless UI primitives
 - **TypeScript** - Type safety
 - **Vite** - Build tool
