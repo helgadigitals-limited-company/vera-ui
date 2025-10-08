@@ -103,7 +103,7 @@ Vera UI uses CSS variables for theming, making it easy to customize:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./stories/Contributing.mdx) for details.
+We welcome contributions! Please see our [Contributing Guide](./Contributing.mdx) for details.
 
 ## 📄 License
 
