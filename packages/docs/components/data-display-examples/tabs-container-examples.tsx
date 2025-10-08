@@ -54,8 +54,6 @@ export function BasicTabsContainerExample() {
         onTabChange={(tab) => { console.log("Tab changed to:", tab); }}
         />
     );
-
-
 }
 
 export function URLPersistedTabsExample() {
