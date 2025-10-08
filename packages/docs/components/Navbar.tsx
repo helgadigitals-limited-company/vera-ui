@@ -16,9 +16,9 @@ export default function Navbar() {
 
   const navigationItems = [
     { href: '/docs', label: 'Documentation' },
-    { href: '/docs/components', label: 'Components' },
+    { href: '/docs/components/forms', label: 'Components' },
     { href: '/docs/examples', label: 'Examples' },
-    { href: '/docs/contributing', label: 'Contributing' },
+    { href: '/docs/contributing/guidelines', label: 'Contributing' },
   ];
 
   return (
@@ -34,7 +34,7 @@ export default function Navbar() {
               height={32}
               className="rounded-md"
             />
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent-foreground bg-clip-text">
               Vera UI
             </span>
           </Link>

@@ -34,7 +34,7 @@ export default async function HomePage() {
               Latest version : {version}
             </Badge>
             
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text text-transparent mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text  mb-6">
               Vera UI
             </h1>
             
@@ -50,7 +50,7 @@ export default async function HomePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/docs/components">
+                <Link href='/docs/components/forms'>
                   View Components
                 </Link>
               </Button>
