@@ -113,5 +113,4 @@ MIT © [HelgaDigitals](https://github.com/helgadigitals-limited-company)
 
 - [GitHub](https://github.com/helgadigitals-limited-company/vera-ui)
 - [NPM](https://www.npmjs.com/package/@helgadigitals/vera-ui)
-- [Storybook](https://helgadigitals-limited-company.github.io/vera-ui)
 - [Issues](https://github.com/helgadigitals-limited-company/vera-ui/issues)
