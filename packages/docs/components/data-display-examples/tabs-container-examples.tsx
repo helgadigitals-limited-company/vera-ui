@@ -158,7 +158,6 @@ export function ScrollableTabsExample() {
 }
 
 export function ConditionalTabsExample() {
-
   const tabs: TabItem[] = [
     {
       value: 'public',
