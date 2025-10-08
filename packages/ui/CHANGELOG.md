@@ -1,3 +1,38 @@
+## [1.2.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.1.0...v1.2.0) (2025-10-08)
+
+### 🚀 Features
+
+* Add TabsContainerWithSuspense component for improved loading handling in tab examples ([1bb8fcc](https://github.com/helgadigitals-limited-company/vera-ui/commit/1bb8fccfa5fc92bdd409d2b4746d3df0a3e0b989))
+* Enhance homepage layout and styling, add dynamic version display. ([a5b7789](https://github.com/helgadigitals-limited-company/vera-ui/commit/a5b7789f81340ac61c48cc6907954ec8039b8e37))
+* Implement custom Navbar component and enhance layout with ThemeProvider ([7daa7b1](https://github.com/helgadigitals-limited-company/vera-ui/commit/7daa7b1323d1243f95da32b4471c9141d5b02fca))
+* Rewrote index.mdx to not act as a landing page but to contain a little information about the library ([ad2f091](https://github.com/helgadigitals-limited-company/vera-ui/commit/ad2f091577a6f48764f6f5adbee923c8111fdf81))
+
+### 🐛 Bug Fixes
+
+* Correct Tailwind CSS compatibility statement in README and remove Storybook mention ([8787e03](https://github.com/helgadigitals-limited-company/vera-ui/commit/8787e03edf460277311025fc1921b5b1c4e2cf19))
+* docs and ui ([0ebb50e](https://github.com/helgadigitals-limited-company/vera-ui/commit/0ebb50e04cc2a332cfa48ba5aaba4dafaca28400))
+* **docs:** move sidebar-layout to layout/ (Fixes [#27](https://github.com/helgadigitals-limited-company/vera-ui/issues/27)), add TabContainer examples (Fixes [#28](https://github.com/helgadigitals-limited-company/vera-ui/issues/28)) ([bd55c02](https://github.com/helgadigitals-limited-company/vera-ui/commit/bd55c02a212c9b1c710d407d4b77784b4608d343))
+* Integrate search functionality in Navbar component when the user clicks the search button ([05ec5bb](https://github.com/helgadigitals-limited-company/vera-ui/commit/05ec5bbfac2a78ee97ca06c26359eb0a71040566))
+* Remove duplicate import statements for Toaster and ThemeProvider in layout.tsx ([38be7b7](https://github.com/helgadigitals-limited-company/vera-ui/commit/38be7b7482aa7f15a2ab5b675bc3a61e891b07aa))
+* Remove metadata comments from Contributing guide ([8901f48](https://github.com/helgadigitals-limited-company/vera-ui/commit/8901f48bcbde7d6d7daebeac85a7f2464ea1a0fa))
+* Remove outdated Tailwind setup instructions from README ([d5f8775](https://github.com/helgadigitals-limited-company/vera-ui/commit/d5f877590618fdcb09d33b2266b6e06cd3385762))
+* Remove Storybook link from README ([48c28e7](https://github.com/helgadigitals-limited-company/vera-ui/commit/48c28e7924bca2b9acb754232f7b1a79578084e8))
+* Remove Storybook stories section from project structure in Contributing guide ([ddb9013](https://github.com/helgadigitals-limited-company/vera-ui/commit/ddb901305dd641351ac15dd8fd7863cdf64dff61))
+* Remove unnecessary component name section from documentation ([e48ce96](https://github.com/helgadigitals-limited-company/vera-ui/commit/e48ce9660d284a0d5f1c88292420e10f51bc73c2))
+* Removed the hardcoded latest version and implemented Fetch and display the latest version of Vera UI dynamically on the homepage ([f43c2a0](https://github.com/helgadigitals-limited-company/vera-ui/commit/f43c2a023a7aaa4a1856d9c55f020f17c5ed6027))
+* Update CheckboxFormExample and CheckboxIndeterminateExample to use more specific types ([bf87a16](https://github.com/helgadigitals-limited-company/vera-ui/commit/bf87a16c11c7b5bd764b888c122ff0069934fd5f))
+* update documentation descriptions for various components and improve consistency across files ([8e1c7a4](https://github.com/helgadigitals-limited-company/vera-ui/commit/8e1c7a4089785a510f6802798ddc2ba444899a50))
+* Update link to Contributing Guide in README ([ff79f76](https://github.com/helgadigitals-limited-company/vera-ui/commit/ff79f76731f0c0a5fd48cd6e2aa9b2863f7a80ea))
+* Update navigation links for Components and Contributing sections ([7c1f771](https://github.com/helgadigitals-limited-company/vera-ui/commit/7c1f771b664b9deda4aedd670a171e8280e1b304))
+* Update Node.js version requirement and repository clone URL in Contributing guide ([c86bd16](https://github.com/helgadigitals-limited-company/vera-ui/commit/c86bd166e8db50b589b7bda301b32bec705b9f2f))
+* Update README to clarify Tailwind CSS support and improve documentation links ([9b75ac7](https://github.com/helgadigitals-limited-company/vera-ui/commit/9b75ac79bc778279d1e7a29bc8e755b07d7b28f8))
+* Update README to remove Tailwind v3 setup instructions and clarify compatibility with Tailwind v4 ([317b3cb](https://github.com/helgadigitals-limited-company/vera-ui/commit/317b3cb0596394a9ca8f43f385a67a829ff6a0d3))
+
+### 📚 Documentation
+
+* Add comprehensive contributing guide for Vera UI ([deb9da3](https://github.com/helgadigitals-limited-company/vera-ui/commit/deb9da37a97de3185f757a3f3ab43db5ab337e5f))
+* refine component docs, remove duplicate H1s, and inline previews ([9f92f31](https://github.com/helgadigitals-limited-company/vera-ui/commit/9f92f318a517544b0dbeb33838480651159a3ed8))
+
 ## [1.1.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.0.0...v1.1.0) (2025-10-06)
 
 ### 🚀 Features
