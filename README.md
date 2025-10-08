@@ -10,35 +10,7 @@ npm install @helgadigitals/vera-ui
 
 ### Tailwind CSS Compatibility
 
-Vera UI supports Only **Tailwind CSS **v4**.
-
-**For detailed setup instructions, see [TAILWIND_SETUP.md](./TAILWIND_SETUP.md)**
-
-#### Quick Setup for Tailwind v4 (Recommended)
-
-```css
-/* In your main CSS file */
-@import "tailwindcss";
-@import "@helgadigitals/vera-ui/dist/vera-ui.css";
-```
-
-#### Quick Setup for Tailwind v3
-
-```bash
-# Install dependencies
-npm install tailwindcss@^3 postcss autoprefixer tailwindcss-animate
-
-# Copy Tailwind config
-cp node_modules/@helgadigitals/vera-ui/tailwind.config.cjs ./tailwind.config.js
-```
-
-```css
-/* In your main CSS file */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import "@helgadigitals/vera-ui/dist/vera-ui-v3.css";
-```
+Vera UI supports Only **Tailwind CSS v4**.
 
 ## 🚀 Usage
 
@@ -83,11 +55,10 @@ function App() {
 ## 🛠 Tech Stack
 
 - **React** - UI library
-- **Tailwind CSS** - Utility-first CSS framework (v3 & v4 compatible)
+- **Tailwind CSS** - Utility-first CSS compatible with Tailwind v4
 - **Radix UI** - Headless UI primitives
 - **TypeScript** - Type safety
 - **Vite** - Build tool
-- **Storybook** - Component documentation
 
 ## 📦 Available Components
 
@@ -132,7 +103,7 @@ Vera UI uses CSS variables for theming, making it easy to customize:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./stories/Contributing.mdx) for details.
+We welcome contributions! Please see our [Contributing Guide](./Contributing.mdx) for details.
 
 ## 📄 License
 
@@ -142,5 +113,4 @@ MIT © [HelgaDigitals](https://github.com/helgadigitals-limited-company)
 
 - [GitHub](https://github.com/helgadigitals-limited-company/vera-ui)
 - [NPM](https://www.npmjs.com/package/@helgadigitals/vera-ui)
-- [Storybook](https://helgadigitals-limited-company.github.io/vera-ui)
 - [Issues](https://github.com/helgadigitals-limited-company/vera-ui/issues)

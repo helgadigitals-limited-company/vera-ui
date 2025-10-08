@@ -2,8 +2,12 @@ import "@/app/global.css";
 import { RootProvider } from "fumadocs-ui/provider";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
-import { Toaster } from "@helgadigitals/vera-ui";
+<<<<<<< HEAD
+import { ThemeProvider, Toaster } from "@helgadigitals/vera-ui";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+=======
+import { Toaster, ThemeProvider } from "@helgadigitals/vera-ui";
+>>>>>>> feature-theme
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,11 +28,15 @@ export default function Layout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
-        <NuqsAdapter>
-          <RootProvider>{children}</RootProvider>
+        
+        <ThemeProvider defaultTheme="system" storageKey="vera-ui-theme">
+          <RootProvider>
+            <NuqsAdapter>
+              {children}
+            </NuqsAdapter>
+          </RootProvider>
           <Toaster />
-
-        </NuqsAdapter>
+        </ThemeProvider>
       </body>
     </html>
   );

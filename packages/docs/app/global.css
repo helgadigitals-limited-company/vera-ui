@@ -1,7 +1,7 @@
 @import "@helgadigitals/vera-ui/dist/vera-ui.css";
-@import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
-@import 'fumadocs-ui/css/preset.css';
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
 
 /* Background grid pattern for component previews */
 .bg-grid-pattern {
@@ -12,12 +12,44 @@
 
 /* === Custom background gradient === */
 .bg-radial-theme {
-  background-image: radial-gradient(125% 125% at 50% 100%, #ffffff 40%, #bfbfcb 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: radial-gradient(125% 125% at 50% 100%, #ffffff 100%);
 }
 
 /* Dark mode version */
 .dark .bg-radial-theme {
-  background-image: radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%);
+  background-image: radial-gradient(125% 125% at 50% 100%, #000000 100%);
+  background-color: #000; /* ✅ solid fallback */
+}
+
+/* For grid-fade background */
+.dark .bg-fade-grid {
+  background-color: #000; /* ✅ ensure background goes dark */
+}
+
+
+/* === Center Fade Grid Background (Tailwind-compatible) === */
+.bg-fade-grid {
+  position: relative;
+  background-color: #f9fafb;
+}
+
+.bg-fade-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: 
+    linear-gradient(to right, #d1d5db 1px, transparent 1px),
+    linear-gradient(to bottom, #d1d5db 1px, transparent 1px);
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%);
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Optional dark mode variation */
+.dark .bg-fade-grid::before {
+  background-image: 
+    linear-gradient(to right, #374151 1px, transparent 1px),
+    linear-gradient(to bottom, #374151 1px, transparent 1px);
 }

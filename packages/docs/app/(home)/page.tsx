@@ -3,26 +3,14 @@
 import Link from 'next/link';
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from '@helgadigitals/vera-ui';
 import { ArrowRight } from 'lucide-react';
-
-const getVeraUiLatestVersion = async () => {
-  try {
-    const res = await fetch("https://registry.npmjs.org/@helgadigitals/vera-ui/latest", {
-      next: { revalidate: 3600 } // Cache for 1 hour
-    });
-    if (!res.ok) return "1.0.0";
-    const data = await res.json();
-    return data.version || "1.0.0";
-  } catch {
-    return "1.0.0";
-  }
-}
+import { getVeraUiLatestVersion } from '@/lib/get-version';
 
 export default async function HomePage() {
   const version = await getVeraUiLatestVersion();
 
 
   return (
-    <main className="min-h-screen w-full relative">
+    <main className="bg-fade-grid min-h-screen w-full relative">
       {/* Hero Section */}
       <section className="relative z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 dark:from-primary/10 dark:to-accent/10" />
@@ -34,7 +22,7 @@ export default async function HomePage() {
               Latest version : {version}
             </Badge>
             
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text text-transparent mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text  mb-6">
               Vera UI
             </h1>
             
@@ -50,7 +38,7 @@ export default async function HomePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/docs/components">
+                <Link href='/docs/components/forms'>
                   View Components
                 </Link>
               </Button>

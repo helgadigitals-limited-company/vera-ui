@@ -1,0 +1,477 @@
+
+# Contributing to Vera UI
+
+Thank you for your interest in contributing to Vera UI! This guide will help you get started with contributing to our modern, accessible React component library.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 22+ 
+- pnpm (preferred package manager)
+- Git
+
+### Development Setup
+
+1. **Fork and Clone**
+   ```bash
+   git clone https://github.com/helgadigitals-limited-company/vera-ui.git
+   cd vera-ui
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Start Development**
+   ```bash
+   # Start both packages in dev mode
+   pnpm dev
+
+   # Or start individually
+   pnpm dev:ui    # Component library only
+   pnpm dev:docs  # Documentation only
+   ```
+
+4. **Build and Test**
+   ```bash
+   # Build the component library
+   pnpm build:ui
+
+   # Build the documentation
+   pnpm build:docs
+
+   # Run tests
+   pnpm test
+
+   # Lint code
+   pnpm lint
+   ```
+
+## 📁 Project Structure
+
+```
+vera-ui/
+├── packages/
+│   ├── ui/                    # Component library (@helgadigitals/vera-ui)
+│   │   ├── src/
+│   │   │   ├── components/    # React components
+│   │   │   │   ├── ui/       # Base UI components
+│   │   │   │   └── ...       # Complex components
+│   │   │   ├── hooks/        # Custom hooks
+│   │   │   ├── lib/          # Utilities (cn, theme-context, etc.)
+│   │   │   └── index.ts      # Main export
+│   │   ├── vera-ui.css       # Tailwind v4 styles
+│   │   └── package.json
+│   └── docs/                  # Documentation site (Next.js + Fumadocs)
+│       ├── content/           # MDX documentation
+│       ├── app/              # Next.js app
+│       ├── components/       # Doc-specific components
+│       └── package.json
+├── pnpm-workspace.yaml       # Workspace configuration
+└── package.json
+```
+
+## 🧩 Component Development
+
+### Component Architecture
+
+All UI components follow these principles:
+
+- **Built with Radix UI**: Use Radix UI primitives when available for accessibility
+- **Styled with CVA**: Use `class-variance-authority` for variant-based styling
+- **TypeScript First**: Full TypeScript support with proper type definitions
+- **Composable**: Follow compound component patterns
+- **Responsive**: Mobile-first approach with responsive utilities
+
+### Component Template
+
+```tsx
+"use client"
+
+import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
+
+const myComponentVariants = cva(
+  "base-classes-here",
+  {
+    variants: {
+      variant: {
+        default: "default-variant-classes",
+        secondary: "secondary-variant-classes",
+      },
+      size: {
+        default: "default-size-classes", 
+        sm: "small-size-classes",
+        lg: "large-size-classes",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface MyComponentProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof myComponentVariants> {
+  // Additional props here
+}
+
+const MyComponent = React.forwardRef<HTMLDivElement, MyComponentProps>(
+  ({ className, variant, size, ...props }, ref) => {
+    return (
+      <div
+        className={cn(myComponentVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+MyComponent.displayName = "MyComponent"
+
+export { MyComponent, myComponentVariants }
+```
+
+### Component Categories
+
+Organize components into these categories:
+
+#### Forms
+- Input, Textarea, Select, Checkbox, Radio, etc.
+- Form validation and handling components
+
+#### Navigation  
+- Breadcrumb, Navigation Menu, Tabs, Sidebar, etc.
+- Components for site navigation
+
+#### Data Display
+- Table, Badge, Avatar, Card, etc.
+- Components for displaying information
+
+#### Layout
+- Container, Grid, Stack, Separator, etc.
+- Components for page layout
+
+#### Feedback
+- Alert, Toast, Progress, Loading, etc.
+- Components for user feedback
+
+#### Overlays
+- Dialog, Sheet, Popover, Tooltip, etc.
+- Components that appear above other content
+
+### Key Development Patterns
+
+1. **Always use `cn()` utility** for conditional classes (combines clsx + tailwind-merge)
+2. **Export from index.ts** - All components must be exported in alphabetical order
+3. **CSS Variables** - Use theme CSS variables, not hardcoded colors
+4. **Accessibility First** - Maintain ARIA patterns from Radix UI
+5. **Test both themes** - Ensure components work in light and dark modes
+
+## 📚 Documentation Guidelines
+
+### Component Documentation
+
+Every component should have comprehensive documentation including:
+
+1. **Overview**: What the component does and when to use it
+2. **Installation**: Import statement and dependencies
+3. **Basic Usage**: Simple example with `ComponentPreview`
+4. **Props**: All available props with types and descriptions
+5. **Variants**: Different visual styles available
+6. **Examples**: Multiple real-world use cases
+7. **Accessibility**: ARIA patterns and keyboard interactions
+8. **API Reference**: Detailed prop documentation
+
+### Documentation Template
+
+```mdx
+---
+title: Component Name
+description: Brief description of what the component does
+---
+
+import { ComponentPreview, AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { ComponentName } from "@helgadigitals/vera-ui";
+
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+
+## Usage
+
+<ComponentPreview>
+  <ComponentName>Example usage</ComponentName>
+</ComponentPreview>
+
+## Examples
+
+### Basic Example
+
+<AutoExtractPreview 
+  source="components/category-examples/component-examples.tsx" 
+  functionName="BasicExample"
+>
+  <BasicExample />
+</AutoExtractPreview>
+
+## API Reference
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "secondary"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    size: {
+      type: '"default" | "sm" | "lg"',
+      default: '"default"',
+      description: 'Size of the component',
+    },
+  }}
+/>
+```
+
+### Using AutoExtractPreview
+
+For better maintainability, create example components in `*-examples.tsx` files and use `AutoExtractPreview`:
+
+```tsx
+// components/form-examples/button-examples.tsx
+export function BasicButtonExample() {
+  return (
+    <Button>Click me</Button>
+  )
+}
+```
+
+```mdx
+<AutoExtractPreview 
+  source="components/form-examples/button-examples.tsx" 
+  functionName="BasicButtonExample"
+>
+  <BasicButtonExample />
+</AutoExtractPreview>
+```
+
+## 🎨 Styling Guidelines
+
+### Tailwind CSS v4 Support
+
+Vera UI supports **only Tailwind CSS v4**. The primary CSS is built with:
+- `vera-ui.css` - Main stylesheet with Tailwind v4
+- No `tailwind.config.js` file needed
+
+### Design Tokens
+
+Use CSS variables for theming:
+
+```css
+:root {
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --background: 0 0% 100%;
+  --foreground: 224 71.4% 4.1%;
+  /* ... */
+}
+```
+
+### Responsive Design
+
+Follow mobile-first approach:
+
+```tsx
+className="text-sm md:text-base lg:text-lg"
+```
+
+## ♿ Accessibility
+
+All components must meet these accessibility standards:
+
+- **WCAG 2.1 AA compliance**
+- **Proper ARIA attributes** (inherited from Radix UI)
+- **Keyboard navigation support**
+- **Screen reader compatibility**
+- **Focus management**
+- **Color contrast requirements**
+
+### Accessibility Checklist
+
+- [ ] Keyboard navigation works correctly
+- [ ] Screen readers announce content properly
+- [ ] Focus indicators are visible
+- [ ] Color contrast meets WCAG standards
+- [ ] Works with dark/light themes
+- [ ] Is responsive across screen sizes
+
+## 🧪 Testing
+
+### Component Testing
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run tests with coverage
+pnpm test:coverage
+```
+
+### Testing Checklist
+
+- [ ] Unit tests for component logic
+- [ ] Accessibility tests
+- [ ] Visual regression tests (if applicable)
+- [ ] Integration tests for complex components
+
+## 📦 Build and Release
+
+### Build Process
+
+```bash
+# Build component library
+pnpm build:ui
+
+# Extract code examples (for docs)
+pnpm extract-code
+
+# Build documentation
+pnpm build:docs
+```
+
+### Publishing
+
+The library is published to NPM as `@helgadigitals/vera-ui` with:
+- ESM build (`vera-ui.es.js`)
+- CJS build (`vera-ui.cjs.js`) 
+- Type definitions (`index.d.ts`)
+- CSS styles (`vera-ui.css`)
+
+## 🔄 Pull Request Guidelines
+
+### Before Submitting
+
+- [ ] Run tests and ensure they pass
+- [ ] Run linting and fix any issues
+- [ ] Update documentation for any new features
+- [ ] Add examples for new components
+- [ ] Follow the established code style
+- [ ] Exports are added to main `index.ts`
+- [ ] Component works in both light and dark themes
+
+### PR Template
+
+When submitting a pull request, please include:
+
+1. **Description**: Clear description of what the PR does
+2. **Type**: Bug fix, new feature, documentation, etc.
+3. **Testing**: How you tested the changes
+4. **Screenshots**: For UI changes, include before/after screenshots
+5. **Breaking Changes**: Any breaking changes and migration path
+
+### Component Checklist
+
+For new components, ensure:
+
+- [ ] Component follows the template structure
+- [ ] Includes proper TypeScript types
+- [ ] Has comprehensive documentation
+- [ ] Includes multiple usage examples
+- [ ] Follows accessibility guidelines
+- [ ] Works with dark/light themes
+- [ ] Is responsive across screen sizes
+- [ ] Exports are added to main index.ts
+- [ ] Documentation is added to the docs site
+
+## 🛠 Development Tools
+
+### Code Style
+
+We use these tools for consistency:
+
+- **ESLint**: Code linting
+- **Prettier**: Code formatting (integrated with ESLint)
+- **TypeScript**: Type checking
+
+### IDE Setup
+
+For the best development experience:
+
+1. Install ESLint and Prettier extensions
+2. Enable format on save
+3. Use TypeScript for full IntelliSense support
+
+## 🌟 Special Components
+
+### Sidebar System
+
+The [`SidebarLayout`](packages/ui/src/components/navigation/sidebar-layout.tsx) component supports:
+- Grouped/ungrouped items (`SidebarItem | Group | MixedSidebarItem`)
+- Auto-detection of mixed content
+- Router integration for active states
+
+### DataTable
+
+The [`DataTable`](packages/ui/src/components/data-display/data-table.tsx) provides:
+- Sorting, filtering, pagination
+- Row selection and bulk actions
+- Responsive design
+
+### Theme Provider
+
+Uses React Context in [`theme-context.ts`](packages/ui/src/lib/theme-context.ts) for theme management.
+
+## 🤝 Community
+
+- **GitHub Issues**: Report bugs and request features
+- **GitHub Discussions**: Ask questions and share ideas
+- **Documentation**: Comprehensive guides at [veraui.helgadigitals.com](https://veraui.helgadigitals.com/)
+
+## 📋 Commit Convention
+
+We use conventional commits for automated changelog generation:
+
+```
+feat: add new Button component
+fix: resolve accessibility issue in Dialog
+docs: update installation guide
+chore: update dependencies
+```
+
+Types:
+- `feat`: New features
+- `fix`: Bug fixes
+- `docs`: Documentation changes
+- `style`: Code style changes
+- `refactor`: Code refactoring
+- `test`: Adding tests
+- `chore`: Maintenance tasks
+
+## 🎯 Getting Help
+
+If you need help:
+
+1. Check the [documentation](https://veraui.helgadigitals.com/)
+2. Search existing [GitHub issues](https://github.com/helgadigitals-limited-company/vera-ui/issues)
+3. Create a new issue with a clear description
+4. Join our community discussions
+
+## 🙏 Thank You
+
+Every contribution, no matter how small, helps make Vera UI better for everyone. We appreciate your time and effort in improving this library!
+
+---
+
+**Happy contributing!** 🚀
