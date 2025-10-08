@@ -1,36 +1,57 @@
 "use client";
 
 import { type TabItem, TabsContainer } from "@helgadigitals/vera-ui";
+import { Suspense } from "react";
+
+// component to handle Suspense boundary
+function TabsContainerWithSuspense({ tabs, defaultTab, persistInUrl, containerHeight, urlParamName }: {
+  tabs: TabItem[];
+  defaultTab?: string;
+  persistInUrl?: boolean;
+  containerHeight?: string;
+  urlParamName?: string;
+}) {
+  return (
+    <Suspense fallback={<div className="p-4">Loading...</div>}>
+      <TabsContainer
+        tabs={tabs}
+        defaultTab={defaultTab}
+        persistInUrl={persistInUrl}
+        containerHeight={containerHeight}
+        urlParamName={urlParamName}
+      />
+    </Suspense>
+  );
+}
 
 export function BasicTabsContainerExample() {
-
-    const tabs: TabItem[] = [
-      {
-        value: 'overview',
-        label: 'Overview',
-        content:(
-          <div className="space-y-4 p-4">
-            <h3 className="text-lg font-semibold">Project Overview</h3>
-            <p className="text-muted-foreground">
-                          This is the main overview of your project with key metrics and summary information.
-            </p>
-          </div>
-        ),
-      },
-      {
-        value: 'analytics',
-        label: 'Analytics',
-        content:(
-          <div className="space-y-4 p-4">
-            <h3 className="text-lg font-semibold">Analytics  Dashboard</h3>
-            <p className="text-muted-foreground">
-            View detailed analytics and performance metrics for your project.  </p>
-          </div>
-        ),
-        disabled: false,
-      },
-      {
-        
+  const tabs: TabItem[] = [
+    {
+      value: 'overview',
+      label: 'Overview',
+      content:(
+        <div className="space-y-4 p-4">
+          <h3 className="text-lg font-semibold">Project Overview</h3>
+          <p className="text-muted-foreground">
+            This is the main overview of your project with key metrics and summary information.
+          </p>
+        </div>
+      ),
+    },
+    {
+      value: 'analytics',
+      label: 'Analytics',
+      content:(
+        <div className="space-y-4 p-4">
+          <h3 className="text-lg font-semibold">Analytics Dashboard</h3>
+          <p className="text-muted-foreground">
+            View detailed analytics and performance metrics for your project.
+          </p>
+        </div>
+      ),
+      disabled: false,
+    },
+    {
       value: 'settings',
       label: 'Settings',
       content: (
@@ -42,19 +63,17 @@ export function BasicTabsContainerExample() {
         </div>
       ),
       disabled: false,
+    },
+  ];
 
-      },
-    ];
-    return (
-      <TabsContainer
-       tabs={tabs}
-        defaultTab="overview"
-        persistInUrl={false}
-        containerHeight="300px"
-        />
-    );
-
-
+  return (
+    <TabsContainerWithSuspense
+      tabs={tabs}
+      defaultTab="overview"
+      persistInUrl={false}
+      containerHeight="300px"
+    />
+  );
 }
 
 export function URLPersistedTabsExample() {
@@ -91,21 +110,22 @@ export function URLPersistedTabsExample() {
         </div>
       ),
       disabled: false,
-
     },
   ];
+
   return (
-    <TabsContainer
+    <TabsContainerWithSuspense
       tabs={tabs}
       defaultTab="dashboard"
-      persistInUrl={false}
+      persistInUrl={true}
+      urlParamName="view"
       containerHeight="300px"
     />
   );
 }
 
 export function ScrollableTabsExample() {
- const tabs: TabItem[] = [
+  const tabs: TabItem[] = [
     {
       value: 'tab1',
       label: 'Overview',
@@ -147,8 +167,9 @@ export function ScrollableTabsExample() {
       content: <div className="p-4">Support content</div>,
     },
   ];
+
   return (
-    <TabsContainer
+    <TabsContainerWithSuspense
       tabs={tabs}
       defaultTab="tab1"
       persistInUrl={false}
@@ -158,7 +179,6 @@ export function ScrollableTabsExample() {
 }
 
 export function ConditionalTabsExample() {
-
   const tabs: TabItem[] = [
     {
       value: 'public',
@@ -194,7 +214,7 @@ export function ConditionalTabsExample() {
   ];
 
   return (
-    <TabsContainer
+    <TabsContainerWithSuspense
       tabs={tabs}
       defaultTab="public"
       persistInUrl={false}
