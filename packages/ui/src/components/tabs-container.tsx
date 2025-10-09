@@ -150,15 +150,7 @@ export function TabsContainer({
                                     className={cn(
                                         "relative py-3 transition-all",
                                         "data-[state=active]:bg-transparent",
-                                        "after:absolute after:bottom-0 after:left-0 after:right-0",
-                                        "after:h-[3px] after:rounded-t-full",
-                                        "after:transform after:scale-x-0",
-                                        "data-[state=active]:after:scale-x-100",
-                                        "after:transition-transform after:duration-300",
-                                        "after:bg-primary",
-                                        "hover:after:scale-x-100 hover:after:opacity-70",
-                                        "focus-visible:after:scale-x-100 focus-visible:after:opacity-70",
-                                        "rounded-none whitespace-nowrap flex-shrink-0",
+                                        "rounded-xl whitespace-nowrap flex-shrink-0",
                                         "text-muted-foreground data-[state=active]:text-foreground",
                                         "font-medium"
                                     )}
