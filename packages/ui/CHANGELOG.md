@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.2.0...v1.2.1) (2025-10-09)
+
+### 🐛 Bug Fixes
+
+* **docs:** remove redundant wrapper div in ComponentPreview tabs ([#21](https://github.com/helgadigitals-limited-company/vera-ui/issues/21)) ([fa698ed](https://github.com/helgadigitals-limited-company/vera-ui/commit/fa698ed403ddbb1942d610b904919d6be1453467))
+* **docs:** Removed unnecessary white wrapper div around Preview/Code tabs. Resolves [#21](https://github.com/helgadigitals-limited-company/vera-ui/issues/21) ([368971e](https://github.com/helgadigitals-limited-company/vera-ui/commit/368971e5c40d0834cfddf2297830dc93016f465a))
+
 ## [1.2.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.1.0...v1.2.0) (2025-10-08)
 
 ### 🚀 Features
