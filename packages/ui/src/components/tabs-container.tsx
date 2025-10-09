@@ -150,9 +150,10 @@ export function TabsContainer({
                                     className={cn(
                                         "relative py-3 transition-all",
                                         "data-[state=active]:bg-transparent",
-                                        "rounded-xl whitespace-nowrap flex-shrink-0",
+                                        "whitespace-nowrap flex-shrink-0",
                                         "text-muted-foreground data-[state=active]:text-foreground",
-                                        "font-medium"
+                                        "font-medium",
+                                        "border-b-2 border-transparent data-[state=active]:border-primary"
                                     )}
                                 >
                                     {tab.label}
