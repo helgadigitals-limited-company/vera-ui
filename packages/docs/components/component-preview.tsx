@@ -93,7 +93,6 @@ function ${extractFunction}() {
   }
 
   return (
-    <div className="my-8 rounded-xl border border-border/50 bg-card shadow-sm overflow-hidden">
       <Tabs items={["Preview", "Code"]} defaultIndex={defaultIndex}>
         <Tab value="Preview">
           <div className="p-8">
@@ -137,7 +136,6 @@ function ${extractFunction}() {
           </div>
         </Tab>
       </Tabs>
-    </div>
   );
 }
 
