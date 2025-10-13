@@ -8,6 +8,8 @@
     "navigation-menu",
     "menubar",
     "pagination",
-    "tabs"
+    "tabs",
+    "navigation-components",
+    "reusable-sidebar"
   ]
 }
