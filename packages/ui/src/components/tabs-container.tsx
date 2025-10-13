@@ -148,12 +148,13 @@ export function TabsContainer({
                                     value={tab.value}
                                     disabled={tab.disabled}
                                     className={cn(
-                                        "relative py-3 transition-all",
+                                        "relative py-3 transition-all duration-300 ease-in-out", // smooth transition
                                         "data-[state=active]:bg-transparent",
                                         "whitespace-nowrap flex-shrink-0",
                                         "text-muted-foreground data-[state=active]:text-foreground",
                                         "font-medium",
-                                        "border-b-2 border-transparent data-[state=active]:border-primary"
+                                        "border-b-2 border-transparent data-[state=active]:border-primary",
+                                        "hover:text-foreground/80 hover:scale-105" //  hover effect
                                     )}
                                 >
                                     {tab.label}
