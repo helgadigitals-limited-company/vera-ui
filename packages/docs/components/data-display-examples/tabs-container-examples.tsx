@@ -129,42 +129,42 @@ export function ScrollableTabsExample() {
     {
       value: 'tab1',
       label: 'Overview',
-      content: <div className="p-4">Overview content</div>,
+      content: <div className="space-y-4 p-4">Overview content</div>,
     },
     {
       value: 'tab2',
       label: 'Analytics',
-      content: <div className="p-4">Analytics content</div>,
+      content: <div className="space-y-4 p-4">Analytics content</div>,
     },
     {
       value: 'tab3',
       label: 'Performance',
-      content: <div className="p-4">Performance content</div>,
+      content: <div className="space-y-4 p-4">Performance content</div>,
     },
     {
       value: 'tab4',
       label: 'Security',
-      content: <div className="p-4">Security content</div>,
+      content: <div className="space-y-4 p-4">Security content</div>,
     },
     {
       value: 'tab5',
       label: 'Integration',
-      content: <div className="p-4">Integration content</div>,
+      content: <div className="space-y-4 p-4">Integration content</div>,
     },
     {
       value: 'tab6',
       label: 'Documentation',
-      content: <div className="p-4">Documentation content</div>,
+      content: <div className="space-y-4 p-4">Documentation content</div>,
     },
     {
       value: 'tab7',
       label: 'API Reference',
-      content: <div className="p-4">API Reference content</div>,
+      content: <div className="space-y-4 p-4">API Reference content</div>,
     },
     {
       value: 'tab8',
       label: 'Support',
-      content: <div className="p-4">Support content</div>,
+      content: <div className="space-y-4 p-4">Support content</div>,
     },
   ];
 
