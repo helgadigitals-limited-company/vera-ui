@@ -1,3 +1,18 @@
+## [1.2.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.2.1...v1.2.2) (2025-10-14)
+
+### 🐛 Bug Fixes
+
+* **tabs-container:** removed the box styling of the active tabs and added hover effect ([0567e29](https://github.com/helgadigitals-limited-company/vera-ui/commit/0567e296b12c4d447bc798dcc0dc877b345d73e6))
+
+### 📚 Documentation
+
+* add ReusableSidebar component documentation to navigation section ([40567f5](https://github.com/helgadigitals-limited-company/vera-ui/commit/40567f5b3da6e67c25d0c3d2b90a1338a52f234f)), closes [#29](https://github.com/helgadigitals-limited-company/vera-ui/issues/29)
+* update copilot instructions and add component documentation template ([ee65fd6](https://github.com/helgadigitals-limited-company/vera-ui/commit/ee65fd67caab553212b392c99306be1ec593425a))
+
+### ♻️ Refactoring
+
+* SidebarProvider component ([8e29e81](https://github.com/helgadigitals-limited-company/vera-ui/commit/8e29e8136632d9bc945a438b6a448726e8289432))
+
 ## [1.2.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.2.0...v1.2.1) (2025-10-09)
 
 ### 🐛 Bug Fixes
