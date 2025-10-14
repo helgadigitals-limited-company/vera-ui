@@ -1,9 +1,10 @@
+import { SidebarProvider } from "./ui/sidebar";
 
 
-export  function SidebarProvider() {
+export  function SidebarProviders({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      
-    </div>
+    <SidebarProvider>
+      {children}
+    </SidebarProvider>
   )
 }
