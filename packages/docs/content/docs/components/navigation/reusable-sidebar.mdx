@@ -4,121 +4,272 @@ description: A flexible navigation sidebar component with grouping, collapsible 
 ---
 
 import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
-import { Callout } from "fumadocs-ui/components/callout"
+import { Callout } from "fumadocs-ui/components/callout";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Reusable Sidebar
 
----
-title: Reusable Sidebar
-description: A flexible navigation sidebar component with grouping, collapsible modes, and responsive behavior for application layouts.
----
+The `ReusableSidebar` component provides a comprehensive navigation solution with support for simple items, grouped navigation, collapsible modes, and responsive behavior. It's built on Radix UI primitives and follows the Vera UI design system.
 
-import { AutoExtractPreview } from "@/components/component-preview";
-import { TypeTable } from 'fumadocs-ui/components/type-table';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
-import {
-  BasicSidebarExample,
-  GroupedSidebarExample,
-  MixedSidebarExample,
-  CustomStyledSidebarExample,
-  WithFooterExample,
-  CollapsibleSidebarExample,
-} from "@/components/navigation-examples/reusable-sidebar-examples";
+### SidebarProvider
 
-{/* # Reusable Sidebar
+The provider component manages sidebar state and must wrap the `ReusableSidebar` :
 
-A flexible navigation sidebar component with grouping, collapsible modes, and responsive behavior for application layouts. */}
+```tsx
+import { SidebarProvider } from '@helgadigitals/vera-ui'
+<SidebarProvider>
+  <ReusableSidebar items={items} />
+</SidebarProvider>
+```
 
-## Features
+<Callout type="warning">
+**Important**: The `ReusableSidebar` component must be wrapped with `SidebarProvider` to function properly.
+</Callout>
 
-- **Flexible navigation types** - Simple items, grouped sections, or mixed content
-- **Responsive behavior** - Desktop collapsible mode, mobile overlay with touch controls
-- **Active state detection** - Automatically highlights current route
-- **Customizable styling** - Theme-based styling with custom class overrides
-- **Built-in functionality** - Collapsible groups, badges, footer with user info
-- **Full accessibility** - Keyboard navigation and ARIA attributes
 
 ## Installation
 
 <Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
     <Tab value="pnpm" >
       ```bash
-      pnpm add @helgadigitals/vera-ui lucide-react
+      pnpm add @helgadigitals/vera-ui lucide-react react-router-dom
       ```
     </Tab>
     <Tab value="npm" >
       ```bash
-      npm install @helgadigitals/vera-ui lucide-react
+      npm install @helgadigitals/vera-ui lucide-react react-router-dom
       ```
     </Tab>
     <Tab value="yarn" >
       ```bash
-      yarn add @helgadigitals/vera-ui lucide-react
+      yarn add @helgadigitals/vera-ui lucide-react react-router-dom
       ```
     </Tab>
 </Tabs>
 
-<Callout type="warn">
-  **Important**: The `ReusableSidebar` component must be wrapped with `SidebarProvider` to function properly. The provider manages sidebar state including open/closed status and responsive behavior.
+<Callout type="info">
+  **Note**: This component requires React Router DOM for routing functionality. Make sure to wrap your app with `BrowserRouter` or another React Router provider.
 </Callout>
 
 ## Usage
 
-### Basic Sidebar
+<DynamicCodeBlock 
+  lang="tsx" 
+  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
+import { Home, Users, Settings, BarChart } from 'lucide-react'
+const items = [
+  { title: "Dashboard", path: "/", icon: Home },
+  { title: "Users", path: "/users", icon: Users, badge: 12 },
+  { title: "Analytics", path: "/analytics", icon: BarChart },
+  { title: "Settings", path: "/settings", icon: Settings }
+];
+function App() {
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen">
+        <ReusableSidebar 
+          items={items}
+          heading="My App"
+          label="Navigation"
+        />
+        <main className="flex-1 overflow-auto">
+          <div className="p-6">
+            <h1 className="text-2xl font-bold mb-4">Welcome to Dashboard</h1>
+            <p>Your main application content goes here.</p>
+          </div>
+        </main>
+      </div>
+    </SidebarProvider>
+  )
+}`}
+/>
 
-<AutoExtractPreview 
-  source="components/navigation-examples/reusable-sidebar-examples.tsx" 
-  functionName="BasicSidebarExample"
->
-  <BasicSidebarExample />
-</AutoExtractPreview>
+## Sidebar Features
 
-### Grouped Navigation
+### Responsive Behavior
+- **Desktop**: Full sidebar with collapsible icon mode
+- **Tablet & Mobile**: Overlay behavior with mobile-friendly touch controls
+- **Automatic State Management**: Built-in responsive breakpoint detection
 
-<AutoExtractPreview 
-  source="components/navigation-examples/reusable-sidebar-examples.tsx" 
-  functionName="GroupedSidebarExample"
->
-  <GroupedSidebarExample />
-</AutoExtractPreview>
+### Navigation Types
+- **Simple Items**: Direct navigation links with icons and optional badges
+- **Grouped Items**: Organized sections with collapsible group headers
+- **Mixed Content**: Combination of simple items and grouped sections
+
+### Built-in Functionality
+- **Active State Detection**: Automatically highlights current route
+- **Keyboard Navigation**: Full keyboard accessibility support
+- **Dark Mode Support**: Respects theme system preferences
+- **Icon Integration**: Built for Lucide React icons
+
+
+## Advanced Usage
 
 ### Mixed Navigation
 
-Combine simple items and grouped sections in a single sidebar:
+<DynamicCodeBlock 
+  lang="tsx" 
+  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
+import { Home, Users, Settings, FileText, Zap } from 'lucide-react'
+const mixedItems = [
+  // Top-level items
+  { title: "Dashboard", path: "/", icon: Home },
+  { title: "Quick Actions", path: "/quick", icon: Zap, badge: "New" },
+  
+  // Grouped sections
+  {
+    key: "content",
+    label: "Content",
+    icon: FileText,
+    items: [
+      { title: "Posts", path: "/posts", icon: FileText },
+      { title: "Pages", path: "/pages", icon: FileText }
+    ]
+  },
+  {
+    key: "admin",
+    label: "Administration",
+    items: [
+      { title: "Users", path: "/users", icon: Users, badge: 8 },
+      { title: "Settings", path: "/settings", icon: Settings }
+    ]
+  }
+];
+function MixedNavigation() {
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen">
+        <ReusableSidebar 
+          items={mixedItems}
+          heading="My Application"
+          label="Navigation"
+          isFooterVisible={true}
+          displayName="John Doe"
+        />
+        <main className="flex-1 overflow-auto p-6">
+          <h1 className="text-2xl font-bold">Application Dashboard</h1>
+        </main>
+      </div>
+    </SidebarProvider>
+  )
+}`}
+/>
 
-<AutoExtractPreview 
-  source="components/navigation-examples/reusable-sidebar-examples.tsx" 
-  functionName="MixedSidebarExample"
->
-  <MixedSidebarExample />
-</AutoExtractPreview>
+## Sidebar Customization
 
 ### Custom Styling
 
-<AutoExtractPreview 
-  source="components/navigation-examples/reusable-sidebar-examples.tsx" 
-  functionName="CustomStyledSidebarExample"
->
-  <CustomStyledSidebarExample />
-</AutoExtractPreview>
+<DynamicCodeBlock 
+  lang="tsx" 
+  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
+import { Home, Users, Settings } from 'lucide-react'
+function CustomStyledSidebar() {
+  const items = [
+    { title: "Dashboard", path: "/", icon: Home },
+    { title: "Users", path: "/users", icon: Users },
+    { title: "Settings", path: "/settings", icon: Settings }
+  ];
+  const customStyles = {
+    bgColor: "bg-slate-900",
+    textColor: "text-slate-100",
+    widthClass: "w-80",
+    itemTextSize: "text-base",
+    headingTextSize: "text-sm",
+    surfaceClasses: "border-slate-700"
+  };
+  const customClasses = {
+    root: "shadow-xl",
+    header: "bg-slate-800 border-b border-slate-700",
+    heading: "text-slate-200 font-bold",
+    menuButton: "hover:bg-slate-800/50",
+    menuButtonActive: "bg-slate-700 text-white"
+  };
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen">
+        <ReusableSidebar 
+          items={items}
+          heading="Custom Theme"
+          stylesConfig={customStyles}
+          classNames={customClasses}
+        />
+        <main className="flex-1 overflow-auto bg-slate-50 p-6">
+          <h1 className="text-2xl font-bold">Custom Styled Sidebar</h1>
+        </main>
+      </div>
+    </SidebarProvider>
+  )
+}`}
+/>
 
-### With Footer
+### With Footer and Branding
 
-<AutoExtractPreview 
-  source="components/navigation-examples/reusable-sidebar-examples.tsx" 
-  functionName="WithFooterExample"
->
-  <WithFooterExample />
-</AutoExtractPreview>
+<DynamicCodeBlock 
+  lang="tsx" 
+  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
+import { Home, Users, Settings, FolderOpen } from 'lucide-react'
+function BrandedSidebar() {
+  const items = [
+    { title: "Dashboard", path: "/", icon: Home },
+    { title: "Projects", path: "/projects", icon: FolderOpen },
+    { title: "Team", path: "/team", icon: Users },
+    { title: "Settings", path: "/settings", icon: Settings }
+  ];
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen">
+        <ReusableSidebar 
+          items={items}
+          heading="Project Manager"
+          image="/logo.png"
+          isFooterVisible={true}
+          displayName="Jane Smith"
+          label="Main Navigation"
+        />
+        <main className="flex-1 overflow-auto p-6">
+          <h1 className="text-2xl font-bold">Project Dashboard</h1>
+        </main>
+      </div>
+    </SidebarProvider>
+  )
+}`}
+/>
 
-### Collapsible Mode
+## Router Integration
 
-<AutoExtractPreview 
-  source="components/navigation-examples/reusable-sidebar-examples.tsx" 
-  functionName="CollapsibleSidebarExample"
->
-  <CollapsibleSidebarExample />
-</AutoExtractPreview>
+The sidebar requires React Router DOM and automatically detects active routes using React Router's navigation hooks.
+
+<DynamicCodeBlock 
+  lang="tsx" 
+  code={`// React Router DOM example
+import { BrowserRouter } from 'react-router-dom';
+import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
+import { Home, Users, Settings } from 'lucide-react'
+const navigationItems = [
+  { title: "Dashboard", path: "/", icon: Home },
+  { title: "Users", path: "/users", icon: Users },
+  { title: "Settings", path: "/settings", icon: Settings }
+];
+function App() {
+  return (
+    <BrowserRouter>
+      <SidebarProvider>
+        <div className="flex h-screen">
+          <ReusableSidebar 
+            items={navigationItems}
+            heading="My App"
+            label="Navigation"
+          />
+          <main className="flex-1 overflow-auto">
+            {/* Your routes here */}
+          </main>
+        </div>
+      </SidebarProvider>
+    </BrowserRouter>
+  )
+}`}
+/>
 
 ## API Reference
 
@@ -145,7 +296,7 @@ The provider component manages sidebar state and must wrap the `ReusableSidebar`
 
 ### ReusableSidebar
 
-The main sidebar navigation component.
+The main sidebar navigation component that integrates with React Router DOM.
 
 <TypeTable
   type={{
@@ -342,563 +493,3 @@ Custom CSS classes for granular styling control.
     },
   }}
 />
-
-## Use Cases
-
-### Application Navigation
-- **Admin dashboards** - Organize admin tools and settings
-- **Content management** - Navigate between content types and sections
-- **User portals** - Personal account and preferences navigation
-- **Project management** - Switch between projects, teams, and tasks
-
-### Multi-level Organization
-- **Documentation sites** - Organize content by category and subcategory
-- **E-commerce admin** - Products, orders, customers, settings
-- **Analytics platforms** - Different report types and data views
-- **Learning platforms** - Courses, lessons, progress tracking
-
-### Responsive Applications
-- **Mobile-first apps** - Overlay sidebar on small screens
-- **Desktop applications** - Collapsible sidebar for more workspace
-- **Progressive web apps** - Adaptive navigation for all devices
-- **Hybrid interfaces** - Context-aware navigation patterns
-
-### Custom Branding
-- **White-label products** - Custom colors and branding per client
-- **Multi-tenant apps** - Different themes per organization
-- **Brand consistency** - Match company design systems
-- **Theme variations** - Light/dark mode with custom accents
-
-## Accessibility
-
-The ReusableSidebar includes:
-
-- **Keyboard navigation** - Full keyboard support with Tab, Enter, Arrow keys
-- **Screen reader support** - Proper ARIA labels and landmark roles
-- **Focus management** - Clear focus indicators and logical tab order
-- **ARIA attributes** - `aria-expanded`, `aria-label`, `aria-current` for navigation state
-- **Semantic HTML** - Uses semantic nav elements and button tags
-- **Color contrast** - Meets WCAG AA standards for all states
-- **Reduced motion** - Respects prefers-reduced-motion for animations
-
-**Keyboard Shortcuts:**
-- `Tab` - Navigate between sidebar items
-- `Enter` / `Space` - Activate navigation or toggle groups
-- `Arrow Up/Down` - Navigate between items (when focused)
-- `Home` - Jump to first item
-- `End` - Jump to last item
-
-## Best Practices
-
-### Content Organization
-- **Logical grouping** - Group related items together
-- **Clear labels** - Use descriptive, action-oriented text
-- **Consistent ordering** - Keep frequently used items at top
-- **Limited depth** - Avoid more than 2 levels of nesting
-
-### Visual Design
-- **Icon consistency** - Use icons from same family (Lucide React)
-- **Badge usage** - Use badges sparingly for important notifications
-- **Color hierarchy** - Maintain clear visual distinction between states
-- **Spacing** - Ensure adequate touch targets (44x44px minimum)
-
-### Performance
-- **Lazy loading** - Load sidebar content only when needed
-- **State persistence** - Remember user preferences (collapsed/expanded)
-- **Optimized icons** - Use tree-shakeable icon libraries
-- **Memoization** - Prevent unnecessary re-renders of navigation items
-
-### Code Quality
-- **Type safety** - Use TypeScript for all sidebar configurations
-- **Consistent data** - Standardize navigation data structure across app
-- **Error handling** - Handle missing routes and invalid paths gracefully
-- **Testing** - Test navigation flows and active state detection
-
-## Router Integration
-
-The sidebar automatically detects active routes based on the current pathname. It works seamlessly with various routing libraries:
-
-### React Router
-
-```tsx
-import { BrowserRouter } from 'react-router-dom';
-import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui';
-
-function App() {
-  return (
-    <BrowserRouter>
-      <SidebarProvider>
-        <div className="flex h-screen">
-          <ReusableSidebar items={navigationItems} />
-          <main className="flex-1">{/* Routes */}</main>
-        </div>
-      </SidebarProvider>
-    </BrowserRouter>
-  );
-}
-```
-
-### Next.js App Router
-
-```tsx
-// app/layout.tsx
-import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui';
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html>
-      <body>
-        <SidebarProvider>
-          <div className="flex h-screen">
-            <ReusableSidebar items={items} />
-            <main className="flex-1">{children}</main>
-          </div>
-        </SidebarProvider>
-      </body>
-    </html>
-  );
-}
-```
-
-## Advanced Patterns
-
-### Dynamic Navigation
-
-Generate navigation items based on user permissions:
-
-```tsx
-import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui';
-import { Home, Users, Settings } from 'lucide-react';
-
-function DynamicSidebar({ userRole }: { userRole: string }) {
-  const items = React.useMemo(() => {
-    const base = [
-      { title: "Dashboard", path: "/", icon: Home }
-    ];
-    
-    if (userRole === 'admin') {
-      base.push(
-        { title: "Users", path: "/users", icon: Users },
-        { title: "Settings", path: "/settings", icon: Settings }
-      );
-    }
-    
-    return base;
-  }, [userRole]);
-
-  return (
-    <SidebarProvider>
-      <ReusableSidebar items={items} heading="My App" />
-    </SidebarProvider>
-  );
-}
-```
-
-### Persistent State
-
-Save sidebar state to localStorage:
-
-```tsx
-import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui';
-
-function PersistentSidebar() {
-  // State is automatically persisted by the component
-  // Group open/closed states are saved to localStorage
-  
-  return (
-    <SidebarProvider>
-      <ReusableSidebar 
-        items={items}
-        // Groups will remember their open/closed state
-      />
-    </SidebarProvider>
-  );
-}
-```
-
-## Related Components
-
-- **[Sidebar Layout](./sidebar-layout)** - Full layout wrapper with sidebar and content area
-- **[Navigation Menu](/components/navigation/navigation-menu)** - Horizontal navigation alternative
-- **[Breadcrumbs](/components/navigation/breadcrumbs)** - Hierarchical page location indicator
-
-## Troubleshooting
-
-### Sidebar not showing active state
-
-**Problem:** Navigation items don&apos;t highlight when navigating to their routes.
-
-**Solution:** Ensure you&apos;re using React Router or that `window.location.pathname` is updated correctly. The component relies on the pathname to determine active state.
-
-```tsx
-// Make sure your router is configured correctly
-import { BrowserRouter } from 'react-router-dom';
-
-<BrowserRouter>
-  <SidebarProvider>
-    <ReusableSidebar items={items} />
-  </SidebarProvider>
-</BrowserRouter>
-```
-
-### Groups not persisting state
-
-**Problem:** Group open/closed states reset on page refresh.
-
-**Solution:** The component automatically saves state to localStorage. If it&apos;s not working, check that:
-1. localStorage is available (not in incognito/private mode)
-2. Each group has a unique `key` property
-3. Browser isn&apos;t blocking localStorage access
-
-### Icons not displaying
-
-**Problem:** Navigation icons appear as empty spaces.
-
-**Solution:** Install and import lucide-react icons correctly:
-
-```bash
-pnpm add lucide-react
-```
-
-```tsx
-import { Home, Users, Settings } from 'lucide-react';
-// Not: import * as Icons from 'lucide-react'
-```
-
-### Sidebar overflow issues
-
-**Problem:** Sidebar content is cut off or not scrollable.
-
-**Solution:** Ensure parent container has proper height constraints:
-
-```tsx
-<div className="flex h-screen"> {/* or h-full with parent height set */}
-  <ReusableSidebar items={items} />
-  <main className="flex-1 overflow-auto">
-    {content}
-  </main>
-</div>
-```
-
-### SidebarProvider
-
-The provider component manages sidebar state and must wrap the `ReusableSidebar` :
-
-```tsx
-import { SidebarProvider } from '@helgadigitals/vera-ui'
-<SidebarProvider>
-  <ReusableSidebar items={items} />
-</SidebarProvider>
-```
-
-<Callout type="warning">
-**Important**: The `ReusableSidebar` component must be wrapped with `SidebarProvider` to function properly.
-</Callout>
-
-
-## Installation
-
-```bash npm2yarn
-npm install @helgadigitals/vera-ui lucide-react
-```
-
-## Usage
-
-<DynamicCodeBlock 
-  lang="tsx" 
-  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
-import { Home, Users, Settings, BarChart } from 'lucide-react'
-
-const items = [
-  { title: "Dashboard", path: "/", icon: Home },
-  { title: "Users", path: "/users", icon: Users, badge: 12 },
-  { title: "Analytics", path: "/analytics", icon: BarChart },
-  { title: "Settings", path: "/settings", icon: Settings }
-];
-
-function App() {
-  return (
-    <SidebarProvider>
-      <div className="flex h-screen">
-        <ReusableSidebar 
-          items={items}
-          heading="My App"
-          label="Navigation"
-        />
-        <main className="flex-1 overflow-auto">
-          <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Welcome to Dashboard</h1>
-            <p>Your main application content goes here.</p>
-          </div>
-        </main>
-      </div>
-    </SidebarProvider>
-  )
-}`}
-/>
-
-## Sidebar Features
-
-### Responsive Behavior
-- **Desktop**: Full sidebar with collapsible icon mode
-- **Tablet & Mobile**: Overlay behavior with mobile-friendly touch controls
-- **Automatic State Management**: Built-in responsive breakpoint detection
-
-### Navigation Types
-- **Simple Items**: Direct navigation links with icons and optional badges
-- **Grouped Items**: Organized sections with collapsible group headers
-- **Mixed Content**: Combination of simple items and grouped sections
-
-### Built-in Functionality
-- **Active State Detection**: Automatically highlights current route
-- **Keyboard Navigation**: Full keyboard accessibility support
-- **Dark Mode Support**: Respects theme system preferences
-- **Icon Integration**: Built for Lucide React icons
-
-
-## Advanced Usage
-
-### Mixed Navigation
-
-<DynamicCodeBlock 
-  lang="tsx" 
-  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
-import { Home, Users, Settings, FileText, Zap } from 'lucide-react'
-
-const mixedItems = [
-  // Top-level items
-  { title: "Dashboard", path: "/", icon: Home },
-  { title: "Quick Actions", path: "/quick", icon: Zap, badge: "New" },
-  
-  // Grouped sections
-  {
-    key: "content",
-    label: "Content",
-    icon: FileText,
-    items: [
-      { title: "Posts", path: "/posts", icon: FileText },
-      { title: "Pages", path: "/pages", icon: FileText }
-    ]
-  },
-  {
-    key: "admin",
-    label: "Administration",
-    items: [
-      { title: "Users", path: "/users", icon: Users, badge: 8 },
-      { title: "Settings", path: "/settings", icon: Settings }
-    ]
-  }
-];
-
-function MixedNavigation() {
-  return (
-    <SidebarProvider>
-      <div className="flex h-screen">
-        <ReusableSidebar 
-          items={mixedItems}
-          heading="My Application"
-          label="Navigation"
-          isFooterVisible={true}
-          displayName="John Doe"
-        />
-        <main className="flex-1 overflow-auto p-6">
-          <h1 className="text-2xl font-bold">Application Dashboard</h1>
-        </main>
-      </div>
-    </SidebarProvider>
-  )
-}`}
-/>
-
-## Sidebar Customization
-
-### Custom Styling
-
-<DynamicCodeBlock 
-  lang="tsx" 
-  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
-import { Home, Users, Settings } from 'lucide-react'
-
-function CustomStyledSidebar() {
-  const items = [
-    { title: "Dashboard", path: "/", icon: Home },
-    { title: "Users", path: "/users", icon: Users },
-    { title: "Settings", path: "/settings", icon: Settings }
-  ];
-
-  const customStyles = {
-    bgColor: "bg-slate-900",
-    textColor: "text-slate-100",
-    widthClass: "w-80",
-    itemTextSize: "text-base",
-    headingTextSize: "text-sm",
-    surfaceClasses: "border-slate-700"
-  };
-
-  const customClasses = {
-    root: "shadow-xl",
-    header: "bg-slate-800 border-b border-slate-700",
-    heading: "text-slate-200 font-bold",
-    menuButton: "hover:bg-slate-800/50",
-    menuButtonActive: "bg-slate-700 text-white"
-  };
-
-  return (
-    <SidebarProvider>
-      <div className="flex h-screen">
-        <ReusableSidebar 
-          items={items}
-          heading="Custom Theme"
-          stylesConfig={customStyles}
-          classNames={customClasses}
-        />
-        <main className="flex-1 overflow-auto bg-slate-50 p-6">
-          <h1 className="text-2xl font-bold">Custom Styled Sidebar</h1>
-        </main>
-      </div>
-    </SidebarProvider>
-  )
-}`}
-/>
-
-### With Footer and Branding
-
-<DynamicCodeBlock 
-  lang="tsx" 
-  code={`import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
-import { Home, Users, Settings, FolderOpen } from 'lucide-react'
-
-function BrandedSidebar() {
-  const items = [
-    { title: "Dashboard", path: "/", icon: Home },
-    { title: "Projects", path: "/projects", icon: FolderOpen },
-    { title: "Team", path: "/team", icon: Users },
-    { title: "Settings", path: "/settings", icon: Settings }
-  ];
-
-  return (
-    <SidebarProvider>
-      <div className="flex h-screen">
-        <ReusableSidebar 
-          items={items}
-          heading="Project Manager"
-          image="/logo.png"
-          isFooterVisible={true}
-          displayName="Jane Smith"
-          label="Main Navigation"
-        />
-        <main className="flex-1 overflow-auto p-6">
-          <h1 className="text-2xl font-bold">Project Dashboard</h1>
-        </main>
-      </div>
-    </SidebarProvider>
-  )
-}`}
-/>
-
-## Router Integration
-
-The sidebar automatically detects active routes based on the current pathname. It works with any router that updates `window.location.pathname`.
-
-<DynamicCodeBlock 
-  lang="tsx" 
-  code={`// Next.js App Router example
-import { ReusableSidebar, SidebarProvider } from '@helgadigitals/vera-ui'
-import { Home, Users, Settings } from 'lucide-react'
-
-const navigationItems = [
-  { title: "Dashboard", path: "/", icon: Home },
-  { title: "Users", path: "/users", icon: Users },
-  { title: "Settings", path: "/settings", icon: Settings }
-];
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body>
-        <SidebarProvider>
-          <div className="flex h-screen">
-            <ReusableSidebar 
-              items={navigationItems}
-              heading="My App"
-              label="Navigation"
-            />
-            <main className="flex-1 overflow-auto">
-              {children}
-            </main>
-          </div>
-        </SidebarProvider>
-      </body>
-    </html>
-  )
-}`}
-/>
-
-## Props Reference
-
-### ReusableSidebar
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `Array<SidebarItem \| Group>` | - | Navigation items configuration |
-| `heading` | `string` | - | Sidebar header title |
-| `image` | `string` | - | Logo/image URL for header |
-| `isFooterVisible` | `boolean` | `false` | Show footer with user info |
-| `label` | `string` | - | Group label for navigation items |
-| `displayName` | `string` | - | User display name in footer |
-| `classNames` | `ReusableSidebarClassNames` | - | Custom CSS classes for different parts |
-| `stylesConfig` | `SidebarStylesConfig` | - | Style configuration object |
-| `style` | `React.CSSProperties` | - | Inline styles |
-
-### SidebarProvider
-
-The provider component manages sidebar state and must wrap the `ReusableSidebar`:
-
-```tsx
-<SidebarProvider>
-  <ReusableSidebar items={items} />
-</SidebarProvider>
-```
-
-## Type Definitions
-
-### SidebarItem
-```tsx
-interface SidebarItem {
-  title: string          // Display text for the navigation item
-  path: string           // Navigation path/route
-  icon: LucideIcon       // Icon component from lucide-react
-  badge?: string | number // Optional badge content (notifications, counts, etc.)
-}
-```
-
-### Styling Configuration
-```tsx
-interface SidebarStylesConfig {
-  bgColor?: string          // Background color Tailwind class
-  textColor?: string        // Text color Tailwind class
-  widthClass?: string       // Width Tailwind class
-  itemTextSize?: string     // Item text size class
-  headingTextSize?: string  // Heading text size class
-  surfaceClasses?: string   // Surface styling classes
-}
-
-interface ReusableSidebarClassNames {
-  root?: string               
-  header?: string              
-  image?: string               
-  heading?: string            
-  groupLabel?: string         
-  menu?: string               
-  menuItem?: string            
-  menuButton?: string         
-  menuButtonActive?: string    
-  footer?: string             
-  footerUserIcon?: string      
-  footerDisplayName?: string   
-}
-
