@@ -126,6 +126,7 @@ async function main() {
   // Auto-extract from examples directories
   await extractor.autoExtractFromDirectory('components/data-display-examples');
   await extractor.autoExtractFromDirectory('components/form-components-examples');
+  await extractor.autoExtractFromDirectory('components/navigation-examples');
   
   // Use a more inclusive pattern for form components that might not end with "Example"
   await extractor.autoExtractFromDirectory(

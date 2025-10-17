@@ -61,6 +61,7 @@ export * from './components/DataTable'
 export * from './components/Pagination'
 export * from './components/tabs-container' // Temporarily disabled due to nuqs dependency issues
 export * from './components/SidebarProvider'
+export * from './components/menuBar'
 
 // Export utilities
 export * from './lib/utils'
