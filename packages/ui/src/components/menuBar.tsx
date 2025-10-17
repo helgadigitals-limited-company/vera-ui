@@ -100,7 +100,7 @@ export function MenuBar({
                         <NavigationMenuLink asChild>
                           <RouterCompatibleLink
                             className={cn(
-                              "from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md",
+                              "from-muted/50 to-muted flex h-full w-full flex-row justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md",
                               item.featured.className
                             )}
                             href={item.featured.href}
@@ -139,31 +139,30 @@ export function MenuBar({
                       ))}
                     </ul>
                   ) : (
-                    <ul className={cn("grid w-[200px] gap-4", item.gridClassName)}>
-                      <li>
-                        {item.items?.map((link) => (
-                          <NavigationMenuLink key={link.title} asChild>
+                    <ul className={cn("grid w-[300px] p-2", item.gridClassName)}>
+                      {item.items?.map((link) => (
+                        <li key={link.title}>
+                          <NavigationMenuLink asChild>
                             <RouterCompatibleLink
                               href={link.href}
                               className={cn(
-                                link.icon && "flex-row items-center gap-2"
+                                "block select-none rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                link.icon && "flex items-center gap-3"
                               )}
                             >
                               {link.icon}
-                              {link.description ? (
-                                <>
-                                  <div className="font-medium">{link.title}</div>
-                                  <div className="text-muted-foreground">
+                              <div className="flex-1">
+                                <div className="text-sm font-medium leading-none">{link.title}</div>
+                                {link.description && (
+                                  <p className="text-muted-foreground line-clamp-2 text-sm leading-snug mt-1">
                                     {link.description}
-                                  </div>
-                                </>
-                              ) : (
-                                link.title
-                              )}
+                                  </p>
+                                )}
+                              </div>
                             </RouterCompatibleLink>
                           </NavigationMenuLink>
-                        ))}
-                      </li>
+                        </li>
+                      ))}
                     </ul>
                   )}
                 </NavigationMenuContent>

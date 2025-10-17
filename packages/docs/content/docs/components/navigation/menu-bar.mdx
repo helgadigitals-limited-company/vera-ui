@@ -1,0 +1,385 @@
+---
+title: MenuBar
+description: A flexible navigation menu bar component that supports dropdown menus, grid layouts, and featured sections. Built for responsive navigation with support for both Next.js and React Router.
+---
+
+import { ComponentPreview, AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from 'fumadocs-ui/components/type-table';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Callout } from "fumadocs-ui/components/callout";
+import { MenuBar } from "@helgadigitals/vera-ui";
+import { 
+  BasicMenuBarExample,
+  DropdownMenuBarExample,
+  GridMenuBarExample,
+  FeaturedMenuBarExample,
+  ResponsiveMenuBarExample
+} from "@/components/navigation-examples/menubar-examples";
+
+{/* # MenuBar
+
+A flexible navigation menu bar component that supports dropdown menus, grid layouts, and featured sections. Built for responsive navigation with support for both Next.js and React Router. */}
+
+## Features
+
+- **Multiple Layout Types** - Support for simple links, dropdowns, grids, and featured sections
+- **Router Compatibility** - Works with Next.js Link, React Router, and standard anchor tags
+- **Responsive Design** - Mobile-friendly with collapsible viewport option
+- **Accessible Navigation** - Built on Radix UI NavigationMenu with proper ARIA support
+- **Customizable Styling** - Flexible styling options for different menu types
+- **Icon Support** - Built-in support for icons in menu items and featured sections
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic Menu Bar
+
+<AutoExtractPreview 
+  source="components/navigation-examples/menubar-examples.tsx" 
+  functionName="BasicMenuBarExample"
+>
+  <BasicMenuBarExample />
+</AutoExtractPreview>
+
+### Dropdown Menu
+
+<AutoExtractPreview 
+  source="components/navigation-examples/menubar-examples.tsx" 
+  functionName="DropdownMenuBarExample"
+>
+  <DropdownMenuBarExample />
+</AutoExtractPreview>
+
+### Grid Layout
+
+<AutoExtractPreview 
+  source="components/navigation-examples/menubar-examples.tsx" 
+  functionName="GridMenuBarExample"
+>
+  <GridMenuBarExample />
+</AutoExtractPreview>
+
+### Featured Section
+
+<AutoExtractPreview 
+  source="components/navigation-examples/menubar-examples.tsx" 
+  functionName="FeaturedMenuBarExample"
+>
+  <FeaturedMenuBarExample />
+</AutoExtractPreview>
+
+### Responsive Menu
+
+<AutoExtractPreview 
+  source="components/navigation-examples/menubar-examples.tsx" 
+  functionName="ResponsiveMenuBarExample"
+>
+  <ResponsiveMenuBarExample />
+</AutoExtractPreview>
+
+## Router Integration
+
+The MenuBar component automatically detects and works with different routing libraries:
+
+### Next.js
+
+```tsx
+import Link from 'next/link'
+import { MenuBar } from '@helgadigitals/vera-ui'
+
+const items = [
+  { type: 'link', trigger: 'Home', href: '/' },
+  { type: 'link', trigger: 'About', href: '/about' }
+]
+
+function Navigation() {
+  return (
+    <MenuBar 
+      items={items} 
+      LinkComponent={Link}
+    />
+  )
+}
+```
+
+### React Router
+
+```tsx
+import { Link } from 'react-router-dom'
+import { MenuBar } from '@helgadigitals/vera-ui'
+
+const items = [
+  { type: 'link', trigger: 'Dashboard', href: '/' },
+  { type: 'link', trigger: 'Profile', href: '/profile' }
+]
+
+function Navigation() {
+  return (
+    <MenuBar 
+      items={items} 
+      LinkComponent={Link}
+    />
+  )
+}
+```
+
+### Standard HTML
+
+```tsx
+import { MenuBar } from '@helgadigitals/vera-ui'
+
+const items = [
+  { type: 'link', trigger: 'Home', href: '/' },
+  { type: 'link', trigger: 'Contact', href: '/contact' }
+]
+
+function Navigation() {
+  return <MenuBar items={items} /> // Uses anchor tags by default
+}
+```
+
+## API Reference
+
+### MenuBar
+
+<TypeTable
+  type={{
+    items: {
+      type: 'MenuItemConfig[]',
+      description: 'Array of menu item configurations',
+    },
+    viewport: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether to show the navigation viewport for dropdown content',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes for the menu bar',
+    },
+    LinkComponent: {
+      type: 'React.ElementType',
+      default: '"a"',
+      description: 'Component to use for links (Next.js Link, React Router Link, etc.)',
+    },
+  }}
+/>
+
+### MenuItemConfig
+
+<TypeTable
+  type={{
+    trigger: {
+      type: 'string',
+      description: 'Text to display for the menu item',
+    },
+    type: {
+      type: '"dropdown" | "link" | "grid" | "featured"',
+      description: 'Type of menu item to render',
+    },
+    href: {
+      type: 'string',
+      description: 'URL for link-type menu items',
+    },
+    items: {
+      type: 'MenuLink[]',
+      description: 'Array of submenu items for dropdown and grid types',
+    },
+    featured: {
+      type: 'FeaturedSection',
+      description: 'Featured section configuration for featured type',
+    },
+    gridClassName: {
+      type: 'string',
+      description: 'Custom CSS classes for grid layout',
+    },
+    contentClassName: {
+      type: 'string',
+      description: 'Custom CSS classes for dropdown content',
+    },
+  }}
+/>
+
+### MenuLink
+
+<TypeTable
+  type={{
+    title: {
+      type: 'string',
+      description: 'Display text for the menu link',
+    },
+    href: {
+      type: 'string',
+      description: 'URL for the menu link',
+    },
+    description: {
+      type: 'string',
+      description: 'Optional description text',
+    },
+    icon: {
+      type: 'React.ReactNode',
+      description: 'Optional icon element',
+    },
+  }}
+/>
+
+### FeaturedSection
+
+<TypeTable
+  type={{
+    href: {
+      type: 'string',
+      description: 'URL for the featured section',
+    },
+    title: {
+      type: 'string',
+      description: 'Title for the featured section',
+    },
+    description: {
+      type: 'string',
+      description: 'Description text for the featured section',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes for styling',
+    },
+  }}
+/>
+
+## Use Cases
+
+### Website Navigation
+- **Main navigation** - Primary site navigation with dropdowns
+- **Product menus** - Showcase products with featured sections
+- **Service navigation** - Organize services into logical groups
+- **Documentation navigation** - Structure docs with grid layouts
+
+### Application Headers
+- **Dashboard navigation** - Quick access to app sections
+- **Admin panels** - Organize admin functions by category
+- **User menus** - Profile, settings, and account actions
+- **Tool navigation** - Group related tools and features
+
+### E-commerce Navigation
+- **Category menus** - Product categories with grid layouts
+- **Featured products** - Highlight special offers or new items
+- **Quick links** - Direct access to cart, wishlist, account
+- **Brand navigation** - Showcase different product lines
+
+### Content Platforms
+- **Content categories** - Articles, videos, tutorials organized by topic
+- **Creator tools** - Dashboard, analytics, content management
+- **Community features** - Forums, groups, events navigation
+- **Help and support** - Documentation, contact, FAQ sections
+
+## Accessibility
+
+The MenuBar component follows WAI-ARIA guidelines for navigation menus:
+
+- **Keyboard Navigation** - Full keyboard support with arrow keys and Enter/Space
+- **Focus Management** - Proper focus indicators and focus trapping
+- **Screen Readers** - Descriptive labels and role attributes
+- **ARIA States** - Proper expanded/collapsed states for dropdowns
+
+<Callout type="info">
+  **Keyboard Navigation**: Use arrow keys to navigate between menu items, Enter/Space to activate items, and Escape to close dropdowns.
+</Callout>
+
+## Best Practices
+
+### Content Organization
+Structure menu items logically and limit nesting depth:
+
+```tsx
+// Good: Logical grouping with clear hierarchy
+const items = [
+  { type: 'link', trigger: 'Home', href: '/' },
+  {
+    type: 'dropdown',
+    trigger: 'Products',
+    items: [
+      { title: 'Web Apps', href: '/products/web', description: 'Modern web applications' },
+      { title: 'Mobile Apps', href: '/products/mobile', description: 'iOS and Android apps' }
+    ]
+  }
+]
+
+// Avoid: Too many nested levels or unclear grouping
+```
+
+### Performance Optimization
+Use featured sections strategically to highlight important content:
+
+```tsx
+// Good: Use featured sections for key destinations
+{
+  type: 'featured',
+  trigger: 'Solutions',
+  featured: {
+    href: '/enterprise',
+    title: 'Enterprise Solutions',
+    description: 'Scalable solutions for large organizations'
+  },
+  items: [
+    { title: 'Small Business', href: '/solutions/small' },
+    { title: 'Startups', href: '/solutions/startup' }
+  ]
+}
+```
+
+### Responsive Design
+Consider mobile users with appropriate viewport settings:
+
+```tsx
+// Enable viewport for complex dropdown content
+<MenuBar items={items} viewport={true} />
+
+// Keep it simple for mobile-first designs
+<MenuBar items={simpleItems} viewport={false} />
+```
+
+## Styling
+
+The MenuBar component uses Tailwind CSS classes and can be customized:
+
+```tsx
+<MenuBar 
+  items={items}
+  className="bg-primary text-primary-foreground"
+  // Custom grid layouts for dropdown content
+  items={[
+    {
+      type: 'grid',
+      trigger: 'Services',
+      gridClassName: 'grid-cols-3 gap-4',
+      items: services
+    }
+  ]}
+/>
+```
+
+## Related Components
+
+- **[NavigationMenu](/docs/components/navigation/navigation-menu)** - Lower-level navigation menu primitive
+- **[Breadcrumb](/docs/components/navigation/breadcrumb)** - Hierarchical navigation trail
+- **[Sidebar](/docs/components/navigation/sidebar)** - Vertical navigation for applications
+- **[DropdownMenu](/docs/components/navigation/dropdown-menu)** - Context menus and actions
