@@ -11,8 +11,9 @@ Essential components for helping users navigate through your application. From s
 
 ### Primary Navigation
 - **[Sidebar](/docs/components/navigation/sidebar)** - Collapsible navigation sidebar with groups and icons
+- **[Reusable Sidebar](/docs/components/navigation/reusable-sidebar)** - Pre-built sidebar component with responsive behavior
 - **[Navigation Menu](/docs/components/navigation/navigation-menu)** - Horizontal navigation with dropdowns
-- **[Menubar](/docs/components/navigation/menubar)** - Desktop-style menu bar navigation
+- **[Menubar](/docs/components/navigation/menu-bar)** - Desktop-style menu bar navigation with keyboard support
 - **[Breadcrumb](/docs/components/navigation/breadcrumb)** - Hierarchical navigation trail
 
 ### Content Navigation
@@ -68,6 +69,47 @@ function AppLayout({ children }) {
         {children}
       </main>
     </SidebarProvider>
+  )
+}
+```
+
+### Desktop Application with Menubar
+```tsx
+import {
+  Menubar,
+  MenubarMenu,
+  MenubarTrigger,
+  MenubarContent,
+  MenubarItem,
+  MenubarSeparator,
+  MenubarShortcut
+} from '@helgadigitals/vera-ui'
+
+function DesktopApp() {
+  return (
+    <div>
+      <Menubar>
+        <MenubarMenu>
+          <MenubarTrigger>File</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>New <MenubarShortcut>⌘N</MenubarShortcut></MenubarItem>
+            <MenubarItem>Open <MenubarShortcut>⌘O</MenubarShortcut></MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>Save <MenubarShortcut>⌘S</MenubarShortcut></MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger>Edit</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>Undo <MenubarShortcut>⌘Z</MenubarShortcut></MenubarItem>
+            <MenubarItem>Redo <MenubarShortcut>⌘⇧Z</MenubarShortcut></MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
+      <main className="flex-1 p-4">
+        {/* App content */}
+      </main>
+    </div>
   )
 }
 ```

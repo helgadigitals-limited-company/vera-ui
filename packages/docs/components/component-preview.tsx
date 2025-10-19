@@ -71,19 +71,20 @@ function ${extractFunction}() {
   // If no code is provided, just show the preview
   if (!canShowTabs) {
     return (
-      <div className="my-8 rounded-xl border border-border/50 bg-card shadow-sm overflow-hidden">
+            <div className="my-8 rounded-xl border border-border/50 bg-card shadow-sm overflow-visible relative">
         <div className="p-8">
           <div
             className="
-            flex items-center justify-center min-h-[200px] 
-            bg-gradient-to-br from-background to-muted/30 
-            rounded-lg 
-            relative overflow-hidden
-          "
+              flex items-center justify-center min-h-[200px] 
+              bg-gradient-to-br from-background to-muted/30 
+              rounded-lg 
+              relative overflow-visible z-10
+            "
           >
             {/* Subtle background pattern */}
             <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-            <div className="relative z-10 flex flex-wrap items-center justify-center gap-4">
+            {/* The actual component preview — dropdowns, menus, etc. */}
+            <div className="relative flex flex-wrap items-center justify-center gap-4">
               {children}
             </div>
           </div>
@@ -101,12 +102,12 @@ function ${extractFunction}() {
               flex items-center justify-center min-h-[200px] 
               bg-gradient-to-br from-background to-muted/30 
               rounded-lg 
-              relative overflow-hidden
+              relative overflow-visible
             "
             >
               {/* Subtle background pattern */}
               <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-              <div className="relative z-10 flex flex-wrap items-center justify-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-4">
                 {children}
               </div>
             </div>
