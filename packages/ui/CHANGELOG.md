@@ -1,3 +1,17 @@
+## [1.3.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.2.2...v1.3.0) (2025-10-19)
+
+### 🚀 Features
+
+* add MenuBar component and integrate react-router-dom dependency ([da02f03](https://github.com/helgadigitals-limited-company/vera-ui/commit/da02f03b1eb6d515ae2aeeac6ce1b06bb611e6e5))
+
+### 🐛 Bug Fixes
+
+* remove react-router-dom dependency and update package.json ([2642cd7](https://github.com/helgadigitals-limited-company/vera-ui/commit/2642cd7efcefc269660230d8030055725529cbc6))
+
+### 🧪 Testing
+
+* implement routing and layout with MenuBar in App component ([a9ce19c](https://github.com/helgadigitals-limited-company/vera-ui/commit/a9ce19cd54dcc3ed1b6938a1ef2b4418277da5ab))
+
 ## [1.2.2](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.2.1...v1.2.2) (2025-10-14)
 
 ### 🐛 Bug Fixes
