@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      react-router-dom:
+        specifier: ^7.8.2
+        version: 7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
     devDependencies:
       typescript:
         specifier: ~5.8.3
@@ -43,7 +47,7 @@ importers:
         version: 15.5.2(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       nuqs:
         specifier: ^2.4.3
-        version: 2.5.1(next@15.5.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+        version: 2.5.1(next@15.5.2(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -53,9 +57,6 @@ importers:
       react-hook-form:
         specifier: ^7.62.0
         version: 7.62.0(react@19.1.1)
-      react-router-dom:
-        specifier: ^7.8.2
-        version: 7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       shiki:
         specifier: ^3.12.2
         version: 3.12.2
@@ -224,7 +225,7 @@ importers:
         version: 0.4.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       nuqs:
         specifier: ^2.4.3
-        version: 2.5.1(next@15.5.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+        version: 2.5.1(next@15.5.2(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       react-day-picker:
         specifier: ^9.8.0
         version: 9.9.0(react@19.1.1)
@@ -10735,7 +10736,7 @@ snapshots:
 
   npm@10.9.3: {}
 
-  nuqs@2.5.1(next@15.5.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1):
+  nuqs@2.5.1(next@15.5.2(@babel/core@7.28.3)(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1):
     dependencies:
       '@standard-schema/spec': 1.0.0
       react: 19.1.1
