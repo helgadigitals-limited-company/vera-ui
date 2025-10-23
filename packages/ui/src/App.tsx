@@ -2,12 +2,8 @@ import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MenuBar, type MenuItemConfig } from "@/components/menuBar";
-import {
-  FileText,
-  Users,
-  Package,
-  Sparkles,
-} from "lucide-react";
+import { TabsContainer, type TabItem } from "@/components/tabs-container";
+import { FileText, Users, Package, Sparkles } from "lucide-react";
 
 // Layout component with MenuBar
 function Layout() {
@@ -185,29 +181,251 @@ function DocsPage() {
 }
 
 function ComponentsPage() {
+  const componentTabs: TabItem[] = [
+    {
+      value: "buttons",
+      label: "Buttons",
+      content: (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Button Components</h2>
+          <p className="text-muted-foreground">
+            Interactive button components with various styles and states.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Primary Button</h3>
+              <p className="text-sm text-muted-foreground">
+                Default button style for primary actions
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Secondary Button</h3>
+              <p className="text-sm text-muted-foreground">
+                Alternative style for secondary actions
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Outline Button</h3>
+              <p className="text-sm text-muted-foreground">
+                Minimal button with outline
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Ghost Button</h3>
+              <p className="text-sm text-muted-foreground">
+                Subtle button with no border
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "forms",
+      label: "Forms",
+      content: (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Form Components</h2>
+          <p className="text-muted-foreground">
+            Form inputs, selects, textareas, and validation components.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Input</h3>
+              <p className="text-sm text-muted-foreground">
+                Text input with validation
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Select</h3>
+              <p className="text-sm text-muted-foreground">
+                Dropdown selection component
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Textarea</h3>
+              <p className="text-sm text-muted-foreground">
+                Multi-line text input
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Checkbox</h3>
+              <p className="text-sm text-muted-foreground">
+                Toggle selection component
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "navigation",
+      label: "Navigation",
+      content: (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Navigation Components</h2>
+          <p className="text-muted-foreground">
+            Menus, tabs, breadcrumbs, and navigation bars.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Menu Bar</h3>
+              <p className="text-sm text-muted-foreground">
+                Horizontal navigation menu
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Sidebar</h3>
+              <p className="text-sm text-muted-foreground">
+                Vertical navigation panel
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Tabs</h3>
+              <p className="text-sm text-muted-foreground">
+                Tabbed content container
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Breadcrumb</h3>
+              <p className="text-sm text-muted-foreground">
+                Page hierarchy navigation
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "data-display",
+      label: "Data Display",
+      content: (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Data Display Components</h2>
+          <p className="text-muted-foreground">
+            Tables, cards, lists, and data visualization components.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Table</h3>
+              <p className="text-sm text-muted-foreground">
+                Data table with sorting and filtering
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Card</h3>
+              <p className="text-sm text-muted-foreground">
+                Container for related content
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Badge</h3>
+              <p className="text-sm text-muted-foreground">
+                Small status indicator
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Avatar</h3>
+              <p className="text-sm text-muted-foreground">
+                User profile image
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "feedback",
+      label: "Feedback",
+      content: (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Feedback Components</h2>
+          <p className="text-muted-foreground">
+            Alerts, toasts, modals, and progress indicators.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Alert</h3>
+              <p className="text-sm text-muted-foreground">
+                Important notification message
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Toast</h3>
+              <p className="text-sm text-muted-foreground">
+                Brief notification popup
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Dialog</h3>
+              <p className="text-sm text-muted-foreground">
+                Modal dialog window
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Progress</h3>
+              <p className="text-sm text-muted-foreground">
+                Loading progress indicator
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      value: "layout",
+      label: "Layout",
+      content: (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">Layout Components</h2>
+          <p className="text-muted-foreground">
+            Grid, flex, containers, and spacing utilities.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Container</h3>
+              <p className="text-sm text-muted-foreground">
+                Responsive content wrapper
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Grid</h3>
+              <p className="text-sm text-muted-foreground">
+                CSS Grid layout system
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Flex</h3>
+              <p className="text-sm text-muted-foreground">
+                Flexbox layout utilities
+              </p>
+            </div>
+            <div className="p-6 border rounded-lg">
+              <h3 className="font-semibold mb-2">Separator</h3>
+              <p className="text-sm text-muted-foreground">
+                Visual content divider
+              </p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold mb-6">Components</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[
-          "Buttons",
-          "Forms",
-          "Navigation",
-          "Data Display",
-          "Feedback",
-          "Layout",
-        ].map((component) => (
-          <div
-            key={component}
-            className="p-6 border rounded-lg hover:shadow-md transition-shadow"
-          >
-            <h3 className="text-xl font-semibold mb-2">{component}</h3>
-            <p className="text-muted-foreground">
-              Explore {component.toLowerCase()} components
-            </p>
-          </div>
-        ))}
-      </div>
+      <p className="text-muted-foreground mb-8">
+        Explore our comprehensive collection of UI components organized by
+        category.
+      </p>
+      <TabsContainer
+        tabs={componentTabs}
+        defaultTab="buttons"
+        persistInUrl={true}
+        urlParamName="category"
+        containerHeight="600px"
+      />
     </div>
   );
 }

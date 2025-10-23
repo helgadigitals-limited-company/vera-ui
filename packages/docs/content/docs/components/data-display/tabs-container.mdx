@@ -11,6 +11,8 @@ import {
   URLPersistedTabsExample,
   ScrollableTabsExample,
   ConditionalTabsExample,
+  CompactLayoutExample,
+  FullWidthLayoutExample,
 } from "@/components/data-display-examples/tabs-container-examples";
 
 {/* # Tabs Container
@@ -22,6 +24,7 @@ An enhanced tabbed interface component that provides advanced features like URL 
 - **URL Persistence** - Tab state synced with URL parameters
 - **Scrollable Navigation** - Horizontal scrolling with navigation arrows
 - **Flexible Content** - Support for any React content in tabs
+- **Flexible Layouts** - Choose between compact or full-width tab layouts
 - **Accessibility** - Enhanced keyboard navigation and ARIA support
 - **Responsive Design** - Adapts to different screen sizes
 - **State Management** - Optional URL persistence with fallback to local state
@@ -85,6 +88,28 @@ An enhanced tabbed interface component that provides advanced features like URL 
   <ConditionalTabsExample />
 </AutoExtractPreview>
 
+### Compact Layout (Default)
+
+Tabs only take up the space they need, leaving the rest of the container width available.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/tabs-container-examples.tsx" 
+  functionName="CompactLayoutExample"
+>
+  <CompactLayoutExample />
+</AutoExtractPreview>
+
+### Full Width Layout
+
+Tabs spread across the entire container width for a more prominent appearance.
+
+<AutoExtractPreview 
+  source="components/data-display-examples/tabs-container-examples.tsx" 
+  functionName="FullWidthLayoutExample"
+>
+  <FullWidthLayoutExample />
+</AutoExtractPreview>
+
 ## API Reference
 
 ### TabsContainer
@@ -134,6 +159,11 @@ The main container component for tabbed interfaces.
       type: 'boolean',
       default: 'true',
       description: 'Whether to persist tab state in URL',
+    },
+    tabsLayout: {
+      type: '"compact" | "full"',
+      default: '"compact"',
+      description: 'Whether tabs should be compact (only take needed space) or full width (spread across container)',
     },
   }}
 />
