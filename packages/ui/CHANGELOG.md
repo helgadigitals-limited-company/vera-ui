@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.3.0...v1.3.1) (2025-10-23)
+
+### 🐛 Bug Fixes
+
+* added a tabLayout prop to control the layout of tabList either to be compact or full with compact as default ([1c3503c](https://github.com/helgadigitals-limited-company/vera-ui/commit/1c3503c207c92f7435b03c7a295ac04124b3df6a))
+
 ## [1.3.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.2.2...v1.3.0) (2025-10-19)
 
 ### 🚀 Features
