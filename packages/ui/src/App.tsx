@@ -425,7 +425,6 @@ function ComponentsPage() {
         persistInUrl={true}
         urlParamName="category"
         containerHeight="600px"
-        onTabChange={(value) => console.log("Category changed:", value)}
       />
     </div>
   );
