@@ -140,15 +140,10 @@ export function AvatarWithImage() {
       <Avatar className="h-24 w-24 overflow-hidden">
         <AvatarImage 
           src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=300&h=300&crop=faces&fit=crop"
-          alt="Profile"
+          alt="me"
           className="object-cover rounded-full"
         />
         <AvatarFallback>JD</AvatarFallback>
-      </Avatar>
-      
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-        <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     </div>
   );
