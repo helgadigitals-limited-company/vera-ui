@@ -197,13 +197,13 @@ export function ProductCardExample() {
   return (
     <Card className="w-[300px]">
       <CardHeader className="p-0">
-        <AspectRatio ratio={16 / 9}>
+        <AspectRatio ratio={4 / 3} className="bg-muted rounded-t-lg overflow-hidden">
           <Image
-            src="/api/placeholder/400/225"
+            src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=600"
             alt="Product"
-            width={400}
-            height={225}
-            className="rounded-t-lg object-cover w-full h-full"
+            fill
+            sizes="300px"
+            className="object-contain"
           />
         </AspectRatio>
       </CardHeader>
@@ -229,7 +229,6 @@ export function ProductCardExample() {
     </Card>
   );
 }
-
 export function NotificationCardExample() {
   const notifications = [
     {

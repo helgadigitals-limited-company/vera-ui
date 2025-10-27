@@ -134,18 +134,20 @@ export function AvatarGroupExample() {
     </div>
   );
 }
-
-export function AvatarWithImage(){
+export function AvatarWithImage() {
   return (
-    <>
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
+    <div className="flex space-x-4">
+      <Avatar className="h-24 w-24 overflow-hidden">
+        <AvatarImage 
+          src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=300&h=300&crop=faces&fit=crop"
+          alt="me"
+          className="object-cover rounded-full"
+        />
+        <AvatarFallback>JD</AvatarFallback>
       </Avatar>
-    </>
-  )
+    </div>
+  );
 }
-
 export function UserListExample() {
   const users = [
     {
