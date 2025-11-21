@@ -3,7 +3,11 @@ title: Collapsible
 description: A small wrapper around @radix-ui/react-collapsible.
 ---
 
-import CollapsibleExample from "@/components/data-display-examples/collapsible.example";
+
+import { AutoExtractPreview } from "@/components/component-preview"
+import { TypeTable } from 'fumadocs-ui/components/type-table'
+import { BasicCollapsibleExample, OpenByDefaultExample, AccordionExample, ProgressiveFormExample, TableRowExample } from '@/components/data-display-examples/collapsible-example'
+
 
 
 
@@ -15,12 +19,48 @@ A small wrapper around `@radix-ui/react-collapsible` that provides three exporte
 - `CollapsibleTrigger` — the button/element that toggles open/closed
 - `CollapsibleContent` — the content shown when open
 
-<CollapsibleExample />
+## Featured
+
+<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="BasicCollapsibleExample">
+  <BasicCollapsibleExample />
+</AutoExtractPreview>
+
+## Examples
+
+### Basic
+
+<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="BasicCollapsibleExample">
+  <BasicCollapsibleExample />
+</AutoExtractPreview>
+
+### Open by default
+
+<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="OpenByDefaultExample">
+  <OpenByDefaultExample />
+</AutoExtractPreview>
+
+### Accordion (only one open)
+
+<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="AccordionExample">
+  <AccordionExample />
+</AutoExtractPreview>
+
+### Progressive form (advanced settings)
+
+<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="ProgressiveFormExample">
+  <ProgressiveFormExample />
+</AutoExtractPreview>
+
+### Table / row details
+
+<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="TableRowExample">
+  <TableRowExample />
+</AutoExtractPreview>
 
 ## Quick usage
 
 ```tsx
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from './collapsible'
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@helgadigitals/vera-ui'
 
 <Collapsible defaultOpen={false}>
   <CollapsibleTrigger asChild>
@@ -33,3 +73,49 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from './collapsib
     </div>
   </CollapsibleContent>
 </Collapsible>
+```
+
+## Features
+
+- Thin wrapper around `@radix-ui/react-collapsible` with local project styling.
+- Forwards all props (className, aria-*, events) to Radix primitives.
+- Supports both controlled and uncontrolled APIs.
+- Works with `asChild` to render semantic triggers (button, link).
+
+## Use Cases
+
+### Content display
+Use `Collapsible` to hide optional or verbose content and reduce visual noise. Great for article excerpts, product details, and user bios.
+
+### FAQ / Accordion
+Render a list of question/answer items. Use the controlled API (`open` + `onOpenChange`) to implement accordion behaviour (only one item open at a time).
+
+### Progressive disclosure
+Hide advanced form controls or secondary settings behind a collapsible to simplify long forms.
+
+### Table / list item details
+Reveal row-level details or actions without navigating away from the list or table view.
+
+## API Reference
+
+<TypeTable
+  type={{
+    defaultOpen: { type: 'boolean', description: 'Whether the collapsible is open by default (uncontrolled).' },
+    open: { type: 'boolean', description: 'Controlled open state.' },
+    onOpenChange: { type: '(open: boolean) => void', description: 'Callback when open state changes.' },
+    asChild: { type: 'boolean', description: 'If true, renders child as the trigger element (on CollapsibleTrigger).' },
+  }}
+/>
+
+## Accessibility & Best Practices
+
+- Prefer `asChild` when you need the trigger to be a semantic button or link.
+- Use the controlled API for accordions to coordinate focus and keyboard navigation.
+- Avoid very large content blocks inside a collapsible; paginate or lazy-load if needed.
+
+---
+
+*If you want, I can also:*
+- add simple height animation CSS for `CollapsibleContent`,
+- produce a `collapsible.stories.tsx` for Storybook,
+- or create a small `Accordion` wrapper component that enforces single-open behavior.
