@@ -1,4 +1,10 @@
-import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from "@helgadigitals/vera-ui";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
+  Button,
+} from "@helgadigitals/vera-ui";
 import { MapPin, Calendar, Mail, User } from "lucide-react";
 
 export function BasicAvatarExample() {
@@ -7,11 +13,11 @@ export function BasicAvatarExample() {
       <Avatar>
         <AvatarFallback>JD</AvatarFallback>
       </Avatar>
-      
+
       <Avatar>
         <AvatarFallback>JS</AvatarFallback>
       </Avatar>
-      
+
       <Avatar>
         <AvatarFallback>BJ</AvatarFallback>
       </Avatar>
@@ -25,19 +31,19 @@ export function AvatarSizesExample() {
       <Avatar className="h-6 w-6">
         <AvatarFallback className="text-xs">U</AvatarFallback>
       </Avatar>
-      
+
       <Avatar className="h-8 w-8">
         <AvatarFallback className="text-sm">U</AvatarFallback>
       </Avatar>
-      
+
       <Avatar className="h-10 w-10">
         <AvatarFallback>U</AvatarFallback>
       </Avatar>
-      
+
       <Avatar className="h-12 w-12">
         <AvatarFallback className="text-lg">U</AvatarFallback>
       </Avatar>
-      
+
       <Avatar className="h-16 w-16">
         <AvatarFallback className="text-xl">U</AvatarFallback>
       </Avatar>
@@ -52,29 +58,27 @@ export function AvatarFallbackExample() {
       <Avatar>
         <AvatarFallback>JD</AvatarFallback>
       </Avatar>
-      
+
       {/* Another set of initials */}
       <Avatar>
         <AvatarFallback>BK</AvatarFallback>
       </Avatar>
-      
+
       {/* Simple initials */}
       <Avatar>
         <AvatarFallback>JS</AvatarFallback>
       </Avatar>
-      
+
       {/* Custom fallback with icon */}
       <Avatar>
         <AvatarFallback>
           <User className="h-4 w-4" />
         </AvatarFallback>
       </Avatar>
-      
+
       {/* Custom colored fallback */}
       <Avatar>
-        <AvatarFallback className="bg-blue-500 text-white">
-          AB
-        </AvatarFallback>
+        <AvatarFallback className="bg-blue-500 text-white">AB</AvatarFallback>
       </Avatar>
     </div>
   );
@@ -90,7 +94,11 @@ export function AvatarGroupExample() {
   ];
 
   const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
   };
 
   const displayUsers = users.slice(0, 4);
@@ -121,7 +129,9 @@ export function AvatarGroupExample() {
         <div className="flex space-x-2">
           {displayUsers.map((user, index) => (
             <Avatar key={index} className="h-8 w-8">
-              <AvatarFallback className="text-xs">{getInitials(user.name)}</AvatarFallback>
+              <AvatarFallback className="text-xs">
+                {getInitials(user.name)}
+              </AvatarFallback>
             </Avatar>
           ))}
           {remainingCount > 0 && (
@@ -138,7 +148,7 @@ export function AvatarWithImage() {
   return (
     <div className="flex space-x-4">
       <Avatar className="h-24 w-24 overflow-hidden">
-        <AvatarImage 
+        <AvatarImage
           src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=300&h=300&crop=faces&fit=crop"
           alt="me"
           className="object-cover rounded-full"
@@ -155,56 +165,69 @@ export function UserListExample() {
       name: "John Doe",
       email: "john@example.com",
       status: "online",
-      role: "Admin"
+      role: "Admin",
     },
     {
       id: 2,
       name: "Jane Smith",
       email: "jane@example.com",
       status: "offline",
-      role: "Editor"
+      role: "Editor",
     },
     {
       id: 3,
       name: "Bob Johnson",
       email: "bob@example.com",
       status: "away",
-      role: "User"
+      role: "User",
     },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      case 'offline': return 'bg-gray-500';
-      default: return 'bg-gray-500';
+      case "online":
+        return "bg-green-500";
+      case "away":
+        return "bg-yellow-500";
+      case "offline":
+        return "bg-gray-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
   const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
   };
 
   return (
     <div className="space-y-4">
       {users.map((user) => (
-        <div key={user.id} className="flex items-center space-x-4 p-4 border rounded-lg">
+        <div
+          key={user.id}
+          className="flex items-center space-x-4 p-4 border rounded-lg"
+        >
           <div className="relative">
             <Avatar>
               <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
             </Avatar>
-            <div className={`absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-white ${getStatusColor(user.status)}`} />
+            <div
+              className={`absolute -bottom-1 -right-1 h-3 w-3 rounded-full border-2 border-white ${getStatusColor(
+                user.status
+              )}`}
+            />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">
               {user.name}
             </p>
-            <p className="text-sm text-gray-500 truncate">
-              {user.email}
-            </p>
+            <p className="text-sm text-gray-500 truncate">{user.email}</p>
           </div>
-          <Badge variant={user.role === 'Admin' ? 'default' : 'secondary'}>
+          <Badge variant={user.role === "Admin" ? "default" : "secondary"}>
             {user.role}
           </Badge>
         </div>
@@ -220,19 +243,23 @@ export function ProfileHeaderExample() {
         <Avatar className="h-24 w-24 mx-auto sm:mx-0">
           <AvatarFallback className="text-2xl">SJ</AvatarFallback>
         </Avatar>
-        
+
         <div className="flex-1 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Sarah Johnson</h1>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Sarah Johnson
+              </h1>
               <p className="text-gray-600">Senior Frontend Developer</p>
             </div>
             <div className="mt-3 sm:mt-0 flex justify-center sm:justify-end space-x-2">
-              <Button variant="outline" size="sm">Message</Button>
+              <Button variant="outline" size="sm">
+                Message
+              </Button>
               <Button size="sm">Follow</Button>
             </div>
           </div>
-          
+
           <div className="mt-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-600">
             <div className="flex items-center justify-center sm:justify-start">
               <MapPin className="h-4 w-4 mr-1" />
@@ -247,7 +274,7 @@ export function ProfileHeaderExample() {
               sarah@example.com
             </div>
           </div>
-          
+
           <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
             <Badge variant="secondary">React</Badge>
             <Badge variant="secondary">TypeScript</Badge>

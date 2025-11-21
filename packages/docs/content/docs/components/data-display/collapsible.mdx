@@ -1,0 +1,35 @@
+---
+title: Collapsible
+description: A small wrapper around @radix-ui/react-collapsible.
+---
+
+import CollapsibleExample from "@/components/data-display-examples/collapsible.example";
+
+
+
+# Collapsible
+
+A small wrapper around `@radix-ui/react-collapsible` that provides three exported components:
+
+- `Collapsible` — the Root (container)
+- `CollapsibleTrigger` — the button/element that toggles open/closed
+- `CollapsibleContent` — the content shown when open
+
+<CollapsibleExample />
+
+## Quick usage
+
+```tsx
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from './collapsible'
+
+<Collapsible defaultOpen={false}>
+  <CollapsibleTrigger asChild>
+    <button>Show details</button>
+  </CollapsibleTrigger>
+
+  <CollapsibleContent>
+    <div>
+      {/* your content */}
+    </div>
+  </CollapsibleContent>
+</Collapsible>
