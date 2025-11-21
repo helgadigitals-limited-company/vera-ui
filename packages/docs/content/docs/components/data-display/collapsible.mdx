@@ -1,27 +1,57 @@
 ---
 title: Collapsible
-description: A small wrapper around @radix-ui/react-collapsible.
+description: A lightweight wrapper around @radix-ui/react-collapsible that provides an accessible and flexible way to show and hide content in your application.
 ---
 
-
-import { AutoExtractPreview } from "@/components/component-preview"
-import { TypeTable } from 'fumadocs-ui/components/type-table'
-import { BasicCollapsibleExample, OpenByDefaultExample, AccordionExample, ProgressiveFormExample, TableRowExample } from '@/components/data-display-examples/collapsible-example'
-
-
-
-
-# Collapsible
-
-A small wrapper around `@radix-ui/react-collapsible` that provides three exported components:
-
-- `Collapsible` — the Root (container)
-- `CollapsibleTrigger` — the button/element that toggles open/closed
-- `CollapsibleContent` — the content shown when open
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import {
+  BasicCollapsibleExample,
+  OpenByDefaultExample,
+  AccordionExample,
+  ProgressiveFormExample,
+  TableRowExample,
+} from "@/components/data-display-examples/collapsible-examples";
 
 ## Featured
 
-<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="BasicCollapsibleExample">
+- **Accessible** — Built on Radix UI with proper ARIA attributes and keyboard navigation
+- **Flexible** — Works with both controlled and uncontrolled state
+- **Composable** — Use asChild to render custom trigger elements
+- **Customizable** — Forward all props including className, styles, and event handlers
+- **Lightweight** — Minimal wrapper that doesn't add unnecessary complexity
+
+## Installation
+
+Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+<Tab value="pnpm">
+      ```bash
+       bash pnpm add @radix-ui/react-collapsible
+      ```
+
+  </Tab>
+  <Tab value="npm">
+```bash
+    npm install @radix-ui/react-collapsible
+```
+  </Tab>
+  <Tab value="yarn">
+```bash
+    yarn add @radix-ui/react-collapsible
+```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic Usage
+
+<AutoExtractPreview
+  source="components/data-display-examples/collapsible-examples.tsx"
+  functionName="BasicCollapsibleExample"
+>
   <BasicCollapsibleExample />
 </AutoExtractPreview>
 
@@ -29,38 +59,57 @@ A small wrapper around `@radix-ui/react-collapsible` that provides three exporte
 
 ### Basic
 
-<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="BasicCollapsibleExample">
+<AutoExtractPreview
+  source="components/data-display-examples/collapsible-examples.tsx"
+  functionName="BasicCollapsibleExample"
+>
   <BasicCollapsibleExample />
 </AutoExtractPreview>
 
 ### Open by default
 
-<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="OpenByDefaultExample">
+<AutoExtractPreview
+  source="components/data-display-examples/collapsible-examples.tsx"
+  functionName="OpenByDefaultExample"
+>
   <OpenByDefaultExample />
 </AutoExtractPreview>
 
 ### Accordion (only one open)
 
-<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="AccordionExample">
+<AutoExtractPreview
+  source="components/data-display-examples/collapsible-examples.tsx"
+  functionName="AccordionExample"
+>
   <AccordionExample />
 </AutoExtractPreview>
 
 ### Progressive form (advanced settings)
 
-<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="ProgressiveFormExample">
+<AutoExtractPreview
+  source="components/data-display-examples/collapsible-examples.tsx"
+  functionName="ProgressiveFormExample"
+>
   <ProgressiveFormExample />
 </AutoExtractPreview>
 
 ### Table / row details
 
-<AutoExtractPreview source="components/data-display-examples/collapsible-examples.tsx" functionName="TableRowExample">
+<AutoExtractPreview
+  source="components/data-display-examples/collapsible-examples.tsx"
+  functionName="TableRowExample"
+>
   <TableRowExample />
 </AutoExtractPreview>
 
 ## Quick usage
 
 ```tsx
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@helgadigitals/vera-ui'
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@helgadigitals/vera-ui";
 
 <Collapsible defaultOpen={false}>
   <CollapsibleTrigger asChild>
@@ -68,42 +117,54 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@helgadigit
   </CollapsibleTrigger>
 
   <CollapsibleContent>
-    <div>
-      {/* your content */}
-    </div>
+    <div>{/* your content */}</div>
   </CollapsibleContent>
-</Collapsible>
+</Collapsible>;
 ```
 
 ## Features
 
 - Thin wrapper around `@radix-ui/react-collapsible` with local project styling.
-- Forwards all props (className, aria-*, events) to Radix primitives.
+- Forwards all props (className, aria-\*, events) to Radix primitives.
 - Supports both controlled and uncontrolled APIs.
 - Works with `asChild` to render semantic triggers (button, link).
 
 ## Use Cases
 
 ### Content display
+
 Use `Collapsible` to hide optional or verbose content and reduce visual noise. Great for article excerpts, product details, and user bios.
 
 ### FAQ / Accordion
+
 Render a list of question/answer items. Use the controlled API (`open` + `onOpenChange`) to implement accordion behaviour (only one item open at a time).
 
 ### Progressive disclosure
+
 Hide advanced form controls or secondary settings behind a collapsible to simplify long forms.
 
 ### Table / list item details
+
 Reveal row-level details or actions without navigating away from the list or table view.
 
 ## API Reference
 
 <TypeTable
   type={{
-    defaultOpen: { type: 'boolean', description: 'Whether the collapsible is open by default (uncontrolled).' },
-    open: { type: 'boolean', description: 'Controlled open state.' },
-    onOpenChange: { type: '(open: boolean) => void', description: 'Callback when open state changes.' },
-    asChild: { type: 'boolean', description: 'If true, renders child as the trigger element (on CollapsibleTrigger).' },
+    defaultOpen: {
+      type: "boolean",
+      description: "Whether the collapsible is open by default (uncontrolled).",
+    },
+    open: { type: "boolean", description: "Controlled open state." },
+    onOpenChange: {
+      type: "(open: boolean) => void",
+      description: "Callback when open state changes.",
+    },
+    asChild: {
+      type: "boolean",
+      description:
+        "If true, renders child as the trigger element (on CollapsibleTrigger).",
+    },
   }}
 />
 
@@ -115,7 +176,8 @@ Reveal row-level details or actions without navigating away from the list or tab
 
 ---
 
-*If you want, I can also:*
+_If you want, I can also:_
+
 - add simple height animation CSS for `CollapsibleContent`,
 - produce a `collapsible.stories.tsx` for Storybook,
 - or create a small `Accordion` wrapper component that enforces single-open behavior.
