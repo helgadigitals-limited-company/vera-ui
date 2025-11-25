@@ -10,13 +10,23 @@ import {
 } from "@helgadigitals/vera-ui";
 
 export function BasicCollapsibleExample() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="max-w-xl">
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Collapsible
+        open={isOpen}
+        onOpenChange={(open) => {
+          console.log("Collapsible onOpenChange ->", open);
+          setIsOpen(open);
+        }}
+      >
         <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between px-4 py-3 text-left border rounded hover:bg-gray-50 transition-colors">
+          {/* add an onClick so we can see if the button receives the click */}
+          <button
+            onClick={() => console.log("trigger button clicked")}
+            className="w-full flex items-center justify-between px-4 py-3 text-left border rounded  transition-colors"
+          >
             <span className="font-medium">Show details</span>
             {isOpen ? (
               <ChevronUp className="h-4 w-4" aria-hidden />
@@ -27,17 +37,8 @@ export function BasicCollapsibleExample() {
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className="px-4 py-3 text-sm border border-t-0 rounded-b bg-gray-50">
-            <p className="mb-2">
-              This is the collapsible content area. You can place any content
-              here:
-            </p>
-            <ul className="list-disc list-inside space-y-1 text-gray-700">
-              <li>Text paragraphs and descriptions</li>
-              <li>Forms and input fields</li>
-              <li>Lists and data tables</li>
-              <li>Images and media</li>
-            </ul>
+          <div className="px-4 py-3 text-sm border border-t-0 rounded-b ">
+            <p className="mb-2">This is the collapsible content area.</p>
           </div>
         </CollapsibleContent>
       </Collapsible>
@@ -52,7 +53,7 @@ export function OpenByDefaultExample() {
     <div className="max-w-xl">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between px-4 py-3 text-left border rounded hover:bg-gray-50 transition-colors">
+          <button className="w-full flex items-center justify-between px-4 py-3 text-left border rounded  transition-colors">
             <span className="font-medium">User Profile Settings</span>
             {isOpen ? (
               <Minus className="h-4 w-4" aria-hidden />
@@ -69,11 +70,11 @@ export function OpenByDefaultExample() {
               that users should see immediately but can dismiss if needed.
             </p>
             <div className="space-y-2">
-              <div className="flex items-center justify-between p-2 bg-white rounded border">
+              <div className="flex items-center justify-between p-2  rounded border">
                 <span>Email notifications</span>
                 <input type="checkbox" defaultChecked />
               </div>
-              <div className="flex items-center justify-between p-2 bg-white rounded border">
+              <div className="flex items-center justify-between p-2  rounded border">
                 <span>Marketing updates</span>
                 <input type="checkbox" />
               </div>
@@ -120,7 +121,7 @@ export function AccordionExample() {
             onOpenChange={(open) => setOpenId(open ? item.id : null)}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full text-left px-4 py-3 border rounded hover:bg-gray-50 transition-colors flex items-center justify-between">
+              <button className="w-full text-left px-4 py-3 border rounded  transition-colors flex items-center justify-between">
                 <span className="font-medium">{item.question}</span>
                 <ChevronDown
                   className={`h-4 w-4 transition-transform ${
@@ -132,7 +133,7 @@ export function AccordionExample() {
             </CollapsibleTrigger>
 
             <CollapsibleContent>
-              <div className="px-4 py-3 border border-t-0 rounded-b bg-gray-50 text-sm text-gray-700">
+              <div className="px-4 py-3 border border-t-0 rounded-b  text-sm text-gray-700">
                 {item.answer}
               </div>
             </CollapsibleContent>
@@ -169,7 +170,7 @@ export function ProgressiveFormExample() {
 
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <button className="flex items-center gap-2 px-3 py-2 border rounded hover:bg-gray-50 transition-colors text-sm">
+          <button className="flex items-center gap-2 px-3 py-2 border rounded  transition-colors text-sm">
             <Settings className="h-4 w-4" />
             <span>Advanced settings</span>
             {isOpen ? (
@@ -181,7 +182,7 @@ export function ProgressiveFormExample() {
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className="space-y-3 p-4 border border-t-0 rounded-b bg-gray-50">
+          <div className="space-y-3 p-4 border border-t-0 rounded-b ">
             <div>
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" />
@@ -237,9 +238,12 @@ export function TableRowExample() {
     },
   ];
 
+  // State must be outside the map - manage which row is open
+  const [openRowId, setOpenRowId] = useState<number | null>(null);
+
   return (
     <div className="border rounded overflow-hidden">
-      <div className="bg-gray-100 px-4 py-2 font-medium text-sm border-b">
+      <div className="bg-background px-4 py-2 font-medium text-sm border-b">
         <div className="grid grid-cols-4 gap-4">
           <div>Project</div>
           <div>Status</div>
@@ -248,10 +252,10 @@ export function TableRowExample() {
         </div>
       </div>
       {rows.map((row) => {
-        const [isOpen, setIsOpen] = useState(false);
+        const isOpen = openRowId === row.id;
         return (
           <div key={row.id} className="border-b last:border-b-0">
-            <div className="px-4 py-3 grid grid-cols-4 gap-4 items-center hover:bg-gray-50">
+            <div className="px-4 py-3 grid grid-cols-4 gap-4 items-center ">
               <div className="font-medium">{row.name}</div>
               <div>
                 <span
@@ -266,14 +270,17 @@ export function TableRowExample() {
               </div>
               <div className="text-sm text-gray-600">{row.date}</div>
               <div className="text-right">
-                <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+                <Collapsible
+                  open={isOpen}
+                  onOpenChange={(open) => setOpenRowId(open ? row.id : null)}
+                >
                   <CollapsibleTrigger asChild>
-                    <button className="px-3 py-1 text-sm border rounded hover:bg-gray-100 transition-colors">
+                    <button className="px-3 py-1 text-sm border rounded  transition-colors">
                       {isOpen ? "Hide" : "Details"}
                     </button>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="mt-3 p-3 bg-gray-50 rounded text-sm space-y-2">
+                    <div className="mt-3 p-3  rounded text-sm space-y-2">
                       <div>
                         <span className="font-medium">Description:</span>{" "}
                         {row.details}

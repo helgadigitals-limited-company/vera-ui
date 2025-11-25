@@ -5,6 +5,7 @@ description: A lightweight wrapper around @radix-ui/react-collapsible that provi
 
 import { AutoExtractPreview } from "@/components/component-preview";
 import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import {
   BasicCollapsibleExample,
   OpenByDefaultExample,
@@ -13,7 +14,7 @@ import {
   TableRowExample,
 } from "@/components/data-display-examples/collapsible-examples";
 
-## Featured
+## Features
 
 - **Accessible** — Built on Radix UI with proper ARIA attributes and keyboard navigation
 - **Flexible** — Works with both controlled and uncontrolled state
@@ -23,30 +24,17 @@ import {
 
 ## Installation
 
-Installation
-
-<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
-<Tab value="pnpm">
-      ```bash
-       bash pnpm add @radix-ui/react-collapsible
-      ```
-
-  </Tab>
-  <Tab value="npm">
-```bash
-    npm install @radix-ui/react-collapsible
-```
-  </Tab>
-  <Tab value="yarn">
-```bash
-    yarn add @radix-ui/react-collapsible
-```
-  </Tab>
+<Tabs groupId="package" items={["pnpm", "npm", "yarn"]}>
+  <Tab value="pnpm">```bash pnpm add @helgadigitals/vera-ui ```</Tab>
+  <Tab value="npm">```bash npm install @helgadigitals/vera-ui ```</Tab>
+  <Tab value="yarn">```bash yarn add @helgadigitals/vera-ui ```</Tab>
 </Tabs>
 
 ## Usage
 
 ### Basic Usage
+
+{" "}
 
 <AutoExtractPreview
   source="components/data-display-examples/collapsible-examples.tsx"
@@ -56,15 +44,6 @@ Installation
 </AutoExtractPreview>
 
 ## Examples
-
-### Basic
-
-<AutoExtractPreview
-  source="components/data-display-examples/collapsible-examples.tsx"
-  functionName="BasicCollapsibleExample"
->
-  <BasicCollapsibleExample />
-</AutoExtractPreview>
 
 ### Open by default
 
@@ -122,12 +101,29 @@ import {
 </Collapsible>;
 ```
 
-## Features
+## API Reference
 
-- Thin wrapper around `@radix-ui/react-collapsible` with local project styling.
-- Forwards all props (className, aria-\*, events) to Radix primitives.
-- Supports both controlled and uncontrolled APIs.
-- Works with `asChild` to render semantic triggers (button, link).
+<TypeTable
+  type={{
+    defaultOpen: {
+      type: "boolean",
+      description: "Whether the collapsible is open by default (uncontrolled).",
+    },
+    open: {
+      type: "boolean",
+      description: "Controlled open state.",
+    },
+    onOpenChange: {
+      type: "(open: boolean) => void",
+      description: "Callback when open state changes.",
+    },
+    asChild: {
+      type: "boolean",
+      description:
+        "If true, renders child as the trigger element (on CollapsibleTrigger).",
+    },
+  }}
+/>
 
 ## Use Cases
 
@@ -147,37 +143,16 @@ Hide advanced form controls or secondary settings behind a collapsible to simpli
 
 Reveal row-level details or actions without navigating away from the list or table view.
 
-## API Reference
-
-<TypeTable
-  type={{
-    defaultOpen: {
-      type: "boolean",
-      description: "Whether the collapsible is open by default (uncontrolled).",
-    },
-    open: { type: "boolean", description: "Controlled open state." },
-    onOpenChange: {
-      type: "(open: boolean) => void",
-      description: "Callback when open state changes.",
-    },
-    asChild: {
-      type: "boolean",
-      description:
-        "If true, renders child as the trigger element (on CollapsibleTrigger).",
-    },
-  }}
-/>
-
 ## Accessibility & Best Practices
 
 - Prefer `asChild` when you need the trigger to be a semantic button or link.
 - Use the controlled API for accordions to coordinate focus and keyboard navigation.
 - Avoid very large content blocks inside a collapsible; paginate or lazy-load if needed.
+- Ensure trigger buttons have descriptive labels for screen readers.
+- Use proper heading hierarchy within collapsible content.
 
----
+## Related Components
 
-_If you want, I can also:_
-
-- add simple height animation CSS for `CollapsibleContent`,
-- produce a `collapsible.stories.tsx` for Storybook,
-- or create a small `Accordion` wrapper component that enforces single-open behavior.
+- **[Accordion](/docs/components/data-display/accordion)** - Purpose-built accordion component
+- **[Card](/docs/components/data-display/card)** - Container for grouped content
+- **[Tabs](/docs/components/navigation/tabs)** - Alternative navigation pattern
