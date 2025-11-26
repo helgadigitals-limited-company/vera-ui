@@ -17,14 +17,13 @@ export function BasicCollapsibleExample() {
       <Collapsible
         open={isOpen}
         onOpenChange={(open) => {
-          console.log("Collapsible onOpenChange ->", open);
           setIsOpen(open);
         }}
       >
         <CollapsibleTrigger asChild>
           {/* add an onClick so we can see if the button receives the click */}
           <button
-            onClick={() => console.log("trigger button clicked")}
+            onClick={() => {}}
             className="w-full flex items-center justify-between px-4 py-3 text-left border rounded  transition-colors"
           >
             <span className="font-medium">Show details</span>
