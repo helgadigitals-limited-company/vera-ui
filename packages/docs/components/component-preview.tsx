@@ -71,7 +71,7 @@ function ${extractFunction}() {
   // If no code is provided, just show the preview
   if (!canShowTabs) {
     return (
-            <div className="my-8 rounded-xl border border-border/50 bg-card shadow-sm overflow-visible relative">
+      <div className="my-8 rounded-xl border border-border/50 bg-card shadow-sm overflow-visible relative">
         <div className="p-8">
           <div
             className="
@@ -94,49 +94,55 @@ function ${extractFunction}() {
   }
 
   return (
-      <Tabs items={["Preview", "Code"]} defaultIndex={defaultIndex}>
-        <Tab value="Preview">
-          <div className="p-8">
+    <Tabs items={["Preview", "Code"]} defaultIndex={defaultIndex}>
+      <Tab value="Preview">
+        <div className="p-8">
+          <div
+            className="
+        flex items-center justify-center min-h-[200px] 
+        bg-gradient-to-br from-background to-muted/30 
+        rounded-lg 
+        relative overflow-visible
+      "
+          >
+            {/* Subtle background pattern — must not intercept pointer events */}
             <div
-              className="
-              flex items-center justify-center min-h-[200px] 
-              bg-gradient-to-br from-background to-muted/30 
-              rounded-lg 
-              relative overflow-visible
-            "
-            >
-              {/* Subtle background pattern */}
-              <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                {children}
-              </div>
+              className="absolute inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none"
+              aria-hidden
+            />
+
+            {/* Put children on top so they receive clicks */}
+            <div className="flex flex-wrap items-center justify-center gap-4 relative z-10">
+              {children}
             </div>
           </div>
-        </Tab>
-        <Tab value="Code">
-          <div className="p-6">
-            {sourceInfo.path && sourceInfo.function && (
-              <div className="mb-4 p-3 bg-muted/50 rounded-lg border">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
-                    {sourceInfo.path}
+        </div>
+      </Tab>
+
+      <Tab value="Code">
+        <div className="p-6">
+          {sourceInfo.path && sourceInfo.function && (
+            <div className="mb-4 p-3 bg-muted/50 rounded-lg border">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
+                  {sourceInfo.path}
+                </span>
+                <span>→</span>
+                <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
+                  {sourceInfo.function}()
+                </span>
+                {hasExtractedCode && (
+                  <span className="ml-auto text-green-600 dark:text-green-400 text-xs">
+                    ✓ Auto-extracted
                   </span>
-                  <span>→</span>
-                  <span className="font-mono text-xs bg-muted px-2 py-1 rounded">
-                    {sourceInfo.function}()
-                  </span>
-                  {hasExtractedCode && (
-                    <span className="ml-auto text-green-600 dark:text-green-400 text-xs">
-                      ✓ Auto-extracted
-                    </span>
-                  )}
-                </div>
+                )}
               </div>
-            )}
-            <DynamicCodeBlock lang={lang} code={codeToDisplay} />
-          </div>
-        </Tab>
-      </Tabs>
+            </div>
+          )}
+          <DynamicCodeBlock lang={lang} code={codeToDisplay} />
+        </div>
+      </Tab>
+    </Tabs>
   );
 }
 
