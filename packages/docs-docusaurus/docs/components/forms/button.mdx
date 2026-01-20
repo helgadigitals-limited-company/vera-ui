@@ -1,0 +1,90 @@
+---
+title: Button
+description: A fundamental interactive element that triggers an action when activated. The Button component supports multiple variants, sizes, and states to fit different use cases in your application.
+---
+
+import { Button } from "@helgadigitals/vera-ui"
+import { PlusIcon } from "lucide-react"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Variants
+
+<!-- Preview removed during migration -->
+
+### Sizes
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+The Button component accepts all standard HTML button attributes plus these additional props:
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "destructive" | "outline" | "secondary" | "ghost" | "link"',
+      default: '"default"',
+      description: 'The visual style variant of the button',
+    },
+    size: {
+      type: '"default" | "sm" | "lg" | "icon"',
+      default: '"default"',
+      description: 'The size of the button',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, the button will render as its child element',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the button is disabled',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+## Accessibility
+
+The Button component follows WAI-ARIA guidelines:
+
+- **Keyboard Navigation**: Fully accessible via keyboard (Enter/Space to activate)
+- **Screen Readers**: Proper semantic button element with accessible text
+- **Focus Management**: Clear focus indicators and focus trapping when needed
+- **Disabled State**: Properly communicated to assistive technologies
+
+<Callout type="info">
+  **ARIA Labels**: For icon-only buttons, always provide an `aria-label` or `aria-describedby` attribute for screen readers.
+</Callout>
+
+<!-- Preview removed during migration -->

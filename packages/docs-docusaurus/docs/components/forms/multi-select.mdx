@@ -1,0 +1,250 @@
+---
+title: Multi Select
+description: A powerful multi-select component that allows users to choose multiple values from a dropdown list. Features include search functionality, select all/clear options, badge display for selected items, and customizable animations.
+---
+
+import { MultiSelect } from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Basic Multi Select
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### With Icons
+
+<!-- Preview removed during migration -->
+
+### Different Variants
+
+<!-- Preview removed during migration -->
+
+### With Animation
+
+<!-- Preview removed during migration -->
+
+### Custom Max Count
+
+<!-- Preview removed during migration -->
+
+### Form Integration
+
+<!-- Preview removed during migration -->
+
+### Modal Popover
+
+<!-- Preview removed during migration -->
+
+### Large Dataset
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+<TypeTable
+  type={{
+    options: {
+      type: 'Array<{label: string, value: string, icon?: ComponentType}>',
+      description: 'Array of option objects to display',
+    },
+    onValueChange: {
+      type: '(values: string[]) => void',
+      description: 'Callback fired when selected values change',
+    },
+    defaultValue: {
+      type: 'string[]',
+      default: '[]',
+      description: 'Default selected values',
+    },
+    placeholder: {
+      type: 'string',
+      default: '"Select options"',
+      description: 'Placeholder text when no values are selected',
+    },
+    animation: {
+      type: 'number',
+      default: '0',
+      description: 'Animation duration in seconds for badge effects',
+    },
+    maxCount: {
+      type: 'number',
+      default: '3',
+      description: 'Maximum number of badges to display before showing "+X more"',
+    },
+    modalPopover: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the popover should be modal',
+    },
+    variant: {
+      type: '"default" | "secondary" | "destructive" | "inverted"',
+      default: '"default"',
+      description: 'Visual style variant for selected badges',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    formValue: {
+      type: 'string[]',
+      description: 'Controlled value for form integration',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Render as child of another component',
+    },
+  }}
+/>
+
+### Option Object
+
+<TypeTable
+  type={{
+    label: {
+      type: 'string',
+      description: 'The text to display for the option',
+    },
+    value: {
+      type: 'string',
+      description: 'The unique value associated with the option',
+    },
+    icon: {
+      type: 'React.ComponentType<{className?: string}>',
+      description: 'Optional icon component to display',
+    },
+  }}
+/>
+
+## Features
+
+### Selection Management
+- **Multiple Selection**: Select/deselect multiple options
+- **Select All**: Toggle all options at once
+- **Clear All**: Remove all selections
+- **Individual Removal**: Remove individual selections via badge close buttons
+
+### Search and Filtering
+- **Real-time Search**: Type to filter options instantly
+- **Keyboard Navigation**: Navigate with arrow keys and select with Enter
+- **No Results**: Shows "No results found" when search yields no matches
+
+### Visual Feedback
+- **Badge Display**: Selected items shown as removable badges
+- **Count Overflow**: Shows "+X more" when exceeding maxCount
+- **Animation Support**: Optional bounce animation for selected badges
+- **Variants**: Different visual styles for badges
+
+### Accessibility
+- **Keyboard Support**: Full keyboard navigation and selection
+- **Screen Reader**: Proper ARIA attributes and announcements
+- **Focus Management**: Proper focus handling throughout interaction
+
+## Accessibility
+
+The MultiSelect component follows WAI-ARIA guidelines:
+
+- **Keyboard Navigation**:
+  - Space or Enter opens the dropdown
+  - Arrow keys navigate between options
+  - Type to search for options
+  - Escape closes the dropdown
+  - Backspace removes last selected item when search is empty
+- **Screen Readers**: Proper ARIA attributes and selection announcements
+- **Focus Management**: Focus is properly managed between trigger and content
+
+<Callout type="info">
+  **Search Functionality**: Users can type while the dropdown is open to filter options. The search is case-insensitive and matches option labels.
+</Callout>
+
+## Badge Variants
+
+The selected items are displayed as badges with different visual styles:
+
+- **Default**: Standard badge appearance
+- **Secondary**: Muted badge appearance
+- **Destructive**: Red badge appearance for warnings/errors
+- **Inverted**: Inverted color scheme
+
+## Best Practices
+
+### Provide Clear Labels
+Always include descriptive labels for your multi-select components:
+
+```tsx
+// Good: Clear label
+<div className="space-y-2">
+  <label className="text-sm font-medium">
+    Programming Languages
+  </label>
+  <MultiSelect
+    options={languages}
+    onValueChange={setSelectedLanguages}
+    placeholder="Select programming languages"
+  />
+</div>
+```
+
+### Set Appropriate Max Count
+Consider the available space when setting maxCount:
+
+```tsx
+// For narrow containers
+<MultiSelect maxCount={2} />
+
+// For wider containers
+<MultiSelect maxCount={5} />
+```
+
+### Use Icons for Better UX
+Icons help users quickly identify options:
+
+```tsx
+const options = [
+  { value: "email", label: "Email", icon: Mail },
+  { value: "phone", label: "Phone", icon: Phone },
+  { value: "sms", label: "SMS", icon: MessageSquare },
+]
+```
+
+## Styling
+
+The MultiSelect component supports custom styling through CSS classes:
+
+```tsx
+<MultiSelect
+  className="w-full border-blue-300 focus-within:border-blue-500"
+  variant="secondary"
+  // ... other props
+/>
+```
+
+The badges inherit the variant styling but can also be customized through the component's CSS variables.

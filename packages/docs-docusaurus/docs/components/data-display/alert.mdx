@@ -1,0 +1,213 @@
+---
+title: Alert
+description: An alert component for displaying important messages, notifications, and system feedback to users. Provides clear visual hierarchy and supports different severity levels.
+
+---
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+} from "@helgadigitals/vera-ui";
+import { 
+  Terminal, 
+  AlertCircle, 
+  CheckCircle, 
+  Info, 
+  AlertTriangle,
+  XCircle,
+  X
+} from "lucide-react";
+
+## Features
+
+- **Multiple variants** - Default and destructive styles
+- **Flexible content** - Title, description, and custom content
+- **Icon support** - Visual indicators for alert types
+- **Accessible** - Built with proper ARIA attributes
+- **Responsive** - Adapts to container width
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Alert
+
+<!-- Preview removed during migration -->
+
+### Alert Variants
+
+<!-- Preview removed during migration -->
+
+### Simple Alerts
+
+<!-- Preview removed during migration -->
+
+### Interactive Alerts
+
+<!-- Preview removed during migration -->
+
+### Status Notifications
+
+
+<!-- Preview removed during migration -->
+
+### Form Validation Alerts
+
+<!-- Preview removed during migration -->
+
+### System Announcements
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Alert
+
+The main alert container component.
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "destructive"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Alert content',
+    },
+  }}
+/>
+
+### AlertTitle
+
+The alert title/heading component.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Title content',
+    },
+  }}
+/>
+
+### AlertDescription
+
+The alert description/content component.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Description content',
+    },
+  }}
+/>
+
+## Use Cases
+
+### System Messages
+- **Status updates** - System maintenance, downtime notifications
+- **Feature announcements** - New features, updates, improvements
+- **Security alerts** - Security updates, breach notifications
+- **Performance warnings** - Resource usage, capacity alerts
+
+### User Feedback
+- **Form validation** - Field errors, validation messages
+- **Action confirmations** - Success messages, completion status
+- **Error notifications** - Failed operations, connectivity issues
+- **Progress updates** - Long-running operation status
+
+### Onboarding & Help
+- **Welcome messages** - First-time user guidance
+- **Tips and hints** - Feature discovery, usage tips
+- **Tutorial steps** - Step-by-step guidance
+- **Context help** - Relevant information for current state
+
+### Business Communications
+- **Promotional messages** - Feature promotions, offers
+- **Policy updates** - Terms of service, privacy policy changes
+- **Survey requests** - Feedback collection, user research
+- **Event announcements** - Webinars, conferences, meetings
+
+### Application State
+- **Loading states** - Processing, uploading, downloading
+- **Empty states** - No data available, search results
+- **Error boundaries** - Application errors, fallback content
+- **Offline notifications** - Connectivity status, sync issues
+
+## Accessibility
+
+The Alert component includes:
+
+- **ARIA role** - `alert` role for important messages
+- **Screen reader support** - Proper announcement of alert content
+- **Keyboard navigation** - Focusable interactive elements
+- **Color contrast** - Sufficient contrast for all variants
+- **Clear hierarchy** - Proper heading structure with titles
+
+## Best Practices
+
+### Content Guidelines
+- **Clear messaging** - Use concise, actionable language
+- **Appropriate tone** - Match tone to alert severity
+- **Specific information** - Provide relevant details and context
+- **Action items** - Include clear next steps when needed
+
+### Visual Design
+- **Consistent styling** - Maintain design system consistency
+- **Appropriate icons** - Use meaningful, recognizable icons
+- **Color psychology** - Use colors that match message intent
+- **Proper spacing** - Ensure readable layout and spacing
+
+### User Experience
+- **Timely display** - Show alerts when relevant and actionable
+- **Dismissible alerts** - Allow users to close non-critical alerts
+- **Persistent importance** - Keep critical alerts visible until resolved
+- **Progressive disclosure** - Don't overwhelm with too many alerts
+
+### Technical Implementation
+- **Performance** - Avoid excessive alert rendering
+- **State management** - Properly manage alert visibility state
+- **Accessibility** - Ensure alerts are announced to screen readers
+- **Responsive design** - Ensure alerts work on all screen sizes
+
+## Related Components
+
+- **[Badge](/docs/components/data-display/badge)** - Status indicators often used with alerts
+- **[Toast](/docs/components/feedback/toast)** - Temporary notifications and messages
+- **[Dialog](/docs/components/overlay/dialog)** - Modal dialogs for important confirmations
+- **[Card](/docs/components/data-display/card)** - Content containers that may include alerts

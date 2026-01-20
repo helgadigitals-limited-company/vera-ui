@@ -1,0 +1,228 @@
+---
+title: Radio Group
+description: A radio group is a set of checkable buttons where only one can be checked at a time. Built on Radix UI's RadioGroup primitive, it provides accessible single-choice selection with keyboard navigation.
+---
+
+import { RadioGroup, RadioGroupItem, Label } from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Basic Radio Group
+
+<!-- Preview removed during migration -->
+
+### Controlled Radio Group
+
+<!-- Preview removed during migration -->
+
+### Horizontal Layout
+
+<!-- Preview removed during migration -->
+
+### With Descriptions
+
+<!-- Preview removed during migration -->
+
+### Disabled State
+
+<!-- Preview removed during migration -->
+
+### Form Integration
+
+<!-- Preview removed during migration -->
+
+### Card-style Options
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### RadioGroup Props
+
+The RadioGroup component accepts all props from Radix UI's RadioGroup component:
+
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'The controlled selected value',
+    },
+    defaultValue: {
+      type: 'string',
+      description: 'The default selected value when uncontrolled',
+    },
+    onValueChange: {
+      type: '(value: string) => void',
+      description: 'Event handler called when the selected value changes',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, prevents the user from interacting with radio buttons',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, indicates that the user must select an option',
+    },
+    name: {
+      type: 'string',
+      description: 'The name of the radio group, submitted with forms',
+    },
+    orientation: {
+      type: '"horizontal" | "vertical"',
+      default: '"vertical"',
+      description: 'The orientation of the radio group',
+    },
+    dir: {
+      type: '"ltr" | "rtl"',
+      description: 'The reading direction',
+    },
+    loop: {
+      type: 'boolean',
+      default: 'true',
+      description: 'When true, keyboard navigation will loop from last to first',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+### RadioGroupItem Props
+
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'The unique value for this radio button',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, prevents the user from interacting with this radio button',
+    },
+    id: {
+      type: 'string',
+      description: 'The id attribute, used for label association',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+## Data Attributes
+
+The following data attributes are automatically applied and can be used for styling:
+
+### RadioGroup
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-orientation` | `"horizontal"` \| `"vertical"` | The orientation of the group |
+
+### RadioGroupItem
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-state` | `"checked" \| "unchecked"` | The checked state of the radio button |
+| `data-disabled` | Present when disabled | Applied when the radio button is disabled |
+
+## Accessibility
+
+The RadioGroup component follows WAI-ARIA guidelines:
+
+- **Keyboard Navigation**: 
+  - Arrow keys move between radio buttons
+  - Space selects the focused radio button
+  - Tab moves focus to and from the radio group
+- **Screen Readers**: Proper ARIA attributes and semantic radio elements
+- **Focus Management**: Visual focus indicators and proper focus handling
+- **Grouping**: Radio buttons are properly grouped for screen readers
+
+<Callout type="info">
+  **Single Selection**: Radio groups enforce single selection - selecting one option automatically deselects others. Use checkboxes if you need multiple selection.
+</Callout>
+
+## Best Practices
+
+### Always Use Labels
+Every radio button should have an associated label:
+
+```tsx
+// Good: Properly labeled
+<div className="flex items-center space-x-2">
+  <RadioGroupItem value="option1" id="opt1" />
+  <Label htmlFor="opt1">Option 1</Label>
+</div>
+
+// Avoid: No label
+<RadioGroupItem value="option1" />
+```
+
+### Logical Grouping
+Group related options together and provide clear group labels:
+
+```tsx
+// Good: Clear grouping with descriptive heading
+<div className="space-y-3">
+  <h3 className="text-sm font-medium">Shipping Options</h3>
+  <RadioGroup>
+    </RadioGroup>
+</div>
+```
+
+### Default Selection
+Consider providing a sensible default selection:
+
+```tsx
+// Good: Reasonable default
+<RadioGroup defaultValue="standard">
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="express" id="express" />
+    <Label htmlFor="express">Express ($10)</Label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="standard" id="standard" />
+    <Label htmlFor="standard">Standard (Free)</Label>
+  </div>
+</RadioGroup>
+```
+
+## Styling
+
+The RadioGroup components support custom styling and automatically adapt to your theme:
+
+```tsx
+<RadioGroup className="space-y-4">
+  <RadioGroupItem 
+    className="border-2 border-blue-500 text-blue-500"
+    // ...props
+  />
+</RadioGroup>
+```

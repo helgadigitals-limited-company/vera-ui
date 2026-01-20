@@ -1,0 +1,198 @@
+---
+title: Badge
+description: A versatile component for displaying small pieces of information such as status indicators, labels, tags, or counts. Perfect for categorization and highlighting important details.
+---
+
+import { Badge } from "@helgadigitals/vera-ui";
+import { 
+  CheckCircle, 
+  AlertCircle, 
+  XCircle, 
+  Clock,
+  Bell,
+  Mail,
+  ShoppingCart,
+  Star
+} from "lucide-react";
+
+## Features
+
+- **Multiple variants** - Default, secondary, destructive, and outline styles
+- **Flexible content** - Text, icons, or combination
+- **Semantic rendering** - Can render as different elements using `asChild`
+- **Accessible** - Proper focus states and ARIA support
+- **Responsive** - Adapts to container and content size
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Badges
+
+<!-- Preview removed during migration -->
+
+### Status Indicators
+
+<!-- Preview removed during migration -->
+
+### Badges with Icons
+
+<!-- Preview removed during migration -->
+
+### Interactive Badges
+
+<!-- Preview removed during migration -->
+
+### Count Badges
+
+<!-- Preview removed during migration -->
+
+### Custom Styled Badges
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Badge
+
+The main badge component with support for different variants and styles.
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "secondary" | "destructive" | "outline"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Render as a child element',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Badge content',
+    },
+  }}
+/>
+
+### Variants
+
+#### Default
+Primary badge style with solid background and contrasting text.
+
+```tsx
+<Badge variant="default">Default</Badge>
+```
+
+#### Secondary
+Subtle badge style with muted colors.
+
+```tsx
+<Badge variant="secondary">Secondary</Badge>
+```
+
+#### Destructive
+Error or warning badge style with attention-grabbing colors.
+
+```tsx
+<Badge variant="destructive">Error</Badge>
+```
+
+#### Outline
+Minimal badge style with border and no background.
+
+```tsx
+<Badge variant="outline">Outline</Badge>
+```
+
+## Use Cases
+
+### Status Indication
+- **User status** - Online, offline, away, busy
+- **Order status** - Pending, processing, shipped, delivered
+- **System status** - Healthy, warning, error, maintenance
+- **Payment status** - Paid, pending, overdue, refunded
+
+### Categorization
+- **Content tags** - Technology, design, business categories
+- **User roles** - Admin, moderator, member, guest
+- **Product labels** - New, sale, featured, limited
+- **Skill tags** - Programming languages, frameworks, tools
+
+### Notifications
+- **Count indicators** - Unread messages, notifications
+- **Alert badges** - New features, updates, warnings
+- **Achievement badges** - Completed tasks, milestones
+- **Rating displays** - Star ratings, scores, rankings
+
+### Data Highlighting
+- **Priority levels** - High, medium, low priority items
+- **Severity indicators** - Critical, warning, info levels
+- **Version tags** - Release versions, build numbers
+- **Feature flags** - Beta, experimental, deprecated features
+
+## Accessibility
+
+The Badge component includes:
+
+- **Semantic markup** - Proper element structure
+- **Focus management** - Keyboard navigation support when interactive
+- **Color contrast** - WCAG compliant color combinations
+- **Screen reader support** - Descriptive content for assistive technology
+- **ARIA attributes** - Enhanced accessibility information when needed
+
+## Best Practices
+
+### Visual Design
+- **Use sparingly** - Avoid badge overload in interfaces
+- **Consistent meaning** - Same colors should indicate same types of information
+- **Appropriate sizing** - Scale badges relative to surrounding content
+- **Clear contrast** - Ensure badges stand out from background
+
+### Content Guidelines
+- **Concise text** - Keep badge labels short and descriptive
+- **Consistent language** - Use standard terminology across your application
+- **Clear hierarchy** - Different variants should indicate different importance levels
+- **Meaningful icons** - Use recognizable icons that enhance understanding
+
+### Interactive Badges
+- **Clear affordances** - Make interactive badges obviously clickable
+- **Hover states** - Provide visual feedback on interaction
+- **Focus indicators** - Ensure keyboard users can navigate effectively
+- **Accessible actions** - Include proper ARIA labels for actions
+
+### Performance
+- **Avoid excessive badges** - Large numbers of badges can impact performance
+- **Optimize icons** - Use efficient icon implementations
+- **Consider virtualization** - For lists with many badged items
+- **Lazy loading** - Load badge content when needed
+
+## Related Components
+
+- **[Alert](/docs/components/data-display/alert)** - Larger message containers for important information
+- **[Avatar](/docs/components/data-display/avatar)** - User representation that can include status badges
+- **[Card](/docs/components/data-display/card)** - Containers that often include badge decorations
+- **[Table](/docs/components/data-display/table)** - Data tables that frequently use badges in cells

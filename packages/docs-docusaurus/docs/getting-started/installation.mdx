@@ -1,0 +1,258 @@
+---
+title: Installation
+description: Get started with Vera UI, a modern React component library built with accessibility and customization in mind.
+
+---
+
+## Requirements
+
+<Callout type="info">
+  Make sure you have Node.js 22+ and a React project set up before installing Vera UI.
+</Callout>
+
+- **React**: ^18.2.0 || ^19.0.0
+- **React DOM**: ^18.2.0 || ^19.0.0  
+- **Node.js**: >=22
+
+## Install the Package
+
+<Steps>
+
+### Install Vera UI
+
+<Tabs groupId="package" items={['npm', 'pnpm', 'yarn']} persist>
+  <TabItem value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </TabItem>
+  <TabItem value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </TabItem>
+  <TabItem value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </TabItem>
+</Tabs>
+
+### Install Peer Dependencies
+
+Depending on your needs, you may need to install additional peer dependencies:
+
+<Tabs groupId="package" items={['npm', 'pnpm', 'yarn']}>
+  <TabItem value="npm">
+    ```bash
+    # For forms
+    npm install react-hook-form zod
+
+    # For routing (optional)
+    npm install react-router-dom
+
+    # For advanced table features
+    npm install @tanstack/react-table
+
+    # For date handling
+    npm install date-fns
+    ```
+  </TabItem>
+  <TabItem value="pnpm">
+    ```bash
+    # For forms
+    pnpm add react-hook-form zod
+
+    # For routing (optional)
+    pnpm add react-router-dom
+
+    # For advanced table features
+    pnpm add @tanstack/react-table
+
+    # For date handling
+    pnpm add date-fns
+    ```
+  </TabItem>
+  <TabItem value="yarn">
+    ```bash
+    # For forms
+    yarn add react-hook-form zod
+
+    # For routing (optional)
+    yarn add react-router-dom
+
+    # For advanced table features
+    yarn add @tanstack/react-table
+
+    # For date handling
+    yarn add date-fns
+    ```
+  </TabItem>
+</Tabs>
+
+### Set Up Tailwind CSS
+
+Vera UI is built with Tailwind CSS v4. Install Tailwind CSS v4 based on your framework:
+
+<Tabs groupId="framework" items={['Vite', 'Next.js']} persist>
+  <TabItem value="Vite">
+    <Tabs groupId="package" items={['npm', 'pnpm', 'yarn']} persist>
+      <TabItem value="npm">
+        ```bash
+        npm install @tailwindcss/vite tailwindcss
+        ```
+      </TabItem>
+      <TabItem value="pnpm">
+        ```bash
+        pnpm add @tailwindcss/vite tailwindcss
+        ```
+      </TabItem>
+      <TabItem value="yarn">
+        ```bash
+        yarn add @tailwindcss/vite tailwindcss
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+  <TabItem value="Next.js">
+    <Tabs groupId="package" items={['npm', 'pnpm', 'yarn']} persist>
+      <TabItem value="npm">
+        ```bash
+        npm install @tailwindcss/postcss
+        ```
+      </TabItem>
+      <TabItem value="pnpm">
+        ```bash
+        pnpm add @tailwindcss/postcss
+        ```
+      </TabItem>
+      <TabItem value="yarn">
+        ```bash
+        yarn add @tailwindcss/postcss
+        ```
+      </TabItem>
+    </Tabs>
+  </TabItem>
+</Tabs>
+
+### Configure Tailwind CSS
+
+With Tailwind CSS v4, configuration is much simpler. No `tailwind.config.js` file is needed.
+
+Configure Tailwind CSS based on your framework:
+
+<Tabs groupId="framework" items={['Vite', 'Next.js']} persist>
+  <TabItem value="Vite">
+    Add the Tailwind plugin to your Vite configuration:
+
+    ```js title="vite.config.ts"
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+    import tailwindcss from '@tailwindcss/vite'
+
+    export default defineConfig({
+      plugins: [react(), tailwindcss()],
+    })
+    ```
+  </TabItem>
+  <TabItem value="Next.js">
+    Add the Tailwind plugin to your Next.js configuration:
+
+    ```js title="next.config.js"
+    import tailwindcss from '@tailwindcss/vite'
+
+    /** @type {import('next').NextConfig} */
+    const nextConfig = {
+      experimental: {
+        // Enable CSS imports in the app directory
+        turbo: {
+          rules: {
+            '*.css': {
+              loaders: ['@tailwindcss/vite'],
+            },
+          },
+        },
+      },
+    }
+
+    export default nextConfig
+    ```
+
+    Or if using the App Router, you can also configure it in your `postcss.config.js`:
+
+    ```js title="postcss.config.js"
+    module.exports = {
+      plugins: {
+        '@tailwindcss/postcss': {},
+      },
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Add CSS Variables
+
+Add the required imports to your main CSS file (e.g., `globals.css`):
+
+```css title="src/globals.css"
+@import "@helgadigitals/vera-ui/dist/vera-ui.css";
+@import "tailwindcss";
+```
+```
+
+### Import Vera UI Styles
+
+Import your CSS file in your main application file:
+
+```tsx title="src/main.tsx" {3}
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './globals.css'
+import App from './App'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+```
+
+</Steps>
+
+## Quick Start
+
+Now you can start using Vera UI components in your React application:
+
+```tsx title="src/App.tsx"
+import { Button, Card, CardContent, CardHeader, CardTitle } from '@helgadigitals/vera-ui'
+
+function App() {
+  return (
+    <div className="p-8">
+      <Card className="w-96">
+        <CardHeader>
+          <CardTitle>Welcome to Vera UI</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-4 text-muted-foreground">
+            A modern React component library built for accessibility and customization.
+          </p>
+          <Button>Get Started</Button>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
+export default App
+```
+
+## Next Steps
+
+- Explore the [Components](/docs/components) to see all available components
+- Check out [Examples](/docs/examples) for real-world use cases
+- Learn about [Contributing](/docs/contributing) to help improve Vera UI
+
+<Callout type="success">
+  🎉 **You're all set!** Start building beautiful interfaces with Vera UI components.
+</Callout>

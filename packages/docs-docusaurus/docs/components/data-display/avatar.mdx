@@ -1,0 +1,356 @@
+---
+title: Avatar
+description: A flexible avatar component for displaying user profile images with automatic fallback support. Perfect for user identification and profile representation across your application.
+---
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@helgadigitals/vera-ui";
+import { User } from "lucide-react";
+
+## Features
+
+- **Automatic fallbacks** - Graceful degradation from image to initials
+- **Accessible** - Built on Radix UI with proper ARIA support
+- **Customizable sizing** - Easy to resize and style
+- **Image optimization** - Proper loading and error handling
+- **Flexible content** - Support for images, text, or custom content
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Avatar
+
+<!-- Preview removed during migration -->
+
+### Avatar with Image
+
+<!-- Preview removed during migration -->
+
+### Avatar Sizes
+
+<!-- Preview removed during migration -->
+
+### Fallback Examples
+
+<!-- Preview removed during migration -->
+
+### User List with Avatars
+
+<!-- Preview removed during migration -->
+
+### Avatar Group
+
+<!-- Preview removed during migration -->
+
+### Profile Header with Avatar
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Avatar
+
+The root avatar container component.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Avatar image and fallback',
+    },
+  }}
+/>
+
+### AvatarImage
+
+The avatar image component with automatic error handling.
+
+<TypeTable
+  type={{
+    src: {
+      type: 'string',
+      description: 'Image source URL',
+    },
+    alt: {
+      type: 'string',
+      description: 'Alternative text for accessibility',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+**Features:**
+- Automatic fallback when image fails to load
+- Proper aspect ratio maintenance
+- Accessibility attributes
+
+### AvatarFallback
+
+The fallback content shown when image is unavailable.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Fallback content (usually initials)',
+    },
+  }}
+/>
+
+**Features:**
+- Only displays when image is unavailable
+- Supports text, icons, or custom content
+- Customizable styling and colors
+
+## Use Cases
+
+### User Identification
+- **Profile headers** - User profile pages and settings
+- **Comment sections** - Associate comments with users
+- **Team members** - Display team member information
+- **Author attribution** - Article and content authors
+
+### Navigation & Menus
+- **User menus** - Dropdown menus with user avatar
+- **Header navigation** - Current user identification
+- **Sidebar profiles** - User info in navigation areas
+- **Account switchers** - Multiple account selection
+
+### Social Features
+- **Friend lists** - Social connections and contacts
+- **Activity feeds** - User actions and posts
+- **Chat interfaces** - Message sender identification
+- **Collaboration tools** - Team member presence
+
+### Content Attribution
+- **Blog authors** - Article writer identification
+- **Review authors** - Product and service reviewers
+- **Forum posts** - Discussion participant identification
+- **Project contributors** - Code and content contributors
+
+### Administrative Interfaces
+- **User management** - Admin panels and user lists
+- **Audit logs** - Action tracking with user identification
+- **Permission management** - Role and access control
+- **Support tickets** - Customer service interfaces
+
+## Accessibility
+
+The Avatar component includes:
+
+- **Alt text support** - Proper image descriptions for screen readers
+- **Semantic markup** - Appropriate HTML structure
+- **Keyboard navigation** - When used in interactive contexts
+- **Focus management** - Proper focus indicators
+- **ARIA attributes** - Enhanced accessibility information
+
+## Best Practices
+
+### Image Optimization
+- **Appropriate sizes** - Use correctly sized images for avatars
+- **File formats** - Use WebP or other optimized formats
+- **Loading states** - Provide immediate fallbacks
+- **Error handling** - Graceful degradation for broken images
+
+### Fallback Design
+- **Meaningful initials** - Use first letter of first and last name
+- **Consistent styling** - Maintain visual consistency with images
+- **Color schemes** - Use branded or thematic colors
+- **Icon alternatives** - Consider icons for system users
+
+### Performance
+- **Lazy loading** - Load avatar images only when needed
+- **Caching** - Implement proper image caching strategies
+- **Placeholder content** - Show fallbacks immediately
+- **Size optimization** - Use appropriate image dimensions
+
+### Visual Consistency
+- **Uniform sizing** - Consistent avatar sizes in similar contexts
+- **Border treatment** - Consistent border and shadow styling
+- **Spacing** - Proper spacing around avatars
+- **Color harmony** - Fallback colors that complement your design
+
+## Related Components
+
+- **[Badge](/docs/components/data-display/badge)** - Status indicators often used with avatars
+- **[Card](/docs/components/data-display/card)** - Profile cards containing avatars
+- **[DropdownMenu](/docs/components/navigation/dropdown-menu)** - User menus triggered by avatars
+- **[HoverCard](/docs/components/data-display/hover-card)** - User info on avatar hover
+### Profile Header with Avatar
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Avatar
+
+The root avatar container component.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Avatar image and fallback',
+    },
+  }}
+/>
+
+### AvatarImage
+
+The avatar image component with automatic error handling.
+
+<TypeTable
+  type={{
+    src: {
+      type: 'string',
+      description: 'Image source URL',
+    },
+    alt: {
+      type: 'string',
+      description: 'Alternative text for accessibility',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+**Features:**
+- Automatic fallback when image fails to load
+- Proper aspect ratio maintenance
+- Accessibility attributes
+
+### AvatarFallback
+
+The fallback content shown when image is unavailable.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Fallback content (usually initials)',
+    },
+  }}
+/>
+
+**Features:**
+- Only displays when image is unavailable
+- Supports text, icons, or custom content
+- Customizable styling and colors
+
+## Use Cases
+
+### User Identification
+- **Profile headers** - User profile pages and settings
+- **Comment sections** - Associate comments with users
+- **Team members** - Display team member information
+- **Author attribution** - Article and content authors
+
+### Navigation & Menus
+- **User menus** - Dropdown menus with user avatar
+- **Header navigation** - Current user identification
+- **Sidebar profiles** - User info in navigation areas
+- **Account switchers** - Multiple account selection
+
+### Social Features
+- **Friend lists** - Social connections and contacts
+- **Activity feeds** - User actions and posts
+- **Chat interfaces** - Message sender identification
+- **Collaboration tools** - Team member presence
+
+### Content Attribution
+- **Blog authors** - Article writer identification
+- **Review authors** - Product and service reviewers
+- **Forum posts** - Discussion participant identification
+- **Project contributors** - Code and content contributors
+
+### Administrative Interfaces
+- **User management** - Admin panels and user lists
+- **Audit logs** - Action tracking with user identification
+- **Permission management** - Role and access control
+- **Support tickets** - Customer service interfaces
+
+## Accessibility
+
+The Avatar component includes:
+
+- **Alt text support** - Proper image descriptions for screen readers
+- **Semantic markup** - Appropriate HTML structure
+- **Keyboard navigation** - When used in interactive contexts
+- **Focus management** - Proper focus indicators
+- **ARIA attributes** - Enhanced accessibility information
+
+## Best Practices
+
+### Image Optimization
+- **Appropriate sizes** - Use correctly sized images for avatars
+- **File formats** - Use WebP or other optimized formats
+- **Loading states** - Provide immediate fallbacks
+- **Error handling** - Graceful degradation for broken images
+
+### Fallback Design
+- **Meaningful initials** - Use first letter of first and last name
+- **Consistent styling** - Maintain visual consistency with images
+- **Color schemes** - Use branded or thematic colors
+- **Icon alternatives** - Consider icons for system users
+
+### Performance
+- **Lazy loading** - Load avatar images only when needed
+- **Caching** - Implement proper image caching strategies
+- **Placeholder content** - Show fallbacks immediately
+- **Size optimization** - Use appropriate image dimensions
+
+### Visual Consistency
+- **Uniform sizing** - Consistent avatar sizes in similar contexts
+- **Border treatment** - Consistent border and shadow styling
+- **Spacing** - Proper spacing around avatars
+- **Color harmony** - Fallback colors that complement your design
+
+## Related Components
+
+- **[Badge](/docs/components/data-display/badge)** - Status indicators often used with avatars
+- **[Card](/docs/components/data-display/card)** - Profile cards containing avatars
+- **[DropdownMenu](/docs/components/navigation/dropdown-menu)** - User menus triggered by avatars
+- **[HoverCard](/docs/components/data-display/hover-card)** - User info on avatar hover

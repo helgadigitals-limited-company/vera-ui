@@ -1,0 +1,171 @@
+---
+title: Accordion
+description: A vertically stacked set of interactive headings that each reveal a section of content. Perfect for organizing information in a space-efficient way while maintaining accessibility.
+
+---
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@helgadigitals/vera-ui";
+
+## Features
+
+- **Collapsible sections** - Show/hide content to save space
+- **Keyboard navigation** - Full keyboard accessibility support
+- **Multiple modes** - Single or multiple sections open simultaneously
+- **Smooth animations** - Elegant expand/collapse transitions
+- **Accessible** - Built on Radix UI with proper ARIA attributes
+
+## Installation
+
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Accordion
+
+<!-- Preview removed during migration -->
+
+### Multiple Accordion
+
+<!-- Preview removed during migration -->
+
+## Disabled Items
+
+You can disable specific accordion items to prevent user interaction:
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Accordion
+
+The root accordion container.
+
+<TypeTable
+  type={{
+    type: {
+      type: '"single" | "multiple"',
+      description: 'Whether one or multiple items can be open',
+    },
+    collapsible: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether all items can be closed (single type only)',
+    },
+    value: {
+      type: 'string',
+      description: 'Controlled value for single type',
+    },
+    defaultValue: {
+      type: 'string',
+      description: 'Default value for single type',
+    },
+    onValueChange: {
+      type: '(value: string) => void',
+      description: 'Callback for single type value changes',
+    },
+  }}
+/>
+
+### AccordionItem
+
+Individual accordion section container.
+
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'Unique identifier for the item',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the item is disabled',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+### AccordionTrigger
+
+The clickable header that toggles the content.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Trigger content',
+    },
+  }}
+/>
+
+### AccordionContent
+
+The collapsible content area.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Content to show/hide',
+    },
+  }}
+/>
+
+## Use Cases
+
+### Documentation & Help
+- **FAQ sections** - Frequently asked questions
+- **User guides** - Step-by-step instructions
+- **API documentation** - Endpoint details and examples
+- **Troubleshooting** - Common issues and solutions
+
+### Content Organization
+- **Product features** - Feature lists and descriptions
+- **Service details** - Service offerings and specifications
+- **Course modules** - Educational content organization
+- **Article sections** - Long-form content breakdown
+
+### User Interfaces
+- **Settings panels** - Grouped configuration options
+- **Filter menus** - Collapsible filter categories
+- **Form sections** - Grouped form fields
+- **Navigation menus** - Hierarchical menu structures
+
+## Related Components
+
+- **[Collapsible](/docs/components/data-display/collapsible)** - Simple show/hide content
+- **[Tabs](/docs/components/data-display/tabs)** - Alternative content organization
+- **[Card](/docs/components/data-display/card)** - Content containers

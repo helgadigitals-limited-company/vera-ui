@@ -1,0 +1,269 @@
+---
+title: Card
+description: A versatile container component for grouping related content and actions. Cards provide a structured way to display information with clear boundaries and hierarchy.
+
+---
+
+## Features
+
+- **Modular structure** - Header, content, footer, and action sections
+- **Flexible layout** - Grid-based header with action positioning
+- **Semantic HTML** - Proper content structure for accessibility
+- **Responsive design** - Adapts to different screen sizes
+- **Customizable styling** - Easy to theme and customize
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Card
+
+<!-- Preview removed during migration -->
+
+### Card with Footer
+
+<!-- Preview removed during migration -->
+
+### Card with Action
+
+<!-- Preview removed during migration -->
+
+### Profile Card
+
+<!-- Preview removed during migration -->
+
+### Stats Card
+
+<!-- Preview removed during migration -->
+
+### Product Card
+
+<!-- Preview removed during migration -->
+
+### Notification Card
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Card
+
+The main card container component.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Card content',
+    },
+  }}
+/>
+
+### CardHeader
+
+Container for card title, description, and actions.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Header content',
+    },
+  }}
+/>
+
+**Features:**
+- Automatic grid layout when `CardAction` is present
+- Container queries for responsive behavior
+- Proper spacing and alignment
+
+### CardTitle
+
+Main heading for the card.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Title content',
+    },
+  }}
+/>
+
+### CardDescription
+
+Subtitle or description text for the card.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Description content',
+    },
+  }}
+/>
+
+### CardAction
+
+Action buttons or controls positioned in the header.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Action elements',
+    },
+  }}
+/>
+
+**Features:**
+- Automatically positioned in top-right of header
+- Spans full header height when needed
+- Self-aligning to start position
+
+### CardContent
+
+Main content area of the card.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Content elements',
+    },
+  }}
+/>
+
+### CardFooter
+
+Footer area for actions or additional information.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Footer content',
+    },
+  }}
+/>
+
+## Use Cases
+
+### Content Display
+- **Blog posts** - Article previews with title, excerpt, and metadata
+- **Product listings** - Product information with images and pricing
+- **User profiles** - Personal information and contact details
+- **Project showcases** - Project descriptions with images and links
+
+### Dashboard Components
+- **Statistics cards** - Key metrics and performance indicators
+- **Quick actions** - Shortcuts to common tasks
+- **Status updates** - System status and notifications
+- **Recent activity** - Latest actions and updates
+
+### E-commerce
+- **Product cards** - Product images, descriptions, and prices
+- **Shopping cart items** - Items with quantities and prices
+- **Order summaries** - Order details and status
+- **Review cards** - Customer reviews and ratings
+
+### Social Features
+- **Post cards** - Social media posts with content and interactions
+- **Comment cards** - User comments and replies
+- **Notification cards** - System and user notifications
+- **Activity feed** - Timeline of user activities
+
+### Forms and Settings
+- **Settings sections** - Grouped configuration options
+- **Form sections** - Related form fields and controls
+- **Onboarding steps** - Step-by-step process cards
+- **Feature cards** - Product features and benefits
+
+## Accessibility
+
+The Card component family includes:
+
+- **Semantic structure** - Proper heading hierarchy and content organization
+- **Keyboard navigation** - Focusable interactive elements
+- **Screen reader support** - Descriptive content structure
+- **ARIA landmarks** - When cards represent distinct sections
+- **Color contrast** - Sufficient contrast for text and borders
+
+## Best Practices
+
+### Content Organization
+- **Clear hierarchy** - Use title, description, and content logically
+- **Consistent structure** - Maintain similar card layouts across your app
+- **Appropriate grouping** - Group related information together
+- **Scannable content** - Make cards easy to scan and understand
+
+### Visual Design
+- **Consistent spacing** - Use uniform padding and margins
+- **Appropriate shadows** - Subtle shadows for depth without distraction
+- **Border usage** - Clear boundaries without overwhelming the design
+- **Responsive layouts** - Cards that adapt to different screen sizes
+
+### Interactive Elements
+- **Clear actions** - Make buttons and links obviously interactive
+- **Hover states** - Provide feedback on hoverable elements
+- **Loading states** - Show loading indicators when needed
+- **Error handling** - Display errors clearly within card context
+
+### Performance
+- **Image optimization** - Optimize images in product and profile cards
+- **Lazy loading** - Load card content as needed
+- **Virtualization** - For large lists of cards
+- **Efficient updates** - Update only changed card content
+
+## Related Components
+
+- **[Badge](/docs/components/data-display/badge)** - Status indicators often used in cards
+- **[Avatar](/docs/components/data-display/avatar)** - User representation in profile cards
+- **[Button](/docs/components/forms/button)** - Actions in card headers and footers
+- **[AspectRatio](/docs/components/data-display/aspect-ratio)** - Responsive images in cards

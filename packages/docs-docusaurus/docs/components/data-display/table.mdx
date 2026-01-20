@@ -1,0 +1,261 @@
+---
+title: Table
+description: A foundational table component built with semantic HTML elements, providing the building blocks for displaying structured data in rows and columns.
+---
+
+## Features
+
+- **Semantic HTML** - Uses proper table elements for accessibility
+- **Responsive container** - Horizontal scrolling on smaller screens
+- **Flexible styling** - Customizable classes for headers, cells, and rows
+- **Selection support** - Built-in checkbox styling and states
+- **Hover effects** - Visual feedback on row interaction
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Table
+
+<!-- Preview removed during migration -->
+
+### Selectable Table
+
+<!-- Preview removed during migration -->
+
+### Table with Footer
+
+<!-- Preview removed during migration -->
+
+### Table with Caption
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Table
+
+The main table container with responsive overflow handling.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Table content',
+    },
+  }}
+/>
+
+### TableHeader
+
+Table header section containing column headers.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Header rows',
+    },
+  }}
+/>
+
+### TableBody
+
+Table body section containing data rows.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Body rows',
+    },
+  }}
+/>
+
+### TableFooter
+
+Table footer section for summary information.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Footer rows',
+    },
+  }}
+/>
+
+### TableRow
+
+Individual table row element.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    'data-state': {
+      type: '"selected"',
+      description: 'Selection state for styling',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Row cells',
+    },
+  }}
+/>
+
+### TableHead
+
+Header cell element with appropriate styling.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Header content',
+    },
+  }}
+/>
+
+### TableCell
+
+Data cell element for table content.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    colSpan: {
+      type: 'number',
+      description: 'Number of columns to span',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Cell content',
+    },
+  }}
+/>
+
+### TableCaption
+
+Table caption for describing the table content.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Caption text',
+    },
+  }}
+/>
+
+## Use Cases
+
+### Data Presentation
+- **Simple lists** - Product catalogs, user directories
+- **Financial reports** - Invoices, transaction history
+- **Comparison tables** - Feature matrices, pricing tables
+
+### Administrative Interfaces
+- **User management** - List users with roles and permissions
+- **Content management** - Articles, posts with metadata
+- **System logs** - Event listings with timestamps
+
+### Dashboard Components
+- **Recent activity** - Latest actions or updates
+- **Summary tables** - Key metrics and statistics
+- **Status overviews** - System health, task progress
+
+### E-commerce
+- **Product listings** - Inventory with prices and stock
+- **Order history** - Customer purchase records
+- **Shopping carts** - Item lists with quantities
+
+## Accessibility
+
+The Table component includes:
+
+- **Semantic HTML** - Proper table structure for screen readers
+- **ARIA attributes** - Enhanced accessibility information
+- **Keyboard navigation** - Tab through interactive elements
+- **Selection states** - Clear indication of selected rows
+- **Focus management** - Visible focus indicators
+
+## Best Practices
+
+### Structure
+- Use `TableHeader` for column headers
+- Group data in `TableBody`
+- Add summaries in `TableFooter`
+- Include `TableCaption` for context
+
+### Styling
+- Apply consistent alignment (left, center, right)
+- Use appropriate column widths
+- Highlight selected or active rows
+- Provide visual feedback on hover
+
+### Performance
+- Consider virtualization for large datasets
+- Use the [DataTable](/docs/components/data-display/data-table) component for advanced features
+- Implement proper loading states
+- Handle empty states gracefully
+
+### Responsive Design
+- Allow horizontal scrolling on mobile
+- Consider hiding non-essential columns
+- Stack information vertically when needed
+- Maintain touch-friendly targets
+
+## Related Components
+
+- **[DataTable](/docs/components/data-display/data-table)** - Advanced table with sorting, filtering, and pagination
+- **[Card](/docs/components/data-display/card)** - Alternative layout for displaying structured data
+- **[Badge](/docs/components/data-display/badge)** - Status indicators for table cells
+- **[Pagination](/docs/components/data-display/pagination)** - Navigate through large datasets

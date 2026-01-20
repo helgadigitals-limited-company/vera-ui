@@ -1,0 +1,216 @@
+---
+title: File Upload
+description: A feature-rich file upload component that supports drag and drop, file previews, validation, progress tracking, and multiple file selection. Built with accessibility and user experience in mind. 
+
+---
+
+import { FileUpload } from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Basic File Upload
+
+<!-- Preview removed during migration -->
+
+### Multiple File Upload
+
+<!-- Preview removed during migration -->
+
+### Image Upload with Preview
+
+<!-- Preview removed during migration -->
+
+### File Type Restrictions
+
+<!-- Preview removed during migration -->
+
+### Disabled State
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+<TypeTable
+  type={{
+    value: {
+      type: 'File | File[] | null',
+      description: 'The controlled file value(s)',
+    },
+    onChange: {
+      type: '(files: File | File[] | null) => void',
+      description: 'Callback when files change',
+    },
+    accept: {
+      type: 'string',
+      default: '"*/*"',
+      description: 'File input accept attribute',
+    },
+    multiple: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Allow multiple file selection',
+    },
+    id: {
+      type: 'string',
+      default: '"file-upload"',
+      description: 'Input element ID',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    label: {
+      type: 'string',
+      default: '"Choose file(s)"',
+      description: 'Main upload area label',
+    },
+    error: {
+      type: 'string',
+      description: 'Error message to display',
+    },
+    helperText: {
+      type: 'string',
+      description: 'Helpful text below the label',
+    },
+    showPreview: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Show image previews',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Disable the upload area',
+    },
+    maxSize: {
+      type: 'number',
+      default: '10',
+      description: 'Maximum file size in MB',
+    },
+    maxFiles: {
+      type: 'number',
+      default: '10',
+      description: 'Maximum number of files (when multiple)',
+    },
+    allowedTypes: {
+      type: 'string[]',
+      default: '[]',
+      description: 'Array of allowed MIME types',
+    },
+    onError: {
+      type: '(error: string) => void',
+      description: 'Callback when validation fails',
+    },
+    uploadProgress: {
+      type: 'number',
+      description: 'Upload progress percentage (0-100)',
+    },
+    dragAndDrop: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Enable drag and drop functionality',
+    },
+    compact: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Show selected files as compact badges',
+    },
+  }}
+/>
+
+### File Validation
+
+The component automatically validates files based on:
+
+- **File size**: Checked against `maxSize` prop
+- **File count**: Checked against `maxFiles` prop (when multiple)
+- **File types**: Checked against `allowedTypes` array
+
+When validation fails, the `onError` callback is triggered with a descriptive message.
+
+## Features
+
+### Drag and Drop
+- Full drag and drop support for modern browsers
+- Visual feedback during drag operations
+- Automatic file validation on drop
+
+### File Previews
+- Image thumbnails for supported formats
+- File type icons for non-image files
+- File size and type information
+
+### Validation
+- File size limits
+- File type restrictions
+- Maximum file count limits
+- Custom error handling
+
+### Progress Tracking
+- Upload progress bar support
+- Loading states and feedback
+- Progress percentage display
+
+### Accessibility
+- Full keyboard navigation support
+- Screen reader friendly
+- Proper ARIA labels and descriptions
+- Focus management
+
+## Styling
+
+The FileUpload component supports custom styling through the `className` prop and automatically adapts to your theme:
+
+```tsx
+<FileUpload
+  className="border-2 border-dashed border-blue-300"
+  // ... other props
+/>
+```
+
+## File Type Support
+
+The component automatically detects and displays appropriate icons for:
+
+- **Images**: PNG, JPG, GIF, WebP, etc.
+- **Videos**: MP4, WebM, AVI, etc.
+- **Audio**: MP3, WAV, OGG, etc.
+- **Documents**: PDF, DOC, DOCX, TXT, etc.
+- **Archives**: ZIP, RAR, 7Z, etc.
+- **Other**: Generic file icon for unknown types
+
+<Callout type="info">
+  **Image Previews**: When `showPreview` is enabled, image files will display thumbnails instead of generic icons, making it easier for users to identify their uploaded images.
+</Callout>
+
+## Browser Support
+
+- Modern browsers with File API support
+- Drag and drop on browsers that support it
+- Graceful fallback to click-to-upload on older browsers
