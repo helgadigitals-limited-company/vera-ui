@@ -69,7 +69,7 @@ export function DropdownMenuBarExample() {
           title: "Web Development",
           href: "#",
           description: "Custom web applications and websites",
-          icon: <Package className="h-4 w-10" />,
+          icon: <Package className="h-4 w-4" />,
         },
         {
           title: "Consulting",
