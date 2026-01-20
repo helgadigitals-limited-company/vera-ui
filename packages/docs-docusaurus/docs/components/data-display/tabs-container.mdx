@@ -1,0 +1,217 @@
+---
+title: Tabs Container
+description: An enhanced tabbed interface component that provides advanced features like URL persistence, scrollable navigation, and improved accessibility. Perfect for organizing complex content with multiple views.
+---
+
+## Features
+
+- **URL Persistence** - Tab state synced with URL parameters
+- **Scrollable Navigation** - Horizontal scrolling with navigation arrows
+- **Flexible Content** - Support for any React content in tabs
+- **Flexible Layouts** - Choose between compact or full-width tab layouts
+- **Accessibility** - Enhanced keyboard navigation and ARIA support
+- **Responsive Design** - Adapts to different screen sizes
+- **State Management** - Optional URL persistence with fallback to local state
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui nuqs
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui nuqs
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui nuqs
+      ```
+    </TabItem>
+</Tabs>
+
+
+## Usage
+
+### Basic Tabs Container
+
+<!-- Preview removed during migration -->
+
+### With URL Persistence
+
+<!-- Preview removed during migration -->
+
+### Scrollable Tabs with Many Options
+
+<!-- Preview removed during migration -->
+
+### With Disabled and Hidden Tabs
+
+<!-- Preview removed during migration -->
+
+### Compact Layout (Default)
+
+Tabs only take up the space they need, leaving the rest of the container width available.
+
+<!-- Preview removed during migration -->
+
+### Full Width Layout
+
+Tabs spread across the entire container width for a more prominent appearance.
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### TabsContainer
+
+The main container component for tabbed interfaces.
+
+<TypeTable
+  type={{
+    tabs: {
+      type: 'TabItem[]',
+      description: 'Array of tab items to display',
+    },
+    defaultTab: {
+      type: 'string',
+      default: 'tabs[0].value',
+      description: 'Default selected tab value',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    urlParamName: {
+      type: 'string',
+      default: '"tab"',
+      description: 'URL parameter name for this tab group',
+    },
+    historyMode: {
+      type: '"push" | "replace"',
+      default: '"push"',
+      description: 'Control URL history behavior',
+    },
+    shallow: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to use shallow routing',
+    },
+    onTabChange: {
+      type: '(value: string) => void',
+      description: 'Callback when tab changes',
+    },
+    containerHeight: {
+      type: 'string',
+      default: '"calc(100vh-5rem)"',
+      description: 'Container height CSS value',
+    },
+    persistInUrl: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to persist tab state in URL',
+    },
+    tabsLayout: {
+      type: '"compact" | "full"',
+      default: '"compact"',
+      description: 'Whether tabs should be compact (only take needed space) or full width (spread across container)',
+    },
+  }}
+/>
+
+### TabItem
+
+Individual tab configuration object.
+
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'Unique identifier for the tab',
+    },
+    label: {
+      type: 'string',
+      description: 'Display text for the tab',
+    },
+    content: {
+      type: 'ReactNode',
+      description: 'Content to render in the tab panel',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the tab is disabled',
+    },
+    hidden: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the tab is hidden',
+    },
+  }}
+/>
+
+## Use Cases
+
+### Dashboard Interfaces
+- **Admin panels** - Multiple views for different administrative functions
+- **Analytics dashboards** - Different metric views and time periods
+- **Project management** - Overview, tasks, timeline, and settings
+- **User profiles** - Personal info, preferences, security, and activity
+
+### Content Organization
+- **Documentation sites** - API reference, guides, tutorials, examples
+- **Product catalogs** - Categories, filters, and detailed views
+- **Media galleries** - Photos, videos, albums, and metadata
+- **Knowledge bases** - Articles, FAQs, tutorials, and resources
+
+### Application Views
+- **Settings panels** - General, privacy, notifications, and advanced
+- **Data visualization** - Charts, tables, maps, and export options
+- **Communication tools** - Messages, contacts, groups, and settings
+- **E-commerce** - Products, orders, customers, and analytics
+
+### Development Tools
+- **Code editors** - Files, terminal, debugger, and extensions
+- **API testing** - Requests, responses, history, and documentation
+- **Database tools** - Tables, queries, schemas, and administration
+- **Monitoring dashboards** - Metrics, logs, alerts, and configuration
+
+## Features in Detail
+
+### URL Persistence
+The component automatically syncs tab state with URL parameters:
+- **Shareable URLs** - Users can bookmark specific tab states
+- **Browser navigation** - Back/forward buttons work correctly
+- **Deep linking** - Direct links to specific tabs
+- **History management** - Choose between push/replace modes
+
+### Scrollable Navigation
+When tabs overflow the container:
+- **Smooth scrolling** - Animated horizontal scrolling
+- **Navigation arrows** - Left/right scroll controls
+- **Auto-detection** - Arrows appear/hide based on overflow
+- **Touch support** - Works with touch gestures on mobile
+
+### Accessibility
+- **Keyboard navigation** - Arrow keys, Tab, and Enter support
+- **Screen readers** - Proper ARIA labels and announcements
+- **Focus management** - Clear focus indicators and logical flow
+- **Semantic markup** - Uses proper HTML roles and attributes
+
+## Best Practices
+
+1. **Limit tab count** - Keep to 5-7 visible tabs for optimal UX
+2. **Clear labels** - Use descriptive, concise tab labels
+3. **Logical grouping** - Group related content together
+4. **Loading states** - Show skeleton content while loading
+5. **Error handling** - Gracefully handle missing or invalid tabs
+6. **Mobile optimization** - Ensure tabs work well on small screens
+
+## Related Components
+
+- **[Tabs](/docs/components/ui/tabs)** - Basic tabs component
+- **[Navigation](/docs/components/navigation)** - Navigation components
+- **[Card](/docs/components/data-display/card)** - Content containers for tab panels

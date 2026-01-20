@@ -1,0 +1,156 @@
+---
+title: Combobox
+description: A combobox is an input widget that has an associated popup that enables users to select a value for the input from a collection of possible values. It combines the functionality of a dropdown and search input, allowing users to either select from a list or type to filter options.
+---
+
+import { Combobox } from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Basic Combobox
+
+<!-- Preview removed during migration -->
+
+### Different States
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+<TypeTable
+  type={{
+    options: {
+      type: 'Array<{label: string, value: string, icon?: ComponentType}>',
+      description: 'Array of option objects to display',
+    },
+    onValueChange: {
+      type: '(value: string) => void',
+      description: 'Callback fired when the selected value changes',
+    },
+    value: {
+      type: 'string',
+      description: 'The controlled selected value',
+    },
+    defaultValue: {
+      type: 'string',
+      default: '""',
+      description: 'The default selected value when uncontrolled',
+    },
+    placeholder: {
+      type: 'string',
+      default: '"Select an option"',
+      description: 'Placeholder text displayed when no value is selected',
+    },
+    modalPopover: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the popover should be modal',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    variant: {
+      type: '"default" | "secondary" | "destructive" | "error"',
+      default: '"default"',
+      description: 'Visual style variant',
+    },
+    isLoading: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the component is in a loading state',
+    },
+    isError: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the component encountered an error',
+    },
+    errorMessage: {
+      type: 'string',
+      default: '"Failed to load options"',
+      description: 'Custom error message to display',
+    },
+    noOptionsMessage: {
+      type: 'string',
+      default: '"No options available"',
+      description: 'Message when no options are available',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the combobox is disabled',
+    },
+  }}
+/>
+
+### Option Object
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `label` | `string` | Yes | The text to display for the option |
+| `value` | `string` | Yes | The unique value associated with the option |
+| `icon` | `React.ComponentType<{className?: string}>` | No | Optional icon component to display |
+
+## Accessibility
+
+The Combobox component follows WAI-ARIA guidelines for combobox patterns:
+
+- **Keyboard Navigation**: 
+  - Arrow keys to navigate options
+  - Enter to select an option
+  - Escape to close the popover
+  - Backspace to clear selection when input is empty
+- **Screen Readers**: Proper ARIA attributes and announcements
+- **Focus Management**: Focus is properly managed between trigger and popover
+- **Search**: Users can type to filter options
+
+<Callout type="info">
+  **Search Functionality**: The combobox includes built-in search functionality. Users can type in the input to filter the available options in real-time.
+</Callout>
+
+## States
+
+The Combobox component supports several visual states:
+
+- **Default**: Normal interactive state
+- **Loading**: Shows loading spinner and message
+- **Error**: Displays error styling and message
+- **Disabled**: Non-interactive state
+- **Empty**: When no options are available
+
+## Styling
+
+The component uses class-variance-authority (cva) for consistent styling across variants. You can customize the appearance using the `className` prop:
+
+```tsx
+<Combobox
+  className="w-full max-w-md"
+  // ... other props
+/>
+```

@@ -1,0 +1,134 @@
+---
+title: Collapsible
+description: A lightweight wrapper around @helgadigitals/vera-ui collapsible that provides an accessible and flexible way to show and hide content in your application.
+---
+
+## Features
+
+- **Accessible** — Built on Radix UI with proper ARIA attributes and keyboard navigation
+- **Flexible** — Works with both controlled and uncontrolled state
+- **Composable** — Use asChild to render custom trigger elements
+- **Customizable** — Forward all props including className, styles, and event handlers
+- **Lightweight** — Minimal wrapper that doesn't add unnecessary complexity
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Usage
+
+{" "}
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Open by default
+
+<!-- Preview removed during migration -->
+
+### Accordion (only one open)
+
+<!-- Preview removed during migration -->
+
+### Progressive form (advanced settings)
+
+<!-- Preview removed during migration -->
+
+### Table / row details
+
+<!-- Preview removed during migration -->
+
+## Quick usage
+
+```tsx
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@helgadigitals/vera-ui";
+
+<Collapsible defaultOpen={false}>
+  <CollapsibleTrigger asChild>
+    <button>Show details</button>
+  </CollapsibleTrigger>
+
+  <CollapsibleContent>
+    <div></div>
+  </CollapsibleContent>
+</Collapsible>;
+```
+
+## API Reference
+
+<TypeTable
+  type={{
+    defaultOpen: {
+      type: "boolean",
+      description: "Whether the collapsible is open by default (uncontrolled).",
+    },
+    open: {
+      type: "boolean",
+      description: "Controlled open state.",
+    },
+    onOpenChange: {
+      type: "(open: boolean) => void",
+      description: "Callback when open state changes.",
+    },
+    asChild: {
+      type: "boolean",
+      description:
+        "If true, renders child as the trigger element (on CollapsibleTrigger).",
+    },
+  }}
+/>
+
+## Use Cases
+
+### Content display
+
+Use `Collapsible` to hide optional or verbose content and reduce visual noise. Great for article excerpts, product details, and user bios.
+
+### FAQ / Accordion
+
+Render a list of question/answer items. Use the controlled API (`open` + `onOpenChange`) to implement accordion behaviour (only one item open at a time).
+
+### Progressive disclosure
+
+Hide advanced form controls or secondary settings behind a collapsible to simplify long forms.
+
+### Table / list item details
+
+Reveal row-level details or actions without navigating away from the list or table view.
+
+## Accessibility & Best Practices
+
+- Prefer `asChild` when you need the trigger to be a semantic button or link.
+- Use the controlled API for accordions to coordinate focus and keyboard navigation.
+- Avoid very large content blocks inside a collapsible; paginate or lazy-load if needed.
+- Ensure trigger buttons have descriptive labels for screen readers.
+- Use proper heading hierarchy within collapsible content.
+
+## Related Components
+
+- **[Accordion](/docs/components/data-display/accordion)** - Purpose-built accordion component
+- **[Card](/docs/components/data-display/card)** - Container for grouped content
+- **[Tabs](/docs/components/navigation/tabs)** - Alternative navigation pattern

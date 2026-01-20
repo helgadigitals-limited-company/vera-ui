@@ -1,0 +1,171 @@
+---
+title: Introduction
+description: Vera UI is a modern, accessible React component library built with Radix UI primitives and styled with Tailwind CSS. It provides a comprehensive set of UI components designed for building scalable, production-ready applications with excellent developer experience and accessibility standards.
+---
+
+<Callout type="info">
+**New to Vera UI?** Check out our [main website](/) for a complete overview, features showcase, and getting started guide.
+</Callout>
+
+## What is Vera UI?
+
+Vera UI is designed to solve common challenges in modern React development:
+
+- **Accessibility First**: Built on Radix UI primitives with WCAG 2.1 compliance
+- **Developer Experience**: Full TypeScript support with excellent IntelliSense
+- **Design System Ready**: Consistent theming and component patterns
+- **Production Tested**: Battle-tested components used in real applications
+
+## Quick Start
+
+If you're ready to jump in, here's the fastest way to get started:
+
+<Steps>
+  <Step>
+    ### Install the Package
+    
+    ```bash npm2yarn
+    npm install @helgadigitals/vera-ui
+    ```
+  </Step>
+  
+  <Step>
+    ### Import and Use
+    
+    ```tsx
+    import { Button, Card, CardHeader, CardTitle, CardContent } from "@helgadigitals/vera-ui";
+    
+    function Welcome() {
+      return (
+        <Card className="w-96">
+          <CardHeader>
+            <CardTitle>Welcome to Vera UI</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Button>Get Started</Button>
+          </CardContent>
+        </Card>
+      );
+    }
+    ```
+  </Step>
+</Steps>
+
+For detailed setup instructions including theme configuration, see our [Installation Guide](/docs/getting-started/installation).
+
+## Component Overview
+
+Vera UI includes 50+ components organized into logical categories:
+
+<Cards>
+  <Card
+    title="Forms"
+    description="Input controls, buttons, selects, and form validation components"
+    href="/docs/components/forms"
+  />
+  <Card
+    title="Navigation" 
+    description="Sidebar, breadcrumbs, pagination, and navigation patterns"
+    href="/docs/components/navigation"
+  />
+  <Card
+    title="Data Display"
+    description="Tables, cards, badges, and information presentation components"
+    href="/docs/components/data-display"
+  />
+  <Card
+    title="Layout"
+    description="Structural components for organizing page content"
+    href="/docs/components/layout"
+  />
+  <Card
+    title="Feedback"
+    description="Alerts, progress indicators, and user feedback components"
+    href="/docs/components/feedback"
+  />
+  <Card
+    title="Overlays"
+    description="Modals, tooltips, popovers, and overlay components"
+    href="/docs/components/overlays"
+  />
+</Cards>
+
+## Key Features
+
+### Advanced Components
+
+Vera UI includes several sophisticated components for complex use cases:
+
+- **[DataTable](/docs/components/data-display/data-table)** - Advanced tables with sorting, filtering, and row selection
+- **[SidebarLayout](/docs/components/navigation/sidebar-layout)** - Complete navigation layouts with grouped/ungrouped items
+- **[Form](/docs/components/forms/form)** - Comprehensive form handling with validation support
+
+### Tailwind CSS v4 Support
+
+Vera UI is built specifically for **Tailwind CSS v4** compatibility:
+
+```tsx
+// Built-in theme integration
+<Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+  Styled with Tailwind v4
+</Button>
+```
+
+### TypeScript Excellence
+
+Every component includes comprehensive TypeScript definitions:
+
+```tsx
+import { type ButtonProps } from "@helgadigitals/vera-ui";
+
+// Full type safety and IntelliSense support
+const CustomButton: React.FC<ButtonProps> = ({ variant = "default", ...props }) => {
+  return <Button variant={variant} {...props} />;
+};
+```
+
+## Architecture
+
+Vera UI follows these core principles:
+
+- **Radix UI Foundation**: Accessibility and behavior from Radix UI primitives
+- **CVA Styling**: Uses `class-variance-authority` for consistent variant management  
+- **Composable Design**: Components work together seamlessly
+- **Theme System**: CSS variables for easy customization
+
+## Documentation Structure
+
+This documentation is organized to help you find what you need quickly:
+
+- **[Getting Started](/docs/getting-started)** - Installation, setup, and basic usage
+- **[Components](/docs/components)** - Complete component reference with examples
+- **[Examples](/docs/examples)** - Real-world implementation patterns
+- **[Contributing](/docs/contributing)** - Guidelines for contributing to the project
+
+## Next Steps
+
+<Cards>
+  <Card
+    title="Installation"
+    description="Set up Vera UI in your React project with theme configuration"
+    href="/docs/getting-started/installation"
+  />
+  <Card
+    title="Browse Components"
+    description="Explore all available components with interactive examples"
+    href="/docs/components"
+  />
+  <Card
+    title="View Examples"
+    description="See common patterns and advanced implementations"
+    href="/docs/examples"
+  />
+</Cards>
+
+<Callout type="tip">
+**Quick Tip**: Start with basic components like [Button](/docs/components/forms/button) and [Card](/docs/components/data-display/card) to understand the library's patterns, then explore advanced components like [DataTable](/docs/components/data-display/data-table).
+</Callout>
+
+---
+
+For more information about Vera UI's features, philosophy, and detailed getting started guide, visit our [main website](/).

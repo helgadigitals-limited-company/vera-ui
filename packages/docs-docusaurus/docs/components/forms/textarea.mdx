@@ -1,0 +1,282 @@
+---
+title: Textarea
+description: A textarea component for multi-line text input with automatic resizing support. Built with accessibility and user experience in mind, featuring modern styling and seamless integration with forms.
+---
+
+import { Textarea, Label } from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### With Label
+
+<!-- Preview removed during migration -->
+
+### Disabled State
+
+<!-- Preview removed during migration -->
+
+### Controlled State
+
+<!-- Preview removed during migration -->
+
+### With Character Limit
+
+<!-- Preview removed during migration -->
+
+### Different Sizes
+
+<!-- Preview removed during migration -->
+
+### Disabled and Read-only States
+
+<!-- Preview removed during migration -->
+
+### Form Integration
+
+<!-- Preview removed during migration -->
+
+### Auto-resizing Textarea
+
+<!-- Preview removed during migration -->
+
+### With Helper Text and Error
+
+<!-- Preview removed during migration -->
+
+### Message Composer
+
+<!-- Preview removed during migration -->
+
+### Code Editor Style
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+The Textarea component accepts all standard HTML textarea attributes:
+
+<TypeTable
+  type={{
+    value: {
+      type: 'string',
+      description: 'The controlled value of the textarea',
+    },
+    defaultValue: {
+      type: 'string',
+      description: 'The default value when uncontrolled',
+    },
+    onChange: {
+      type: '(event: ChangeEvent<HTMLTextAreaElement>) => void',
+      description: 'Event handler called when the value changes',
+    },
+    placeholder: {
+      type: 'string',
+      description: 'Placeholder text',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the textarea is disabled',
+    },
+    readOnly: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the textarea is read-only',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the textarea is required',
+    },
+    rows: {
+      type: 'number',
+      description: 'Number of visible text lines',
+    },
+    cols: {
+      type: 'number',
+      description: 'Number of visible character widths',
+    },
+    maxLength: {
+      type: 'number',
+      description: 'Maximum number of characters allowed',
+    },
+    minLength: {
+      type: 'number',
+      description: 'Minimum number of characters required',
+    },
+    wrap: {
+      type: '"hard" | "soft" | "off"',
+      default: '"soft"',
+      description: 'How text wraps',
+    },
+    resize: {
+      type: '"none" | "both" | "horizontal" | "vertical"',
+      description: 'Resize behavior (CSS)',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+## Accessibility
+
+The Textarea component provides full accessibility support:
+
+- **Keyboard Navigation**: Standard textarea keyboard interactions
+- **Screen Readers**: Proper semantic textarea element with labels
+- **Focus Management**: Clear focus indicators and proper focus handling
+- **Validation**: Supports HTML5 validation attributes and custom validation
+
+<Callout type="info">
+  **Labeling**: Always provide proper labels for textareas using the `label` element with `htmlFor` attribute or `aria-label` for screen reader accessibility.
+</Callout>
+
+```tsx
+// Good: Properly labeled textarea
+<div className="space-y-2">
+  <Label htmlFor="description">Description</Label>
+  <Textarea id="description" />
+</div>
+
+// Also good: Using aria-label
+<Textarea aria-label="Enter your comments" />
+```
+
+## Field Sizing
+
+The textarea component includes modern CSS `field-sizing: content` support for automatic content-based sizing where supported by browsers:
+
+```tsx
+// The textarea will automatically adjust height based on content
+<Textarea placeholder="This will auto-resize..." />
+```
+
+## Best Practices
+
+### Provide Clear Labels
+Always include descriptive labels and helpful placeholder text:
+
+```tsx
+// Good: Clear label and helpful placeholder
+<div className="space-y-2">
+  <Label htmlFor="feedback">Customer Feedback</Label>
+  <Textarea
+    id="feedback"
+    placeholder="Please share your experience with our product..."
+  />
+</div>
+```
+
+### Set Appropriate Size
+Use appropriate sizing for the expected content:
+
+```tsx
+// Short content
+<Textarea className="min-h-[80px]" placeholder="Brief comment..." />
+
+// Long content
+<Textarea className="min-h-[200px]" placeholder="Detailed description..." />
+```
+
+### Include Character Limits
+Show character counts for limited inputs:
+
+```tsx
+<div className="space-y-2">
+  <Textarea maxLength={500} />
+  <div className="text-sm text-muted-foreground text-right">
+    {value.length}/500
+  </div>
+</div>
+```
+
+### Handle Validation
+Provide clear validation feedback:
+
+```tsx
+<Textarea
+  className={error ? "border-destructive" : ""}
+  aria-invalid={!!error}
+  aria-describedby={error ? "error-message" : undefined}
+/>
+{error && (
+  <p id="error-message" className="text-sm text-destructive">
+    {error}
+  </p>
+)}
+```
+
+## Styling
+
+The Textarea component supports extensive customization:
+
+```tsx
+// Custom height
+<Textarea className="min-h-[100px]" />
+
+// Code editor style
+<Textarea className="font-mono bg-muted/30" />
+
+// Rounded corners
+<Textarea className="rounded-xl" />
+
+// No resize
+<Textarea className="resize-none" />
+```
+
+## Common Patterns
+
+### Auto-save with Debouncing
+
+```tsx
+import { useState, useEffect } from "react"
+import { useDebounce } from "use-debounce"
+
+function AutoSaveTextarea() {
+  const [value, setValue] = useState("")
+  const [debouncedValue] = useDebounce(value, 500)
+
+  useEffect(() => {
+    if (debouncedValue) {
+      // Auto-save logic here
+      console.log("Auto-saving:", debouncedValue)
+    }
+  }, [debouncedValue])
+
+  return (
+    <Textarea
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      placeholder="Your content will be auto-saved..."
+    />
+  )
+}
+```

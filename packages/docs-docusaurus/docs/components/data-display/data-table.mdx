@@ -1,0 +1,348 @@
+---
+title: DataTable
+description: A feature-rich data table component that provides advanced functionality for displaying and interacting with tabular data. Includes built-in support for sorting, filtering, pagination, row selection, custom actions, and responsive design.
+---
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui lucide-react
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui lucide-react
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui lucide-react
+      ```
+    </TabItem>
+</Tabs>
+
+## Basic Usage
+
+<!-- Preview removed during migration -->
+
+## Features
+
+### Sorting
+
+Enable sorting on specific columns:
+
+<!-- Preview removed during migration -->
+
+## Row Expansion
+
+Enable expansion to display specific information about that row
+
+<!-- Preview removed during migration -->
+
+### Global Search
+
+Add a global search filter:
+
+<!-- Preview removed during migration -->
+
+### Row Selection
+
+Enable single or multiple row selection:
+
+<!-- Preview removed during migration -->
+
+### Custom Actions
+
+Add action buttons for each row:
+
+<!-- Preview removed during migration -->
+
+### Custom Cell Rendering
+
+Customize how data is displayed:
+
+<!-- Preview removed during migration -->
+
+### Loading and Empty States
+
+Handle loading and empty data states:
+
+<!-- Preview removed during migration -->
+
+### Products Example
+
+Example with different data types and formatting:
+
+<!-- Preview removed during migration -->
+
+## Advanced Usage
+
+### Complete Feature Example
+
+<!-- Preview removed during migration -->
+
+## Props Reference
+
+### Core Props
+
+<TypeTable
+  type={{
+    tableData: {
+      type: 'T[]',
+      description: 'Array of data objects to display',
+    },
+    tableColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Column keys to display from data',
+    },
+    excludeColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Column keys to exclude from display',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    rowClassName: {
+      type: 'string | ((row: T) => string)',
+      description: 'CSS classes for rows',
+    },
+    loading: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Show loading state',
+    },
+    loadingComponent: {
+      type: 'ReactNode',
+      description: 'Custom loading component',
+    },
+    emptyStateComponent: {
+      type: 'ReactNode',
+      description: 'Custom empty state component',
+    },
+    emptyMessage: {
+      type: 'string',
+      description: 'Empty state message',
+    },
+  }}
+/>
+
+### Selection Props
+
+<TypeTable
+  type={{
+    selectable: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Enable row selection',
+    },
+    selectionMode: {
+      type: '"single" | "multiple"',
+      default: '"multiple"',
+      description: 'Selection mode',
+    },
+    selectedRowIds: {
+      type: 'Array<string | number>',
+      description: 'Controlled selected row IDs',
+    },
+    onSelectionChange: {
+      type: '(ids: Array<string | number>) => void',
+      description: 'Selection change handler',
+    },
+    maxSelections: {
+      type: 'number',
+      description: 'Maximum selections allowed',
+    },
+    onMaxSelectionsReached: {
+      type: '(id: string | number) => void',
+      description: 'Max selections callback',
+    },
+    selectionColumnHeader: {
+      type: 'ReactNode',
+      description: 'Custom selection column header',
+    },
+  }}
+/>
+
+### Sorting Props
+
+<TypeTable
+  type={{
+    sortableColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Columns that can be sorted',
+    },
+    multiSort: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Enable multiple column sorting',
+    },
+    sortState: {
+      type: 'Array<{key: StringKeys<T>, direction: "asc" | "desc"}>',
+      description: 'Controlled sort state',
+    },
+    defaultSortState: {
+      type: 'Array<{key: StringKeys<T>, direction: "asc" | "desc"}>',
+      description: 'Default sort state',
+    },
+    onSortChange: {
+      type: '(state) => void',
+      description: 'Sort change handler',
+    },
+    sortFns: {
+      type: 'Partial<Record<StringKeys<T>, (a, b) => number>>',
+      description: 'Custom sort functions',
+    },
+    manualSort: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Disable automatic sorting',
+    },
+  }}
+/>
+
+### Filtering Props
+
+<TypeTable
+  type={{
+    enableGlobalFilter: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Enable global search',
+    },
+    globalFilter: {
+      type: 'string',
+      description: 'Controlled global filter value',
+    },
+    onGlobalFilterChange: {
+      type: '(value: string) => void',
+      description: 'Global filter change handler',
+    },
+    globalFilterPlaceholder: {
+      type: 'string',
+      description: 'Global filter input placeholder',
+    },
+    globalFilterFn: {
+      type: '(row: T, searchTerm: string) => boolean',
+      description: 'Custom global filter function',
+    },
+    filterableColumns: {
+      type: 'StringKeys<T>[]',
+      description: 'Columns that can be filtered',
+    },
+    columnFilters: {
+      type: 'Partial<Record<StringKeys<T>, string>>',
+      description: 'Controlled column filters',
+    },
+    onColumnFiltersChange: {
+      type: '(filters) => void',
+      description: 'Column filters change handler',
+    },
+  }}
+/>
+
+### Actions Props
+
+<TypeTable
+  type={{
+    actions: {
+      type: 'TableAction<T>[]',
+      description: 'Array of action configurations',
+    },
+    actionsRender: {
+      type: '(row: T) => ReactNode',
+      description: 'Custom actions render function',
+    },
+    actionsColumnHeader: {
+      type: 'ReactNode',
+      description: 'Custom actions column header',
+    },
+    actionsPlacement: {
+      type: '"start" | "end"',
+      default: '"end"',
+      description: 'Actions column placement',
+    },
+  }}
+/>
+
+### Custom Rendering Props
+
+<TypeTable
+  type={{
+    customHeadRender: {
+      type: '(col, helpers?) => ReactNode',
+      description: 'Custom header cell renderer',
+    },
+    customBodyRender: {
+      type: '(rowData, col) => ReactNode',
+      description: 'Custom body cell renderer',
+    },
+    onRowClick: {
+      type: '(rowData: T) => void',
+      description: 'Row click handler',
+    },
+    getRowId: {
+      type: '(row: T, index: number) => string | number',
+      description: 'Custom row ID function',
+    },
+  }}
+/>
+
+## TableAction Interface
+
+```tsx
+interface TableAction<T> {
+  id: string;                           // Unique action identifier
+  label?: string;                       // Action label (for tooltips)
+  icon?: ReactNode;                     // Action icon
+  onClick: (row: T) => void;           // Click handler
+  variant?: string;                     // Button variant
+  disabled?: (row: T) => boolean;      // Dynamic disable condition
+  hidden?: (row: T) => boolean;        // Dynamic visibility condition
+}
+```
+
+## Utility Functions
+
+The DataTable component works with several utility functions:
+
+```tsx
+import { transformToSelectOptions, splitStringByUnderscore } from "@helgadigitals/vera-ui";
+
+// Transform data for select options
+const options = transformToSelectOptions(users, 'name', 'id');
+
+// Format column headers
+const formattedHeader = splitStringByUnderscore('user_name'); // "user name"
+```
+
+## Best Practices
+
+<Callout type="info">
+**Performance**: For large datasets (>1000 rows), consider implementing server-side pagination, sorting, and filtering.
+</Callout>
+
+<Callout type="warning">
+**Row Identity**: Always provide a `getRowId` function or ensure your data has unique `id` fields for proper selection and updates.
+</Callout>
+
+### Recommended Patterns
+
+1. **Controlled vs Uncontrolled**: Use controlled components for complex state management
+2. **Custom Rendering**: Use `customBodyRender` for consistent formatting across your app
+3. **Action Patterns**: Group related actions and use consistent iconography
+4. **Loading States**: Always provide loading and empty states for better UX
+5. **Responsive Design**: Consider mobile layouts for complex tables
+
+### Accessibility
+
+- All interactive elements are keyboard accessible
+- Screen reader support with proper ARIA labels
+- High contrast mode compatibility
+- Focus management for table navigation
+
+## Examples
+
+See the complete examples in the [Examples section](/docs/examples) for more advanced usage patterns and real-world implementations.

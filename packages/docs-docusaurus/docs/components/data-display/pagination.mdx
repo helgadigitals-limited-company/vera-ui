@@ -1,0 +1,162 @@
+---
+title: Pagination
+description: Navigation component for dividing content across multiple pages with intuitive controls for users to navigate through large datasets efficiently.
+---
+
+## Features
+
+- **Page navigation** - Previous, next, and direct page access
+- **Flexible display** - Show/hide page numbers based on space
+- **Size indicators** - Items per page and total count
+- **Keyboard accessible** - Full keyboard navigation support
+- **Responsive design** - Adapts to different screen sizes
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+### Basic Pagination
+
+<!-- Preview removed during migration -->
+
+### Simple Pagination
+
+<!-- Preview removed during migration -->
+
+### Large Dataset Pagination
+
+<!-- Preview removed during migration -->
+
+### Interactive Pagination with Data
+
+<!-- Preview removed during migration -->
+
+### Custom Page Sizes
+
+<!-- Preview removed during migration -->
+
+### Minimal Pagination
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Pagination
+
+Main pagination component with navigation controls.
+
+<TypeTable
+  type={{
+    currentPage: {
+      type: 'number',
+      description: 'Currently active page',
+    },
+    totalPages: {
+      type: 'number',
+      description: 'Total number of pages',
+    },
+    onPageChange: {
+      type: '(page: number) => void',
+      description: 'Callback when page changes',
+    },
+    totalItems: {
+      type: 'number',
+      description: 'Total number of items',
+    },
+    pageSize: {
+      type: 'number',
+      description: 'Current page size',
+    },
+    onPageSizeChange: {
+      type: '(size: number) => void',
+      description: 'Callback when page size changes',
+    },
+    showFirstLast: {
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to show first/last page buttons',
+    },
+    siblingsCount: {
+      type: 'number',
+      default: '1',
+      description: 'Number of siblings pages to show',
+    },
+    pageSizeOptions: {
+      type: 'number[]',
+      default: '[5, 10, 20, 50, 100]',
+      description: 'Available page size options',
+    },
+    isFetching: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether data is being fetched',
+    },
+  }}
+/>
+
+## Use Cases
+
+### Data Tables
+- **Search results** - Navigate through search results
+- **User lists** - Browse user directories
+- **Product catalogs** - Browse product listings
+- **Report data** - Navigate through report entries
+
+### Content Lists
+- **Blog posts** - Navigate through article archives
+- **News articles** - Browse news content
+- **Gallery images** - Navigate image collections
+- **Comment threads** - Browse comment pages
+
+### Admin Panels
+- **Management interfaces** - Navigate administrative data
+- **Analytics dashboards** - Browse metric pages
+- **Content management** - Navigate content lists
+- **User administration** - Browse user accounts
+
+### E-commerce
+- **Product listings** - Navigate product categories
+- **Order history** - Browse past orders
+- **Inventory management** - Navigate stock items
+- **Customer lists** - Browse customer data
+
+## Accessibility
+
+The Pagination component follows accessibility best practices:
+
+- **Keyboard navigation** - Arrow keys and Tab navigation
+- **Screen reader support** - Proper ARIA labels and descriptions
+- **Focus management** - Clear focus indicators
+- **Semantic markup** - Uses appropriate HTML elements
+
+## Best Practices
+
+1. **Show context** - Display current page and total pages
+2. **Provide page size options** - Let users control how much they see
+3. **Maintain state** - Remember user's page and size preferences
+4. **Handle loading states** - Show loading indicators during navigation
+5. **Responsive design** - Adapt to different screen sizes
+
+## Related Components
+
+- **[Table](/docs/components/data-display/table)** - Often used together for data display
+- **[DataTable](/docs/components/data-display/data-table)** - Comprehensive data table with built-in pagination
+- **[Button](/docs/components/ui/button)** - Used for navigation controls

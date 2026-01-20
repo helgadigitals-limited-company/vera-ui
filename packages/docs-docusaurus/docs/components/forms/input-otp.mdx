@@ -1,0 +1,278 @@
+---
+title: Input OTP
+description: A one-time password (OTP) input component built on the `input-otp` library. Perfect for verification codes, two-factor authentication, and secure input scenarios requiring specific character patterns.
+---
+
+import { 
+  InputOTP, 
+  InputOTPGroup, 
+  InputOTPSlot, 
+  InputOTPSeparator 
+} from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Basic OTP Input
+
+<!-- Preview removed during migration -->
+
+### With Separator
+
+<!-- Preview removed during migration -->
+
+### Different Lengths
+
+<!-- Preview removed during migration -->
+
+### Disabled State
+
+<!-- Preview removed during migration -->
+
+### Form Integration
+
+<!-- Preview removed during migration -->
+
+### With Timer and Resend
+
+<!-- Preview removed during migration -->
+
+### Custom Styling
+
+<!-- Preview removed during migration -->
+
+### Alphanumeric Code
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### InputOTP
+
+The root component that manages the OTP input state.
+
+<TypeTable
+  type={{
+    maxLength: {
+      type: 'number',
+      description: 'Maximum number of characters',
+    },
+    value: {
+      type: 'string',
+      description: 'The controlled value of the OTP input',
+    },
+    onChange: {
+      type: '(value: string) => void',
+      description: 'Called when the value changes',
+    },
+    onComplete: {
+      type: '(value: string) => void',
+      description: 'Called when all slots are filled',
+    },
+    pattern: {
+      type: 'string',
+      description: 'RegExp pattern to validate input',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the input is disabled',
+    },
+    autoFocus: {
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether to auto-focus the first slot',
+    },
+    pushPasswordManagerStrategy: {
+      type: '"increase-width" | "none"',
+      default: '"increase-width"',
+      description: 'How to handle password managers',
+    },
+    containerClassName: {
+      type: 'string',
+      description: 'Class name for the container element',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+### InputOTPGroup
+
+Groups OTP slots together.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+### InputOTPSlot
+
+Individual slot for a single character.
+
+<TypeTable
+  type={{
+    index: {
+      type: 'number',
+      description: 'The slot index (0-based)',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+### InputOTPSeparator
+
+Visual separator between groups of slots.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+## Features
+
+### Smart Input Handling
+- **Auto-advance**: Automatically moves focus to the next slot when typing
+- **Auto-backspace**: Moves focus to previous slot when backspacing
+- **Paste support**: Intelligently handles pasted content
+- **Pattern validation**: Supports RegExp patterns for input validation
+
+### Visual Feedback
+- **Active state**: Shows which slot is currently focused
+- **Completion state**: Visual feedback when all slots are filled
+- **Error state**: Can be styled to show validation errors
+- **Caret animation**: Animated cursor in empty focused slots
+
+### Accessibility
+- **Keyboard navigation**: Full keyboard support with arrow keys
+- **Screen readers**: Proper ARIA attributes and announcements
+- **Focus management**: Intelligent focus handling between slots
+- **Copy/paste**: Supports clipboard operations
+
+## Accessibility
+
+The InputOTP component provides comprehensive accessibility:
+
+- **Keyboard Navigation**: 
+  - Arrow keys move between slots
+  - Backspace moves to previous slot and clears
+  - Delete clears current slot
+  - Home/End move to first/last slot
+- **Screen Readers**: Proper ARIA attributes and slot announcements
+- **Focus Management**: Visual focus indicators and logical focus flow
+- **Input Methods**: Supports various input methods and IME
+
+<Callout type="info">
+  **Security Note**: For sensitive codes like passwords or PINs, consider using the appropriate `inputMode` and `autoComplete` attributes for better user experience while maintaining security.
+</Callout>
+
+## Common Patterns
+
+### Phone Number Verification
+
+```tsx
+<InputOTP maxLength={6} pattern="^\\d+$">
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
+
+### Two-Factor Authentication
+
+```tsx
+<InputOTP maxLength={6} pattern="^\\d+$">
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
+
+### Backup Codes
+
+```tsx
+<InputOTP maxLength={8} pattern="^[A-Z0-9]+$">
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+    <InputOTPSlot index={3} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+    <InputOTPSlot index={6} />
+    <InputOTPSlot index={7} />
+  </InputOTPGroup>
+</InputOTP>
+```
+
+## Styling
+
+The InputOTP components support extensive customization:
+
+```tsx
+/* Custom slot styling */
+<InputOTPSlot 
+  index={0}
+  className="w-12 h-12 text-lg border-2 border-blue-500 rounded-lg"
+/>
+
+/* Custom container styling */
+<InputOTP
+  containerClassName="gap-4"
+  className="justify-center"
+  maxLength={6}
+>
+  </InputOTP>
+```

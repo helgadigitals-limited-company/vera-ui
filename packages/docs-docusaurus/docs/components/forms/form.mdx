@@ -1,0 +1,277 @@
+---
+title: Form
+description: A collection of form components built on React Hook Form that provides validation, accessibility, and consistent styling. These components work together to create comprehensive, accessible forms with built-in error handling.
+---
+
+import { 
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  FormField,
+  Input,
+  Button,
+  Checkbox,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea
+} from "@helgadigitals/vera-ui"
+
+<Callout type="info">
+  **Zod Integration**: All form examples in this documentation use Zod for schema validation, providing type-safe validation with excellent developer experience. The form components work seamlessly with React Hook Form and Zod resolver for robust form validation.
+</Callout>
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui react-hook-form @hookform/resolvers zod
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui react-hook-form @hookform/resolvers zod
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui react-hook-form @hookform/resolvers zod
+      ```
+    </TabItem>
+</Tabs>
+
+## Architecture
+
+The form system consists of several components that work together:
+
+- **`Form`** - Provides form context (alias for React Hook Form's `FormProvider`)
+- **`FormField`** - Wraps React Hook Form's `Controller` with field context
+- **`FormItem`** - Container for individual form fields with spacing
+- **`FormLabel`** - Accessible label with error styling
+- **`FormControl`** - Wrapper for form inputs with ARIA attributes
+- **`FormDescription`** - Helper text for form fields
+- **`FormMessage`** - Error and validation messages
+
+## Basic Usage
+<!-- Preview removed during migration -->
+## Examples
+
+### Complete Registration Form
+
+<!-- Preview removed during migration -->
+  
+
+### Profile Settings Form
+
+<!-- Preview removed during migration -->
+
+### Form with Dynamic Fields
+<!-- Preview removed during migration -->
+
+### Form with File Upload
+<!-- Preview removed during migration -->
+
+
+### Custom Validation Messages
+<!-- Preview removed during migration -->
+### Async Validation
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Form
+
+Alias for React Hook Form's `FormProvider`. Provides form context to child components.
+
+<TypeTable
+  type={{
+    'All React Hook Form FormProvider props': {
+      type: '-',
+      description: 'See React Hook Form documentation',
+    },
+  }}
+/>
+
+### FormField
+
+Wrapper around React Hook Form's `Controller` with additional field context.
+
+<TypeTable
+  type={{
+    'All React Hook Form Controller props': {
+      type: '-',
+      description: 'See React Hook Form documentation',
+    },
+  }}
+/>
+
+### FormItem
+
+Container for individual form fields with consistent spacing.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Form field components',
+    },
+  }}
+/>
+
+### FormLabel
+
+Accessible form label with error state styling.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    'All Label component props': {
+      type: '-',
+      description: 'Inherits from Label component',
+    },
+  }}
+/>
+
+### FormControl
+
+Wrapper for form inputs that adds proper ARIA attributes.
+
+<TypeTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: 'Form input component',
+    },
+    'All Slot component props': {
+      type: '-',
+      description: 'Passes props to child component',
+    },
+  }}
+/>
+
+### FormDescription
+
+Helper text that provides additional context for form fields.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Description text',
+    },
+  }}
+/>
+
+### FormMessage
+
+Displays validation errors and messages.
+
+<TypeTable
+  type={{
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Custom message (overrides field error)',
+    },
+  }}
+/>
+
+### useFormField Hook
+
+Custom hook that provides field state and accessibility IDs.
+
+**Returns:**
+```tsx
+{
+  id: string                    // Unique field ID
+  name: string                  // Field name
+  formItemId: string           // ID for form item
+  formDescriptionId: string    // ID for description
+  formMessageId: string        // ID for error message
+  invalid: boolean             // Whether field has errors
+  isDirty: boolean            // Whether field value changed
+  isTouched: boolean          // Whether field was focused
+  error?: FieldError          // Field error object
+}
+```
+
+## Features
+
+### Accessibility
+- **ARIA Attributes**: Proper `aria-describedby`, `aria-invalid`, and `id` associations
+- **Error Announcements**: Screen readers announce validation errors
+- **Label Association**: Labels properly associated with form controls
+- **Focus Management**: Logical tab order and focus indicators
+
+### Validation
+- **Built-in Rules**: Required, pattern, min/max length, custom validation
+- **Async Validation**: Support for server-side validation
+- **Real-time Feedback**: Validation on blur, change, or submit
+- **Error Display**: Consistent error message styling and positioning
+
+### Developer Experience
+- **TypeScript Support**: Full type safety with form schemas
+- **Schema Validation**: Works with Zod, Yup, Joi, and other validation libraries
+- **Flexible Layout**: Compose forms with any layout structure
+- **Performance**: Optimized re-renders and validation timing
+
+## Accessibility
+
+The form components provide comprehensive accessibility features:
+
+- **Screen Reader Support**: Proper ARIA labels, descriptions, and error announcements
+- **Keyboard Navigation**: Full keyboard support for all form elements
+- **Focus Management**: Logical tab order and visible focus indicators
+- **Error Handling**: Clear error messages with proper associations
+- **Semantic HTML**: Uses appropriate form elements and structure
+
+<Callout type="info">
+  **Best Practice**: Always use `FormLabel`, `FormDescription`, and `FormMessage` together with `FormControl` to ensure proper accessibility and consistent styling.
+</Callout>
+
+## Schema Validation
+
+The form components work seamlessly with schema validation libraries:
+
+### With Zod
+<!-- Preview removed during migration -->
+  
+## Styling
+
+### Custom Form Layouts
+<!-- Preview removed during migration -->
+
+### Error State Customization
+<!-- Preview removed during migration -->
+
+## Common Patterns
+
+### Form Submission States
+<!-- Preview removed during migration -->
+
+
+### Conditional Fields
+<!-- Preview removed during migration -->
+
+### Form Reset and Default Values
+<!-- Preview removed during migration -->

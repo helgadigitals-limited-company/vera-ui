@@ -1,0 +1,239 @@
+---
+title: Switch
+description: A switch component built on Radix UI's Switch primitive that allows users to toggle between on and off states. Perfect for boolean settings, preferences, and feature toggles.
+---
+
+import { Switch, Label, Button, Input } from "@helgadigitals/vera-ui"
+import { Sun, Moon } from "lucide-react"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Basic Switch
+
+<!-- Preview removed during migration -->
+
+### Controlled Switch
+
+<!-- Preview removed during migration -->
+
+### Disabled Switch
+
+<!-- Preview removed during migration -->
+
+### Settings Panel
+
+<!-- Preview removed during migration -->
+
+### Form Integration
+
+<!-- Preview removed during migration -->
+
+### Feature Toggles
+
+<!-- Preview removed during migration -->
+
+### Custom Styling
+
+<!-- Preview removed during migration -->
+
+### With Icons
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+The Switch component accepts all props from Radix UI's Switch component:
+
+<TypeTable
+  type={{
+    checked: {
+      type: 'boolean',
+      description: 'The controlled checked state of the switch',
+    },
+    defaultChecked: {
+      type: 'boolean',
+      default: 'false',
+      description: 'The default checked state when uncontrolled',
+    },
+    onCheckedChange: {
+      type: '(checked: boolean) => void',
+      description: 'Event handler called when the checked state changes',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, prevents the user from interacting with the switch',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, indicates that the user must toggle the switch',
+    },
+    name: {
+      type: 'string',
+      description: 'The name of the switch, submitted with forms',
+    },
+    value: {
+      type: 'string',
+      default: '"on"',
+      description: 'The value given as data when submitted with a name',
+    },
+    id: {
+      type: 'string',
+      description: 'The id attribute of the switch',
+    },
+    className: {
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  }}
+/>
+
+## Data Attributes
+
+The following data attributes are automatically applied and can be used for styling:
+
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-state` | `"checked" \| "unchecked"` | The checked state of the switch |
+| `data-disabled` | Present when disabled | Applied when the switch is disabled |
+
+### Switch Thumb
+
+The thumb (movable part) also receives data attributes:
+
+| Attribute | Values | Description |
+|-----------|--------|-------------|
+| `data-state` | `"checked" \| "unchecked"` | The checked state of the thumb |
+
+## Accessibility
+
+The Switch component follows WAI-ARIA guidelines:
+
+- **Keyboard Navigation**: Space key toggles the switch state
+- **Screen Readers**: Proper ARIA attributes and semantic switch element
+- **Focus Management**: Clear focus indicators with keyboard navigation
+- **Labeling**: Use proper `label` elements with `htmlFor` attribute or `aria-label`
+
+<Callout type="info">
+  **Labeling**: Always provide a clear, descriptive label for switches. Use the `label` element with the `htmlFor` attribute pointing to the switch's `id`.
+</Callout>
+
+```tsx
+// Good: Properly labeled switch
+<div className="flex items-center space-x-2">
+  <Switch id="notifications" />
+  <Label htmlFor="notifications">Enable push notifications</Label>
+</div>
+
+// Also good: Using aria-label for compact layouts
+<Switch aria-label="Toggle dark mode" />
+```
+
+## Switch vs Checkbox
+
+Choose Switch for:
+- **Settings and preferences** that take effect immediately
+- **Feature toggles** that enable/disable functionality
+- **Binary states** that represent on/off, enabled/disabled
+
+Choose Checkbox for:
+- **Form submissions** that require explicit confirmation
+- **Multiple selections** from a list of options
+- **Agreements** like terms and conditions
+
+## Best Practices
+
+### Immediate Effect
+Switches should trigger immediate changes:
+
+```tsx
+// Good: Immediate effect
+const [notifications, setNotifications] = useState(false)
+
+return (
+  <Switch
+    checked={notifications}
+    onCheckedChange={(checked) => {
+      setNotifications(checked)
+      // Apply setting immediately
+      updateNotificationSettings(checked)
+    }}
+  />
+)
+```
+
+### Clear Labels
+Use descriptive labels that indicate the action:
+
+```tsx
+// Good: Clear action
+<Label htmlFor="auto-save">Enable auto-save</Label>
+
+// Avoid: Ambiguous label
+<Label htmlFor="setting">Setting</Label>
+```
+
+### Consistent Placement
+Maintain consistent switch placement in settings panels:
+
+```tsx
+// Good: Consistent right-aligned switches
+<div className="flex items-center justify-between">
+  <Label>Setting name</Label>
+  <Switch />
+</div>
+```
+
+## Styling
+
+The Switch component supports custom styling and automatically adapts to your theme:
+
+```tsx
+<Switch className="data-[state=checked]:bg-green-600" />
+```
+
+Common style customizations:
+
+```css
+/* Custom switch colors */
+.custom-switch {
+  @apply data-[state=checked]:bg-blue-600;
+}
+
+/* Custom thumb styling */
+.custom-switch [data-slot="switch-thumb"] {
+  @apply bg-white shadow-lg;
+}
+
+/* Large switch variant */
+.large-switch {
+  @apply h-6 w-11;
+}
+```

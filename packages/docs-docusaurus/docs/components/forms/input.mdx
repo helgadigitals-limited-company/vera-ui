@@ -1,0 +1,385 @@
+---
+title: Input
+description: A versatile text input component that supports different types, states, and styling options. Built with accessibility and form integration in mind. 
+---
+
+import { Input } from "@helgadigitals/vera-ui"
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+    <TabItem value="pnpm" >
+      ```bash
+      pnpm add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="npm" >
+      ```bash
+      npm install @helgadigitals/vera-ui
+      ```
+    </TabItem>
+    <TabItem value="yarn" >
+      ```bash
+      yarn add @helgadigitals/vera-ui
+      ```
+    </TabItem>
+</Tabs>
+
+## Usage
+
+<!-- Preview removed during migration -->
+
+## Examples
+
+### Input Types
+
+<!-- Preview removed during migration -->
+
+### Input States
+
+<!-- Preview removed during migration -->
+
+### With Form Integration
+
+<!-- Preview removed during migration -->
+
+## API Reference
+
+### Props
+
+The Input component accepts all standard HTML input attributes plus:
+
+<Callout type="info">
+The Input component is built on the native HTML input element and supports all its standard attributes including `type`, `placeholder`, `disabled`, `required`, etc.
+</Callout>
+
+## Accessibility
+
+- The Input component maintains focus management and keyboard navigation
+- Supports ARIA attributes for screen readers
+- Works with form labels and validation messages
+- Follows WAI-ARIA guidelines for input elements
+
+## Best Practices
+
+- Always provide meaningful placeholder text or labels
+- Use appropriate input types for better user experience
+- Include validation feedback for form inputs
+- Consider disabled and readonly states appropriately
+- Test with keyboard navigation and screen readers
+```
+
+### Input Validation
+
+```tsx
+import { useState } from "react";
+import { Input, Label } from "@helgadigitals/vera-ui";
+import { cn } from "@helgadigitals/vera-ui";
+
+export default function ValidationExample() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateEmail = (value: string) => {
+    if (!value) return "Email is required";
+    if (!/\S+@\S+\.\S+/.test(value)) return "Email is invalid";
+    return "";
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value) return "Password is required";
+    if (value.length < 8) return "Password must be at least 8 characters";
+    return "";
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    const error = validateEmail(value);
+    setErrors(prev => ({ ...prev, email: error }));
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    const error = validatePassword(value);
+    setErrors(prev => ({ ...prev, password: error }));
+  };
+
+  return (
+    <div className="space-y-4 max-w-md">
+      <div className="space-y-2">
+        <Label htmlFor="email" className={errors.email ? "text-destructive" : ""}>
+          Email
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Enter your email"
+          className={cn(errors.email && "border-destructive")}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "email-error" : undefined}
+        />
+        {errors.email && (
+          <p id="email-error" className="text-sm text-destructive">
+            {errors.email}
+          </p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="password" className={errors.password ? "text-destructive" : ""}>
+          Password
+        </Label>
+        <Input
+          id="password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          placeholder="Enter your password"
+          className={cn(errors.password && "border-destructive")}
+          aria-invalid={!!errors.password}
+          aria-describedby={errors.password ? "password-error" : undefined}
+        />
+        {errors.password && (
+          <p id="password-error" className="text-sm text-destructive">
+            {errors.password}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+## Props Reference
+
+The Input component accepts all standard HTML input attributes plus:
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | - | Additional CSS classes |
+| `type` | `string` | `"text"` | HTML input type |
+| `disabled` | `boolean` | `false` | Whether the input is disabled |
+| `readOnly` | `boolean` | `false` | Whether the input is read-only |
+| `required` | `boolean` | `false` | Whether the input is required |
+| `placeholder` | `string` | - | Placeholder text |
+| `value` | `string` | - | Controlled value |
+| `defaultValue` | `string` | - | Default value for uncontrolled |
+| `onChange` | `(event: ChangeEvent<HTMLInputElement>) => void` | - | Change handler |
+| `onFocus` | `(event: FocusEvent<HTMLInputElement>) => void` | - | Focus handler |
+| `onBlur` | `(event: FocusEvent<HTMLInputElement>) => void` | - | Blur handler |
+
+## Styling
+
+### CSS Variables
+
+The component uses these CSS variables:
+
+```css
+.input {
+  --input-background: hsl(var(--background));
+  --input-border: hsl(var(--border));
+  --input-text: hsl(var(--foreground));
+  --input-placeholder: hsl(var(--muted-foreground));
+  --input-focus-border: hsl(var(--ring));
+  --input-disabled-background: hsl(var(--muted));
+  --input-disabled-text: hsl(var(--muted-foreground));
+}
+```
+
+### Custom Styling
+
+```tsx
+// Custom styled input
+<Input
+  className="bg-blue-50 border-blue-200 focus:border-blue-500 focus:ring-blue-500"
+  placeholder="Custom styled input"
+/>
+
+// Large input variant
+<Input
+  className="h-12 px-4 text-lg"
+  placeholder="Large input"
+/>
+
+// Compact input variant
+<Input
+  className="h-8 px-3 text-sm"
+  placeholder="Compact input"
+/>
+```
+
+## Accessibility
+
+The Input component includes built-in accessibility features:
+
+- **Semantic HTML**: Uses proper `input` element
+- **ARIA Support**: Supports `aria-invalid`, `aria-describedby`, and other ARIA attributes
+- **Keyboard Navigation**: Full keyboard support
+- **Screen Readers**: Proper labeling and description association
+- **Focus Management**: Clear focus indicators
+
+### Best Practices
+
+<Callout type="info">
+**Labels**: Always associate inputs with labels using the `htmlFor` attribute or by wrapping the input in a label.
+</Callout>
+
+<Callout type="warning">
+**Validation**: Use `aria-invalid` and `aria-describedby` to associate error messages with inputs for better accessibility.
+</Callout>
+
+```tsx
+// ✅ Good - proper labeling and error association
+<div>
+  <Label htmlFor="email">Email Address</Label>
+  <Input
+    id="email"
+    type="email"
+    aria-invalid={!!emailError}
+    aria-describedby={emailError ? "email-error" : undefined}
+  />
+  {emailError && (
+    <p id="email-error" className="text-destructive text-sm">
+      {emailError}
+    </p>
+  )}
+</div>
+
+// ❌ Bad - no label association
+<div>
+  <span>Email</span>
+  <Input type="email" />
+</div>
+```
+
+## Integration with Form Libraries
+
+### React Hook Form
+
+```tsx
+import { useForm } from "react-hook-form";
+import { Input, Label, Button } from "@helgadigitals/vera-ui";
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+export default function ReactHookFormExample() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Email is invalid"
+            }
+          })}
+          className={errors.email ? "border-destructive" : ""}
+        />
+        {errors.email && (
+          <p className="text-sm text-destructive">{errors.email.message}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
+          type="password"
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters"
+            }
+          })}
+          className={errors.password ? "border-destructive" : ""}
+        />
+        {errors.password && (
+          <p className="text-sm text-destructive">{errors.password.message}</p>
+        )}
+      </div>
+
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+```
+
+### Formik
+
+```tsx
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { Input, Label, Button } from "@helgadigitals/vera-ui";
+
+const validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required")
+});
+
+export default function FormikExample() {
+  return (
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={validationSchema}
+      onSubmit={(values) => console.log(values)}
+    >
+      {({ errors, touched }) => (
+        <Form className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Field
+              as={Input}
+              id="email"
+              name="email"
+              type="email"
+              className={errors.email && touched.email ? "border-destructive" : ""}
+            />
+            {errors.email && touched.email && (
+              <p className="text-sm text-destructive">{errors.email}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Field
+              as={Input}
+              id="password"
+              name="password"
+              type="password"
+              className={errors.password && touched.password ? "border-destructive" : ""}
+            />
+            {errors.password && touched.password && (
+              <p className="text-sm text-destructive">{errors.password}</p>
+            )}
+          </div>
+
+          <Button type="submit">Submit</Button>
+        </Form>
+      )}
+    </Formik>
+  );
+}
+```
