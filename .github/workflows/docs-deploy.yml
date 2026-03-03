@@ -12,7 +12,7 @@ env:
   REGISTRY: ${{ secrets.DOCKER_REGISTRY || 'docker.io' }}
   IMAGE_NAME: vera-ui-docs
   CONTAINER_NAME: vera-ui-docs
-  CONTAINER_PORT: 3000
+  CONTAINER_PORT: 3001
 
 jobs:
   build-and-deploy:
