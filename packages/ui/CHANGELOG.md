@@ -1,3 +1,31 @@
+## [1.4.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.3.1...v1.4.0) (2026-05-02)
+
+### 🚀 Features
+
+* add .npmrc configuration and improve component preview layout for better usability ([b8ede7a](https://github.com/helgadigitals-limited-company/vera-ui/commit/b8ede7a7fb282b65c5c30d1e7f7b63e6afd30b4a))
+* add collapsible component examples and documentation ([332d2ab](https://github.com/helgadigitals-limited-company/vera-ui/commit/332d2ab6f2e94b32da2075f8b181bf62f7f666e4))
+* add collapsible examples and documentation for enhanced usage guidance ([f270d95](https://github.com/helgadigitals-limited-company/vera-ui/commit/f270d95af45bf3dc9f5df189f5f893f9fd2d1c78))
+* add collapsible examples and documentation to showcase usage ([286221f](https://github.com/helgadigitals-limited-company/vera-ui/commit/286221f5c5c1d0739ba24a80b35d85c0233fdc07))
+* add new collapsible examples and enhance documentation for better usage guidance ([c600411](https://github.com/helgadigitals-limited-company/vera-ui/commit/c600411443907574ba052747f18cd22f062fd67b))
+* enhance collapsible examples and documentation for improved clarity and usage guidance ([5bc549d](https://github.com/helgadigitals-limited-company/vera-ui/commit/5bc549d4127f45cae05a6d710aadbdb767be188a))
+
+### 🐛 Bug Fixes
+
+* add alt attribute to AvatarImage for improved accessibility ([083e078](https://github.com/helgadigitals-limited-company/vera-ui/commit/083e07895ca405a20859b45f9785af2b7cb381e0))
+* improve installation command formatting in collapsible documentation ([48e7745](https://github.com/helgadigitals-limited-company/vera-ui/commit/48e7745eb52d63b1649b4e1d3fa2c558a2fc4812))
+* remove console logs from BasicCollapsibleExample for cleaner output ([e295494](https://github.com/helgadigitals-limited-company/vera-ui/commit/e295494a2bf447a6d385f7b477fecef528d5f466))
+* resolve broken image display in product card example ([e54e563](https://github.com/helgadigitals-limited-company/vera-ui/commit/e54e563151cd21bc41f99dc7780387b01ea48204))
+* update alt attribute for AvatarImage in AvatarWithImage example ([a191893](https://github.com/helgadigitals-limited-company/vera-ui/commit/a1918932864a3368797e08848a94d165cf208215))
+* update description and improve installation command formatting for collapsible documentation ([46ebc33](https://github.com/helgadigitals-limited-company/vera-ui/commit/46ebc333a38b515d8b6dbf8bf563d8d769c3b92d))
+
+### 📚 Documentation
+
+* add theming documentation and update dependencies ([1055e9b](https://github.com/helgadigitals-limited-company/vera-ui/commit/1055e9b024f46ae9fc657459d68ce1c8ac363382))
+
+### ♻️ Refactoring
+
+* remove border styling from TabsContainer ([2d89828](https://github.com/helgadigitals-limited-company/vera-ui/commit/2d89828f6927dbdcad17cbf2e6d27e91205658d1))
+
 ## [1.3.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.3.0...v1.3.1) (2025-10-23)
 
 ### 🐛 Bug Fixes
