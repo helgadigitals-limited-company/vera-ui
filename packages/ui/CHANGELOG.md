@@ -1,3 +1,9 @@
+## [1.4.1](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.4.0...v1.4.1) (2026-05-02)
+
+### ♻️ Refactoring
+
+* migrate combobox from base-ui to radix ui ([0236340](https://github.com/helgadigitals-limited-company/vera-ui/commit/0236340b257626bdd636d24770f631ca06a1aaa8))
+
 ## [1.4.0](https://github.com/helgadigitals-limited-company/vera-ui/compare/v1.3.1...v1.4.0) (2026-05-02)
 
 ### 🚀 Features
