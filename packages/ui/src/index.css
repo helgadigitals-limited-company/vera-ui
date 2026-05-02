@@ -5,6 +5,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer vera-defaults {
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.148 0.004 228.8);
@@ -100,6 +101,7 @@
     --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
+} /* end @layer vera-defaults */
 
 @theme inline {
     --color-background: var(--background);

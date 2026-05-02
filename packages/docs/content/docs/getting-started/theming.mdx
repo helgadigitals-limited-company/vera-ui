@@ -1,0 +1,299 @@
+---
+title: Theming
+description: Customize Vera UI's design tokens to match your brand — via CSS variable overrides or the ThemeProvider tokens prop.
+---
+
+import { Callout } from "fumadocs-ui/components/callout"
+import { Tabs, Tab } from "fumadocs-ui/components/tabs"
+import { TypeTable } from 'fumadocs-ui/components/type-table'
+import { Steps } from "fumadocs-ui/components/steps"
+
+Vera UI is built on CSS custom properties. Every color, radius, shadow, and font is a CSS variable that you can override — either in plain CSS or programmatically via the `ThemeProvider` `tokens` prop.
+
+## How It Works
+
+All design tokens are defined in the library's stylesheet under a `@layer vera-defaults` block. Because they live in a named layer, any CSS you write outside a layer automatically takes precedence — no `!important` needed.
+
+```css
+/* Library internals (simplified) */
+@layer vera-defaults {
+  :root {
+    --primary: oklch(0.488 0.243 264.376);
+    --radius: 0.625rem;
+    /* ... */
+  }
+}
+```
+
+You override them simply by declaring the variable in your own stylesheet after importing the library CSS.
+
+---
+
+## Approach 1 — CSS Override
+
+Best for: static brand colors, global theme, no JavaScript required.
+
+<Steps>
+
+### Import the library stylesheet
+
+```css title="src/globals.css"
+@import "@helgadigitals/vera-ui/styles";
+@import "tailwindcss";
+```
+
+### Override tokens after the import
+
+```css title="src/globals.css"
+@import "@helgadigitals/vera-ui/styles";
+@import "tailwindcss";
+
+:root {
+  --primary: oklch(0.52 0.22 150);          /* your brand green */
+  --primary-foreground: oklch(1 0 0);
+  --radius: 0.5rem;                          /* slightly less rounded */
+  --font-sans: "DM Sans", sans-serif;
+}
+
+.dark {
+  --primary: oklch(0.62 0.22 150);          /* lighter in dark mode */
+  --background: oklch(0.12 0 0);
+}
+```
+
+</Steps>
+
+<Callout type="info">
+  Because Vera UI defaults live in `@layer vera-defaults`, your unlayered `:root` declarations always win — no specificity tricks required.
+</Callout>
+
+---
+
+## Approach 2 — ThemeProvider `tokens` Prop
+
+Best for: tokens loaded from an API, per-tenant branding, or A/B testing color schemes.
+
+The `ThemeProvider` component accepts a `tokens` prop. Each key maps to a CSS custom property that gets injected on `document.documentElement` at runtime.
+
+```tsx title="src/main.tsx"
+import { ThemeProvider } from '@helgadigitals/vera-ui'
+
+export default function App() {
+  return (
+    <ThemeProvider
+      tokens={{
+        primary: 'oklch(0.52 0.22 150)',
+        'primary-foreground': 'oklch(1 0 0)',
+        radius: '0.5rem',
+        'font-sans': '"DM Sans", sans-serif',
+      }}
+    >
+      {/* your app */}
+    </ThemeProvider>
+  )
+}
+```
+
+Tokens can come from anywhere — a database, a config file, user preferences:
+
+```tsx title="src/main.tsx"
+import { useEffect, useState } from 'react'
+import { ThemeProvider, type DesignTokens } from '@helgadigitals/vera-ui'
+
+export default function App() {
+  const [tokens, setTokens] = useState<DesignTokens>({})
+
+  useEffect(() => {
+    fetch('/api/brand-config')
+      .then(r => r.json())
+      .then(config => setTokens(config.tokens))
+  }, [])
+
+  return (
+    <ThemeProvider tokens={tokens}>
+      {/* your app */}
+    </ThemeProvider>
+  )
+}
+```
+
+<Callout type="info">
+  The `tokens` prop is reactive — updating it re-applies all CSS variables. Useful for live theme switching beyond light/dark mode.
+</Callout>
+
+---
+
+## Token Reference
+
+All token keys accepted by the `tokens` prop and valid as CSS variable overrides.
+
+### Colors
+
+<TypeTable
+  type={{
+    primary: {
+      description: 'Primary brand color. Used for buttons, links, and focus rings.',
+      type: 'string',
+    },
+    'primary-foreground': {
+      description: 'Text/icon color on primary backgrounds.',
+      type: 'string',
+    },
+    secondary: {
+      description: 'Secondary surface color.',
+      type: 'string',
+    },
+    'secondary-foreground': {
+      description: 'Text color on secondary backgrounds.',
+      type: 'string',
+    },
+    accent: {
+      description: 'Accent color for hover states and highlights.',
+      type: 'string',
+    },
+    'accent-foreground': {
+      description: 'Text color on accent backgrounds.',
+      type: 'string',
+    },
+    background: {
+      description: 'Page background color.',
+      type: 'string',
+    },
+    foreground: {
+      description: 'Default text color.',
+      type: 'string',
+    },
+    card: {
+      description: 'Card surface color.',
+      type: 'string',
+    },
+    'card-foreground': {
+      description: 'Text color inside cards.',
+      type: 'string',
+    },
+    muted: {
+      description: 'Muted surface color for subtle backgrounds.',
+      type: 'string',
+    },
+    'muted-foreground': {
+      description: 'De-emphasized text color.',
+      type: 'string',
+    },
+    destructive: {
+      description: 'Destructive action color (errors, delete).',
+      type: 'string',
+    },
+    'destructive-foreground': {
+      description: 'Text color on destructive backgrounds.',
+      type: 'string',
+    },
+    border: {
+      description: 'Default border color.',
+      type: 'string',
+    },
+    input: {
+      description: 'Input field border color.',
+      type: 'string',
+    },
+    ring: {
+      description: 'Focus ring color.',
+      type: 'string',
+    },
+  }}
+/>
+
+### Sidebar
+
+<TypeTable
+  type={{
+    sidebar: {
+      description: 'Sidebar background color.',
+      type: 'string',
+    },
+    'sidebar-foreground': {
+      description: 'Sidebar text color.',
+      type: 'string',
+    },
+    'sidebar-primary': {
+      description: 'Active item highlight color in the sidebar.',
+      type: 'string',
+    },
+    'sidebar-primary-foreground': {
+      description: 'Text on active sidebar items.',
+      type: 'string',
+    },
+    'sidebar-accent': {
+      description: 'Hover color for sidebar items.',
+      type: 'string',
+    },
+    'sidebar-accent-foreground': {
+      description: 'Text on hovered sidebar items.',
+      type: 'string',
+    },
+    'sidebar-border': {
+      description: 'Sidebar border/divider color.',
+      type: 'string',
+    },
+    'sidebar-ring': {
+      description: 'Focus ring inside the sidebar.',
+      type: 'string',
+    },
+  }}
+/>
+
+### Charts
+
+<TypeTable
+  type={{
+    'chart-1': { description: 'First chart series color.', type: 'string' },
+    'chart-2': { description: 'Second chart series color.', type: 'string' },
+    'chart-3': { description: 'Third chart series color.', type: 'string' },
+    'chart-4': { description: 'Fourth chart series color.', type: 'string' },
+    'chart-5': { description: 'Fifth chart series color.', type: 'string' },
+  }}
+/>
+
+### Typography & Shape
+
+<TypeTable
+  type={{
+    'font-sans': {
+      description: 'Sans-serif font stack. Defaults to Inter.',
+      type: 'string',
+    },
+    'font-serif': {
+      description: 'Serif font stack. Defaults to Source Serif 4.',
+      type: 'string',
+    },
+    'font-mono': {
+      description: 'Monospace font stack. Defaults to JetBrains Mono.',
+      type: 'string',
+    },
+    radius: {
+      description: 'Base border radius. All component radii are derived from this value.',
+      type: 'string',
+    },
+  }}
+/>
+
+<Callout type="info">
+  All values are passed directly to `CSS.setProperty`, so use any valid CSS value: `oklch()`, `hsl()`, hex, named colors, or CSS expressions.
+</Callout>
+
+---
+
+## Color Format
+
+Vera UI defaults use **OKLCH** — a perceptually uniform color space that makes it easy to create accessible color scales. You can use any CSS color format your browser supports:
+
+```css
+/* All of these work */
+--primary: oklch(0.52 0.22 150);     /* recommended */
+--primary: hsl(142 60% 42%);
+--primary: #2d8a55;
+--primary: rgb(45, 138, 85);
+```
+
+<Callout type="success">
+  OKLCH is recommended because lightness is consistent across hues, making it easier to ensure sufficient contrast ratios for accessibility.
+</Callout>
