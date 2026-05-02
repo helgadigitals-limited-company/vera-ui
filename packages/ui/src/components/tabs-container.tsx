@@ -160,7 +160,7 @@ export function TabsContainer({
                     "whitespace-nowrap flex-shrink-0",
                     "text-muted-foreground data-[state=active]:text-foreground",
                     "font-medium",
-                    "border-b-2 border-transparent data-[state=active]:border-primary",
+                    // "border-b-2 border-transparent data-[state=active]:border-primary",
                     "hover:text-foreground/80 hover:scale-105" //  hover effect
                   )}
                 >
