@@ -4,6 +4,7 @@ description: An enhanced tabbed interface component that provides advanced featu
 ---
 
 import { ComponentPreview, AutoExtractPreview } from "@/components/component-preview";
+import { Callout } from "fumadocs-ui/components/callout";
 import { TypeTable } from 'fumadocs-ui/components/type-table';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import {
@@ -49,6 +50,22 @@ An enhanced tabbed interface component that provides advanced features like URL 
     </Tab>
 </Tabs>
 
+
+<Callout type="warning">
+**URL persistence requires a nuqs adapter.** `persistInUrl` is `true` by default, so tab state is synced to the URL via [nuqs](https://nuqs.dev). Wrap your app in the appropriate adapter — for example `NuqsAdapter` from `nuqs/adapters/react` or `nuqs/adapters/next/app`. Without an adapter, either add one or pass `persistInUrl={false}` to use local state only.
+
+```tsx
+import { NuqsAdapter } from "nuqs/adapters/react";
+
+export function App() {
+  return (
+    <NuqsAdapter>
+      <TabsContainer tabs={tabs} />
+    </NuqsAdapter>
+  );
+}
+```
+</Callout>
 
 ## Usage
 

@@ -25,7 +25,7 @@ npm releases on `main`).
 | 008 | Harden chart.tsx against style-tag injection | P2 | M | — | DONE |
 | 009 | Fix wrong docs content + repo-root hygiene | P2 | S | — | DONE |
 | 010 | Document missing components (tranche 1: 8 pages) | P3 | L | 009 | DONE |
-| 011 | Resolve tabs-container nuqs contract + export debris | P2 | M | 006 | TODO |
+| 011 | Resolve tabs-container nuqs contract + export debris | P2 | M | 006 | DONE |
 | 012 | Spike: shadcn-compatible registry (design/spike) | P3 | M | — | TODO |
 | 013 | Decompose the 1184-line DataTable god component | P3 | L | 004 DONE, 006 DONE | TODO |
 
