@@ -32,7 +32,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "release": "semantic-release",
-    "release:dry-run": "semantic-release --dry-run"
+    "release:dry-run": "semantic-release --dry-run",
+    "registry:build": "node scripts/build-registry.mjs && shadcn build --output ../docs/public/r"
   },
   "repository": {
     "type": "git",

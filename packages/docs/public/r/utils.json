@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "utils",
+  "title": "Utils",
+  "description": "cn() class-name helper and shared utilities.",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "src/lib/utils.ts",
+      "content": "import { type Group, type MixedSidebarItem, type SidebarItem } from \"@/components/Sidebar\";\nimport { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n\n\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\nexport function transformToSelectOptions<T extends Record<string, any>>(\n  data: T[],\n  labelField: keyof T,\n  valueField: keyof T = 'id' as keyof T\n): { value: string; label: string }[] {\n  return data\n    .filter((item) => item[valueField] !== undefined)\n    .map((item) => ({\n      value: String(item[valueField]),\n      label: String(item[labelField] ?? ''),\n    }));\n}\n\n\nexport function splitStringByUnderscore(str: string) {\n  return str.split(\"_\").join(\" \");\n}\n\n\n// Helper function to check if items are Groups or SidebarItems\nexport function isGroupArray(items: SidebarItem[] | Group[]): items is Group[] {\n  if (!items || items.length === 0) return false;\n  const firstItem = items[0];\n  return (\n    typeof firstItem === 'object' &&\n    firstItem !== null &&\n    'key' in firstItem &&\n    'label' in firstItem &&\n    'items' in firstItem &&\n    Array.isArray((firstItem as Group).items)\n  );\n}\n\n// utility functions for mixed array handling\n\nexport function isMixedArray(items: SidebarItem[] | Group[] | MixedSidebarItem[]): items is MixedSidebarItem[] {\n  if (!items || items.length === 0) return false;\n  \n  // Check if we have both types in the array\n  let hasGroups = false;\n  let hasItems = false;\n  \n  for (const item of items) {\n    if (isGroup(item)) {\n      hasGroups = true;\n    } else {\n      hasItems = true;\n    }\n    \n    // If we found both types, it's a mixed array\n    if (hasGroups && hasItems) {\n      return true;\n    }\n  }\n  \n  return false;\n}\n\n\n\nexport function isGroup(item: SidebarItem | Group): item is Group {\n  return (\n    typeof item === 'object' &&\n    item !== null &&\n    'key' in item &&\n    'label' in item &&\n    'items' in item &&\n    Array.isArray((item as Group).items)\n  );\n}\n\nexport function isSidebarItem(item: SidebarItem | Group): item is SidebarItem {\n  return (\n    typeof item === 'object' &&\n    item !== null &&\n    'title' in item &&\n    'path' in item &&\n    'icon' in item\n  );\n}",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}
