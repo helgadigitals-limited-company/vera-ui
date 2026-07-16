@@ -87,6 +87,9 @@ coverage/
 # Vite cache
 .vite/
 
+# Code graph tool output
+graphify-out/
+
 # Vitest
 coverage/
 

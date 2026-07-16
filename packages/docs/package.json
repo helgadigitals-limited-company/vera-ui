@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm extract-code && next build",
+    "predev": "pnpm extract-code",
     "dev": "next dev --turbo",
     "start": "next start",
     "postinstall": "pnpm rebuild esbuild && fumadocs-mdx",

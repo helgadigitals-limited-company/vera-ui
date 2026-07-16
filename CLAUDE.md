@@ -80,7 +80,7 @@ Sidebar uses `react-router-dom` for active state detection — it requires a rou
     <ExampleFunctionName />
   </AutoExtractPreview>
   ```
-- `pnpm extract-code` must run before `next build` (it's a `prebuild` step in docs `package.json`)
+- `pnpm extract-code` runs before `next build` (chained in the docs `build` script) and via `predev` before `dev`
 
 ### Build Output
 
