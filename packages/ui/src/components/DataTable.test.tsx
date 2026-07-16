@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { DataTable } from './DataTable'
 
@@ -9,6 +9,12 @@ const rows: Row[] = [
   { id: '2', name: 'Bob', age: 25 },
   { id: '3', name: 'Carol', age: 35 },
 ]
+
+const tenRows: Row[] = Array.from({ length: 10 }, (_, i) => ({
+  id: String(i + 1),
+  name: `Person ${String.fromCharCode(65 + i)}`,
+  age: 20 + i,
+}))
 
 function nameColumnHeader() {
   return screen.getByRole('columnheader', { name: /^name$/i })
@@ -108,5 +114,104 @@ describe('DataTable sort state immutability', () => {
     })
     expect(original[0].direction).toBe('asc')
     expect(original[1].direction).toBe('asc')
+  })
+})
+
+describe('DataTable happy paths', () => {
+  it('renders all column headers and rows for a 10-row dataset', () => {
+    render(
+      <DataTable
+        tableData={tenRows}
+        tableColumns={['name', 'age']}
+        getRowId={(row) => row.id}
+      />
+    )
+
+    expect(screen.getByRole('columnheader', { name: /^name$/i })).toBeInTheDocument()
+    expect(screen.getByRole('columnheader', { name: /^age$/i })).toBeInTheDocument()
+
+    for (const row of tenRows) {
+      expect(screen.getByText(row.name)).toBeInTheDocument()
+    }
+  })
+
+  it('reorders first-column cell text on uncontrolled sort click', () => {
+    const unsorted: Row[] = [
+      { id: '1', name: 'Charlie', age: 30 },
+      { id: '2', name: 'Alice', age: 25 },
+      { id: '3', name: 'Bob', age: 35 },
+    ]
+
+    render(
+      <DataTable
+        tableData={unsorted}
+        tableColumns={['name', 'age']}
+        getRowId={(row) => row.id}
+        sortableColumns={['name']}
+      />
+    )
+
+    fireEvent.click(nameColumnHeader())
+
+    const bodyRows = screen.getAllByRole('row').slice(1)
+    const nameCells = bodyRows.map((row) => within(row).getAllByRole('cell')[0].textContent)
+    expect(nameCells).toEqual(['Alice', 'Bob', 'Charlie'])
+  })
+
+  it('toggles row selection and fires onSelectionChange', () => {
+    const onSelectionChange = vi.fn()
+
+    render(
+      <DataTable
+        tableData={tenRows}
+        tableColumns={['name', 'age']}
+        getRowId={(row) => row.id}
+        selectable
+        selectionMode="multiple"
+        selectedRowIds={[]}
+        onSelectionChange={onSelectionChange}
+      />
+    )
+
+    const checkboxes = screen.getAllByRole('checkbox')
+    // first checkbox is select-all; row checkboxes follow
+    fireEvent.click(checkboxes[1])
+
+    expect(onSelectionChange).toHaveBeenCalledWith(['1'])
+  })
+
+  it('narrows visible rows with the global filter', () => {
+    render(
+      <DataTable
+        tableData={tenRows}
+        tableColumns={['name', 'age']}
+        getRowId={(row) => row.id}
+        enableGlobalFilter
+      />
+    )
+
+    const search = screen.getByPlaceholderText('Search all columns...')
+    fireEvent.change(search, { target: { value: 'Person A' } })
+
+    expect(screen.getByText('Person A')).toBeInTheDocument()
+    expect(screen.queryByText('Person B')).not.toBeInTheDocument()
+  })
+
+  it('toggles expanded content via the expand control', () => {
+    render(
+      <DataTable
+        tableData={tenRows.slice(0, 3)}
+        tableColumns={['name', 'age']}
+        getRowId={(row) => row.id}
+        expandable
+        expandedContent={(row) => <div>Details for {row.name}</div>}
+      />
+    )
+
+    expect(screen.queryByText('Details for Person A')).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Expand row' })[0])
+
+    expect(screen.getByText('Details for Person A')).toBeInTheDocument()
   })
 })
