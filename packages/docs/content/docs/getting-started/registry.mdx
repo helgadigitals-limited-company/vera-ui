@@ -1,0 +1,77 @@
+---
+title: Install via shadcn CLI
+description: Add Vera UI components straight into your project's source with the shadcn CLI, using the Vera UI registry.
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+Vera UI ships as an npm package **and** as a [shadcn](https://ui.shadcn.com) registry.
+The registry lets you copy component source directly into your project (you own
+the code, customize freely) instead of importing from the package.
+
+<Callout type="info">
+Prefer the npm package (`npm install @helgadigitals/vera-ui`) for app-wide
+adoption, semver updates, and the composite components (DataTable, Sidebar,
+TabsContainer). Use the registry when you want to own and customize individual
+component source.
+</Callout>
+
+## Configure the registry
+
+Add the `@vera-ui` namespace to your project's `components.json` so the CLI knows
+where to fetch Vera UI components from:
+
+```json title="components.json"
+{
+  "registries": {
+    "@vera-ui": "https://YOUR_DOCS_URL/r/{name}.json"
+  }
+}
+```
+
+<Callout type="warn">
+Replace `https://YOUR_DOCS_URL` with the base URL where this documentation site
+is hosted — the registry is served as static JSON at `/r/{name}.json`.
+</Callout>
+
+Your project must be a shadcn project (run `npx shadcn@latest init` first if it
+isn't) configured for **Tailwind CSS v4** and the **radix** base — Vera UI
+components are built on the unified `radix-ui` package, so mixing them with a
+base-ui registry will not compile.
+
+## Add components
+
+```bash
+# A single component
+npx shadcn@latest add @vera-ui/button
+
+# A composite — its dependencies (popover, command, tooltip, …) are
+# pulled from the Vera UI registry automatically
+npx shadcn@latest add @vera-ui/combobox
+```
+
+Every cross-component dependency resolves **within** the Vera UI registry, so a
+composite install never falls back to the default shadcn registry.
+
+## Theme tokens
+
+Vera UI's design tokens (color palette, radius, shadows, fonts) live in a theme
+item. Install it once to match Vera UI's look:
+
+```bash
+npx shadcn@latest add @vera-ui/vera-ui-theme
+```
+
+## Available items
+
+All components under the library's `ui/` surface are published, plus:
+
+- `@vera-ui/utils` — the `cn()` helper (`registry:lib`)
+- `@vera-ui/use-mobile` — the mobile-breakpoint hook (`registry:hook`)
+- `@vera-ui/vera-ui-theme` — design tokens (`registry:style`)
+
+<Callout type="info">
+Components that rely on a provider still need it wired up in your app root — for
+example, `@vera-ui/tooltip` requires a `<TooltipProvider>` around your tree.
+</Callout>

@@ -2,6 +2,7 @@
   "title": "Getting Started",
   "pages": [
     "installation",
+    "registry",
     "theming"
   ]
 }
