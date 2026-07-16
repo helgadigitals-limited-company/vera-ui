@@ -2,7 +2,7 @@
 
 declare global {
   interface ImportMeta {
-    glob<T = any>(
+    glob<T = unknown>(
       pattern: string | string[],
       options?: {
         base?: string;
