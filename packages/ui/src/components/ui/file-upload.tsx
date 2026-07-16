@@ -259,22 +259,30 @@ export  function FileUpload({
   useEffect(() => {
     if (value) {
       const files = Array.isArray(value) ? value : [value];
-      const newFilesWithPreview = files.map(createFileWithPreview);
+      // Reuse already-processed files (same object with id/preview) so we
+      // neither leak the URL created in processFiles nor churn preview identity.
+      const newFilesWithPreview = files.map((file) => {
+        const existing = file as Partial<FileWithPreview>;
+        if (existing.id && (!isImage(file) || existing.preview)) {
+          return file as FileWithPreview;
+        }
+        return createFileWithPreview(file);
+      });
       setFilesWithPreview((prev) => {
-        // Cleanup old preview URLs
-        prev.forEach((file) => {
-          if (file.preview) {
-            URL.revokeObjectURL(file.preview);
+        const kept = new Set(newFilesWithPreview.map((f) => f.preview));
+        prev.forEach((f) => {
+          if (f.preview && !kept.has(f.preview)) {
+            URL.revokeObjectURL(f.preview);
           }
         });
         return newFilesWithPreview;
       });
     } else {
       setFilesWithPreview((prev) => {
-        // Cleanup preview URLs
-        prev.forEach((file) => {
-          if (file.preview) {
-            URL.revokeObjectURL(file.preview);
+        const kept = new Set<string | undefined>();
+        prev.forEach((f) => {
+          if (f.preview && !kept.has(f.preview)) {
+            URL.revokeObjectURL(f.preview);
           }
         });
         return [];

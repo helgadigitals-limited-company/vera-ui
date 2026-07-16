@@ -21,7 +21,7 @@ npm releases on `main`).
 | 004 | Fix DataTable unkeyed fragment + sort-state mutation | P1 | S | — | DONE |
 | 005 | Fix semantic-release version write-back + docs image tag | P2 | S | — | DONE |
 | 006 | Characterization-test baseline (tabs-container, Pagination, DataTable, file-upload) | P1 | M | 001 | DONE |
-| 007 | Fix file-upload leaked object URLs / preview churn | P2 | M | 006 | TODO |
+| 007 | Fix file-upload leaked object URLs / preview churn | P2 | M | 006 | DONE |
 | 008 | Harden chart.tsx against style-tag injection | P2 | M | — | TODO |
 | 009 | Fix wrong docs content + repo-root hygiene | P2 | S | — | TODO |
 | 010 | Document missing components (tranche 1: 8 pages) | P3 | L | 009 | TODO |
