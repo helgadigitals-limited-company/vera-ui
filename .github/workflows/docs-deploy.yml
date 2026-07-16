@@ -32,7 +32,10 @@ jobs:
       - name: Extract UI version
         id: version
         run: |
-          UI_VERSION=$(jq -r '.version' packages/ui/package.json)
+          UI_VERSION=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//')
+          if [ -z "$UI_VERSION" ]; then
+            UI_VERSION=$(jq -r '.version' packages/ui/package.json)
+          fi
           echo "UI_VERSION=$UI_VERSION" >> $GITHUB_OUTPUT
           echo "IMAGE_TAG=${UI_VERSION}-${GITHUB_SHA:0:7}" >> $GITHUB_OUTPUT
           echo "📦 UI Version: $UI_VERSION"
