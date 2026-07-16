@@ -37,49 +37,25 @@ interface TabsContainerProps {
   tabsLayout?: "compact" | "full";
 }
 
-export function TabsContainer({
+type TabsContainerInnerProps = Pick<
+  TabsContainerProps,
+  "tabs" | "className" | "containerHeight" | "tabsLayout"
+> & {
+  activeTab: string;
+  onTabValueChange: (value: string) => void;
+};
+
+function TabsContainerInner({
   tabs,
-  defaultTab,
   className,
-  urlParamName = "tab",
-  historyMode = "push",
-  shallow = true,
-  onTabChange,
   containerHeight = "calc(100vh-5rem)",
-  persistInUrl = true,
   tabsLayout = "compact",
-}: TabsContainerProps) {
+  activeTab,
+  onTabValueChange,
+}: TabsContainerInnerProps) {
   const tabsListRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  const [localTab, setLocalTab] = useState(defaultTab || tabs[0]?.value || "");
-
-  // Only use nuqs if persistInUrl is true
-  const [urlTab, setUrlTab] = useQueryState(urlParamName, {
-    shallow,
-    history: historyMode,
-    clearOnDefault: true,
-    parse: (value) => {
-      // Validate that the parsed value is a valid tab
-      return tabs.some((tab) => tab.value === value)
-        ? value
-        : defaultTab || tabs[0]?.value || "";
-    },
-  });
-
-  // Use the default value directly in the component logic
-  const activeTab = persistInUrl
-    ? urlTab ?? defaultTab ?? tabs[0]?.value ?? ""
-    : localTab;
-
-  const handleTabChange = (value: string) => {
-    if (persistInUrl) {
-      setUrlTab(value).catch(console.error);
-    } else {
-      setLocalTab(value);
-    }
-    onTabChange?.(value);
-  };
 
   const checkForArrows = () => {
     if (!tabsListRef.current) return;
@@ -107,7 +83,6 @@ export function TabsContainer({
     tabsListRef.current.scrollBy({ left: 200, behavior: "smooth" });
   };
 
-  // Filter out hidden tabs
   const visibleTabs = tabs.filter((tab) => !tab.hidden);
 
   if (!visibleTabs.length) {
@@ -122,7 +97,7 @@ export function TabsContainer({
     <section className="w-full h-full">
       <Tabs
         value={activeTab}
-        onValueChange={handleTabChange}
+        onValueChange={onTabValueChange}
         className={cn("w-full", className)}
         style={{ height: containerHeight }}
       >
@@ -155,13 +130,12 @@ export function TabsContainer({
                   value={tab.value}
                   disabled={tab.disabled}
                   className={cn(
-                    "relative py-3 transition-all duration-300 ease-in-out", // smooth transition
+                    "relative py-3 transition-all duration-300 ease-in-out",
                     "data-[state=active]:bg-transparent",
                     "whitespace-nowrap flex-shrink-0",
                     "text-muted-foreground data-[state=active]:text-foreground",
                     "font-medium",
-                    // "border-b-2 border-transparent data-[state=active]:border-primary",
-                    "hover:text-foreground/80 hover:scale-105" //  hover effect
+                    "hover:text-foreground/80 hover:scale-105"
                   )}
                 >
                   {tab.label}
@@ -194,5 +168,84 @@ export function TabsContainer({
         ))}
       </Tabs>
     </section>
+  );
+}
+
+function UrlPersistedTabs({
+  tabs,
+  defaultTab,
+  className,
+  urlParamName = "tab",
+  historyMode = "push",
+  shallow = true,
+  onTabChange,
+  containerHeight = "calc(100vh-5rem)",
+  tabsLayout = "compact",
+}: TabsContainerProps) {
+  const [urlTab, setUrlTab] = useQueryState(urlParamName, {
+    shallow,
+    history: historyMode,
+    clearOnDefault: true,
+    parse: (value) => {
+      return tabs.some((tab) => tab.value === value)
+        ? value
+        : defaultTab || tabs[0]?.value || "";
+    },
+  });
+
+  const activeTab = urlTab ?? defaultTab ?? tabs[0]?.value ?? "";
+
+  const handleTabChange = (value: string) => {
+    setUrlTab(value).catch(console.error);
+    onTabChange?.(value);
+  };
+
+  return (
+    <TabsContainerInner
+      tabs={tabs}
+      className={className}
+      containerHeight={containerHeight}
+      tabsLayout={tabsLayout}
+      activeTab={activeTab}
+      onTabValueChange={handleTabChange}
+    />
+  );
+}
+
+function LocalTabs({
+  tabs,
+  defaultTab,
+  className,
+  onTabChange,
+  containerHeight = "calc(100vh-5rem)",
+  tabsLayout = "compact",
+}: TabsContainerProps) {
+  const [localTab, setLocalTab] = useState(defaultTab || tabs[0]?.value || "");
+
+  const handleTabChange = (value: string) => {
+    setLocalTab(value);
+    onTabChange?.(value);
+  };
+
+  return (
+    <TabsContainerInner
+      tabs={tabs}
+      className={className}
+      containerHeight={containerHeight}
+      tabsLayout={tabsLayout}
+      activeTab={localTab}
+      onTabValueChange={handleTabChange}
+    />
+  );
+}
+
+export function TabsContainer({
+  persistInUrl = true,
+  ...props
+}: TabsContainerProps) {
+  return persistInUrl ? (
+    <UrlPersistedTabs {...props} persistInUrl={persistInUrl} />
+  ) : (
+    <LocalTabs {...props} persistInUrl={persistInUrl} />
   );
 }

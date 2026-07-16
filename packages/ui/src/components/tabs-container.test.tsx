@@ -48,6 +48,12 @@ function renderTabs(
 }
 
 describe('TabsContainer', () => {
+  it('renders with persistInUrl=false without a nuqs adapter', () => {
+    render(<TabsContainer tabs={tabs} persistInUrl={false} />)
+
+    expect(screen.getByText('Content A')).toBeVisible()
+  })
+
   it('with persistInUrl=false activates the first tab and switches on click', () => {
     const onTabChange = vi.fn()
     renderTabs({ persistInUrl: false, onTabChange })
