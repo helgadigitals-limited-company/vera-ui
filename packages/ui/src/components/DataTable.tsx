@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { Fragment, type ReactNode, useCallback, useMemo, useState } from "react";
 import { cn, splitStringByUnderscore } from "@/lib/utils";
 import {
   Table,
@@ -258,8 +258,7 @@ export const DataTable = <T extends Record<string, any>>(
         if (!existing) {
           next.push({ key: col, direction: "asc" });
         } else if (existing.direction === "asc") {
-          existing.direction = "desc";
-          next = [...next];
+          next = next.map((r) => (r.key === col ? { ...r, direction: "desc" as const } : r));
         } else {
           next = next.filter((r) => r.key !== col);
         }
@@ -296,8 +295,7 @@ export const DataTable = <T extends Record<string, any>>(
         } else if (!existing) {
           next.push({ key: col, direction });
         } else {
-          existing.direction = direction;
-          next = [...next];
+          next = next.map((r) => (r.key === col ? { ...r, direction } : r));
         }
       }
       applySortChange(next);
@@ -1085,10 +1083,9 @@ export const DataTable = <T extends Record<string, any>>(
               const rowExpanded = expandable && isRowExpanded(id);
               
               return (
-                <>
+                <Fragment key={id}>
                   {/* Main row */}
                   <TableRow
-                    key={id}
                     data-row-id={id}
                     // NEW: expose selection state for styling and a11y
                     data-state={rowSelected ? "selected" : undefined}
@@ -1172,7 +1169,7 @@ export const DataTable = <T extends Record<string, any>>(
                       </TableCell>
                     </TableRow>
                   )}
-                </>
+                </Fragment>
               );
             })}
           </TableBody>
