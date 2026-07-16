@@ -26,7 +26,10 @@
     "build:lib": "tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "release": "semantic-release",
     "release:dry-run": "semantic-release --dry-run"
   },

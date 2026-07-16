@@ -8,6 +8,7 @@
     "start": "next start",
     "postinstall": "pnpm rebuild esbuild && fumadocs-mdx",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "extract-code": "tsx scripts/extract-code.ts"
   },
   "dependencies": {

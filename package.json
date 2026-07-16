@@ -11,14 +11,16 @@
     "build:ui": "pnpm --filter @helgadigitals/vera-ui build",
     "build:docs": "pnpm --filter docs build",
     "lint": "pnpm --recursive lint",
-    "test": "pnpm --recursive test"
+    "test": "pnpm --recursive test",
+    "typecheck": "pnpm --recursive typecheck"
   },
   "devDependencies": {
     "typescript": "~5.8.3"
   },
+  "packageManager": "pnpm@10.12.1",
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=8"
+    "node": ">=22",
+    "pnpm": ">=10"
   },
   "dependencies": {
     "react-router-dom": "^7.8.2"

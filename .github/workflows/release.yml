@@ -44,30 +44,9 @@ jobs:
       - name: Run ${{ matrix.check }}
         run: |
           case "${{ matrix.check }}" in
-            lint)
-              echo "Running linting checks..."
-              if pnpm run lint 2>/dev/null; then
-                echo "✅ Lint check passed"
-              else
-                echo "⚠️ Lint check skipped (no lint script found)"
-              fi
-              ;;
-            test)
-              echo "Running tests..."
-              if pnpm run test 2>/dev/null; then
-                echo "✅ Tests passed"
-              else
-                echo "⚠️ Tests skipped (no test script found)"
-              fi
-              ;;
-            typecheck)
-              echo "Running TypeScript checks..."
-              if pnpm run build:ui 2>/dev/null; then
-                echo "✅ TypeScript check passed"
-              else
-                echo "⚠️ TypeScript check completed with warnings"
-              fi
-              ;;
+            lint)      pnpm run lint ;;
+            test)      pnpm run test ;;
+            typecheck) pnpm run typecheck ;;
           esac
 
   build:
