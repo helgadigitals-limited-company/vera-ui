@@ -1,15 +1,13 @@
 {
-  "title": "Navigation Components", 
+  "title": "Navigation Components",
   "pages": [
-    "index",
-    "sidebar",
-    "sidebar-layout",
+    "navigation-components",
+    "reusable-sidebar",
+    "menu-bar",
     "breadcrumb",
     "navigation-menu",
-    "menubar",
-    "pagination",
-    "tabs",
-    "navigation-components",
-    "reusable-sidebar"
+    "command",
+    "sheet",
+    "dropdown-menu"
   ]
 }

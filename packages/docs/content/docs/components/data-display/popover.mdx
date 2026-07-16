@@ -1,0 +1,90 @@
+---
+title: Popover
+description: A floating panel anchored to a trigger element, built on Radix UI Popover.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicPopoverExample,
+  PopoverAlignmentExample,
+} from "@/components/data-display-examples/popover-examples";
+
+## Features
+
+- **Anchored positioning** — Aligns to trigger with configurable side and offset
+- **Composable** — Header, title, and description helpers
+- **Accessible** — Keyboard and screen reader support via Radix UI
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic popover
+
+<AutoExtractPreview
+  source="components/data-display-examples/popover-examples.tsx"
+  functionName="BasicPopoverExample"
+>
+  <BasicPopoverExample />
+</AutoExtractPreview>
+
+## Examples
+
+### Alignment
+
+<AutoExtractPreview
+  source="components/data-display-examples/popover-examples.tsx"
+  functionName="PopoverAlignmentExample"
+>
+  <PopoverAlignmentExample />
+</AutoExtractPreview>
+
+## API Reference
+
+### PopoverContent
+
+<TypeTable
+  type={{
+    align: {
+      type: '"start" | "center" | "end"',
+      default: '"center"',
+      description: "Alignment relative to the trigger.",
+    },
+    sideOffset: {
+      type: "number",
+      default: "4",
+      description: "Distance in pixels from the trigger.",
+    },
+    className: {
+      type: "string",
+      description: "Additional CSS classes.",
+    },
+  }}
+/>
+
+Additional props are forwarded to Radix UI Popover primitives. See the [Radix Popover docs](https://www.radix-ui.com/primitives/docs/components/popover).
+
+## Related Components
+
+- **[Tooltip](/docs/components/data-display/tooltip)** — Lightweight hint on hover
+- **[Dropdown Menu](/docs/components/navigation/dropdown-menu)** — Action menus

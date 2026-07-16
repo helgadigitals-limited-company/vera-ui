@@ -1,0 +1,98 @@
+---
+title: Tooltip
+description: A small overlay that displays supplementary information when the user hovers or focuses a trigger.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicTooltipExample,
+  TooltipWithDelayExample,
+} from "@/components/data-display-examples/tooltip-examples";
+
+## Features
+
+- **Instant or delayed** — Configurable delay via `TooltipProvider`
+- **Accessible** — Works with keyboard focus and screen readers
+- **Arrow indicator** — Built-in pointer to the trigger
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+Wrap tooltips in a `TooltipProvider`. Use `Tooltip`, `TooltipTrigger`, and `TooltipContent` for each tooltip.
+
+### Basic tooltip
+
+<AutoExtractPreview
+  source="components/data-display-examples/tooltip-examples.tsx"
+  functionName="BasicTooltipExample"
+>
+  <BasicTooltipExample />
+</AutoExtractPreview>
+
+## Examples
+
+### Custom delay
+
+<AutoExtractPreview
+  source="components/data-display-examples/tooltip-examples.tsx"
+  functionName="TooltipWithDelayExample"
+>
+  <TooltipWithDelayExample />
+</AutoExtractPreview>
+
+## API Reference
+
+### TooltipProvider
+
+<TypeTable
+  type={{
+    delayDuration: {
+      type: "number",
+      default: "0",
+      description: "Delay in ms before the tooltip opens.",
+    },
+  }}
+/>
+
+### TooltipContent
+
+<TypeTable
+  type={{
+    sideOffset: {
+      type: "number",
+      default: "0",
+      description: "Distance in pixels from the trigger.",
+    },
+    className: {
+      type: "string",
+      description: "Additional CSS classes.",
+    },
+  }}
+/>
+
+Additional props are forwarded to Radix UI Tooltip primitives. See the [Radix Tooltip docs](https://www.radix-ui.com/primitives/docs/components/tooltip).
+
+## Related Components
+
+- **[Popover](/docs/components/data-display/popover)** — Rich floating content panels

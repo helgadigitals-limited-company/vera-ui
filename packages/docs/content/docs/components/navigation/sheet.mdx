@@ -1,0 +1,89 @@
+---
+title: Sheet
+description: A slide-over panel built on Radix Dialog, ideal for mobile navigation and secondary workflows.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicSheetExample,
+  SheetSideVariantsExample,
+} from "@/components/navigation-examples/sheet-examples";
+
+## Features
+
+- **Edge positioning** — Slide in from top, right, bottom, or left
+- **Responsive** — Works well as mobile navigation drawer
+- **Composable** — Header, footer, title, and description subcomponents
+- **Optional close button** — Configurable on `SheetContent`
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic sheet
+
+<AutoExtractPreview
+  source="components/navigation-examples/sheet-examples.tsx"
+  functionName="BasicSheetExample"
+>
+  <BasicSheetExample />
+</AutoExtractPreview>
+
+## Examples
+
+### Side variants
+
+<AutoExtractPreview
+  source="components/navigation-examples/sheet-examples.tsx"
+  functionName="SheetSideVariantsExample"
+>
+  <SheetSideVariantsExample />
+</AutoExtractPreview>
+
+## API Reference
+
+### SheetContent
+
+<TypeTable
+  type={{
+    side: {
+      type: '"top" | "right" | "bottom" | "left"',
+      default: '"right"',
+      description: "Which edge the sheet slides in from.",
+    },
+    showCloseButton: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to render the built-in close button.",
+    },
+    className: {
+      type: "string",
+      description: "Additional CSS classes.",
+    },
+  }}
+/>
+
+## Related Components
+
+- **[Dialog](/docs/components/data-display/dialog)** — Centered modal dialogs
+- **[Reusable Sidebar](/docs/components/navigation/reusable-sidebar)** — Application sidebar navigation

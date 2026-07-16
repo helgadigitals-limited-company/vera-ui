@@ -1,0 +1,108 @@
+---
+title: Dialog
+description: A modal dialog built on Radix UI that interrupts the user with important content and expects a response.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicDialogExample,
+  DialogWithFormExample,
+  ControlledDialogExample,
+} from "@/components/data-display-examples/dialog-examples";
+
+## Features
+
+- **Accessible** — Focus trapping, escape to close, and proper ARIA roles
+- **Composable** — Header, footer, title, and description subcomponents
+- **Flexible** — Controlled or uncontrolled open state
+- **Customizable** — Optional close button on content and footer
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic dialog
+
+<AutoExtractPreview
+  source="components/data-display-examples/dialog-examples.tsx"
+  functionName="BasicDialogExample"
+>
+  <BasicDialogExample />
+</AutoExtractPreview>
+
+## Examples
+
+### With form
+
+<AutoExtractPreview
+  source="components/data-display-examples/dialog-examples.tsx"
+  functionName="DialogWithFormExample"
+>
+  <DialogWithFormExample />
+</AutoExtractPreview>
+
+### Controlled state
+
+<AutoExtractPreview
+  source="components/data-display-examples/dialog-examples.tsx"
+  functionName="ControlledDialogExample"
+>
+  <ControlledDialogExample />
+</AutoExtractPreview>
+
+## API Reference
+
+### DialogContent
+
+<TypeTable
+  type={{
+    showCloseButton: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to render the built-in close button.",
+    },
+    className: {
+      type: "string",
+      description: "Additional CSS classes.",
+    },
+  }}
+/>
+
+### DialogFooter
+
+<TypeTable
+  type={{
+    showCloseButton: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to render a Close button in the footer.",
+    },
+  }}
+/>
+
+Additional props are forwarded to the underlying Radix UI Dialog primitives. See the [Radix Dialog docs](https://www.radix-ui.com/primitives/docs/components/dialog) for full API details.
+
+## Related Components
+
+- **[Sheet](/docs/components/navigation/sheet)** — Slide-over panel for secondary workflows
+- **[Alert Dialog](/docs/components/data-display/alert-dialog)** — Confirmation dialogs (coming soon)

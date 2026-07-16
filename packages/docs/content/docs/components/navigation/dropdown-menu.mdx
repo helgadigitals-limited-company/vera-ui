@@ -1,0 +1,103 @@
+---
+title: Dropdown Menu
+description: A menu triggered by a button, displaying a list of actions or options built on Radix UI.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicDropdownMenuExample,
+  DropdownMenuWithCheckboxExample,
+} from "@/components/navigation-examples/dropdown-menu-examples";
+
+## Features
+
+- **Rich menu items** — Labels, separators, shortcuts, and destructive variant
+- **Checkbox and radio items** — Toggle and single-select options
+- **Submenus** — Nested menus with `DropdownMenuSub`
+- **Accessible** — Full keyboard navigation via Radix UI
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic menu
+
+<AutoExtractPreview
+  source="components/navigation-examples/dropdown-menu-examples.tsx"
+  functionName="BasicDropdownMenuExample"
+>
+  <BasicDropdownMenuExample />
+</AutoExtractPreview>
+
+## Examples
+
+### Checkbox items
+
+<AutoExtractPreview
+  source="components/navigation-examples/dropdown-menu-examples.tsx"
+  functionName="DropdownMenuWithCheckboxExample"
+>
+  <DropdownMenuWithCheckboxExample />
+</AutoExtractPreview>
+
+## API Reference
+
+### DropdownMenuItem
+
+<TypeTable
+  type={{
+    variant: {
+      type: '"default" | "destructive"',
+      default: '"default"',
+      description: "Visual style for the menu item.",
+    },
+    inset: {
+      type: "boolean",
+      description: "Add left padding for alignment with checkbox items.",
+    },
+  }}
+/>
+
+### DropdownMenuContent
+
+<TypeTable
+  type={{
+    align: {
+      type: '"start" | "center" | "end"',
+      default: '"start"',
+      description: "Alignment relative to the trigger.",
+    },
+    sideOffset: {
+      type: "number",
+      default: "4",
+      description: "Distance in pixels from the trigger.",
+    },
+  }}
+/>
+
+Additional props are forwarded to Radix UI Dropdown Menu primitives. See the [Radix Dropdown Menu docs](https://www.radix-ui.com/primitives/docs/components/dropdown-menu).
+
+## Related Components
+
+- **[Command](/docs/components/navigation/command)** — Searchable command palette
+- **[Popover](/docs/components/data-display/popover)** — Non-menu floating content

@@ -1,0 +1,85 @@
+---
+title: Navigation Menu
+description: A horizontal navigation component with optional dropdown panels, built on Radix UI Navigation Menu.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicNavigationMenuExample,
+  NavigationMenuWithDropdownExample,
+} from "@/components/navigation-examples/navigation-menu-examples";
+
+## Features
+
+- **Dropdown panels** — Nested content with animated viewport
+- **Link and trigger styles** — `navigationMenuTriggerStyle` helper for consistent styling
+- **Accessible** — Full keyboard navigation and ARIA support
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Simple links
+
+<AutoExtractPreview
+  source="components/navigation-examples/navigation-menu-examples.tsx"
+  functionName="BasicNavigationMenuExample"
+>
+  <BasicNavigationMenuExample />
+</AutoExtractPreview>
+
+## Examples
+
+### With dropdown
+
+<AutoExtractPreview
+  source="components/navigation-examples/navigation-menu-examples.tsx"
+  functionName="NavigationMenuWithDropdownExample"
+>
+  <NavigationMenuWithDropdownExample />
+</AutoExtractPreview>
+
+## API Reference
+
+### NavigationMenu
+
+<TypeTable
+  type={{
+    viewport: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to render the shared dropdown viewport.",
+    },
+    className: {
+      type: "string",
+      description: "Additional CSS classes.",
+    },
+  }}
+/>
+
+Additional props are forwarded to Radix UI Navigation Menu primitives. See the [Radix Navigation Menu docs](https://www.radix-ui.com/primitives/docs/components/navigation-menu).
+
+## Related Components
+
+- **[Menubar](/docs/components/navigation/menu-bar)** — Desktop-style application menu
+- **[Breadcrumb](/docs/components/navigation/breadcrumb)** — Hierarchical location trail

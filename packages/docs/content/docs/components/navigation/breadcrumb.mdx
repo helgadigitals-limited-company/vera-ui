@@ -1,0 +1,76 @@
+---
+title: Breadcrumb
+description: A navigation aid showing the user's current location within a hierarchical structure.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicBreadcrumbExample,
+  BreadcrumbWithEllipsisExample,
+} from "@/components/navigation-examples/breadcrumb-examples";
+
+## Features
+
+- **Semantic markup** — Uses `nav` with `aria-label="breadcrumb"`
+- **Flexible separators** — Default chevron or custom separator content
+- **Ellipsis support** — Collapse long paths with `BreadcrumbEllipsis`
+- **Composable** — Link, page, and separator subcomponents
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Basic breadcrumb
+
+<AutoExtractPreview
+  source="components/navigation-examples/breadcrumb-examples.tsx"
+  functionName="BasicBreadcrumbExample"
+>
+  <BasicBreadcrumbExample />
+</AutoExtractPreview>
+
+## Examples
+
+### With ellipsis
+
+<AutoExtractPreview
+  source="components/navigation-examples/breadcrumb-examples.tsx"
+  functionName="BreadcrumbWithEllipsisExample"
+>
+  <BreadcrumbWithEllipsisExample />
+</AutoExtractPreview>
+
+## Components
+
+| Component | Description |
+|-----------|-------------|
+| `Breadcrumb` | Root `nav` element |
+| `BreadcrumbList` | Ordered list container |
+| `BreadcrumbItem` | List item wrapper |
+| `BreadcrumbLink` | Navigable link (supports `asChild`) |
+| `BreadcrumbPage` | Current page (non-navigable) |
+| `BreadcrumbSeparator` | Separator between items |
+| `BreadcrumbEllipsis` | Collapsed segment indicator |
+
+## Related Components
+
+- **[Navigation Menu](/docs/components/navigation/navigation-menu)** — Primary horizontal navigation

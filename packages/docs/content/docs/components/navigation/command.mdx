@@ -1,0 +1,79 @@
+---
+title: Command
+description: A fast, composable command palette built on cmdk for search-driven navigation and actions.
+---
+
+import { AutoExtractPreview } from "@/components/component-preview";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+import {
+  BasicCommandExample,
+  CommandDialogExample,
+} from "@/components/navigation-examples/command-examples";
+
+## Features
+
+- **Searchable list** — Filter items as the user types
+- **Grouped items** — Organize commands with headings and separators
+- **Dialog mode** — `CommandDialog` wraps the palette in a modal
+- **Keyboard shortcuts** — Display shortcuts with `CommandShortcut`
+
+## Installation
+
+<Tabs groupId="package" items={['pnpm', 'npm', 'yarn']}>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="npm">
+    ```bash
+    npm install @helgadigitals/vera-ui
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add @helgadigitals/vera-ui
+    ```
+  </Tab>
+</Tabs>
+
+## Usage
+
+### Inline command palette
+
+<AutoExtractPreview
+  source="components/navigation-examples/command-examples.tsx"
+  functionName="BasicCommandExample"
+>
+  <BasicCommandExample />
+</AutoExtractPreview>
+
+## Examples
+
+### Command dialog
+
+<AutoExtractPreview
+  source="components/navigation-examples/command-examples.tsx"
+  functionName="CommandDialogExample"
+>
+  <CommandDialogExample />
+</AutoExtractPreview>
+
+## Components
+
+| Component | Description |
+|-----------|-------------|
+| `Command` | Root container |
+| `CommandInput` | Search input with icon |
+| `CommandList` | Scrollable results list |
+| `CommandEmpty` | Shown when no results match |
+| `CommandGroup` | Grouped section with heading |
+| `CommandItem` | Selectable command row |
+| `CommandSeparator` | Visual divider between groups |
+| `CommandShortcut` | Keyboard shortcut label |
+| `CommandDialog` | Modal wrapper using Dialog |
+
+## Related Components
+
+- **[Dialog](/docs/components/data-display/dialog)** — Underlying modal for `CommandDialog`
+- **[Dropdown Menu](/docs/components/navigation/dropdown-menu)** — Contextual action menus
