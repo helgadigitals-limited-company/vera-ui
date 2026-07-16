@@ -39,7 +39,6 @@ export default defineConfig({
         "react-dom", 
         "react/jsx-runtime",
         "react-router-dom",
-        "date-fns",
         "lucide-react",
         "motion",
         "nuqs",

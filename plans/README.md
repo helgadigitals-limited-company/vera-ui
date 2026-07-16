@@ -16,7 +16,7 @@ npm releases on `main`).
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
 | 001 | Make the CI quality gate actually fail | P1 | S | — | DONE |
-| 002 | Clean the published package's dependency & packaging posture | P1 | M | 001 (recommended) | TODO |
+| 002 | Clean the published package's dependency & packaging posture | P1 | M | 001 (recommended) | DONE |
 | 003 | Fix MultiSelect discarding `defaultValue` on mount | P1 | S | — | TODO |
 | 004 | Fix DataTable unkeyed fragment + sort-state mutation | P1 | S | — | TODO |
 | 005 | Fix semantic-release version write-back + docs image tag | P2 | S | — | TODO |
