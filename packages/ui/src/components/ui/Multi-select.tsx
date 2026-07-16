@@ -147,9 +147,12 @@ export const MultiSelect = React.forwardRef<
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
     const [isAnimating, setIsAnimating] = React.useState(false);
 
-    // Update selectedValues when formValue changes
+    // Sync with the form-controlled value only when one is provided,
+    // so uncontrolled usage keeps its defaultValue.
     React.useEffect(() => {
-      setSelectedValues(formValue || []);
+      if (formValue !== undefined) {
+        setSelectedValues(formValue);
+      }
     }, [formValue]);
 
     const handleInputKeyDown = (
