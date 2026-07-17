@@ -19,18 +19,9 @@ import { useDataTableSort } from "./data-table/use-data-table-sort";
 import { useDataTableSelection } from "./data-table/use-data-table-selection";
 import { useDataTableFilters } from "./data-table/use-data-table-filters";
 import { useDataTableExpansion } from "./data-table/use-data-table-expansion";
+import { DataTableLoading } from "./data-table/data-table-loading";
 
 export type { DataTableProps, TableAction } from "./data-table/types";
-
-// Default loading component
-const DefaultLoadingComponent = () => (
-  <div className="flex items-center justify-center py-16">
-    <div className="flex items-center gap-2 text-muted-foreground">
-      <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent"></div>
-      <span>Loading...</span>
-    </div>
-  </div>
-);
 
 // Default empty state component
 const DefaultEmptyStateComponent = ({ message }: { message: string }) => (
@@ -354,65 +345,23 @@ export const DataTable = <T extends Record<string, any>>(
   // Show loading state
   if (loading) {
     return (
-      <div className={cn("relative w-full", className)}>
-        {enableGlobalFilter && (
-          <div className="mb-4">
-            <Input
-              placeholder={globalFilterPlaceholder}
-              value={effectiveGlobalFilter}
-              onChange={(e) => handleGlobalFilterChange(e.target.value)}
-              className="max-w-sm"
-              disabled
-            />
-          </div>
-        )}
-        
-        <div className="overflow-auto">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                {actionsPlacement === "start" && showActionsColumn && (
-                  <TableHead className="whitespace-nowrap">
-                    {actionsColumnHeader}
-                  </TableHead>
-                )}
-
-                {expandable && (
-                  <TableHead className="w-12 text-center">
-                    {expandColumnHeader || ""}
-                  </TableHead>
-                )}
-
-                {selectable && (
-                  <TableHead className="w-8 text-center">
-                    {selectionColumnHeader}
-                  </TableHead>
-                )}
-
-                {visibleDataColumns.map((col) => (
-                  <TableHead key={col} className="whitespace-nowrap first-letter:capitalize">
-                    {splitStringByUnderscore(col)}
-                  </TableHead>
-                ))}
-
-                {actionsPlacement === "end" && showActionsColumn && (
-                  <TableHead className="whitespace-nowrap">
-                    {actionsColumnHeader}
-                  </TableHead>
-                )}
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              <TableRow>
-                <TableCell colSpan={totalColumns} className="h-64">
-                  {loadingComponent || <DefaultLoadingComponent />}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </div>
-      </div>
+      <DataTableLoading
+        className={className}
+        enableGlobalFilter={enableGlobalFilter}
+        globalFilterPlaceholder={globalFilterPlaceholder}
+        effectiveGlobalFilter={effectiveGlobalFilter}
+        handleGlobalFilterChange={handleGlobalFilterChange}
+        actionsPlacement={actionsPlacement}
+        showActionsColumn={showActionsColumn}
+        actionsColumnHeader={actionsColumnHeader}
+        expandable={expandable}
+        expandColumnHeader={expandColumnHeader}
+        selectable={selectable}
+        selectionColumnHeader={selectionColumnHeader}
+        visibleDataColumns={visibleDataColumns}
+        totalColumns={totalColumns}
+        loadingComponent={loadingComponent}
+      />
     );
   }
 
