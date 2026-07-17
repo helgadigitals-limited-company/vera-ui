@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { Fragment, type ReactNode, useCallback, useMemo, useState } from "react";
+import { Fragment, type ReactNode, useMemo } from "react";
 import { cn, splitStringByUnderscore } from "@/lib/utils";
 import {
   Table,
@@ -17,6 +17,7 @@ import type { DataTableProps, StringKeys } from "./data-table/types";
 import { useDataTableSort } from "./data-table/use-data-table-sort";
 import { useDataTableSelection } from "./data-table/use-data-table-selection";
 import { useDataTableFilters } from "./data-table/use-data-table-filters";
+import { useDataTableExpansion } from "./data-table/use-data-table-expansion";
 
 export type { DataTableProps, TableAction } from "./data-table/types";
 
@@ -333,68 +334,21 @@ export const DataTable = <T extends Record<string, any>>(
     );
   };
   // ----- Expansion -----
-  const [internalExpandedRowIds, setInternalExpandedRowIds] = useState<Array<string | number>>(defaultExpandedRowIds);
-  const effectiveExpandedRowIds = expandedRowIds ?? internalExpandedRowIds;
-
-  const isRowExpanded = useCallback(
-    (id: string | number) => effectiveExpandedRowIds.includes(id),
-    [effectiveExpandedRowIds]
-  );
-
-  const toggleRowExpansion = useCallback(
-    (id: string | number) => {
-      const next = isRowExpanded(id)
-        ? effectiveExpandedRowIds.filter((x) => x !== id)
-        : [...effectiveExpandedRowIds, id];
-      
-      if (onExpandedRowsChange) {
-        onExpandedRowsChange(next);
-      } else {
-        setInternalExpandedRowIds(next);
-      }
-    },
-    [isRowExpanded, effectiveExpandedRowIds, onExpandedRowsChange]
-  );
-
-  const expandAll = useCallback(() => {
-    const allIds = processedRows.map(r => r.id);
-    if (onExpandedRowsChange) {
-      onExpandedRowsChange(allIds);
-    } else {
-      setInternalExpandedRowIds(allIds);
-    }
-  }, [processedRows, onExpandedRowsChange]);
-
-  const collapseAll = useCallback(() => {
-    if (onExpandedRowsChange) {
-      onExpandedRowsChange([]);
-    } else {
-      setInternalExpandedRowIds([]);
-    }
-  }, [onExpandedRowsChange]);
-
-  const allRowsExpanded = useMemo(
-    () => expandable && processedRows.length > 0 && processedRows.every(r => effectiveExpandedRowIds.includes(r.id)),
-    [expandable, processedRows, effectiveExpandedRowIds]
-  );
-
-  const toggleExpandAll = useCallback(() => {
-    if (allRowsExpanded) {
-      collapseAll();
-    } else {
-      expandAll();
-    }
-  }, [allRowsExpanded, collapseAll, expandAll]);
-
-  const handleRowClick = useCallback(
-    (row: T, id: string | number) => {
-      if (expandOnRowClick && expandable) {
-        toggleRowExpansion(id);
-      }
-      if (onRowClick) onRowClick(row);
-    },
-    [onRowClick, expandOnRowClick, expandable, toggleRowExpansion]
-  );
+  const {
+    isRowExpanded,
+    toggleRowExpansion,
+    allRowsExpanded,
+    toggleExpandAll,
+    handleRowClick,
+  } = useDataTableExpansion<T>({
+    expandable,
+    expandedRowIds,
+    onExpandedRowsChange,
+    defaultExpandedRowIds,
+    expandOnRowClick,
+    onRowClick,
+    processedRows,
+  });
 
   // Calculate total columns for expansion row colspan
   const totalColumns = useMemo(() => {
