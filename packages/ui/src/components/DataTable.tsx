@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import type { DataTableProps, StringKeys } from "./data-table/types";
@@ -20,17 +21,6 @@ import { useDataTableFilters } from "./data-table/use-data-table-filters";
 import { useDataTableExpansion } from "./data-table/use-data-table-expansion";
 
 export type { DataTableProps, TableAction } from "./data-table/types";
-
-// Simple Input component (if not available from UI library)
-const Input = ({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input
-    className={cn(
-      "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-      className
-    )}
-    {...props}
-  />
-);
 
 // Default loading component
 const DefaultLoadingComponent = () => (
