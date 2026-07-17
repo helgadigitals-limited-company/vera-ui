@@ -27,7 +27,7 @@ npm releases on `main`).
 | 010 | Document missing components (tranche 1: 8 pages) | P3 | L | 009 | DONE |
 | 011 | Resolve tabs-container nuqs contract + export debris | P2 | M | 006 | DONE |
 | 012 | shadcn-compatible registry (spike → full rollout) | P3 | M | — | DONE |
-| 013 | Decompose the 1184-line DataTable god component | P3 | L | 004 DONE, 006 DONE | TODO |
+| 013 | Decompose the 1184-line DataTable god component | P3 | L | 004 DONE, 006 DONE | DONE |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJECTED (with one-line rationale)
 
