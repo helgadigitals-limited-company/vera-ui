@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+"use client";
+import {
+  Fragment,
+  type ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { cn, splitStringByUnderscore } from "@/lib/utils";
 import {
   Table,
@@ -11,7 +17,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 
 type StringKeys<T> = Extract<keyof T, string>;
@@ -43,18 +54,18 @@ export interface DataTableProps<T> {
 
   // Custom cell / header render
   customHeadRender?: (
-    col: StringKeys<T>, 
+    col: StringKeys<T>,
     helpers?: {
       sortable: boolean;
       direction: "asc" | "desc" | null;
       index: number | null;
       toggle: (additive?: boolean) => void;
       set: (direction: "asc" | "desc" | null, additive?: boolean) => void;
-    }
+    },
   ) => ReactNode | null | undefined;
   customBodyRender?: (
     rowData: T,
-    col: StringKeys<T>
+    col: StringKeys<T>,
   ) => ReactNode | null | undefined;
 
   // Row click
@@ -84,7 +95,7 @@ export interface DataTableProps<T> {
   sortState?: Array<{ key: StringKeys<T>; direction: "asc" | "desc" }>;
   defaultSortState?: Array<{ key: StringKeys<T>; direction: "asc" | "desc" }>;
   onSortChange?: (
-    state: Array<{ key: StringKeys<T>; direction: "asc" | "desc" }>
+    state: Array<{ key: StringKeys<T>; direction: "asc" | "desc" }>,
   ) => void;
   sortFns?: Partial<Record<StringKeys<T>, (a: any, b: any) => number>>;
   manualSort?: boolean;
@@ -95,11 +106,15 @@ export interface DataTableProps<T> {
   onGlobalFilterChange?: (value: string) => void;
   globalFilterPlaceholder?: string;
   globalFilterFn?: (row: T, searchTerm: string) => boolean;
-  
+
   filterableColumns?: StringKeys<T>[];
   columnFilters?: Partial<Record<StringKeys<T>, string>>;
-  onColumnFiltersChange?: (filters: Partial<Record<StringKeys<T>, string>>) => void;
-  columnFilterFns?: Partial<Record<StringKeys<T>, (cellValue: any, filterValue: string) => boolean>>;
+  onColumnFiltersChange?: (
+    filters: Partial<Record<StringKeys<T>, string>>,
+  ) => void;
+  columnFilterFns?: Partial<
+    Record<StringKeys<T>, (cellValue: any, filterValue: string) => boolean>
+  >;
 
   // Row Expansion
   expandable?: boolean;
@@ -114,11 +129,14 @@ export interface DataTableProps<T> {
 }
 
 // Simple Input component (if not available from UI library)
-const Input = ({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) => (
+const Input = ({
+  className,
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
     className={cn(
       "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-      className
+      className,
     )}
     {...props}
   />
@@ -159,7 +177,7 @@ const DefaultEmptyStateComponent = ({ message }: { message: string }) => (
 );
 
 export const DataTable = <T extends Record<string, any>>(
-  props: DataTableProps<T>
+  props: DataTableProps<T>,
 ) => {
   const {
     tableColumns = [],
@@ -167,13 +185,13 @@ export const DataTable = <T extends Record<string, any>>(
     excludeColumns = [],
     className,
     rowClassName = "",
-    
+
     // Loading and empty states
     loading = false,
     loadingComponent,
     emptyStateComponent,
     emptyMessage = "No data available to display",
-    
+
     customHeadRender,
     customBodyRender,
     onRowClick,
@@ -208,7 +226,9 @@ export const DataTable = <T extends Record<string, any>>(
     filterableColumns = [],
     columnFilters,
     onColumnFiltersChange,
-    columnFilterFns = {} as Partial<Record<StringKeys<T>, (cellValue: any, filterValue: string) => boolean>>,
+    columnFilterFns = {} as Partial<
+      Record<StringKeys<T>, (cellValue: any, filterValue: string) => boolean>
+    >,
 
     expandable = false,
     expandedRowIds,
@@ -224,13 +244,15 @@ export const DataTable = <T extends Record<string, any>>(
   // Filter visible data columns
   const visibleDataColumns = useMemo(
     () => (tableColumns || []).filter((c) => !excludeColumns.includes(c)),
-    [tableColumns, excludeColumns]
+    [tableColumns, excludeColumns],
   );
 
   // Internal filter states
   const [internalGlobalFilter, setInternalGlobalFilter] = useState("");
-  const [internalColumnFilters, setInternalColumnFilters] = useState<Partial<Record<StringKeys<T>, string>>>({});
-  
+  const [internalColumnFilters, setInternalColumnFilters] = useState<
+    Partial<Record<StringKeys<T>, string>>
+  >({});
+
   const effectiveGlobalFilter = globalFilter ?? internalGlobalFilter;
   const effectiveColumnFilters = columnFilters ?? internalColumnFilters;
 
@@ -245,7 +267,7 @@ export const DataTable = <T extends Record<string, any>>(
       if (onSortChange) onSortChange(next);
       if (!sortState) setInternalSortState(next);
     },
-    [onSortChange, sortState]
+    [onSortChange, sortState],
   );
 
   const toggleSortForColumn = useCallback(
@@ -274,11 +296,15 @@ export const DataTable = <T extends Record<string, any>>(
       }
       applySortChange(next);
     },
-    [effectiveSortState, sortableColumns, multiSort, applySortChange]
+    [effectiveSortState, sortableColumns, multiSort, applySortChange],
   );
 
   const setSortForColumn = useCallback(
-    (col: StringKeys<T>, direction: "asc" | "desc" | null, additive: boolean) => {
+    (
+      col: StringKeys<T>,
+      direction: "asc" | "desc" | null,
+      additive: boolean,
+    ) => {
       if (!sortableColumns.includes(col)) return;
       let next: SortRule[] = [];
       const multi = additive && multiSort;
@@ -302,7 +328,7 @@ export const DataTable = <T extends Record<string, any>>(
       }
       applySortChange(next);
     },
-    [effectiveSortState, sortableColumns, multiSort, applySortChange]
+    [effectiveSortState, sortableColumns, multiSort, applySortChange],
   );
 
   const compareValues = useCallback(
@@ -316,14 +342,15 @@ export const DataTable = <T extends Record<string, any>>(
       if (av == null) return -1;
       if (bv == null) return 1;
       if (typeof av === "number" && typeof bv === "number") return av - bv;
-      if (av instanceof Date && bv instanceof Date) return av.getTime() - bv.getTime();
+      if (av instanceof Date && bv instanceof Date)
+        return av.getTime() - bv.getTime();
       const astr = String(av).toLowerCase();
       const bstr = String(bv).toLowerCase();
       if (astr < bstr) return -1;
       if (astr > bstr) return 1;
       return 0;
     },
-    [sortFns]
+    [sortFns],
   );
 
   // Derive row ids
@@ -333,12 +360,12 @@ export const DataTable = <T extends Record<string, any>>(
         const id = getRowId ? getRowId(row, idx) : idx;
         return { row, id };
       }),
-    [tableData, getRowId]
+    [tableData, getRowId],
   );
 
   const isRowSelected = useCallback(
     (id: string | number) => selectedRowIds.includes(id),
-    [selectedRowIds]
+    [selectedRowIds],
   );
 
   // UPDATED: Enhanced toggle row selection with single/multi mode support
@@ -371,7 +398,14 @@ export const DataTable = <T extends Record<string, any>>(
         onSelectionChange(next);
       }
     },
-    [onSelectionChange, isRowSelected, selectedRowIds, selectionMode, maxSelections, onMaxSelectionsReached]
+    [
+      onSelectionChange,
+      isRowSelected,
+      selectedRowIds,
+      selectionMode,
+      maxSelections,
+      onMaxSelectionsReached,
+    ],
   );
 
   const showActionsColumn =
@@ -382,38 +416,38 @@ export const DataTable = <T extends Record<string, any>>(
     (row: T, searchTerm: string): boolean => {
       if (!searchTerm.trim()) return true;
       const term = searchTerm.toLowerCase();
-      
+
       return visibleDataColumns.some((col) => {
         const value = row[col];
         if (value == null) return false;
-        
+
         // Handle arrays (like skills) by joining them
         if (Array.isArray(value)) {
           return value.join(", ").toLowerCase().includes(term);
         }
-        
+
         // Convert to string and search
         return String(value).toLowerCase().includes(term);
       });
     },
-    [visibleDataColumns]
+    [visibleDataColumns],
   );
 
   const defaultColumnFilterFn = useCallback(
     (cellValue: any, filterValue: string): boolean => {
       if (!filterValue.trim()) return true;
       if (cellValue == null) return false;
-      
+
       const term = filterValue.toLowerCase();
-      
+
       // Handle arrays by joining
       if (Array.isArray(cellValue)) {
         return cellValue.join(", ").toLowerCase().includes(term);
       }
-      
+
       return String(cellValue).toLowerCase().includes(term);
     },
-    []
+    [],
   );
 
   // Apply filters and sort
@@ -423,14 +457,16 @@ export const DataTable = <T extends Record<string, any>>(
     // Apply global filter
     if (enableGlobalFilter && effectiveGlobalFilter.trim()) {
       const filterFn = globalFilterFn || defaultGlobalFilterFn;
-      filtered = filtered.filter(({ row }) => filterFn(row, effectiveGlobalFilter));
+      filtered = filtered.filter(({ row }) =>
+        filterFn(row, effectiveGlobalFilter),
+      );
     }
 
     // Apply column filters
     const activeColumnFilters = Object.entries(effectiveColumnFilters).filter(
-      ([, value]) => value && String(value).trim()
+      ([, value]) => value && String(value).trim(),
     );
-    
+
     if (activeColumnFilters.length > 0) {
       filtered = filtered.filter(({ row }) => {
         return activeColumnFilters.every(([col, filterValue]) => {
@@ -438,14 +474,17 @@ export const DataTable = <T extends Record<string, any>>(
           if (customFn) {
             return customFn(row[col as StringKeys<T>], String(filterValue));
           }
-          return defaultColumnFilterFn(row[col as StringKeys<T>], String(filterValue));
+          return defaultColumnFilterFn(
+            row[col as StringKeys<T>],
+            String(filterValue),
+          );
         });
       });
     }
 
     // Apply sorting
     if (!effectiveSortState.length) return filtered;
-    
+
     const sorted = [...filtered].sort((a, b) => {
       for (const rule of effectiveSortState) {
         const cmp = compareValues(a.row, b.row, rule.key);
@@ -466,13 +505,13 @@ export const DataTable = <T extends Record<string, any>>(
     columnFilterFns,
     defaultColumnFilterFn,
     effectiveSortState,
-    compareValues
+    compareValues,
   ]);
 
   // Update selection logic to work with filtered data
   const filteredRowIds = useMemo(
     () => processedRows.map((r) => r.id),
-    [processedRows]
+    [processedRows],
   );
 
   // UPDATED: Select all logic with single/multi mode support
@@ -495,19 +534,20 @@ export const DataTable = <T extends Record<string, any>>(
     if (allFilteredSelected) {
       // Deselect all filtered rows
       onSelectionChange(
-        selectedRowIds.filter((id) => !filteredRowIds.includes(id))
+        selectedRowIds.filter((id) => !filteredRowIds.includes(id)),
       );
     } else {
       // Select all filtered rows (respecting max selections)
       const currentNonFilteredSelections = selectedRowIds.filter(
-        (id) => !filteredRowIds.includes(id)
+        (id) => !filteredRowIds.includes(id),
       );
-      
+
       let rowsToSelect = filteredRowIds;
-      
+
       // Apply max selections limit
       if (maxSelections) {
-        const availableSlots = maxSelections - currentNonFilteredSelections.length;
+        const availableSlots =
+          maxSelections - currentNonFilteredSelections.length;
         if (availableSlots <= 0) {
           if (onMaxSelectionsReached) {
             onMaxSelectionsReached(filteredRowIds[0]); // Signal with first row
@@ -515,24 +555,27 @@ export const DataTable = <T extends Record<string, any>>(
           return;
         }
         rowsToSelect = filteredRowIds.slice(0, availableSlots);
-        
+
         // If we couldn't select all due to limit, notify
-        if (rowsToSelect.length < filteredRowIds.length && onMaxSelectionsReached) {
+        if (
+          rowsToSelect.length < filteredRowIds.length &&
+          onMaxSelectionsReached
+        ) {
           onMaxSelectionsReached(filteredRowIds[rowsToSelect.length]);
         }
       }
-      
+
       const set = new Set([...currentNonFilteredSelections, ...rowsToSelect]);
       onSelectionChange(Array.from(set));
     }
   }, [
-    onSelectionChange, 
-    selectionMode, 
-    allFilteredSelected, 
-    selectedRowIds, 
-    filteredRowIds, 
-    maxSelections, 
-    onMaxSelectionsReached
+    onSelectionChange,
+    selectionMode,
+    allFilteredSelected,
+    selectedRowIds,
+    filteredRowIds,
+    maxSelections,
+    onMaxSelectionsReached,
   ]);
 
   // Filter change handlers
@@ -544,7 +587,7 @@ export const DataTable = <T extends Record<string, any>>(
         setInternalGlobalFilter(value);
       }
     },
-    [onGlobalFilterChange]
+    [onGlobalFilterChange],
   );
 
   const handleColumnFilterChange = useCallback(
@@ -556,7 +599,7 @@ export const DataTable = <T extends Record<string, any>>(
         setInternalColumnFilters(next);
       }
     },
-    [effectiveColumnFilters, onColumnFiltersChange]
+    [effectiveColumnFilters, onColumnFiltersChange],
   );
 
   const getSortMeta = (col: StringKeys<T>) => {
@@ -597,7 +640,9 @@ export const DataTable = <T extends Record<string, any>>(
               type="button"
               className={cn(
                 "text-xs px-1 py-0.5 rounded hover:bg-gray-100",
-                direction === "asc" ? "bg-blue-100 text-blue-600" : "text-gray-400"
+                direction === "asc"
+                  ? "bg-blue-100 text-blue-600"
+                  : "text-gray-400",
               )}
               onClick={(e) => {
                 e.stopPropagation();
@@ -611,7 +656,9 @@ export const DataTable = <T extends Record<string, any>>(
               type="button"
               className={cn(
                 "text-xs px-1 py-0.5 rounded hover:bg-gray-100",
-                direction === "desc" ? "bg-blue-100 text-blue-600" : "text-gray-400"
+                direction === "desc"
+                  ? "bg-blue-100 text-blue-600"
+                  : "text-gray-400",
               )}
               onClick={(e) => {
                 e.stopPropagation();
@@ -648,7 +695,9 @@ export const DataTable = <T extends Record<string, any>>(
   };
 
   const renderBodyCell = (row: T, col: StringKeys<T>) => {
-    const renderedContent = customBodyRender ? customBodyRender(row, col) : null;
+    const renderedContent = customBodyRender
+      ? customBodyRender(row, col)
+      : null;
     return renderedContent ?? (row[col] as ReactNode);
   };
 
@@ -657,7 +706,7 @@ export const DataTable = <T extends Record<string, any>>(
     if (!actions || actions.length === 0) return null;
 
     const visibleActions = actions.filter((a) => !(a.hidden && a.hidden(row)));
-    
+
     if (visibleActions.length === 0) return null;
 
     return (
@@ -676,16 +725,14 @@ export const DataTable = <T extends Record<string, any>>(
                 key={a.id}
                 disabled={disabled}
                 variant={a.variant as any}
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   a.onClick(row);
                 }}
                 className="cursor-pointer"
               >
                 {a.icon && (
-                  <span className="mr-2 flex items-center">
-                    {a.icon}
-                  </span>
+                  <span className="mr-2 flex items-center">{a.icon}</span>
                 )}
                 {a.label}
               </DropdownMenuItem>
@@ -696,12 +743,14 @@ export const DataTable = <T extends Record<string, any>>(
     );
   };
   // ----- Expansion -----
-  const [internalExpandedRowIds, setInternalExpandedRowIds] = useState<Array<string | number>>(defaultExpandedRowIds);
+  const [internalExpandedRowIds, setInternalExpandedRowIds] = useState<
+    Array<string | number>
+  >(defaultExpandedRowIds);
   const effectiveExpandedRowIds = expandedRowIds ?? internalExpandedRowIds;
 
   const isRowExpanded = useCallback(
     (id: string | number) => effectiveExpandedRowIds.includes(id),
-    [effectiveExpandedRowIds]
+    [effectiveExpandedRowIds],
   );
 
   const toggleRowExpansion = useCallback(
@@ -709,18 +758,18 @@ export const DataTable = <T extends Record<string, any>>(
       const next = isRowExpanded(id)
         ? effectiveExpandedRowIds.filter((x) => x !== id)
         : [...effectiveExpandedRowIds, id];
-      
+
       if (onExpandedRowsChange) {
         onExpandedRowsChange(next);
       } else {
         setInternalExpandedRowIds(next);
       }
     },
-    [isRowExpanded, effectiveExpandedRowIds, onExpandedRowsChange]
+    [isRowExpanded, effectiveExpandedRowIds, onExpandedRowsChange],
   );
 
   const expandAll = useCallback(() => {
-    const allIds = processedRows.map(r => r.id);
+    const allIds = processedRows.map((r) => r.id);
     if (onExpandedRowsChange) {
       onExpandedRowsChange(allIds);
     } else {
@@ -737,8 +786,11 @@ export const DataTable = <T extends Record<string, any>>(
   }, [onExpandedRowsChange]);
 
   const allRowsExpanded = useMemo(
-    () => expandable && processedRows.length > 0 && processedRows.every(r => effectiveExpandedRowIds.includes(r.id)),
-    [expandable, processedRows, effectiveExpandedRowIds]
+    () =>
+      expandable &&
+      processedRows.length > 0 &&
+      processedRows.every((r) => effectiveExpandedRowIds.includes(r.id)),
+    [expandable, processedRows, effectiveExpandedRowIds],
   );
 
   const toggleExpandAll = useCallback(() => {
@@ -756,7 +808,7 @@ export const DataTable = <T extends Record<string, any>>(
       }
       if (onRowClick) onRowClick(row);
     },
-    [onRowClick, expandOnRowClick, expandable, toggleRowExpansion]
+    [onRowClick, expandOnRowClick, expandable, toggleRowExpansion],
   );
 
   // Calculate total columns for expansion row colspan
@@ -785,7 +837,7 @@ export const DataTable = <T extends Record<string, any>>(
             />
           </div>
         )}
-        
+
         <div className="overflow-auto">
           <Table>
             <TableHeader>
@@ -809,7 +861,10 @@ export const DataTable = <T extends Record<string, any>>(
                 )}
 
                 {visibleDataColumns.map((col) => (
-                  <TableHead key={col} className="whitespace-nowrap first-letter:capitalize">
+                  <TableHead
+                    key={col}
+                    className="whitespace-nowrap first-letter:capitalize"
+                  >
                     {splitStringByUnderscore(col)}
                   </TableHead>
                 ))}
@@ -849,7 +904,7 @@ export const DataTable = <T extends Record<string, any>>(
             />
           </div>
         )}
-        
+
         <div className="overflow-auto">
           <Table>
             <TableHeader>
@@ -873,7 +928,10 @@ export const DataTable = <T extends Record<string, any>>(
                 )}
 
                 {visibleDataColumns.map((col) => (
-                  <TableHead key={col} className="whitespace-nowrap first-letter:capitalize">
+                  <TableHead
+                    key={col}
+                    className="whitespace-nowrap first-letter:capitalize"
+                  >
                     {splitStringByUnderscore(col)}
                   </TableHead>
                 ))}
@@ -913,7 +971,9 @@ export const DataTable = <T extends Record<string, any>>(
                           <Input
                             placeholder={`Filter ${splitStringByUnderscore(col)}...`}
                             value={effectiveColumnFilters[col] || ""}
-                            onChange={(e) => handleColumnFilterChange(col, e.target.value)}
+                            onChange={(e) =>
+                              handleColumnFilterChange(col, e.target.value)
+                            }
                             className="h-8 text-xs"
                           />
                         ) : (
@@ -935,7 +995,9 @@ export const DataTable = <T extends Record<string, any>>(
             <TableBody>
               <TableRow>
                 <TableCell colSpan={totalColumns} className="h-64">
-                  {emptyStateComponent || <DefaultEmptyStateComponent message={emptyMessage} />}
+                  {emptyStateComponent || (
+                    <DefaultEmptyStateComponent message={emptyMessage} />
+                  )}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -957,7 +1019,7 @@ export const DataTable = <T extends Record<string, any>>(
           />
         </div>
       )}
-      
+
       <div className="overflow-auto">
         <Table>
           <TableHeader>
@@ -995,10 +1057,17 @@ export const DataTable = <T extends Record<string, any>>(
                         if (el) el.indeterminate = someFilteredSelected;
                       }}
                       onChange={toggleSelectAllFiltered}
-                      disabled={maxSelections ? selectedRowIds.length >= maxSelections && !allFilteredSelected : false}
+                      disabled={
+                        maxSelections
+                          ? selectedRowIds.length >= maxSelections &&
+                            !allFilteredSelected
+                          : false
+                      }
                     />
                   ) : (
-                    <span className="text-xs text-muted-foreground">Select</span>
+                    <span className="text-xs text-muted-foreground">
+                      Select
+                    </span>
                   )}
                   {selectionColumnHeader}
                 </TableHead>
@@ -1011,7 +1080,7 @@ export const DataTable = <T extends Record<string, any>>(
                     key={col}
                     className={cn(
                       "whitespace-nowrap first-letter:capitalize",
-                      sortable && !manualSort && "cursor-pointer select-none"
+                      sortable && !manualSort && "cursor-pointer select-none",
                     )}
                     onClick={(e) => {
                       if (!sortable || manualSort) return;
@@ -1060,7 +1129,9 @@ export const DataTable = <T extends Record<string, any>>(
                         <Input
                           placeholder={`Filter ${splitStringByUnderscore(col)}...`}
                           value={effectiveColumnFilters[col] || ""}
-                          onChange={(e) => handleColumnFilterChange(col, e.target.value)}
+                          onChange={(e) =>
+                            handleColumnFilterChange(col, e.target.value)
+                          }
                           className="h-8 text-xs"
                         />
                       ) : (
@@ -1083,95 +1154,112 @@ export const DataTable = <T extends Record<string, any>>(
             {processedRows.map(({ row, id }) => {
               const rowSelected = selectable && isRowSelected(id);
               const rowExpanded = expandable && isRowExpanded(id);
-              
+
               return (
                 <>
-                  {/* Main row */}
-                  <TableRow
-                    key={id}
-                    data-row-id={id}
-                    // NEW: expose selection state for styling and a11y
-                    data-state={rowSelected ? "selected" : undefined}
-                    aria-selected={rowSelected ? true : undefined}
-                    className={cn(
-                      // removed hardcoded bg; rely on attributes-based styling
-                      expandOnRowClick && expandable && "cursor-pointer hover:bg-muted/50",
-                      typeof rowClassName === "function" ? rowClassName(row) : rowClassName
-                    )}
-                    onClick={() => handleRowClick(row, id)}
-                  >
-                    {actionsPlacement === "start" && showActionsColumn && (
-                      <TableCell onClick={(e) => e.stopPropagation()}>
-                        {renderActionsCell(row)}
-                      </TableCell>
-                    )}
+                  <Fragment key={id}>
+                    {/* Main row */}
+                    <TableRow
+                      data-row-id={id}
+                      // NEW: expose selection state for styling and a11y
+                      data-state={rowSelected ? "selected" : undefined}
+                      aria-selected={rowSelected ? true : undefined}
+                      className={cn(
+                        // removed hardcoded bg; rely on attributes-based styling
+                        expandOnRowClick &&
+                          expandable &&
+                          "cursor-pointer hover:bg-muted/50",
+                        typeof rowClassName === "function"
+                          ? rowClassName(row)
+                          : rowClassName,
+                      )}
+                      onClick={() => handleRowClick(row, id)}
+                    >
+                      {actionsPlacement === "start" && showActionsColumn && (
+                        <TableCell onClick={(e) => e.stopPropagation()}>
+                          {renderActionsCell(row)}
+                        </TableCell>
+                      )}
 
-                    {expandable && (
-                      <TableCell 
-                        className="w-12 text-center"
-                        onClick={(e) => {
-                          if (!expandOnRowClick) {
-                            e.stopPropagation();
-                            toggleRowExpansion(id);
-                          }
-                        }}
-                      >
-                        <button
-                          type="button"
-                          className="p-1 hover:bg-gray-100 rounded text-sm"
-                          aria-label={rowExpanded ? "Collapse row" : "Expand row"}
+                      {expandable && (
+                        <TableCell
+                          className="w-12 text-center"
+                          onClick={(e) => {
+                            if (!expandOnRowClick) {
+                              e.stopPropagation();
+                              toggleRowExpansion(id);
+                            }
+                          }}
                         >
-                          {rowExpanded ? collapseIcon : expandIcon}
-                        </button>
-                      </TableCell>
-                    )}
+                          <button
+                            type="button"
+                            className="p-1 hover:bg-gray-100 rounded text-sm"
+                            aria-label={
+                              rowExpanded ? "Collapse row" : "Expand row"
+                            }
+                          >
+                            {rowExpanded ? collapseIcon : expandIcon}
+                          </button>
+                        </TableCell>
+                      )}
 
-                    {/* UPDATED: Selection cell with radio for single mode */}
-                    {selectable && (
-                      <TableCell
-                        className="w-8 text-center"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <input
-                          type={selectionMode === "single" ? "radio" : "checkbox"}
-                          name={selectionMode === "single" ? "table-selection" : undefined}
-                          aria-label={selectionMode === "single" ? "Select row" : "Select row"}
-                          checked={rowSelected}
-                          onChange={() => toggleRowSelection(id)}
-                          disabled={
-                            selectionMode === "multiple" &&
-                            maxSelections !== undefined &&
-                            selectedRowIds.length >= maxSelections &&
-                            !rowSelected
-                          }
-                        />
-                      </TableCell>
-                    )}
+                      {/* UPDATED: Selection cell with radio for single mode */}
+                      {selectable && (
+                        <TableCell
+                          className="w-8 text-center"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <input
+                            type={
+                              selectionMode === "single" ? "radio" : "checkbox"
+                            }
+                            name={
+                              selectionMode === "single"
+                                ? "table-selection"
+                                : undefined
+                            }
+                            aria-label={
+                              selectionMode === "single"
+                                ? "Select row"
+                                : "Select row"
+                            }
+                            checked={rowSelected}
+                            onChange={() => toggleRowSelection(id)}
+                            disabled={
+                              selectionMode === "multiple" &&
+                              maxSelections !== undefined &&
+                              selectedRowIds.length >= maxSelections &&
+                              !rowSelected
+                            }
+                          />
+                        </TableCell>
+                      )}
 
-                    {visibleDataColumns.map((col) => (
-                      <TableCell key={col} className="whitespace-nowrap">
-                        {renderBodyCell(row, col)}
-                      </TableCell>
-                    ))}
+                      {visibleDataColumns.map((col) => (
+                        <TableCell key={col} className="whitespace-nowrap">
+                          {renderBodyCell(row, col)}
+                        </TableCell>
+                      ))}
 
-                    {actionsPlacement === "end" && showActionsColumn && (
-                      <TableCell onClick={(e) => e.stopPropagation()}>
-                        {renderActionsCell(row)}
-                      </TableCell>
-                    )}
-                  </TableRow>
-
-                  {/* Expanded content row */}
-                  {expandable && rowExpanded && expandedContent && (
-                    <TableRow key={`${id}-expanded`}>
-                      <TableCell 
-                        colSpan={totalColumns}
-                        className="bg-gray-50 border-t-0 py-4"
-                      >
-                        {expandedContent(row)}
-                      </TableCell>
+                      {actionsPlacement === "end" && showActionsColumn && (
+                        <TableCell onClick={(e) => e.stopPropagation()}>
+                          {renderActionsCell(row)}
+                        </TableCell>
+                      )}
                     </TableRow>
-                  )}
+
+                    {/* Expanded content row */}
+                    {expandable && rowExpanded && expandedContent && (
+                      <TableRow key={`${id}-expanded`}>
+                        <TableCell
+                          colSpan={totalColumns}
+                          className="bg-gray-50 border-t-0 py-4"
+                        >
+                          {expandedContent(row)}
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Fragment>
                 </>
               );
             })}
@@ -1181,4 +1269,3 @@ export const DataTable = <T extends Record<string, any>>(
     </div>
   );
 };
-
